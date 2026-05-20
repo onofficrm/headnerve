@@ -1,0 +1,84 @@
+<?php
+if (!defined('_GNUBOARD_')) exit;
+
+if (!defined('MK_CLINIC_NAME')) {
+    define('MK_CLINIC_NAME', '맥락한의원');
+    define('MK_CLINIC_BADGE', '두통신경플래너 맥락한의원');
+    define('MK_CLINIC_TEL', '02-6959-7252');
+    define('MK_CLINIC_TEL_LINK', '0269597252');
+    define('MK_CLINIC_ADDRESS', '서울시 중구 서소문로 134, 2층 맥락한의원');
+    define('MK_CLINIC_HOURS_WEEKDAY', '10:00 ~ 20:00');
+    define('MK_CLINIC_HOURS_SAT', '10:00 ~ 14:00');
+    define('MK_CLINIC_HOURS_SUN', '일요일, 공휴일');
+    define('MK_CLINIC_LUNCH', '14:00 ~ 15:00');
+    define('MK_CLINIC_SAT_LUNCH_NOTE', '토요일은 점심시간 없이 진료합니다.');
+    define('MK_CLINIC_PARKING', '옆건물 주차장 주차지원');
+    define('MK_CLINIC_TRANSPORT', '시청역 8번 출구 1분 거리');
+    define('MK_BLOG_BOARD', 'free'); // TODO: 게시판 생성 후 'blog' 로 변경
+    define('MK_RESERVE_URL', G5_BBS_URL . '/qalist.php');
+    define('MK_KAKAO_URL', 'https://pf.kakao.com/');
+    define('MK_MAP_URL', 'https://map.kakao.com/');
+}
+
+$maekrak_nav_fallback = array(
+    array('name' => '맥락한의원', 'href' => G5_URL . '/#maekrak_philosophy'),
+    array('name' => '두통', 'href' => G5_URL . '/#maekrak_dept_headache'),
+    array('name' => '어지럼증', 'href' => G5_URL . '/#maekrak_dept_dizziness'),
+    array('name' => '자율신경', 'href' => G5_URL . '/#maekrak_dept_autonomic'),
+    array('name' => '말초신경병증', 'href' => G5_URL . '/#maekrak_dept_neuropathy'),
+    array('name' => '브레인포그', 'href' => G5_URL . '/#maekrak_dept_brainfog'),
+    array('name' => '치료 프로그램', 'href' => G5_URL . '/#maekrak_program'),
+    array('name' => '블로그', 'href' => G5_URL . '/#maekrak_blog'),
+    array('name' => '진료시간·오시는 길', 'href' => G5_URL . '/#maekrak_info'),
+);
+
+$maekrak_departments = array(
+    array('id' => 'headache', 'title' => '두통', 'desc' => '편두통, 긴장형두통, 군발두통, 경추성두통을 통증 억제가 아닌 원인 분석의 관점에서 봅니다.', 'link' => G5_URL . '/#maekrak_dept_headache'),
+    array('id' => 'dizziness', 'title' => '어지럼증', 'desc' => '귀만 보는 것이 아니라 경추 고유수용성 감각과 자율신경 불균형을 함께 확인합니다.', 'link' => G5_URL . '/#maekrak_dept_dizziness'),
+    array('id' => 'autonomic', 'title' => '자율신경', 'desc' => '두근거림, 호흡곤란, 소화장애, 불면처럼 검사에서 잘 드러나지 않는 기능 문제를 봅니다.', 'link' => G5_URL . '/#maekrak_dept_autonomic'),
+    array('id' => 'neuropathy', 'title' => '말초신경병증', 'desc' => '손발 저림, 시림, 작열감이 오래 지속된다면 혈류와 신경 회복 환경을 함께 살핍니다.', 'link' => G5_URL . '/#maekrak_dept_neuropathy'),
+    array('id' => 'brainfog', 'title' => '브레인포그', 'desc' => '머리가 멍하고 집중이 안 되는 증상을 의지 문제가 아닌 뇌 에너지 공급 문제로 봅니다.', 'link' => G5_URL . '/#maekrak_dept_brainfog'),
+);
+
+$maekrak_philosophy = array(
+    array('icon' => 'bone', 'title' => '두개경추 구조', 'text' => '머리와 목이 만나는 부위의 정렬과 긴장을 심층적으로 진단하고 확인합니다.'),
+    array('icon' => 'pulse', 'title' => '자율신경 균형', 'text' => '검사에서는 정상이지만 신체 기능이 저하되어 나타나는 자율신경계 불균형을 살핍니다.'),
+    array('icon' => 'brain', 'title' => '뇌 에너지 회복', 'text' => '뇌에 필요한 혈류가 안정적으로 공급되고 에너지가 회복될 수 있는 체내 환경을 만듭니다.'),
+);
+
+$maekrak_targets = array(
+    '신경과·대학병원 검사는 정상인데 두통이 계속됩니다',
+    '진통제를 먹어도 효과가 점점 줄어듭니다',
+    '두통과 어지럼증이 함께 반복됩니다',
+    '머리가 멍하고 집중력이 떨어집니다',
+    '심장이 두근거리거나 숨이 막히는데 검사에서는 이상이 없습니다',
+    '손발 저림과 작열감이 3개월 이상 지속됩니다',
+    '목과 어깨 긴장 이후 두통이 심해집니다',
+    '약에만 의존하지 않고 원인을 알고 싶습니다',
+);
+
+$maekrak_approach = array(
+    array('num' => '1단계', 'title' => '상태 확인', 'text' => '증상 패턴, 자율신경 상태, 두개경추 구조 문제를 함께 확인합니다.'),
+    array('num' => '2단계', 'title' => '기능 회복', 'text' => '두맥탕, 심맥탕, 통맥탕 등 환자의 상태에 맞춘 한약 치료로 신경계 균형과 에너지 회복을 돕습니다.'),
+    array('num' => '3단계', 'title' => '구조 치료', 'text' => '약침, 침, 추나를 통해 경추 주변 긴장과 신경 압박, 혈류 저하 문제를 함께 다룹니다.'),
+    array('num' => '4단계', 'title' => '재발 관리', 'text' => '증상을 억제하는 데서 끝나지 않고 반복되는 원인을 줄여 건강한 일상을 유지하는 것을 목표로 합니다.'),
+);
+
+$maekrak_programs = array(
+    array('title' => '두통 치료 프로그램', 'methods' => array('두맥탕', '약침', '추나')),
+    array('title' => '어지럼증 치료 프로그램', 'methods' => array('두맥탕', '약침', '추나')),
+    array('title' => '자율신경 치료 프로그램', 'methods' => array('심맥탕', '약침', '추나')),
+    array('title' => '말초신경 치료 프로그램', 'methods' => array('통맥탕', '약침', '침 치료')),
+    array('title' => '브레인포그 치료 프로그램', 'methods' => array('두맥탕', '총명공진단', '약침', '추나')),
+);
+
+$maekrak_doctors = array(
+    array('name' => '이재성', 'title' => '대표원장', 'field' => '두통, 어지럼증, 자율신경'),
+    array('name' => '김윤서', 'title' => '원장', 'field' => '말초신경병증, 브레인포그'),
+);
+
+function maekrak_tel_href($tel = '')
+{
+    $tel = $tel ? $tel : MK_CLINIC_TEL_LINK;
+    return 'tel:' . preg_replace('/[^0-9+]/', '', $tel);
+}

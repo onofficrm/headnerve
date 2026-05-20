@@ -1,82 +1,46 @@
 <?php
-if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+if (!defined('_GNUBOARD_')) exit;
 
-if(G5_COMMUNITY_USE === false) {
-    include_once(G5_THEME_SHOP_PATH.'/shop.tail.php');
+if (G5_COMMUNITY_USE === false) {
+    include_once(G5_THEME_SHOP_PATH . '/shop.tail.php');
     return;
 }
 
+include_once(G5_THEME_PATH . '/inc/site_config.php');
 ?>
+
     </div>
 </div>
 
-
-<?php echo poll('theme/basic'); // 설문조사 ?>
-<?php echo visit('theme/basic'); // 방문자수 ?>
-
-
-<div id="ft">
-    <div id="ft_copy">
-        <div id="ft_company">
-            <a href="<?php echo get_pretty_url('content', 'company'); ?>">회사소개</a>
-            <a href="<?php echo get_pretty_url('content', 'privacy'); ?>">개인정보처리방침</a>
-            <a href="<?php echo get_pretty_url('content', 'provision'); ?>">서비스이용약관</a>
+<footer id="maekrak_ft" class="maekrak-footer maekrak-footer--mobile">
+    <div class="maekrak-footer-inner">
+        <strong><?php echo MK_CLINIC_NAME; ?></strong>
+        <p><?php echo MK_CLINIC_ADDRESS; ?><br>
+        <a href="<?php echo maekrak_tel_href(); ?>"><?php echo MK_CLINIC_TEL; ?></a></p>
+        <div class="maekrak-footer-links">
+            <a href="<?php echo get_pretty_url('content', 'privacy'); ?>">개인정보</a>
+            <a href="<?php echo get_device_change_url(); ?>">PC버전</a>
         </div>
-        Copyright &copy; <b>소유하신 도메인.</b> All rights reserved.<br>
+        <p class="maekrak-footer-copy">&copy; <?php echo date('Y'); ?> <?php echo MK_CLINIC_NAME; ?></p>
     </div>
-    <div class="ft_cnt">
-    	<h2>사이트 정보</h2>
-        <p class="ft_info">
-        	회사명 : 회사명 / 대표 : 대표자명<br>
-			주소  : OO도 OO시 OO구 OO동 123-45<br>
-			사업자 등록번호  : 123-45-67890<br>
-			전화 :  02-123-4567  팩스  : 02-123-4568<br>
-			통신판매업신고번호 :  제 OO구 - 123호<br>
-			개인정보관리책임자 :  정보책임자명<br>
-		</p>
-    </div>
-    <button type="button" id="top_btn"><i class="fa fa-arrow-up" aria-hidden="true"></i><span class="sound_only">상단으로</span></button>
-    <?php
-    if(G5_DEVICE_BUTTON_DISPLAY && G5_IS_MOBILE) { ?>
-    <a href="<?php echo get_device_change_url(); ?>" id="device_change">PC 버전으로 보기</a>
-    <?php
-    }
+</footer>
 
-    if ($config['cf_analytics']) {
-        echo $config['cf_analytics'];
-    }
-    ?>
-</div>
+<?php include_once(G5_THEME_PATH . '/inc/mobile_cta.php'); ?>
+
 <script>
 jQuery(function($) {
-
-    $( document ).ready( function() {
-
-        // 폰트 리사이즈 쿠키있으면 실행
-        font_resize("container", get_cookie("ck_font_resize_rmv_class"), get_cookie("ck_font_resize_add_class"));
-        
-        //상단고정
-        if( $(".top").length ){
-            var jbOffset = $(".top").offset();
-            $( window ).scroll( function() {
-                if ( $( document ).scrollTop() > jbOffset.top ) {
-                    $( '.top' ).addClass( 'fixed' );
-                }
-                else {
-                    $( '.top' ).removeClass( 'fixed' );
-                }
-            });
-        }
-
-        //상단으로
-        $("#top_btn").on("click", function() {
-            $("html, body").animate({scrollTop:0}, '500');
-            return false;
-        });
-
+    $('html, body').on('click', '#top_btn', function() {
+        $('html, body').animate({ scrollTop: 0 }, 500);
+        return false;
     });
+    if (typeof font_resize === 'function') {
+        font_resize('container', get_cookie('ck_font_resize_rmv_class'), get_cookie('ck_font_resize_add_class'));
+    }
 });
 </script>
 
 <?php
-include_once(G5_THEME_PATH."/tail.sub.php");
+if ($config['cf_analytics']) {
+    echo $config['cf_analytics'];
+}
+include_once(G5_THEME_PATH . '/tail.sub.php');

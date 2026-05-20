@@ -1,219 +1,134 @@
 <?php
-if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+if (!defined('_GNUBOARD_')) exit;
 
 if (G5_IS_MOBILE) {
-    include_once(G5_THEME_MOBILE_PATH.'/head.php');
+    include_once(G5_THEME_MOBILE_PATH . '/head.php');
     return;
 }
 
-if(G5_COMMUNITY_USE === false) {
+if (G5_COMMUNITY_USE === false) {
     define('G5_IS_COMMUNITY_PAGE', true);
-    include_once(G5_THEME_SHOP_PATH.'/shop.head.php');
+    include_once(G5_THEME_SHOP_PATH . '/shop.head.php');
     return;
 }
-include_once(G5_THEME_PATH.'/head.sub.php');
-include_once(G5_LIB_PATH.'/latest.lib.php');
-include_once(G5_LIB_PATH.'/outlogin.lib.php');
-include_once(G5_LIB_PATH.'/poll.lib.php');
-include_once(G5_LIB_PATH.'/visit.lib.php');
-include_once(G5_LIB_PATH.'/connect.lib.php');
-include_once(G5_LIB_PATH.'/popular.lib.php');
+
+include_once(G5_THEME_PATH . '/inc/site_config.php');
+
+$g5['body_script'] = defined('_INDEX_') ? ' class="maekrak-site maekrak-site--home"' : ' class="maekrak-site"';
+
+include_once(G5_THEME_PATH . '/head.sub.php');
+include_once(G5_LIB_PATH . '/latest.lib.php');
+
+$menu_datas = get_menu_db(0, true);
+$use_fallback_nav = true;
+foreach ($menu_datas as $row) {
+    if (!empty($row)) {
+        $use_fallback_nav = false;
+        break;
+    }
+}
 ?>
 
-<!-- 상단 시작 { -->
-<div id="hd">
-    <h1 id="hd_h1"><?php echo $g5['title'] ?></h1>
+<header id="maekrak_hd" class="maekrak-header<?php echo defined('_INDEX_') ? ' maekrak-header--transparent' : ''; ?>">
+    <h1 id="hd_h1" class="sound_only"><?php echo $g5['title']; ?></h1>
     <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
 
-    <?php
-    if(defined('_INDEX_')) { // index에서만 실행
-        include G5_BBS_PATH.'/newwin.inc.php'; // 팝업레이어
-    }
-    ?>
-    <div id="tnb">
-    	<div class="inner">
-            <?php if(G5_COMMUNITY_USE) { ?>
-    		<ul id="hd_define">
-    			<li class="active"><a href="<?php echo G5_URL ?>/">커뮤니티</a></li>
-                <?php if (defined('G5_USE_SHOP') && G5_USE_SHOP) { ?>
-    			<li><a href="<?php echo G5_SHOP_URL ?>/">쇼핑몰</a></li>
-                <?php } ?>
-    		</ul>
-            <?php } ?>
-			<ul id="hd_qnb">
-	            <li><a href="<?php echo G5_BBS_URL ?>/faq.php">FAQ</a></li>
-	            <li><a href="<?php echo G5_BBS_URL ?>/qalist.php">Q&A</a></li>
-	            <li><a href="<?php echo G5_BBS_URL ?>/new.php">새글</a></li>
-	            <li><a href="<?php echo G5_BBS_URL ?>/current_connect.php" class="visit">접속자<strong class="visit-num"><?php echo connect('theme/basic'); // 현재 접속자수, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정  ?></strong></a></li>
-	        </ul>
-		</div>
-    </div>
-    <div id="hd_wrapper">
+    <?php if (defined('_INDEX_')) {
+        include G5_BBS_PATH . '/newwin.inc.php';
+    } ?>
 
-        <div id="logo">
-            <a href="<?php echo G5_URL ?>"><img src="<?php echo G5_IMG_URL ?>/logo.png" alt="<?php echo $config['cf_title']; ?>"></a>
-        </div>
-    
-        <div class="hd_sch_wr">
-            <fieldset id="hd_sch">
-                <legend>사이트 내 전체검색</legend>
-                <form name="fsearchbox" method="get" action="<?php echo G5_BBS_URL ?>/search.php" onsubmit="return fsearchbox_submit(this);">
-                <input type="hidden" name="sfl" value="wr_subject||wr_content">
-                <input type="hidden" name="sop" value="and">
-                <label for="sch_stx" class="sound_only">검색어 필수</label>
-                <input type="text" name="stx" id="sch_stx" maxlength="20" placeholder="검색어를 입력해주세요">
-                <button type="submit" id="sch_submit" value="검색"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
-                </form>
-
-                <script>
-                function fsearchbox_submit(f)
-                {
-                    var stx = f.stx.value.trim();
-                    if (stx.length < 2) {
-                        alert("검색어는 두글자 이상 입력하십시오.");
-                        f.stx.select();
-                        f.stx.focus();
-                        return false;
-                    }
-
-                    // 검색에 많은 부하가 걸리는 경우 이 주석을 제거하세요.
-                    var cnt = 0;
-                    for (var i = 0; i < stx.length; i++) {
-                        if (stx.charAt(i) == ' ')
-                            cnt++;
-                    }
-
-                    if (cnt > 1) {
-                        alert("빠른 검색을 위하여 검색어에 공백은 한개만 입력할 수 있습니다.");
-                        f.stx.select();
-                        f.stx.focus();
-                        return false;
-                    }
-                    f.stx.value = stx;
-
-                    return true;
-                }
-                </script>
-
-            </fieldset>
-                
-            <?php echo popular('theme/basic'); // 인기검색어, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정  ?>
-        </div>
-        <ul class="hd_login">        
-            <?php if ($is_member) {  ?>
-            <li><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php">정보수정</a></li>
-            <li><a href="<?php echo G5_BBS_URL ?>/logout.php">로그아웃</a></li>
-            <?php if ($is_admin) {  ?>
-            <li class="tnb_admin"><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>">관리자</a></li>
-            <?php }  ?>
-            <?php } else {  ?>
-            <li><a href="<?php echo G5_BBS_URL ?>/register.php">회원가입</a></li>
-            <li><a href="<?php echo G5_BBS_URL ?>/login.php">로그인</a></li>
-            <?php }  ?>
-
-        </ul>
-    </div>
-    
-    <nav id="gnb">
-        <h2>메인메뉴</h2>
-        <div class="gnb_wrap">
-            <ul id="gnb_1dul">
-                <li class="gnb_1dli gnb_mnal"><button type="button" class="gnb_menu_btn" title="전체메뉴"><i class="fa fa-bars" aria-hidden="true"></i><span class="sound_only">전체메뉴열기</span></button></li>
-                <?php
-				$menu_datas = get_menu_db(0, true);
-				$gnb_zindex = 999; // gnb_1dli z-index 값 설정용
-                $i = 0;
-                foreach( $menu_datas as $row ){
-                    if( empty($row) ) continue;
-                    $add_class = (isset($row['sub']) && $row['sub']) ? 'gnb_al_li_plus' : '';
-                ?>
-                <li class="gnb_1dli <?php echo $add_class; ?>" style="z-index:<?php echo $gnb_zindex--; ?>">
-                    <a href="<?php echo $row['me_link']; ?>" target="_<?php echo $row['me_target']; ?>" class="gnb_1da"><?php echo $row['me_name'] ?></a>
-                    <?php
-                    $k = 0;
-                    foreach( (array) $row['sub'] as $row2 ){
-
-                        if( empty($row2) ) continue; 
-
-                        if($k == 0)
-                            echo '<span class="bg">하위분류</span><div class="gnb_2dul"><ul class="gnb_2dul_box">'.PHP_EOL;
-                    ?>
-                        <li class="gnb_2dli"><a href="<?php echo $row2['me_link']; ?>" target="_<?php echo $row2['me_target']; ?>" class="gnb_2da"><?php echo $row2['me_name'] ?></a></li>
-                    <?php
-                    $k++;
-                    }   //end foreach $row2
-
-                    if($k > 0)
-                        echo '</ul></div>'.PHP_EOL;
-                    ?>
-                </li>
-                <?php
-                $i++;
-                }   //end foreach $row
-
-                if ($i == 0) {  ?>
-                    <li class="gnb_empty">메뉴 준비 중입니다.<?php if ($is_admin) { ?> <a href="<?php echo G5_ADMIN_URL; ?>/menu_list.php">관리자모드 &gt; 환경설정 &gt; 메뉴설정</a>에서 설정하실 수 있습니다.<?php } ?></li>
-                <?php } ?>
-            </ul>
-            <div id="gnb_all">
-                <h2>전체메뉴</h2>
-                <ul class="gnb_al_ul">
-                    <?php
-                    
-                    $i = 0;
-                    foreach( $menu_datas as $row ){
-                    ?>
-                    <li class="gnb_al_li">
-                        <a href="<?php echo $row['me_link']; ?>" target="_<?php echo $row['me_target']; ?>" class="gnb_al_a"><?php echo $row['me_name'] ?></a>
-                        <?php
-                        $k = 0;
-                        foreach( (array) $row['sub'] as $row2 ){
-                            if($k == 0)
-                                echo '<ul>'.PHP_EOL;
-                        ?>
-                            <li><a href="<?php echo $row2['me_link']; ?>" target="_<?php echo $row2['me_target']; ?>"><?php echo $row2['me_name'] ?></a></li>
-                        <?php
-                        $k++;
-                        }   //end foreach $row2
-
-                        if($k > 0)
-                            echo '</ul>'.PHP_EOL;
-                        ?>
-                    </li>
-                    <?php
-                    $i++;
-                    }   //end foreach $row
-
-                    if ($i == 0) {  ?>
-                        <li class="gnb_empty">메뉴 준비 중입니다.<?php if ($is_admin) { ?> <br><a href="<?php echo G5_ADMIN_URL; ?>/menu_list.php">관리자모드 &gt; 환경설정 &gt; 메뉴설정</a>에서 설정하실 수 있습니다.<?php } ?></li>
-                    <?php } ?>
-                </ul>
-                <button type="button" class="gnb_close_btn"><i class="fa fa-times" aria-hidden="true"></i></button>
+    <div class="maekrak-header-bar">
+        <div class="maekrak-header-inner">
+            <div class="maekrak-logo">
+                <a href="<?php echo G5_URL; ?>" id="header-logo">
+                    <span class="maekrak-logo-mark">M</span>
+                    <span class="maekrak-logo-text"><?php echo MK_CLINIC_NAME; ?></span>
+                </a>
             </div>
-            <div id="gnb_all_bg"></div>
+
+            <nav id="maekrak_gnb" class="maekrak-gnb" aria-label="주요 메뉴">
+                <ul class="maekrak-gnb-list">
+                    <?php if ($use_fallback_nav) {
+                        global $maekrak_nav_fallback;
+                        foreach ($maekrak_nav_fallback as $link) { ?>
+                    <li class="maekrak-gnb-item">
+                        <a href="<?php echo $link['href']; ?>" class="maekrak-gnb-link"><?php echo $link['name']; ?></a>
+                    </li>
+                    <?php }
+                    } else {
+                        foreach ($menu_datas as $row) {
+                            if (empty($row)) continue;
+                    ?>
+                    <li class="maekrak-gnb-item">
+                        <a href="<?php echo $row['me_link']; ?>" target="_<?php echo $row['me_target']; ?>" class="maekrak-gnb-link"><?php echo $row['me_name']; ?></a>
+                    </li>
+                    <?php }
+                    } ?>
+                </ul>
+                <a href="#maekrak_cta" class="maekrak-btn maekrak-btn-reserve">상담 예약</a>
+            </nav>
+
+            <button type="button" class="maekrak-header-toggle" id="maekrak_gnb_open" aria-expanded="false" aria-controls="maekrak_gnb_drawer">
+                <i class="fa fa-bars" aria-hidden="true"></i><span class="sound_only">메뉴</span>
+            </button>
         </div>
-    </nav>
-    <script>
-    
-    $(function(){
-        $(".gnb_menu_btn").click(function(){
-            $("#gnb_all, #gnb_all_bg").show();
-        });
-        $(".gnb_close_btn, #gnb_all_bg").click(function(){
-            $("#gnb_all, #gnb_all_bg").hide();
-        });
+    </div>
+
+    <div id="maekrak_gnb_drawer" class="maekrak-gnb-drawer" hidden>
+        <button type="button" class="maekrak-gnb-drawer-close" id="maekrak_gnb_close"><i class="fa fa-times"></i></button>
+        <ul>
+            <?php if ($use_fallback_nav) {
+                foreach ($maekrak_nav_fallback as $link) { ?>
+            <li><a href="<?php echo $link['href']; ?>"><?php echo $link['name']; ?></a></li>
+            <?php }
+            } else {
+                foreach ($menu_datas as $row) {
+                    if (empty($row)) continue;
+            ?>
+            <li><a href="<?php echo $row['me_link']; ?>" target="_<?php echo $row['me_target']; ?>"><?php echo $row['me_name']; ?></a></li>
+            <?php }
+            } ?>
+        </ul>
+        <div class="maekrak-drawer-actions">
+            <a href="<?php echo maekrak_tel_href(); ?>" class="maekrak-btn maekrak-btn-gray"><i class="fa fa-phone"></i> 전화상담</a>
+            <a href="#maekrak_cta" class="maekrak-btn maekrak-btn-primary">예약하기</a>
+        </div>
+    </div>
+    <div class="maekrak-gnb-overlay" id="maekrak_gnb_overlay" hidden></div>
+</header>
+
+<script>
+$(function() {
+    var $header = $('#maekrak_hd');
+    var $snap = $('.maekrak-snap-container');
+
+    function onScroll() {
+        var top = $snap.length ? $snap.scrollTop() : $(window).scrollTop();
+        $header.toggleClass('maekrak-header--scrolled', top > 50);
+    }
+
+    if ($snap.length) {
+        $snap.on('scroll', onScroll);
+    }
+    $(window).on('scroll', onScroll);
+    onScroll();
+
+    function closeDrawer() {
+        $('#maekrak_gnb_drawer, #maekrak_gnb_overlay').prop('hidden', true);
+        $('#maekrak_gnb_open').attr('aria-expanded', 'false');
+    }
+    $('#maekrak_gnb_open').on('click', function() {
+        $('#maekrak_gnb_drawer, #maekrak_gnb_overlay').prop('hidden', false);
+        $(this).attr('aria-expanded', 'true');
     });
+    $('#maekrak_gnb_close, #maekrak_gnb_overlay').on('click', closeDrawer);
+    $('#maekrak_gnb_drawer a').on('click', closeDrawer);
+});
+</script>
 
-    </script>
-</div>
-<!-- } 상단 끝 -->
-
-
-<hr>
-
-<!-- 콘텐츠 시작 { -->
-<div id="wrapper">
-    <div id="container_wr">
-   
-    <div id="container">
-        <?php if (!defined("_INDEX_")) { ?><h2 id="container_title"><span title="<?php echo get_text($g5['title']); ?>"><?php echo get_head_title($g5['title']); ?></span></h2><?php }
+<div id="wrapper" class="maekrak-wrapper">
+    <div id="container_wr" class="maekrak-container-wr">
+        <div id="container" class="maekrak-container">
+        <?php if (!defined('_INDEX_')) { ?>
+            <h2 id="container_title"><span title="<?php echo get_text($g5['title']); ?>"><?php echo get_head_title($g5['title']); ?></span></h2>
+        <?php } ?>
