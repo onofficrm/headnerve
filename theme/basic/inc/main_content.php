@@ -29,6 +29,10 @@ global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_app
                     </div>
                     <div class="maekrak-hero-visual" aria-hidden="true">
                         <div class="maekrak-hero-visual-panel">
+                            <span class="maekrak-hero-visual-mesh"></span>
+                            <span class="maekrak-hero-visual-orb maekrak-hero-visual-orb--a"></span>
+                            <span class="maekrak-hero-visual-orb maekrak-hero-visual-orb--b"></span>
+                            <span class="maekrak-hero-visual-arc"></span>
                             <div class="maekrak-hero-visual-glow"></div>
                             <div class="maekrak-hero-visual-ring maekrak-hero-visual-ring--1"></div>
                             <div class="maekrak-hero-visual-ring maekrak-hero-visual-ring--2"></div>
@@ -251,8 +255,11 @@ global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_app
                         </div>
                     </div>
                     <div class="maekrak-map-placeholder" role="img" aria-label="지도 영역">
-                        <i class="fa fa-map-marker" aria-hidden="true"></i>
-                        <p>지도 영역입니다. 카카오맵 API 연결은 2차 작업에서 진행합니다.</p>
+                        <div class="maekrak-map-placeholder-inner">
+                            <span class="maekrak-map-placeholder-icon"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+                            <strong>맥락한의원 위치</strong>
+                            <p>카카오맵 연동 예정 · 서울시 중구 서소문로 134</p>
+                        </div>
                     </div>
                 </div>
             </div>

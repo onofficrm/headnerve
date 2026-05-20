@@ -126,22 +126,57 @@
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .maekrak-blog-cards-list {
         grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .maekrak-blog-cards-empty {
+        padding: 40px 24px;
+        font-size: 16px;
+        line-height: 1.7;
+        border-radius: 16px;
+    }
+
+    .maekrak-blog-cards-body {
+        padding: 24px 22px;
+    }
+
+    .maekrak-blog-cards-cat {
+        font-size: 13px;
+    }
+
+    .maekrak-blog-cards-subject {
+        font-size: 1.125rem;
+    }
+
+    .maekrak-blog-cards-summary {
+        font-size: 15px;
+    }
+
+    .maekrak-blog-cards-meta {
+        font-size: 14px;
+    }
+
+    .maekrak-blog-cards-read {
+        opacity: 1;
+        transform: none;
+        font-size: 14px;
     }
 
     .maekrak-blog-cards-more--mobile {
         display: flex;
-        margin-top: 32px;
+        margin-top: 24px;
         width: 100%;
+        min-height: 52px;
         justify-content: center;
         align-items: center;
         padding: 16px;
         background: #fff;
         border: 1px solid #e5e5e5;
-        border-radius: 8px;
-        font-size: 14px;
+        border-radius: 12px;
+        font-size: 16px;
         font-weight: 700;
         color: #002B5B;
         text-decoration: none;

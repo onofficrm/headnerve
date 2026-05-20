@@ -24,7 +24,7 @@ foreach ($menu_datas as $row) {
 }
 ?>
 
-<header id="maekrak_hd" class="maekrak-header maekrak-header--mobile maekrak-header--transparent">
+<header id="maekrak_hd" class="maekrak-header maekrak-header--mobile maekrak-header--solid">
     <h1 id="hd_h1" class="sound_only"><?php echo $g5['title']; ?></h1>
     <div class="to_content"><a href="#container">본문 바로가기</a></div>
 
@@ -49,9 +49,12 @@ foreach ($menu_datas as $row) {
         <button type="button" class="maekrak-gnb-drawer-close" id="maekrak_gnb_close"><i class="fa fa-times"></i></button>
         <ul>
             <?php if ($use_fallback_nav) {
-                global $maekrak_nav_fallback;
-                foreach ($maekrak_nav_fallback as $link) { ?>
+                global $maekrak_nav_primary, $maekrak_departments;
+                foreach ($maekrak_nav_primary as $link) { ?>
             <li><a href="<?php echo $link['href']; ?>"><?php echo $link['name']; ?></a></li>
+            <?php }
+                foreach ($maekrak_departments as $dept) { ?>
+            <li class="maekrak-drawer-sub"><a href="<?php echo $dept['link']; ?>"><?php echo $dept['title']; ?></a></li>
             <?php }
             } else {
                 foreach ($menu_datas as $row) {
