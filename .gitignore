@@ -1,0 +1,16 @@
+.DS_Store
+.vscode/
+.idea/
+
+*.sql
+*.zip
+*.tar
+*.tar.gz
+*.bak
+*.backup
+
+data/dbconfig.php
+data/cache/
+data/session/
+data/log/
+data/tmp/
