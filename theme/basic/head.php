@@ -14,7 +14,30 @@ if (G5_COMMUNITY_USE === false) {
 
 include_once(G5_THEME_PATH . '/inc/site_config.php');
 
-$g5['body_script'] = defined('_INDEX_') ? ' class="maekrak-site maekrak-site--home maekrak-home-page"' : ' class="maekrak-site"';
+$maekrak_condition_page = null;
+$maekrak_disease_page = null;
+if (!defined('_INDEX_') && !empty($co_id)) {
+    if (maekrak_is_disease_co_id($co_id)) {
+        $maekrak_disease_page = maekrak_get_disease_by_co_id($co_id);
+    } elseif (maekrak_is_condition_co_id($co_id)) {
+        $maekrak_condition_page = maekrak_get_condition_by_co_id($co_id);
+    }
+}
+
+if (defined('_INDEX_')) {
+    $g5['html_script'] = ' class="maekrak-home-page"';
+    $g5['body_script'] = ' class="maekrak-site maekrak-site--home maekrak-home-page"';
+} elseif ($maekrak_disease_page) {
+    $g5['title'] = $maekrak_disease_page['meta_title'];
+    $g5['body_script'] = ' class="maekrak-site maekrak-site--disease"';
+} elseif ($maekrak_condition_page) {
+    $g5['title'] = $maekrak_condition_page['meta_title'];
+    $g5['body_script'] = ' class="maekrak-site maekrak-site--condition"';
+} else {
+    $g5['body_script'] = ' class="maekrak-site"';
+}
+
+$maekrak_reserve_anchor = !empty($maekrak_disease_page) ? '#maekrak_dis_cta' : (!empty($maekrak_condition_page) ? '#maekrak_cond_cta' : '#maekrak_cta');
 
 include_once(G5_THEME_PATH . '/head.sub.php');
 include_once(G5_LIB_PATH . '/latest.lib.php');
@@ -72,7 +95,7 @@ foreach ($menu_datas as $row) {
                     <?php }
                     } ?>
                 </ul>
-                <a href="#maekrak_cta" class="maekrak-btn maekrak-btn-primary maekrak-btn-reserve">상담 예약</a>
+                <a href="<?php echo $maekrak_reserve_anchor; ?>" class="maekrak-btn maekrak-btn-primary maekrak-btn-reserve">상담 예약</a>
             </nav>
 
             <button type="button" class="maekrak-header-toggle" id="maekrak_gnb_open" aria-expanded="false" aria-controls="maekrak_gnb_drawer">
@@ -101,7 +124,7 @@ foreach ($menu_datas as $row) {
         </ul>
         <div class="maekrak-drawer-actions">
             <a href="<?php echo maekrak_tel_href(); ?>" class="maekrak-btn maekrak-btn-gray"><i class="fa fa-phone"></i> 전화상담</a>
-            <a href="#maekrak_cta" class="maekrak-btn maekrak-btn-primary">예약하기</a>
+            <a href="<?php echo $maekrak_reserve_anchor; ?>" class="maekrak-btn maekrak-btn-primary">예약하기</a>
         </div>
     </div>
     <div class="maekrak-gnb-overlay" id="maekrak_gnb_overlay" hidden></div>
@@ -132,6 +155,6 @@ $(function() {
 <div id="wrapper" class="maekrak-wrapper">
     <div id="container_wr" class="maekrak-container-wr">
         <div id="container" class="maekrak-container">
-        <?php if (!defined('_INDEX_')) { ?>
+        <?php if (!defined('_INDEX_') && empty($maekrak_condition_page) && empty($maekrak_disease_page)) { ?>
             <h2 id="container_title"><span title="<?php echo get_text($g5['title']); ?>"><?php echo get_head_title($g5['title']); ?></span></h2>
         <?php } ?>

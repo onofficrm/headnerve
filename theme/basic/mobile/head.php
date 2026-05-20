@@ -9,7 +9,27 @@ if (G5_COMMUNITY_USE === false) {
 
 include_once(G5_THEME_PATH . '/inc/site_config.php');
 
-$g5['body_script'] = defined('_INDEX_') ? ' class="maekrak-site maekrak-site--home maekrak-site--mobile"' : ' class="maekrak-site maekrak-site--mobile"';
+$maekrak_condition_page = null;
+$maekrak_disease_page = null;
+if (!defined('_INDEX_') && !empty($co_id)) {
+    if (maekrak_is_disease_co_id($co_id)) {
+        $maekrak_disease_page = maekrak_get_disease_by_co_id($co_id);
+    } elseif (maekrak_is_condition_co_id($co_id)) {
+        $maekrak_condition_page = maekrak_get_condition_by_co_id($co_id);
+    }
+}
+
+if (defined('_INDEX_')) {
+    $g5['body_script'] = ' class="maekrak-site maekrak-site--home maekrak-site--mobile"';
+} elseif ($maekrak_disease_page) {
+    $g5['title'] = $maekrak_disease_page['meta_title'];
+    $g5['body_script'] = ' class="maekrak-site maekrak-site--disease maekrak-site--mobile"';
+} elseif ($maekrak_condition_page) {
+    $g5['title'] = $maekrak_condition_page['meta_title'];
+    $g5['body_script'] = ' class="maekrak-site maekrak-site--condition maekrak-site--mobile"';
+} else {
+    $g5['body_script'] = ' class="maekrak-site maekrak-site--mobile"';
+}
 
 include_once(G5_THEME_PATH . '/head.sub.php');
 include_once(G5_LIB_PATH . '/latest.lib.php');
@@ -94,7 +114,7 @@ $(function() {
 
 <div id="wrapper" class="maekrak-wrapper">
     <div id="container" class="maekrak-container">
-    <?php if (!defined('_INDEX_')) { ?>
+    <?php if (!defined('_INDEX_') && empty($maekrak_condition_page) && empty($maekrak_disease_page)) { ?>
         <h2 id="container_title" class="top" title="<?php echo get_text($g5['title']); ?>">
             <a href="javascript:history.back();"><i class="fa fa-chevron-left"></i></a>
             <?php echo get_head_title($g5['title']); ?>

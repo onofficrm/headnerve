@@ -32,7 +32,7 @@ header("Pragma: no-cache"); // HTTP/1.0
 */
 ?>
 <!doctype html>
-<html lang="ko">
+<html lang="ko"<?php echo isset($g5['html_script']) ? $g5['html_script'] : ''; ?>>
 <head>
 <meta charset="utf-8">
 <?php
@@ -49,6 +49,26 @@ if($config['cf_add_meta'])
     echo $config['cf_add_meta'].PHP_EOL;
 ?>
 <title><?php echo $g5_head_title; ?></title>
+<?php
+if (!empty($maekrak_disease_page)) {
+    $mk_meta = $maekrak_disease_page;
+} elseif (!empty($maekrak_condition_page)) {
+    $mk_meta = $maekrak_condition_page;
+} else {
+    $mk_meta = null;
+}
+if (!empty($mk_meta)) {
+    $mk_desc = get_text($mk_meta['meta_description']);
+    $mk_canonical = $mk_meta['canonical'];
+    $mk_og_title = get_text($mk_meta['meta_title']);
+?>
+<meta name="description" content="<?php echo $mk_desc; ?>">
+<link rel="canonical" href="<?php echo $mk_canonical; ?>">
+<meta property="og:type" content="website">
+<meta property="og:title" content="<?php echo $mk_og_title; ?>">
+<meta property="og:description" content="<?php echo $mk_desc; ?>">
+<meta property="og:url" content="<?php echo $mk_canonical; ?>">
+<?php } ?>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
