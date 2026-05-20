@@ -236,3 +236,12 @@ define('G5_IP_DISPLAY', '\\1.♡.\\3.\\4');
 
 // KAKAO 우편번호 서비스 CDN
 define('G5_POSTCODE_JS', '<script src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" async></script>');
+
+// 세션 파일을 data/session에 저장 (호스팅 기본 경로에서 로그인이 풀리는 경우 대비)
+$_g5_session_path = dirname(__FILE__) . '/data/session';
+if (!is_dir($_g5_session_path)) {
+    @mkdir($_g5_session_path, G5_DIR_PERMISSION, true);
+}
+if (is_dir($_g5_session_path) && is_writable($_g5_session_path)) {
+    session_save_path($_g5_session_path);
+}
