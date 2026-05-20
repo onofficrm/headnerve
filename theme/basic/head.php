@@ -14,7 +14,7 @@ if (G5_COMMUNITY_USE === false) {
 
 include_once(G5_THEME_PATH . '/inc/site_config.php');
 
-$g5['body_script'] = defined('_INDEX_') ? ' class="maekrak-site maekrak-site--home"' : ' class="maekrak-site"';
+$g5['body_script'] = defined('_INDEX_') ? ' class="maekrak-site maekrak-site--home maekrak-home-page"' : ' class="maekrak-site"';
 
 include_once(G5_THEME_PATH . '/head.sub.php');
 include_once(G5_LIB_PATH . '/latest.lib.php');

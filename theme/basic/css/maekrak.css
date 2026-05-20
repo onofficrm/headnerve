@@ -423,31 +423,66 @@ body.maekrak-site--home .maekrak-container {
     width: 100%;
 }
 
-/* ===== Scroll Snap (2차: 임시 비활성화) ===== */
-.maekrak-home,
-.maekrak-snap-disabled.maekrak-snap-container {
-    height: auto !important;
-    overflow: visible !important;
-    scroll-snap-type: none !important;
-    background: transparent;
+/* ===== Scroll Snap (PC 홈만, proximity) ===== */
+.maekrak-snap-container {
+    height: auto;
+    overflow: visible;
 }
 
-.maekrak-snap-disabled .maekrak-snap-section,
-.maekrak-home .maekrak-section {
-    min-height: auto !important;
-    scroll-snap-align: none !important;
-    display: block;
-}
-
-/*
 @media (min-width: 769px) {
-    body.maekrak-site--home .maekrak-snap-container:not(.maekrak-snap-disabled) {
-        height: calc(100vh - var(--maekrak-header-h));
-        overflow-y: auto;
+    html:has(body.maekrak-home-page) {
+        scroll-behavior: smooth;
+    }
+
+    body.maekrak-site--home.maekrak-home-page {
         scroll-snap-type: y proximity;
     }
+
+    body.maekrak-site--home.maekrak-home-page .maekrak-snap-section {
+        scroll-snap-align: start;
+        scroll-snap-stop: normal;
+        scroll-margin-top: var(--maekrak-header-h);
+        min-height: calc(100vh - var(--maekrak-header-h));
+        box-sizing: border-box;
+    }
+
+    body.maekrak-site--home.maekrak-home-page .maekrak-snap-section > .maekrak-section-full {
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    body.maekrak-site--home.maekrak-home-page .maekrak-hero-inner {
+        min-height: 100%;
+        padding-top: 32px;
+        padding-bottom: 32px;
+    }
+
+    body.maekrak-site--home.maekrak-home-page .maekrak-normal-section {
+        scroll-snap-align: none;
+        min-height: auto;
+        scroll-margin-top: 0;
+    }
 }
-*/
+
+@media (max-width: 768px) {
+    body.maekrak-home-page,
+    body.maekrak-site--home.maekrak-home-page {
+        scroll-snap-type: none;
+    }
+
+    body.maekrak-site--home .maekrak-snap-container {
+        scroll-snap-type: none;
+    }
+
+    body.maekrak-site--home .maekrak-snap-section,
+    body.maekrak-site--home .maekrak-normal-section {
+        scroll-snap-align: none;
+        min-height: auto;
+        scroll-margin-top: 0;
+    }
+}
 
 /* ===== Sections common ===== */
 .maekrak-section-full {

@@ -8,10 +8,10 @@ global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_app
 <main id="maekrak_main" class="maekrak-main<?php echo defined('_INDEX_') ? ' maekrak-main--home' : ''; ?>" role="main">
 
 <?php if (defined('_INDEX_')) { ?>
-<div class="maekrak-home maekrak-snap-container maekrak-snap-disabled">
+<div class="maekrak-home maekrak-snap-container">
 
     <!-- 1. Hero -->
-    <section id="maekrak_hero" class="maekrak-section maekrak-hero" aria-label="메인 비주얼">
+    <section id="maekrak_hero" class="maekrak-section maekrak-hero maekrak-snap-section" aria-label="메인 비주얼">
         <div class="maekrak-section-full">
             <div class="maekrak-hero-inner">
                 <div class="maekrak-hero-layout">
@@ -51,7 +51,7 @@ global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_app
     </section>
 
     <!-- 2. 브랜드 철학 -->
-    <section id="maekrak_philosophy" class="maekrak-section maekrak-philosophy" aria-label="브랜드 철학">
+    <section id="maekrak_philosophy" class="maekrak-section maekrak-philosophy maekrak-snap-section" aria-label="브랜드 철학">
         <div class="maekrak-section-full maekrak-section-full--white">
             <div class="maekrak-section-inner">
                 <header class="maekrak-section-head maekrak-section-head--center">
@@ -72,7 +72,7 @@ global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_app
     </section>
 
     <!-- 3. 대표 진료과목 -->
-    <section id="maekrak_dept" class="maekrak-section maekrak-dept" aria-label="대표 진료과목">
+    <section id="maekrak_dept" class="maekrak-section maekrak-dept maekrak-snap-section" aria-label="대표 진료과목">
         <div class="maekrak-section-full maekrak-section-full--ivory">
             <div class="maekrak-section-inner">
                 <header class="maekrak-section-head maekrak-section-head--center">
@@ -101,7 +101,7 @@ global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_app
     </section>
 
     <!-- 4. 이런 분들에게 -->
-    <section id="maekrak_target" class="maekrak-section maekrak-target" aria-label="이런 분들에게">
+    <section id="maekrak_target" class="maekrak-section maekrak-target maekrak-normal-section" aria-label="이런 분들에게">
         <div class="maekrak-section-full maekrak-section-full--white">
             <div class="maekrak-section-inner maekrak-section-inner--narrow">
                 <header class="maekrak-section-head maekrak-section-head--center">
@@ -119,7 +119,7 @@ global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_app
     </section>
 
     <!-- 5. 치료 접근 -->
-    <section id="maekrak_approach" class="maekrak-section maekrak-approach" aria-label="치료 접근">
+    <section id="maekrak_approach" class="maekrak-section maekrak-approach maekrak-snap-section" aria-label="치료 접근">
         <div class="maekrak-section-full maekrak-section-full--white">
             <div class="maekrak-section-inner">
                 <header class="maekrak-section-head maekrak-section-head--center">
@@ -139,7 +139,7 @@ global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_app
     </section>
 
     <!-- 6. 치료 프로그램 -->
-    <section id="maekrak_program" class="maekrak-section maekrak-program" aria-label="치료 프로그램">
+    <section id="maekrak_program" class="maekrak-section maekrak-program maekrak-normal-section" aria-label="치료 프로그램">
         <div class="maekrak-section-full maekrak-section-full--ivory">
             <div class="maekrak-section-inner">
                 <header class="maekrak-section-head maekrak-section-head--center">
@@ -165,7 +165,7 @@ global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_app
     </section>
 
     <!-- 7. 의료진 -->
-    <section id="maekrak_doctor" class="maekrak-section maekrak-doctor" aria-label="의료진 소개">
+    <section id="maekrak_doctor" class="maekrak-section maekrak-doctor maekrak-normal-section" aria-label="의료진 소개">
         <div class="maekrak-section-full maekrak-section-full--white">
             <div class="maekrak-section-inner maekrak-section-inner--doctor">
                 <header class="maekrak-section-head maekrak-section-head--center">
@@ -188,7 +188,7 @@ global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_app
     </section>
 
     <!-- 8. 블로그 -->
-    <section id="maekrak_blog" class="maekrak-section maekrak-blog" aria-label="블로그">
+    <section id="maekrak_blog" class="maekrak-section maekrak-blog maekrak-normal-section" aria-label="블로그">
         <div class="maekrak-section-full maekrak-section-full--gray">
             <div class="maekrak-section-inner">
                 <div class="maekrak-blog-head">
@@ -205,7 +205,7 @@ global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_app
     </section>
 
     <!-- 9. 상담 CTA -->
-    <section id="maekrak_cta" class="maekrak-section maekrak-cta" aria-label="상담 안내">
+    <section id="maekrak_cta" class="maekrak-section maekrak-cta maekrak-snap-section" aria-label="상담 안내">
         <div class="maekrak-section-full maekrak-section-full--navy">
             <div class="maekrak-cta-pattern" aria-hidden="true"></div>
             <div class="maekrak-section-inner maekrak-cta-inner">
@@ -221,7 +221,7 @@ global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_app
     </section>
 
     <!-- 10. 진료시간·오시는 길 -->
-    <section id="maekrak_info" class="maekrak-section maekrak-info" aria-label="진료시간 및 오시는 길">
+    <section id="maekrak_info" class="maekrak-section maekrak-info maekrak-normal-section" aria-label="진료시간 및 오시는 길">
         <div class="maekrak-section-full maekrak-section-full--white">
             <div class="maekrak-section-inner">
                 <header class="maekrak-section-head maekrak-section-head--center">
