@@ -29,7 +29,7 @@ foreach ($menu_datas as $row) {
 }
 ?>
 
-<header id="maekrak_hd" class="maekrak-header<?php echo defined('_INDEX_') ? ' maekrak-header--transparent' : ''; ?>">
+<header id="maekrak_hd" class="maekrak-header maekrak-header--solid<?php echo defined('_INDEX_') ? ' maekrak-header--home' : ''; ?>">
     <h1 id="hd_h1" class="sound_only"><?php echo $g5['title']; ?></h1>
     <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
 
@@ -49,10 +49,17 @@ foreach ($menu_datas as $row) {
             <nav id="maekrak_gnb" class="maekrak-gnb" aria-label="주요 메뉴">
                 <ul class="maekrak-gnb-list">
                     <?php if ($use_fallback_nav) {
-                        global $maekrak_nav_fallback;
-                        foreach ($maekrak_nav_fallback as $link) { ?>
-                    <li class="maekrak-gnb-item">
-                        <a href="<?php echo $link['href']; ?>" class="maekrak-gnb-link"><?php echo $link['name']; ?></a>
+                        global $maekrak_nav_primary, $maekrak_departments;
+                        foreach ($maekrak_nav_primary as $link) { ?>
+                    <li class="maekrak-gnb-item<?php echo !empty($link['mega']) ? ' maekrak-gnb-item--has-sub' : ''; ?>">
+                        <a href="<?php echo $link['href']; ?>" class="maekrak-gnb-link"><?php echo $link['name']; ?><?php if (!empty($link['mega'])) { ?> <i class="fa fa-angle-down" aria-hidden="true"></i><?php } ?></a>
+                        <?php if (!empty($link['mega'])) { ?>
+                        <ul class="maekrak-gnb-sub">
+                            <?php foreach ($maekrak_departments as $dept) { ?>
+                            <li><a href="<?php echo $dept['link']; ?>"><?php echo $dept['title']; ?></a></li>
+                            <?php } ?>
+                        </ul>
+                        <?php } ?>
                     </li>
                     <?php }
                     } else {
@@ -65,7 +72,7 @@ foreach ($menu_datas as $row) {
                     <?php }
                     } ?>
                 </ul>
-                <a href="#maekrak_cta" class="maekrak-btn maekrak-btn-reserve">상담 예약</a>
+                <a href="#maekrak_cta" class="maekrak-btn maekrak-btn-primary maekrak-btn-reserve">상담 예약</a>
             </nav>
 
             <button type="button" class="maekrak-header-toggle" id="maekrak_gnb_open" aria-expanded="false" aria-controls="maekrak_gnb_drawer">
@@ -78,8 +85,11 @@ foreach ($menu_datas as $row) {
         <button type="button" class="maekrak-gnb-drawer-close" id="maekrak_gnb_close"><i class="fa fa-times"></i></button>
         <ul>
             <?php if ($use_fallback_nav) {
-                foreach ($maekrak_nav_fallback as $link) { ?>
+                foreach ($maekrak_nav_primary as $link) { ?>
             <li><a href="<?php echo $link['href']; ?>"><?php echo $link['name']; ?></a></li>
+            <?php }
+                foreach ($maekrak_departments as $dept) { ?>
+            <li class="maekrak-drawer-sub"><a href="<?php echo $dept['link']; ?>"><?php echo $dept['title']; ?></a></li>
             <?php }
             } else {
                 foreach ($menu_datas as $row) {
@@ -100,15 +110,8 @@ foreach ($menu_datas as $row) {
 <script>
 $(function() {
     var $header = $('#maekrak_hd');
-    var $snap = $('.maekrak-snap-container');
-
     function onScroll() {
-        var top = $snap.length ? $snap.scrollTop() : $(window).scrollTop();
-        $header.toggleClass('maekrak-header--scrolled', top > 50);
-    }
-
-    if ($snap.length) {
-        $snap.on('scroll', onScroll);
+        $header.toggleClass('maekrak-header--scrolled', $(window).scrollTop() > 24);
     }
     $(window).on('scroll', onScroll);
     onScroll();

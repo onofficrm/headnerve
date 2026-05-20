@@ -32,12 +32,21 @@ $maekrak_nav_fallback = array(
     array('name' => '진료시간·오시는 길', 'href' => G5_URL . '/#maekrak_info'),
 );
 
+$maekrak_nav_primary = array(
+    array('name' => '브랜드 철학', 'href' => G5_URL . '/#maekrak_philosophy'),
+    array('name' => '진료과목', 'href' => G5_URL . '/#maekrak_dept', 'mega' => true),
+    array('name' => '치료 프로그램', 'href' => G5_URL . '/#maekrak_program'),
+    array('name' => '의료진', 'href' => G5_URL . '/#maekrak_doctor'),
+    array('name' => '블로그', 'href' => G5_URL . '/#maekrak_blog'),
+    array('name' => '오시는 길', 'href' => G5_URL . '/#maekrak_info'),
+);
+
 $maekrak_departments = array(
-    array('id' => 'headache', 'title' => '두통', 'desc' => '편두통, 긴장형두통, 군발두통, 경추성두통을 통증 억제가 아닌 원인 분석의 관점에서 봅니다.', 'link' => G5_URL . '/#maekrak_dept_headache'),
-    array('id' => 'dizziness', 'title' => '어지럼증', 'desc' => '귀만 보는 것이 아니라 경추 고유수용성 감각과 자율신경 불균형을 함께 확인합니다.', 'link' => G5_URL . '/#maekrak_dept_dizziness'),
-    array('id' => 'autonomic', 'title' => '자율신경', 'desc' => '두근거림, 호흡곤란, 소화장애, 불면처럼 검사에서 잘 드러나지 않는 기능 문제를 봅니다.', 'link' => G5_URL . '/#maekrak_dept_autonomic'),
-    array('id' => 'neuropathy', 'title' => '말초신경병증', 'desc' => '손발 저림, 시림, 작열감이 오래 지속된다면 혈류와 신경 회복 환경을 함께 살핍니다.', 'link' => G5_URL . '/#maekrak_dept_neuropathy'),
-    array('id' => 'brainfog', 'title' => '브레인포그', 'desc' => '머리가 멍하고 집중이 안 되는 증상을 의지 문제가 아닌 뇌 에너지 공급 문제로 봅니다.', 'link' => G5_URL . '/#maekrak_dept_brainfog'),
+    array('id' => 'headache', 'title' => '두통', 'desc' => '편두통, 긴장형두통, 군발두통, 경추성두통을 통증 억제가 아닌 원인 분석의 관점에서 봅니다.', 'tags' => array('편두통', '긴장형두통', '경추성두통'), 'link' => G5_URL . '/#maekrak_dept_headache'),
+    array('id' => 'dizziness', 'title' => '어지럼증', 'desc' => '귀만 보는 것이 아니라 경추 고유수용성 감각과 자율신경 불균형을 함께 확인합니다.', 'tags' => array('현훈', '어지러움', '자율신경'), 'link' => G5_URL . '/#maekrak_dept_dizziness'),
+    array('id' => 'autonomic', 'title' => '자율신경', 'desc' => '두근거림, 호흡곤란, 소화장애, 불면처럼 검사에서 잘 드러나지 않는 기능 문제를 봅니다.', 'tags' => array('두근거림', '불면', '소화장애'), 'link' => G5_URL . '/#maekrak_dept_autonomic'),
+    array('id' => 'neuropathy', 'title' => '말초신경병증', 'desc' => '손발 저림, 시림, 작열감이 오래 지속된다면 혈류와 신경 회복 환경을 함께 살핍니다.', 'tags' => array('저림', '시림', '작열감'), 'link' => G5_URL . '/#maekrak_dept_neuropathy'),
+    array('id' => 'brainfog', 'title' => '브레인포그', 'desc' => '머리가 멍하고 집중이 안 되는 증상을 의지 문제가 아닌 뇌 에너지 공급 문제로 봅니다.', 'tags' => array('집중력 저하', '머리 멍함', '피로'), 'link' => G5_URL . '/#maekrak_dept_brainfog'),
 );
 
 $maekrak_philosophy = array(

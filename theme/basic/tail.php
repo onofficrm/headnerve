@@ -64,10 +64,6 @@ include_once(G5_THEME_PATH . '/inc/site_config.php');
 <script>
 $(function() {
     $('#top_btn, .maekrak-footer-top').on('click', function() {
-        var $snap = $('.maekrak-snap-container');
-        if ($snap.length) {
-            $snap.animate({ scrollTop: 0 }, 500);
-        }
         $('html, body').animate({ scrollTop: 0 }, 500);
         return false;
     });
