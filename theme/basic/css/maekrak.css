@@ -428,20 +428,19 @@ body.maekrak-site--home .maekrak-container {
 
 @media (min-width: 769px) {
     /*
-     * 스크롤 루트가 html 또는 body로 달라지는 브라우저 모두 대응
-     * + 푸터까지 문서 스크롤 유지
+     * 문서 스크롤(html) + 섹션 snap — wrapper 내부 스크롤 컨테이너는 사용하지 않음
+     * (overflow: auto on .maekrak-snap-container 는 푸터·일반 섹션과 충돌)
      */
     html.maekrak-home-page,
-    html:has(body.maekrak-home-page),
-    body.maekrak-home-page {
-        scroll-snap-type: y proximity;
+    html:has(body.maekrak-home-page) {
+        scroll-snap-type: y mandatory;
         scroll-behavior: smooth;
         scroll-padding-top: var(--maekrak-header-h);
     }
 
     body.maekrak-home-page {
         overflow-x: hidden;
-        overflow-y: visible;
+        scroll-snap-type: none;
     }
 
     body.maekrak-home-page #wrapper,
@@ -451,16 +450,17 @@ body.maekrak-site--home .maekrak-container {
     body.maekrak-home-page .maekrak-snap-container {
         overflow: visible;
         scroll-snap-type: none;
+        height: auto;
     }
 
     body.maekrak-home-page .maekrak-main--home {
-        padding-top: var(--maekrak-header-h);
+        padding-top: 0;
     }
 
     body.maekrak-home-page .maekrak-snap-section {
         scroll-snap-align: start;
-        scroll-snap-stop: normal;
-        scroll-margin-top: 0;
+        scroll-snap-stop: always;
+        scroll-margin-top: var(--maekrak-header-h);
         min-height: 100vh;
         min-height: 100dvh;
         box-sizing: border-box;
@@ -475,6 +475,7 @@ body.maekrak-site--home .maekrak-container {
 
     body.maekrak-home-page .maekrak-hero.maekrak-snap-section .maekrak-hero-inner {
         min-height: 100%;
+        min-height: max(640px, 100%);
         padding-top: 32px;
         padding-bottom: 32px;
     }
@@ -488,6 +489,19 @@ body.maekrak-site--home .maekrak-container {
 
     body.maekrak-home-page .maekrak-footer {
         scroll-snap-align: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html.maekrak-home-page,
+    html:has(body.maekrak-home-page) {
+        scroll-snap-type: none;
+        scroll-behavior: auto;
+    }
+
+    body.maekrak-home-page .maekrak-snap-section {
+        scroll-snap-align: none;
+        scroll-snap-stop: normal;
     }
 }
 
