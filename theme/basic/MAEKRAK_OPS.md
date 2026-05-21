@@ -49,9 +49,9 @@ macOS `._*` 파일이 있으면 `git restore` 후 push.
 
 - `company` · `privacy` · `provision` — 스킨 `theme/maekrak_page` (install 1회 등록)
 
-## 2층 수작업 보강 (9차)
+## 2층 수작업 보강 (9·11차)
 
-수작업 상세: 편두통, 군발두통, 자율신경실조 + 긴장형, 경추성두통, 경추성어지럼, 공황, 당뇨성신경, 장기코로나 브레인포그 (총 9개)
+**전체 23개** 수작업 — [`disease_data.php`](inc/disease_data.php) core 3종 + [`disease_handcrafted_extra.php`](inc/disease_handcrafted_extra.php) 20종. builder 14종(11차) 포함: 약물과용·소아·생리·수험생두통, 메니에르·BPPV·전정신경염, 기립성저혈압·불안·불면, 말초신경·CIPN, 만성피로·수면연관 브레인포그
 
 ## 10차 QA 체크리스트
 
