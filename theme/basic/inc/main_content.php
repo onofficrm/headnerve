@@ -214,6 +214,7 @@ global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_app
                 <p class="maekrak-cta-desc">검사에서 이상이 없다는 말만 듣고 돌아오셨다면, 몸의 기능과 구조를 함께 보는 진료가 필요할 수 있습니다.</p>
                 <div class="maekrak-cta-actions">
                     <a href="<?php echo MK_RESERVE_URL; ?>" class="maekrak-btn maekrak-btn-white maekrak-btn-xl">상담 예약하기</a>
+                    <a href="<?php echo MK_KAKAO_URL; ?>" class="maekrak-btn maekrak-btn-ghost maekrak-btn-xl" target="_blank" rel="noopener noreferrer"><i class="fa fa-comment" aria-hidden="true"></i> 카카오톡 상담</a>
                     <a href="<?php echo maekrak_tel_href(); ?>" class="maekrak-btn maekrak-btn-ghost maekrak-btn-xl">전화 문의하기</a>
                     <a href="#maekrak_info" class="maekrak-btn maekrak-btn-ghost maekrak-btn-xl"><i class="fa fa-map-marker" aria-hidden="true"></i> 오시는 길</a>
                 </div>

@@ -102,6 +102,7 @@ if ($use_fallback_nav) {
         </ul>
         <div class="maekrak-drawer-actions">
             <a href="<?php echo maekrak_tel_href(); ?>" class="maekrak-btn maekrak-btn-gray"><i class="fa fa-phone"></i> 전화상담</a>
+            <a href="<?php echo MK_KAKAO_URL; ?>" class="maekrak-btn maekrak-btn-gray" target="_blank" rel="noopener noreferrer"><i class="fa fa-comment"></i> 카카오톡</a>
             <a href="<?php echo $maekrak_reserve_anchor; ?>" class="maekrak-btn maekrak-btn-primary">예약하기</a>
         </div>
     </div>
