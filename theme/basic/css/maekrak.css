@@ -1839,6 +1839,22 @@ body.maekrak-site--home .maekrak-container {
     line-height: 1.65;
 }
 
+.maekrak-info-tel a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.maekrak-info-tel a:hover {
+    color: var(--maekrak-navy);
+}
+
+.maekrak-info-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
 .maekrak-info-badge {
     display: inline-block;
     padding: 4px 12px;
@@ -2732,6 +2748,16 @@ body.maekrak-site--home .maekrak-container {
         font-size: 1.75rem !important;
         font-weight: 500 !important;
         margin-bottom: 16px !important;
+    }
+
+    .maekrak-info-actions {
+        flex-direction: column;
+    }
+
+    .maekrak-info-actions .maekrak-btn {
+        width: 100%;
+        min-height: 52px;
+        font-size: 16px;
     }
 
     .maekrak-info-block .maekrak-btn-primary {

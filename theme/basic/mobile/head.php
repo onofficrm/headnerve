@@ -55,6 +55,7 @@ foreach ($menu_datas as $row) {
 if ($use_fallback_nav) {
     $menu_datas = maekrak_get_fallback_menu();
 }
+$menu_datas = maekrak_normalize_menu_datas($menu_datas);
 ?>
 
 <header id="maekrak_hd" class="maekrak-header maekrak-header--mobile maekrak-header--solid">

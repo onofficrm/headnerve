@@ -249,8 +249,12 @@ global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_app
                         </div>
                         <div class="maekrak-info-block">
                             <h3><i class="fa fa-phone" aria-hidden="true"></i> 상담 및 예약</h3>
-                            <p class="maekrak-info-tel"><?php echo MK_CLINIC_TEL; ?></p>
-                            <a href="<?php echo maekrak_tel_href(); ?>" class="maekrak-btn maekrak-btn-primary maekrak-btn-sm">전화걸기</a>
+                            <p class="maekrak-info-tel"><a href="<?php echo maekrak_tel_href(); ?>"><?php echo MK_CLINIC_TEL; ?></a></p>
+                            <div class="maekrak-info-actions">
+                                <a href="<?php echo MK_RESERVE_URL; ?>" class="maekrak-btn maekrak-btn-primary maekrak-btn-sm"<?php echo maekrak_reserve_link_attr(); ?>>네이버 예약</a>
+                                <a href="<?php echo MK_KAKAO_URL; ?>" class="maekrak-btn maekrak-btn-gray maekrak-btn-sm" target="_blank" rel="noopener noreferrer">카카오톡 상담</a>
+                                <a href="<?php echo maekrak_tel_href(); ?>" class="maekrak-btn maekrak-btn-ghost maekrak-btn-sm">전화걸기</a>
+                            </div>
                         </div>
                         <div class="maekrak-info-block">
                             <h3><i class="fa fa-car" aria-hidden="true"></i> 주차 안내</h3>
@@ -277,7 +281,11 @@ global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_app
             "addressLocality": "서울",
             "addressCountry": "KR"
         },
-        "openingHours": ["Mo-Fr 10:00-20:00", "Sa 10:00-14:00"]
+        "openingHours": ["Mo-Fr 10:00-20:00", "Sa 10:00-14:00"],
+        "sameAs": [
+            "<?php echo MK_KAKAO_URL; ?>",
+            "<?php echo MK_RESERVE_URL; ?>"
+        ]
     }
     </script>
 

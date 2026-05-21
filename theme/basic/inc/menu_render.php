@@ -2,6 +2,60 @@
 if (!defined('_GNUBOARD_')) exit;
 
 /**
+ * DB 메뉴 링크 보정 (블로그·예약·외부 URL)
+ */
+function maekrak_normalize_menu_row($row)
+{
+    if (empty($row['me_link'])) {
+        return $row;
+    }
+
+    $link = $row['me_link'];
+    $name = isset($row['me_name']) ? $row['me_name'] : '';
+
+    if (defined('MK_BLOG_BOARD') && MK_BLOG_BOARD && (strpos($link, '#maekrak_blog') !== false || $link === G5_URL . '/#maekrak_blog')) {
+        $row['me_link'] = get_pretty_url(MK_BLOG_BOARD);
+        $link = $row['me_link'];
+    }
+
+    if (defined('MK_RESERVE_URL') && MK_RESERVE_URL) {
+        if (strpos($link, 'qalist.php') !== false || (strpos($link, '#maekrak_cta') !== false && (strpos($name, '예약') !== false || strpos($name, '상담') !== false))) {
+            $row['me_link'] = MK_RESERVE_URL;
+            $link = $row['me_link'];
+        }
+    }
+
+    if (preg_match('#^https?://#i', $link)) {
+        $row['me_target'] = 'blank';
+    }
+
+    return $row;
+}
+
+function maekrak_normalize_menu_datas($menu_datas)
+{
+    if (empty($menu_datas) || !is_array($menu_datas)) {
+        return $menu_datas;
+    }
+
+    foreach ($menu_datas as $k => $row) {
+        if (empty($row)) {
+            continue;
+        }
+        $menu_datas[$k] = maekrak_normalize_menu_row($row);
+        if (!empty($menu_datas[$k]['sub']) && is_array($menu_datas[$k]['sub'])) {
+            foreach ($menu_datas[$k]['sub'] as $sk => $sub) {
+                if (!empty($sub)) {
+                    $menu_datas[$k]['sub'][$sk] = maekrak_normalize_menu_row($sub);
+                }
+            }
+        }
+    }
+
+    return $menu_datas;
+}
+
+/**
  * 그누보드 메뉴 2단 구조(1차 + 서브) 렌더링
  */
 function maekrak_get_fallback_menu()
