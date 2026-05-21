@@ -4,7 +4,7 @@
  * 접속: /theme/basic/install/maekrak_menu_install.php
  * 기존 메뉴를 모두 삭제하고 아래 구조로 다시 등록합니다. 실행 후 이 파일을 삭제하세요.
  */
-define('MAEKRAK_MENU_INSTALL_KEY', '');
+define('MAEKRAK_MENU_INSTALL_KEY', 'mrk_ops_20260520');
 
 $g5_path = realpath(__DIR__ . '/../../..');
 chdir($g5_path);
@@ -27,6 +27,26 @@ if (!$allowed) {
 }
 
 include_once G5_THEME_PATH . '/inc/condition_data.php';
+include_once G5_THEME_PATH . '/inc/disease_data.php';
+
+$skin_fixes = array();
+foreach (maekrak_conditions_co_ids() as $cid) {
+    $skin_fixes[$cid] = array('skin' => 'theme/maekrak_condition', 'mobile' => 'theme/maekrak_condition');
+}
+foreach (maekrak_diseases_co_ids() as $did) {
+    $skin_fixes[$did] = array('skin' => 'theme/maekrak_disease', 'mobile' => 'theme/maekrak_disease');
+}
+
+foreach ($skin_fixes as $co_id => $skins) {
+    $esc_id = sql_escape_string($co_id);
+    $esc_skin = sql_escape_string($skins['skin']);
+    $esc_mobile = sql_escape_string($skins['mobile']);
+    sql_query(" UPDATE {$g5['content_table']} SET
+        co_skin = '{$esc_skin}',
+        co_mobile_skin = '{$esc_mobile}'
+        WHERE co_id = '{$esc_id}' ");
+    $skin_fixes[$co_id]['done'] = true;
+}
 
 $menu_rows = array(
     array('code' => '10', 'name' => '브랜드 철학', 'link' => G5_URL . '/#maekrak_philosophy', 'order' => 1),
@@ -90,8 +110,11 @@ if (function_exists('g5_delete_cache')) {
 }
 
 header('Content-Type: text/html; charset=utf-8');
-echo '<h1>맥락한의원 메뉴 2단 등록 완료</h1>';
-echo '<p>기존 메뉴를 삭제하고 1차 6개 + 진료과목 2차 5개를 등록했습니다.</p><ul>';
+echo '<h1>맥락한의원 운영 마무리 완료</h1>';
+echo '<p>내용관리 스킨을 theme/maekrak_* 로 수정하고, 기존 메뉴를 삭제한 뒤 1차 6개 + 진료과목 2차 5개를 등록했습니다.</p><ul>';
+foreach (array_keys($skin_fixes) as $co_id) {
+    echo '<li>스킨: ' . htmlspecialchars($co_id) . '</li>';
+}
 foreach ($inserted as $line) {
     echo '<li>' . htmlspecialchars($line) . '</li>';
 }
