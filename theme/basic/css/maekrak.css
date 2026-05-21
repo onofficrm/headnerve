@@ -1,28 +1,31 @@
 @charset "utf-8";
 
-/* 맥락한의원 — 프리미엄 메디컬 톤 (웜 스톤 + 딥 네이비 + 브래스 골드) */
+/* 맥락한의원 — 클린 프리미엄 (푸터 네이비 + 화이트) */
 
 :root {
     --maekrak-navy: #0B2744;
     --maekrak-navy-deep: #061A2E;
     --maekrak-navy-light: #1A4A6E;
-    --maekrak-ivory: #E8E2D6;
-    --maekrak-stone: #DDD6C8;
-    --maekrak-stone-deep: #CEC6B8;
-    --maekrak-surface: #F3F0E9;
-    --maekrak-surface-elevated: #FBF9F5;
-    --maekrak-gray-light: #D9D3C8;
-    --maekrak-gray: #7A8494;
-    --maekrak-text: #1C2636;
-    --maekrak-text-muted: #5A6472;
+    --maekrak-navy-footer: #040f1a;
+    --maekrak-white: #FFFFFF;
+    --maekrak-surface: #FFFFFF;
+    --maekrak-surface-muted: #F5F7FA;
+    --maekrak-surface-elevated: #FFFFFF;
+    --maekrak-ivory: #F5F7FA;
+    --maekrak-stone: #EEF1F5;
+    --maekrak-stone-deep: #E5E9EF;
+    --maekrak-gray-light: #EEF1F5;
+    --maekrak-gray: #6B7280;
+    --maekrak-text: #1A2332;
+    --maekrak-text-muted: #5C6573;
     --maekrak-accent: #B8925A;
     --maekrak-accent-light: #D4B87A;
-    --maekrak-accent-soft: rgba(184, 146, 90, 0.18);
-    --maekrak-border: rgba(11, 39, 68, 0.11);
-    --maekrak-border-subtle: rgba(11, 39, 68, 0.07);
-    --maekrak-shadow-sm: 0 4px 24px rgba(6, 24, 41, 0.06);
-    --maekrak-shadow-md: 0 14px 44px rgba(6, 24, 41, 0.09);
-    --maekrak-shadow-lg: 0 28px 72px rgba(6, 24, 41, 0.14);
+    --maekrak-accent-soft: rgba(11, 39, 68, 0.05);
+    --maekrak-border: rgba(11, 39, 68, 0.1);
+    --maekrak-border-subtle: rgba(11, 39, 68, 0.06);
+    --maekrak-shadow-sm: 0 2px 16px rgba(6, 26, 46, 0.06);
+    --maekrak-shadow-md: 0 8px 32px rgba(6, 26, 46, 0.08);
+    --maekrak-shadow-lg: 0 20px 56px rgba(6, 26, 46, 0.12);
     --maekrak-radius-lg: 20px;
     --maekrak-radius-xl: 26px;
     --maekrak-header-h: 72px;
@@ -123,14 +126,14 @@ body.maekrak-site #container_title {
     z-index: 1000;
     transition: background 0.35s var(--maekrak-ease), border-color 0.35s, box-shadow 0.35s;
     border-bottom: 1px solid var(--maekrak-border-subtle);
-    background: rgba(243, 240, 233, 0.82);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    box-shadow: 0 1px 0 rgba(11, 39, 68, 0.04);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 var(--maekrak-border-subtle);
 }
 
 .maekrak-header--scrolled {
-    background: rgba(251, 249, 245, 0.94);
+    background: #fff;
     box-shadow: var(--maekrak-shadow-sm);
 }
 
@@ -363,9 +366,9 @@ body.maekrak-site--home .maekrak-container {
 }
 
 .maekrak-btn-outline {
-    background: rgba(251, 249, 245, 0.6);
+    background: #fff;
     color: var(--maekrak-navy);
-    border-color: rgba(11, 39, 68, 0.28);
+    border-color: var(--maekrak-border);
 }
 
 .maekrak-btn-outline:hover {
@@ -380,7 +383,7 @@ body.maekrak-site--home .maekrak-container {
 }
 
 .maekrak-btn-white:hover {
-    background: #FFFCF8;
+    background: #fff;
 }
 
 .maekrak-btn-ghost {
@@ -394,7 +397,7 @@ body.maekrak-site--home .maekrak-container {
 }
 
 .maekrak-btn-gray {
-    background: linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-ivory) 100%);
+    background: var(--maekrak-surface-muted);
     color: var(--maekrak-navy);
 }
 
@@ -561,15 +564,15 @@ body.maekrak-site--home .maekrak-container {
 }
 
 .maekrak-section-full--ivory {
-    background: linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-ivory) 100%);
+    background: var(--maekrak-surface-muted);
 }
 
 .maekrak-section-full--white {
-    background: var(--maekrak-surface-elevated);
+    background: var(--maekrak-white);
 }
 
 .maekrak-section-full--gray {
-    background: linear-gradient(180deg, var(--maekrak-ivory) 0%, var(--maekrak-stone-deep) 100%);
+    background: var(--maekrak-surface-muted);
 }
 
 .maekrak-section-full--navy {
@@ -644,11 +647,8 @@ body.maekrak-site--home .maekrak-container {
 }
 
 .maekrak-section-title strong {
-    font-family: var(--maekrak-font-display);
-    font-weight: 600;
-    font-style: italic;
+    font-weight: 700;
     color: var(--maekrak-navy);
-    letter-spacing: 0.01em;
 }
 
 @media (min-width: 768px) {
@@ -698,9 +698,8 @@ body.maekrak-site--home .maekrak-container {
 /* ===== Hero ===== */
 .maekrak-hero .maekrak-section-full {
     background:
-        radial-gradient(ellipse 90% 70% at 85% 15%, var(--maekrak-accent-soft) 0%, transparent 55%),
-        radial-gradient(ellipse 70% 50% at 10% 90%, rgba(11, 39, 68, 0.07) 0%, transparent 50%),
-        linear-gradient(168deg, var(--maekrak-surface) 0%, var(--maekrak-stone) 48%, var(--maekrak-ivory) 100%);
+        radial-gradient(ellipse 80% 60% at 100% 0%, rgba(11, 39, 68, 0.04) 0%, transparent 50%),
+        linear-gradient(180deg, #fff 0%, var(--maekrak-surface-muted) 100%);
 }
 
 .maekrak-hero-inner {
@@ -761,7 +760,7 @@ body.maekrak-site--home .maekrak-container {
     display: inline-block;
     margin: 0 0 20px;
     padding: 8px 18px;
-    background: rgba(251, 249, 245, 0.75);
+    background: rgba(255, 255, 255, 0.85);
     border: 1px solid var(--maekrak-border);
     border-radius: 999px;
     font-size: 12px;
@@ -1060,7 +1059,7 @@ body.maekrak-site--home .maekrak-container {
 
 .maekrak-medical-card {
     padding: 36px 32px;
-    background: linear-gradient(160deg, var(--maekrak-surface-elevated) 0%, rgba(251, 249, 245, 0.92) 100%);
+    background: var(--maekrak-white);
     border: 1px solid var(--maekrak-border);
     border-radius: var(--maekrak-radius-lg);
     box-shadow: var(--maekrak-shadow-sm);
@@ -1077,7 +1076,7 @@ body.maekrak-site--home .maekrak-container {
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, var(--maekrak-accent), var(--maekrak-navy-light));
+    background: var(--maekrak-navy);
     opacity: 0.55;
 }
 
@@ -1212,7 +1211,7 @@ body.maekrak-site--home .maekrak-container {
     padding: 32px 28px 28px;
     text-decoration: none;
     color: inherit;
-    background: linear-gradient(165deg, var(--maekrak-surface-elevated) 0%, var(--maekrak-ivory) 100%);
+    background: var(--maekrak-white);
     border: 1px solid var(--maekrak-border);
     border-radius: var(--maekrak-radius-xl);
     box-shadow: var(--maekrak-shadow-sm);
@@ -1234,7 +1233,7 @@ body.maekrak-site--home .maekrak-container {
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, var(--maekrak-accent), var(--maekrak-navy-light));
+    background: var(--maekrak-navy);
     opacity: 0.45;
     transition: opacity 0.35s;
 }
@@ -1255,7 +1254,7 @@ body.maekrak-site--home .maekrak-container {
     width: 40px;
     height: 3px;
     margin-bottom: 20px;
-    background: linear-gradient(90deg, var(--maekrak-accent), transparent);
+    background: var(--maekrak-navy-light);
     border-radius: 2px;
     transition: background 0.35s;
 }
@@ -1308,7 +1307,7 @@ body.maekrak-site--home .maekrak-container {
     font-size: 12px;
     font-weight: 500;
     color: var(--maekrak-text-muted);
-    background: rgba(251, 249, 245, 0.7);
+    background: var(--maekrak-surface-muted);
     border: 1px solid var(--maekrak-border-subtle);
     border-radius: 999px;
     transition: background 0.35s, color 0.35s, border-color 0.35s;
@@ -1351,7 +1350,7 @@ body.maekrak-site--home .maekrak-container {
 
 .maekrak-target-box {
     padding: 32px 28px;
-    background: linear-gradient(160deg, rgba(251, 249, 245, 0.95) 0%, var(--maekrak-ivory) 100%);
+    background: var(--maekrak-white);
     border: 1px solid var(--maekrak-border);
     border-radius: var(--maekrak-radius-xl);
     box-shadow: var(--maekrak-shadow-md);
@@ -1617,7 +1616,7 @@ body.maekrak-site--home .maekrak-container {
     align-items: center;
     padding: 36px 32px;
     text-align: center;
-    background: linear-gradient(165deg, var(--maekrak-surface-elevated) 0%, var(--maekrak-ivory) 100%);
+    background: var(--maekrak-white);
     border: 1px solid var(--maekrak-border);
     border-radius: var(--maekrak-radius-lg);
     box-shadow: var(--maekrak-shadow-sm);
@@ -1635,7 +1634,7 @@ body.maekrak-site--home .maekrak-container {
     height: 160px;
     margin-bottom: 32px;
     border-radius: 50%;
-    background: linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-ivory) 100%);
+    background: var(--maekrak-surface-muted);
     border: 1px solid var(--maekrak-border);
     display: flex;
     align-items: center;
@@ -1833,7 +1832,7 @@ body.maekrak-site--home .maekrak-container {
 .maekrak-info-card {
     display: flex;
     flex-direction: column;
-    background: linear-gradient(160deg, var(--maekrak-surface-elevated) 0%, var(--maekrak-ivory) 100%);
+    background: var(--maekrak-white);
     border: 1px solid var(--maekrak-border);
     border-radius: var(--maekrak-radius-lg);
     box-shadow: var(--maekrak-shadow-md);
@@ -1987,8 +1986,8 @@ body.maekrak-site--home .maekrak-container {
     width: 100%;
     min-height: 320px;
     background:
-        linear-gradient(160deg, rgba(11, 39, 68, 0.06) 0%, transparent 50%),
-        linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-surface) 45%, var(--maekrak-ivory) 100%);
+        linear-gradient(160deg, rgba(11, 39, 68, 0.04) 0%, transparent 50%),
+        linear-gradient(180deg, var(--maekrak-surface-muted) 0%, var(--maekrak-white) 100%);
     border-top: 1px solid var(--maekrak-border);
     display: flex;
     align-items: center;
@@ -2325,7 +2324,7 @@ body.maekrak-site--home .maekrak-container {
     margin: 0;
     padding: 0 0 8px;
     list-style: none;
-    background: linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-ivory) 100%);
+    background: var(--maekrak-surface-muted);
 }
 
 .maekrak-drawer-sub-list a {
@@ -2882,7 +2881,7 @@ body.maekrak-site--home .maekrak-container {
         bottom: 0;
         z-index: 1050;
         min-height: var(--maekrak-cta-h);
-        background: rgba(251, 249, 245, 0.94);
+        background: rgba(255, 255, 255, 0.96);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border-top: 1px solid var(--maekrak-border);
@@ -3023,7 +3022,7 @@ body.maekrak-site--condition #ctt_con {
     align-items: center;
     background:
         radial-gradient(ellipse 80% 60% at 90% 10%, var(--maekrak-accent-soft) 0%, transparent 50%),
-        linear-gradient(165deg, var(--maekrak-surface) 0%, var(--maekrak-stone) 55%, var(--maekrak-ivory) 100%);
+        linear-gradient(180deg, #fff 0%, var(--maekrak-surface-muted) 100%);
     border-bottom: 1px solid var(--maekrak-border-subtle);
 }
 
@@ -3118,7 +3117,7 @@ body.maekrak-site--condition #ctt_con {
 .maekrak-cond-hero-visual-card span {
     padding: 10px 16px;
     border-radius: 999px;
-    background: linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-ivory) 100%);
+    background: var(--maekrak-surface-muted);
     color: var(--maekrak-navy);
     font-size: 0.9rem;
     font-weight: 600;
@@ -3149,7 +3148,7 @@ body.maekrak-site--condition #ctt_con {
 }
 
 .maekrak-cond-anchor-box--def {
-    background: var(--maekrak-ivory);
+    background: var(--maekrak-surface-muted);
 }
 
 .maekrak-cond-anchor-box--view {
@@ -3176,7 +3175,7 @@ body.maekrak-site--condition #ctt_con {
 
 /* 원인 카드 */
 .maekrak-cond-causes {
-    background: linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-ivory) 100%);
+    background: var(--maekrak-surface-muted);
 }
 
 .maekrak-cond-cause-grid {
@@ -3265,7 +3264,7 @@ body.maekrak-site--condition #ctt_con {
     display: flex;
     flex-direction: column;
     padding: 24px;
-    background: var(--maekrak-ivory);
+    background: var(--maekrak-white);
     border: 1px solid var(--maekrak-border);
     border-radius: 12px;
 }
@@ -3294,14 +3293,14 @@ body.maekrak-site--condition #ctt_con {
     padding: 4px 10px;
     font-size: 0.8rem;
     border-radius: 999px;
-    background: rgba(251, 249, 245, 0.9);
+    background: var(--maekrak-surface-muted);
     color: var(--maekrak-navy-light);
     border: 1px solid var(--maekrak-border);
 }
 
 /* 체크리스트 */
 .maekrak-cond-check {
-    background: var(--maekrak-ivory);
+    background: var(--maekrak-surface-muted);
 }
 
 .maekrak-cond-check-list {
@@ -3357,7 +3356,7 @@ body.maekrak-site--condition #ctt_con {
 .maekrak-cond-program-col {
     padding: 28px;
     border-radius: 14px;
-    background: linear-gradient(160deg, var(--maekrak-ivory) 0%, var(--maekrak-stone) 100%);
+    background: var(--maekrak-surface-muted);
     border: 1px solid var(--maekrak-border);
 }
 
@@ -3385,7 +3384,7 @@ body.maekrak-site--condition #ctt_con {
 
 /* 블로그 */
 .maekrak-cond-blog {
-    background: linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-ivory) 100%);
+    background: var(--maekrak-surface-muted);
 }
 
 .maekrak-cond-blog-empty {
@@ -3576,7 +3575,7 @@ body.maekrak-site--disease #ctt_con {
     align-items: center;
     background:
         radial-gradient(ellipse 80% 60% at 90% 10%, var(--maekrak-accent-soft) 0%, transparent 50%),
-        linear-gradient(165deg, var(--maekrak-surface) 0%, var(--maekrak-stone) 55%, var(--maekrak-ivory) 100%);
+        linear-gradient(180deg, #fff 0%, var(--maekrak-surface-muted) 100%);
     border-bottom: 1px solid var(--maekrak-border-subtle);
 }
 
@@ -3720,7 +3719,7 @@ body.maekrak-site--disease #ctt_con {
 
 /* 증상 */
 .maekrak-dis-symptoms {
-    background: linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-ivory) 100%);
+    background: var(--maekrak-surface-muted);
 }
 
 .maekrak-dis-symptom-list {
@@ -3795,7 +3794,7 @@ body.maekrak-site--disease #ctt_con {
 
 .maekrak-dis-why-card {
     padding: 22px;
-    background: var(--maekrak-ivory);
+    background: var(--maekrak-white);
     border: 1px solid var(--maekrak-border);
     border-radius: 12px;
 }
@@ -3829,7 +3828,7 @@ body.maekrak-site--disease #ctt_con {
 
 /* 치료 */
 .maekrak-dis-treat {
-    background: linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-ivory) 100%);
+    background: var(--maekrak-surface-muted);
 }
 
 .maekrak-dis-treat-grid {
@@ -3900,7 +3899,7 @@ body.maekrak-site--disease #ctt_con {
     padding: 28px;
     border: 1px solid var(--maekrak-border);
     border-radius: 14px;
-    background: var(--maekrak-ivory);
+    background: var(--maekrak-white);
 }
 
 .maekrak-dis-case-card-title {
@@ -3943,7 +3942,7 @@ body.maekrak-site--disease #ctt_con {
 
 /* FAQ */
 .maekrak-dis-faq {
-    background: linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-ivory) 100%);
+    background: var(--maekrak-surface-muted);
 }
 
 .maekrak-dis-faq-list {
@@ -3996,21 +3995,21 @@ body.maekrak-site--disease #ctt_con {
 
 /* 블로그 */
 .maekrak-dis-blog {
-    background: linear-gradient(180deg, var(--maekrak-surface) 0%, var(--maekrak-stone) 100%);
+    background: var(--maekrak-surface-muted);
 }
 
 .maekrak-dis-blog-empty {
     margin: 0;
     padding: 32px;
     text-align: center;
-    background: linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-ivory) 100%);
+    background: var(--maekrak-surface-muted);
     border-radius: 12px;
     color: var(--maekrak-gray);
 }
 
 /* 관련 페이지 */
 .maekrak-dis-related {
-    background: var(--maekrak-ivory);
+    background: var(--maekrak-surface-muted);
 }
 
 .maekrak-dis-related-parent {
@@ -4217,10 +4216,9 @@ body.maekrak-site--disease #ctt_con {
 
 .maekrak-cond-hero {
     background: linear-gradient(
-        135deg,
-        var(--maekrak-ivory) 0%,
-        var(--maekrak-surface-elevated) 45%,
-        color-mix(in srgb, var(--maekrak-cond-accent) 12%, var(--maekrak-surface-elevated)) 100%
+        180deg,
+        #fff 0%,
+        var(--maekrak-surface-muted) 100%
     );
 }
 
@@ -4240,10 +4238,9 @@ body.maekrak-site--disease #ctt_con {
     background:
         radial-gradient(ellipse 70% 55% at 88% 12%, color-mix(in srgb, var(--maekrak-dis-accent) 22%, transparent) 0%, transparent 55%),
         linear-gradient(
-            165deg,
-            var(--maekrak-surface) 0%,
-            var(--maekrak-stone) 48%,
-            color-mix(in srgb, var(--maekrak-dis-accent) 8%, var(--maekrak-ivory)) 100%
+            180deg,
+            #fff 0%,
+            var(--maekrak-surface-muted) 100%
         );
 }
 
