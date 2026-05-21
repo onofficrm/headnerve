@@ -63,10 +63,13 @@ if (!empty($mk_meta)) {
     $mk_desc = get_text($mk_meta['meta_description']);
     $mk_canonical = $mk_meta['canonical'];
     $mk_og_title = get_text($mk_meta['meta_title']);
-    $mk_og_image = (defined('MK_OG_IMAGE_URL') && MK_OG_IMAGE_URL) ? MK_OG_IMAGE_URL : '';
+    $mk_og_image = function_exists('maekrak_og_image_url') ? maekrak_og_image_url() : ((defined('MK_OG_IMAGE_URL') && MK_OG_IMAGE_URL) ? MK_OG_IMAGE_URL : '');
 ?>
 <meta name="description" content="<?php echo $mk_desc; ?>">
 <link rel="canonical" href="<?php echo $mk_canonical; ?>">
+<?php if (defined('MK_SITEMAP_URL') && MK_SITEMAP_URL) { ?>
+<link rel="sitemap" type="application/xml" title="Sitemap" href="<?php echo MK_SITEMAP_URL; ?>">
+<?php } ?>
 <meta property="og:type" content="website">
 <meta property="og:title" content="<?php echo $mk_og_title; ?>">
 <meta property="og:description" content="<?php echo $mk_desc; ?>">
@@ -130,6 +133,9 @@ if(G5_IS_MOBILE) {
 }
 if(!defined('G5_IS_ADMIN'))
     echo $config['cf_add_script'];
+if (function_exists('maekrak_render_ga4')) {
+    maekrak_render_ga4();
+}
 ?>
 </head>
 <body<?php echo isset($g5['body_script']) ? $g5['body_script'] : ''; ?>>

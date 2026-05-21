@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://headnerve.iwinv.net/theme/basic/sitemap_maekrak.php

@@ -91,25 +91,46 @@ macOS `._*` 파일이 있으면 `git restore` 후 push.
 
 **1층 치료 프로그램 DOCX** (`1층 맥락한의원 … 치료 프로그램.docx` 4종): 선택 — `programs`/`program_note`만 중복 없이 보강
 
+## 14차 (런칭·SEO·QA)
+
+**코드 반영**
+
+- **OG 이미지**: `maekrak_og_image_url()` — `img/og-maekrak.{jpg|png|webp|svg}` 우선 ([`hero_helper.php`](inc/hero_helper.php))
+- **GA4**: `maekrak_render_ga4()` — `MK_GA4_MEASUREMENT_ID` 정의 시만 출력 ([`maekrak_local_config.example.php`](inc/maekrak_local_config.example.php) 참고)
+- **robots.txt**: 저장소 루트 → `Sitemap: …/sitemap_maekrak.php`
+- **head**: `<link rel="sitemap">` ([`head.sub.php`](head.sub.php))
+- **QA 스크립트**: [`scripts/qa_maekrak_urls.sh`](scripts/qa_maekrak_urls.sh) — `BASE_URL=https://headnerve.iwinv.net ./qa_maekrak_urls.sh`
+
+**운영자 수동 작업**
+
+| 항목 | 방법 |
+|------|------|
+| OG JPG | `theme/basic/img/og-maekrak.jpg` (1200×630) FTP 업로드 — 코드 변경 없음 |
+| GA4 | 서버 `inc/maekrak_local_config.php`에 `define('MK_GA4_MEASUREMENT_ID', 'G-…');` |
+| 사이트맵 제출 | https://headnerve.iwinv.net/theme/basic/sitemap_maekrak.php → Search Console·네이버 |
+| install 삭제 | 서버 `public_html/install/` 폴더 삭제 (저장소 `install/`은 GNU Board 원본) |
+
+**2층 DOCX·히어로·의료진 사진**: 15차 (원장 DOCX·이미지 수신 후)
+
 ## 10차 QA 체크리스트
 
-- [ ] 홈·1층 5·2층 23: 히어로 이미지 표시, 없을 때 CSS fallback
-- [ ] 1층 5개: FAQ 아코디언 + FAQPage JSON-LD
-- [ ] 2층 builder 14개: parent별 accent·variant 구분
-- [ ] 블로그 목록: 썸네일 없을 때 카테고리별 기본 이미지
-- [ ] 의료진: `img/doctors/` 실사진 교체 시 카드 반영
-- [ ] 모바일: 히어로·FAQ·블로그 카드 레이아웃
+- [x] 홈·1층 5·2층 23: 히어로 이미지 표시, 없을 때 CSS fallback (SVG)
+- [x] 1층 5개: FAQ 아코디언 + FAQPage JSON-LD
+- [x] 2층 builder 14개: parent별 accent·variant 구분
+- [x] 블로그 목록: 썸네일 없을 때 카테고리별 기본 이미지
+- [ ] 의료진: `img/doctors/` 실사진 교체 시 카드 반영 (사진 대기)
+- [ ] 모바일: 히어로·FAQ·블로그 카드 레이아웃 (수동 스팟 확인)
 
 ## 런칭 체크리스트
 
-- [ ] 홈: 지도·네이버 예약·카카오톡 버튼
-- [ ] GNB: 진료과목 2단·블로그 URL
-- [ ] 1층 5개 + 2층 23개 URL 200 및 본문 표시
+- [x] 홈: 지도·네이버 예약·카카오톡 버튼
+- [x] GNB: 진료과목 2단·블로그 URL
+- [x] 1층 5개 + 2층 23개 URL 200 및 본문 표시 (`qa_maekrak_urls.sh`)
 - [ ] 블로그 샘플/실제 글·카테고리 매칭 (샘플 최대 19건)
-- [ ] 푸터: 소개·개인정보·이용약관 페이지
-- [ ] 모바일 하단 CTA (예약·전화·카카오)
-- [ ] 사이트맵 제출
-- [ ] 관리자: install 스크립트 삭제 여부
+- [x] 푸터: 소개·개인정보·이용약관 페이지
+- [x] 모바일 하단 CTA (예약·전화·카카오)
+- [ ] 사이트맵 제출 (Search Console·네이버 — 수동)
+- [ ] 관리자: install 스크립트 삭제 여부 (서버에서 확인)
 
 ## 블로그 카테고리
 

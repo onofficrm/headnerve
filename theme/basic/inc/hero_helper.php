@@ -150,6 +150,38 @@ function maekrak_render_hero_visual($opts)
     echo '</div>';
 }
 
+/**
+ * SNS·검색용 OG 이미지 (theme/basic/img/og-maekrak.{jpg|png|webp|svg})
+ */
+function maekrak_og_image_url()
+{
+    if (defined('MK_OG_IMAGE_URL') && MK_OG_IMAGE_URL && preg_match('#^https?://#i', MK_OG_IMAGE_URL)) {
+        return MK_OG_IMAGE_URL;
+    }
+    $dir = G5_THEME_PATH . '/img';
+    foreach (array('jpg', 'jpeg', 'png', 'webp', 'svg') as $ext) {
+        $path = $dir . '/og-maekrak.' . $ext;
+        if (is_file($path)) {
+            return G5_THEME_URL . '/img/og-maekrak.' . $ext;
+        }
+    }
+    return defined('MK_OG_IMAGE_URL') ? MK_OG_IMAGE_URL : '';
+}
+
+/** Google Analytics 4 (MK_GA4_MEASUREMENT_ID 정의 시에만 출력) */
+function maekrak_render_ga4()
+{
+    if (!defined('MK_GA4_MEASUREMENT_ID') || MK_GA4_MEASUREMENT_ID === '') {
+        return;
+    }
+    $id = preg_replace('/[^A-Z0-9\-]/i', '', MK_GA4_MEASUREMENT_ID);
+    if ($id === '') {
+        return;
+    }
+    echo '<script async src="https://www.googletagmanager.com/gtag/js?id=' . htmlspecialchars($id, ENT_QUOTES, 'UTF-8') . '"></script>' . PHP_EOL;
+    echo '<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","' . htmlspecialchars($id, ENT_QUOTES, 'UTF-8') . '");</script>' . PHP_EOL;
+}
+
 /** 블로그 카테고리 → 기본 썸네일 (히어로 SVG) */
 function maekrak_blog_default_thumb_url($ca_name)
 {
