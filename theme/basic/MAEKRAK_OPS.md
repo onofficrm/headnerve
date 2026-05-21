@@ -63,6 +63,34 @@ macOS `._*` 파일이 있으면 `git restore` 후 push.
 
 **어지럼 4종 원장 문안** (DOCX): `cervical_dizziness`, `meniere`, `bppv`, `vestibular_neuritis`
 
+## 13차 (1층 DOCX 5종 + 2층 마무리)
+
+**1층 DOCX 반영** (`condition_data.php`): `headache`, `dizziness`, `autonomic`, `peripheral`, `brainfog`
+
+- `ai_anchor` · `clinic_view` · `causes`(4) · `checklist`(6) · `programs`/`program_note` · `faq`(3~4)
+- `subtypes` slug·2층 `co_id` 매핑 유지 (`disease_builder.php` subtype map)
+- 히어로: JPG 미업로드 시 `img/hero/{basename}.svg` fallback
+
+**2층 DOCX 보유 — 재검수 완료** (12차 반영분, 추가 DOCX 없음)
+
+| co_id | DOCX |
+|--------|------|
+| `migraine`, `cluster_headache` | 2층 편두통·군발 |
+| `cervical_dizziness`, `meniere`, `bppv`, `vestibular_neuritis` | 어지럼 4종 |
+
+검수: HTTP 200 · 사례 카드 2건 · FAQ · (군발 `clinic_view`에 DOCX 문구 「구조적 원인을 함께 확인」 포함)
+
+**2층 DOCX 미보유 — 12차 수작업 유지** (`disease_handcrafted_extra.php` · `cases` 없으면 기본 1건)
+
+원장님 **추가 DOCX 요청 우선순위** (파일명 권장: `2층서브메뉴-{과목}-{질환}.docx`):
+
+1. 두통: `medication_headache`, `pediatric_headache`, `menstrual_headache`, `student_headache`
+2. 자율신경: `orthostatic_hp`, `anxiety_disorder`, `insomnia_disorder`
+3. 말초·브레인포그: `peripheral_neuro`, `diabetic_neuropathy`, `cipn`, `longcovid_brainfog`, `fatigue_brainfog`, `sleep_brainfog`
+4. core: `dysautonomia`
+
+**1층 치료 프로그램 DOCX** (`1층 맥락한의원 … 치료 프로그램.docx` 4종): 선택 — `programs`/`program_note`만 중복 없이 보강
+
 ## 10차 QA 체크리스트
 
 - [ ] 홈·1층 5·2층 23: 히어로 이미지 표시, 없을 때 CSS fallback
