@@ -135,27 +135,33 @@ function maekrak_render_disease_page($page)
     </section>
 
     <!-- 6. 치료 사례 요약 -->
+    <?php $dis_cases = maekrak_disease_cases($page); ?>
+    <?php if ($dis_cases) { ?>
     <section class="maekrak-dis-section maekrak-dis-case" aria-labelledby="maekrak_dis_case_title">
         <div class="maekrak-dis-inner">
             <header class="maekrak-dis-head">
                 <h2 id="maekrak_dis_case_title" class="maekrak-dis-title">실제 치료 사례 요약</h2>
                 <p class="maekrak-dis-disclaimer">아래 사례는 진료 관점을 설명하기 위한 요약이며, <strong>개인에 따라 치료 경과는 다를 수 있습니다.</strong></p>
             </header>
-            <?php $c = $page['case']; ?>
-            <div class="maekrak-dis-case-card">
-                <h3 class="maekrak-dis-case-card-title"><?php echo $c['title']; ?></h3>
-                <dl class="maekrak-dis-case-dl">
-                    <div><dt>환자 유형</dt><dd><?php echo $c['patient_type']; ?></dd></div>
-                    <div><dt>치료 전 상태</dt><dd><?php echo $c['before']; ?></dd></div>
-                    <div><dt>기존 치료 이력</dt><dd><?php echo $c['history']; ?></dd></div>
-                    <div><dt>맥락한의원 평가</dt><dd><?php echo $c['assessment']; ?></dd></div>
-                    <div><dt>치료 방향</dt><dd><?php echo $c['treatment_direction']; ?></dd></div>
-                    <div><dt>경과 요약</dt><dd><?php echo $c['progress']; ?></dd></div>
-                </dl>
-                <a href="#maekrak_dis_blog" class="maekrak-btn maekrak-btn-pill">관련 블로그·사례 글 보기</a>
+            <div class="maekrak-dis-case-grid">
+                <?php foreach ($dis_cases as $c) { ?>
+                <div class="maekrak-dis-case-card">
+                    <h3 class="maekrak-dis-case-card-title"><?php echo $c['title']; ?></h3>
+                    <dl class="maekrak-dis-case-dl">
+                        <div><dt>환자 유형</dt><dd><?php echo $c['patient_type']; ?></dd></div>
+                        <div><dt>치료 전 상태</dt><dd><?php echo $c['before']; ?></dd></div>
+                        <div><dt>기존 치료 이력</dt><dd><?php echo $c['history']; ?></dd></div>
+                        <div><dt>맥락한의원 평가</dt><dd><?php echo $c['assessment']; ?></dd></div>
+                        <div><dt>치료 방향</dt><dd><?php echo $c['treatment_direction']; ?></dd></div>
+                        <div><dt>경과 요약</dt><dd><?php echo $c['progress']; ?></dd></div>
+                    </dl>
+                    <a href="#maekrak_dis_blog" class="maekrak-btn maekrak-btn-pill">관련 블로그·사례 글 보기</a>
+                </div>
+                <?php } ?>
             </div>
         </div>
     </section>
+    <?php } ?>
 
     <!-- 7. FAQ -->
     <section class="maekrak-dis-section maekrak-dis-faq" aria-labelledby="maekrak_dis_faq_title">

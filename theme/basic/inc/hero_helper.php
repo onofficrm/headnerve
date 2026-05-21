@@ -15,11 +15,14 @@ function maekrak_hero_img_url($basename)
     if ($basename === '') {
         return '';
     }
-    $path = maekrak_hero_img_dir() . '/' . $basename . '.svg';
-    if (!is_file($path)) {
-        return '';
+    $dir = maekrak_hero_img_dir();
+    foreach (array('webp', 'jpg', 'jpeg', 'png', 'svg') as $ext) {
+        $path = $dir . '/' . $basename . '.' . $ext;
+        if (is_file($path)) {
+            return G5_THEME_URL . '/img/hero/' . $basename . '.' . $ext;
+        }
     }
-    return G5_THEME_URL . '/img/hero/' . $basename . '.svg';
+    return '';
 }
 
 function maekrak_condition_accent($co_id)

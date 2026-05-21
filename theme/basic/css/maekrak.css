@@ -3776,6 +3776,18 @@ body.maekrak-site--disease #ctt_con {
     background: #fff;
 }
 
+.maekrak-dis-case-grid {
+    display: grid;
+    gap: 24px;
+}
+
+@media (min-width: 900px) {
+    .maekrak-dis-case-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+    }
+}
+
 .maekrak-dis-case-card {
     padding: 28px;
     border: 1px solid var(--maekrak-border);

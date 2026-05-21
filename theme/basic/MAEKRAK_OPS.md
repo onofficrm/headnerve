@@ -13,10 +13,11 @@
 
 서버 전용 override: `inc/maekrak_local_config.php` (git 제외 권장)
 
-## 히어로·에셋 (10차)
+## 히어로·에셋 (10차·12차)
 
-- **경로**: `theme/basic/img/hero/` — `home`, `headache`, `dizziness`, `autonomic`, `peripheral`, `brainfog` (SVG placeholder, JPG/WebP로 교체 가능)
-- **의료진 사진**: `theme/basic/img/doctors/` — `site_config.php` `$maekrak_doctors[].photo`에 파일명 (예: `lee.jpg`)
+- **경로**: `theme/basic/img/hero/` — `home`, `headache`, `dizziness`, `autonomic`, `peripheral`, `brainfog`
+- **우선순위**: 같은 basename으로 `webp` → `jpg` → `png` → `svg` (있으면 자동 사용, 없으면 CSS fallback)
+- **의료진 사진**: `theme/basic/img/doctors/` — `site_config.php` `$maekrak_doctors[].photo`에 파일명 (예: `lee.jpg`, `kim.webp`). 비우면 아이콘 카드
 - **1층 FAQ**: `condition_data.php` · JSON-LD `inc/faq_jsonld.php`
 - **2층 builder**: `hero_variant` + parent별 accent (`--maekrak-dis-accent`)
 
@@ -53,7 +54,14 @@ macOS `._*` 파일이 있으면 `git restore` 후 push.
 
 **전체 23개** 수작업 — [`disease_data.php`](inc/disease_data.php) core 3종 + [`disease_handcrafted_extra.php`](inc/disease_handcrafted_extra.php) 20종.
 
-**어지럼 4종 원장 문안 반영** (DOCX): `cervical_dizziness`, `meniere`, `bppv`, `vestibular_neuritis` — AI 앵커·맥락 관점·치료(두맥탕/약침/추나)·FAQ·사례 요약
+**12차 (콘텐츠·UX)**
+
+- **사례 2건**: `disease_template.php` — `cases` 배열 또는 단일 `case` · 어지럼 4종 DOCX 2번째 사례 반영
+- **DOCX 반영**: 편두통·군발두통 (`disease_data.php` core), 어지럼 4종(기존 + 2번째 사례)
+- **맞춤 치료·FAQ**: 2층 수작업 20종 전반 — builder 기본 치료문 대신 페이지별 `treatments`·`faq` 보강
+- **히어로**: `hero_helper.php` — `webp/jpg/png` 우선, `svg` fallback · `img/doctors/` 디렉터리 준비
+
+**어지럼 4종 원장 문안** (DOCX): `cervical_dizziness`, `meniere`, `bppv`, `vestibular_neuritis`
 
 ## 10차 QA 체크리스트
 
