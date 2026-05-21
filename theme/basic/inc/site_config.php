@@ -81,6 +81,12 @@ $maekrak_doctors = array(
     array('name' => '김윤서', 'title' => '원장', 'field' => '말초신경병증, 브레인포그'),
 );
 
+$maekrak_home_meta = array(
+    'meta_title' => MK_CLINIC_NAME . ' | 두통·어지럼증·자율신경 신경계 한의원',
+    'meta_description' => '서울 시청역 인근 맥락한의원. 반복되는 두통·어지럼증·자율신경·말초신경·브레인포그를 두개경추·자율신경·뇌 에너지 균형의 관점에서 진료합니다.',
+    'canonical' => G5_URL,
+);
+
 function maekrak_tel_href($tel = '')
 {
     $tel = $tel ? $tel : MK_CLINIC_TEL_LINK;

@@ -2,6 +2,7 @@
 if (!defined('_GNUBOARD_')) exit;
 
 include_once(G5_THEME_PATH . '/inc/site_config.php');
+global $maekrak_home_meta;
 global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_approach, $maekrak_programs, $maekrak_doctors;
 ?>
 
@@ -260,6 +261,24 @@ global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_app
             </div>
         </div>
     </section>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "MedicalClinic",
+        "name": "<?php echo get_text(MK_CLINIC_NAME); ?>",
+        "description": "<?php echo get_text($maekrak_home_meta['meta_description']); ?>",
+        "url": "<?php echo G5_URL; ?>",
+        "telephone": "<?php echo MK_CLINIC_TEL; ?>",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "<?php echo get_text(MK_CLINIC_ADDRESS); ?>",
+            "addressLocality": "서울",
+            "addressCountry": "KR"
+        },
+        "openingHours": ["Mo-Fr 10:00-20:00", "Sa 10:00-14:00"]
+    }
+    </script>
 
 </div><!-- .maekrak-home -->
 <?php } ?>

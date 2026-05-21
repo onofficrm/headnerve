@@ -32,6 +32,9 @@ if (!defined('_INDEX_') && !empty($co_id)) {
 if (defined('_INDEX_')) {
     $g5['html_script'] = ' class="maekrak-home-page"';
     $g5['body_script'] = ' class="maekrak-site maekrak-site--home maekrak-home-page"';
+    if (!empty($maekrak_home_meta['meta_title'])) {
+        $g5['title'] = $maekrak_home_meta['meta_title'];
+    }
 } elseif ($maekrak_disease_page) {
     $g5['title'] = $maekrak_disease_page['meta_title'];
     $g5['body_script'] = ' class="maekrak-site maekrak-site--disease"';

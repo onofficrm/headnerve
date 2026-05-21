@@ -54,6 +54,8 @@ if (!empty($maekrak_disease_page)) {
     $mk_meta = $maekrak_disease_page;
 } elseif (!empty($maekrak_condition_page)) {
     $mk_meta = $maekrak_condition_page;
+} elseif (defined('_INDEX_') && !empty($maekrak_home_meta)) {
+    $mk_meta = $maekrak_home_meta;
 } else {
     $mk_meta = null;
 }

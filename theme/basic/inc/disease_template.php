@@ -3,6 +3,7 @@ if (!defined('_GNUBOARD_')) exit;
 
 include_once G5_THEME_PATH . '/inc/disease_data.php';
 include_once G5_THEME_PATH . '/inc/condition_data.php';
+include_once G5_THEME_PATH . '/inc/blog_latest.php';
 
 function maekrak_render_disease_page($page)
 {
@@ -277,22 +278,6 @@ function maekrak_render_disease_faq_jsonld($faq_list)
 
 function maekrak_render_disease_blog($page)
 {
-    if (!function_exists('latest')) {
-        echo '<p class="maekrak-dis-blog-empty">관련 글이 준비 중입니다.</p>';
-        return;
-    }
-
-    $bo_table = defined('MK_BLOG_BOARD') ? MK_BLOG_BOARD : 'free';
-    $board = array();
-
-    if (function_exists('get_board_db')) {
-        $board = get_board_db($bo_table, true);
-    }
-
-    if (empty($board['bo_table'])) {
-        echo '<p class="maekrak-dis-blog-empty">관련 글이 준비 중입니다.</p>';
-        return;
-    }
-
-    echo latest('theme/maekrak_blog', $bo_table, 4, 80);
+    $category = !empty($page['blog_category']) ? $page['blog_category'] : '';
+    maekrak_latest_blog($category, 4, 80);
 }
