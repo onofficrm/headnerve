@@ -46,7 +46,16 @@ while IFS= read -r loc; do
      [[ "$loc" == *"co_id=brainfog" ]]; then
     check_url "$loc" "FAQPage"
   elif [[ "$loc" == "${BASE_URL}/" ]] || [[ "$loc" == "${BASE_URL}" ]]; then
-    check_url "$loc" "maekrak-mobile-cta"
+    check_url "$loc" "maekrak-home"
+    code=$(curl -sL -A "Mozilla/5.0 (iPhone)" -o /dev/null -w "%{http_code}" "$loc" || echo "000")
+    body=$(curl -sL -A "Mozilla/5.0 (iPhone)" "$loc" 2>/dev/null || true)
+    if [[ "$code" == "200" ]] && echo "$body" | grep -q 'maekrak-mobile-cta'; then
+      echo "OK   $loc (mobile UA: CTA present)"
+      pass=$((pass + 1))
+    else
+      echo "WARN mobile home missing maekrak-mobile-cta $loc"
+      fail=$((fail + 1))
+    fi
   else
     check_url "$loc" "$marker"
   fi
