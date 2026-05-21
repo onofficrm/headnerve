@@ -91,7 +91,7 @@ function maekrak_render_condition_page($page)
         <div class="maekrak-cond-inner">
             <header class="maekrak-cond-head">
                 <h2 id="maekrak_cond_subtypes_title" class="maekrak-cond-title"><?php echo $page['page_name']; ?> 관련 질환</h2>
-                <p class="maekrak-cond-desc">증상에 맞는 상세 안내 페이지로 이동할 수 있습니다. (상세 페이지는 순차적으로 제공됩니다.)</p>
+                <p class="maekrak-cond-desc">증상에 맞는 상세 안내 페이지로 이동할 수 있습니다.</p>
             </header>
             <ul class="maekrak-cond-subtype-grid">
                 <?php foreach ($page['subtypes'] as $sub) {

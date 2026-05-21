@@ -1,6 +1,8 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
 
+include_once G5_THEME_PATH . '/inc/disease_builder.php';
+
 /**
  * 2층 질환 상세 페이지 데이터 (co_id 키)
  */
@@ -11,12 +13,12 @@ function maekrak_disease_url($co_id)
 
 function maekrak_diseases_co_ids()
 {
-    return array('migraine', 'cluster_headache', 'dysautonomia');
+    return array_keys(maekrak_diseases_data());
 }
 
 function maekrak_is_disease_co_id($co_id)
 {
-    return in_array($co_id, maekrak_diseases_co_ids(), true);
+    return maekrak_get_disease_by_co_id($co_id) !== null;
 }
 
 function maekrak_get_disease_by_co_id($co_id)
@@ -26,24 +28,15 @@ function maekrak_get_disease_by_co_id($co_id)
 }
 
 /**
- * 1층 parent co_id + subtype slug → 2층 disease co_id (등록된 페이지만)
+ * 1층 parent co_id + subtype slug → 2층 disease co_id
  */
 function maekrak_disease_co_id_for_subtype($parent_co_id, $slug)
 {
-    $map = array(
-        'headache' => array(
-            'migraine' => 'migraine',
-            'cluster' => 'cluster_headache',
-        ),
-        'autonomic' => array(
-            'dysautonomia' => 'dysautonomia',
-        ),
-    );
-
+    $map = maekrak_disease_subtype_map();
     return isset($map[$parent_co_id][$slug]) ? $map[$parent_co_id][$slug] : null;
 }
 
-function maekrak_diseases_data()
+function maekrak_diseases_handcrafted_data()
 {
     return array(
         'migraine' => array(
@@ -108,8 +101,8 @@ function maekrak_diseases_data()
             ),
             'related' => array(
                 array('co_id' => 'cluster_headache', 'name' => '군발두통'),
-                array('co_id' => '', 'slug' => 'tension', 'parent' => 'headache', 'name' => '긴장형두통'),
-                array('co_id' => '', 'slug' => 'cervicogenic', 'parent' => 'headache', 'name' => '경추성두통'),
+                array('co_id' => 'tension_headache', 'name' => '긴장형두통'),
+                array('co_id' => 'cervicogenic_headache', 'name' => '경추성두통'),
             ),
             'blog_category' => '편두통',
         ),
@@ -174,8 +167,8 @@ function maekrak_diseases_data()
             ),
             'related' => array(
                 array('co_id' => 'migraine', 'name' => '편두통'),
-                array('co_id' => '', 'slug' => 'tension', 'parent' => 'headache', 'name' => '긴장형두통'),
-                array('co_id' => '', 'slug' => 'cervicogenic', 'parent' => 'headache', 'name' => '경추성두통'),
+                array('co_id' => 'tension_headache', 'name' => '긴장형두통'),
+                array('co_id' => 'cervicogenic_headache', 'name' => '경추성두통'),
             ),
             'blog_category' => '군발두통',
         ),
@@ -240,13 +233,27 @@ function maekrak_diseases_data()
                 ),
             ),
             'related' => array(
-                array('co_id' => '', 'slug' => 'orthostatic', 'parent' => 'autonomic', 'name' => '기립성저혈압'),
-                array('co_id' => '', 'slug' => 'panic', 'parent' => 'autonomic', 'name' => '공황장애'),
-                array('co_id' => '', 'slug' => 'insomnia', 'parent' => 'autonomic', 'name' => '불면'),
+                array('co_id' => 'orthostatic_hypotension', 'name' => '기립성저혈압'),
+                array('co_id' => 'panic_disorder', 'name' => '공황장애'),
+                array('co_id' => 'insomnia_disorder', 'name' => '불면'),
             ),
             'blog_category' => '자율신경',
         ),
     );
+}
+
+function maekrak_diseases_data()
+{
+    static $cache = null;
+    if ($cache !== null) {
+        return $cache;
+    }
+
+    $handcrafted = maekrak_diseases_handcrafted_data();
+    $generated = maekrak_diseases_generated_from_conditions(array_keys($handcrafted));
+    $cache = array_merge($generated, $handcrafted);
+
+    return $cache;
 }
 
 /**
