@@ -17,6 +17,10 @@ include_once(G5_THEME_PATH . '/inc/menu_render.php');
 
 $maekrak_condition_page = null;
 $maekrak_disease_page = null;
+$maekrak_blog_board = false;
+if (!defined('_INDEX_') && !empty($bo_table) && defined('MK_BLOG_BOARD') && $bo_table === MK_BLOG_BOARD) {
+    $maekrak_blog_board = true;
+}
 if (!defined('_INDEX_') && !empty($co_id)) {
     if (maekrak_is_disease_co_id($co_id)) {
         $maekrak_disease_page = maekrak_get_disease_by_co_id($co_id);
@@ -34,6 +38,8 @@ if (defined('_INDEX_')) {
 } elseif ($maekrak_condition_page) {
     $g5['title'] = $maekrak_condition_page['meta_title'];
     $g5['body_script'] = ' class="maekrak-site maekrak-site--condition"';
+} elseif ($maekrak_blog_board) {
+    $g5['body_script'] = ' class="maekrak-site maekrak-site--blog"';
 } else {
     $g5['body_script'] = ' class="maekrak-site"';
 }
@@ -124,6 +130,6 @@ $(function() {
 <div id="wrapper" class="maekrak-wrapper">
     <div id="container_wr" class="maekrak-container-wr">
         <div id="container" class="maekrak-container">
-        <?php if (!defined('_INDEX_') && empty($maekrak_condition_page) && empty($maekrak_disease_page)) { ?>
+        <?php if (!defined('_INDEX_') && empty($maekrak_condition_page) && empty($maekrak_disease_page) && empty($maekrak_blog_board)) { ?>
             <h2 id="container_title"><span title="<?php echo get_text($g5['title']); ?>"><?php echo get_head_title($g5['title']); ?></span></h2>
         <?php } ?>

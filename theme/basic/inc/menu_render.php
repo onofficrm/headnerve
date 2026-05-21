@@ -44,7 +44,7 @@ function maekrak_get_fallback_menu()
         ),
         array(
             'me_name' => '블로그',
-            'me_link' => G5_URL . '/#maekrak_blog',
+            'me_link' => (defined('MK_BLOG_BOARD') && MK_BLOG_BOARD) ? get_pretty_url(MK_BLOG_BOARD) : (G5_URL . '/#maekrak_blog'),
             'me_target' => 'self',
             'sub' => array(),
         ),

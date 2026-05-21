@@ -14,7 +14,7 @@ if (!defined('MK_CLINIC_NAME')) {
     define('MK_CLINIC_SAT_LUNCH_NOTE', '토요일은 점심시간 없이 진료합니다.');
     define('MK_CLINIC_PARKING', '옆건물 주차장 주차지원');
     define('MK_CLINIC_TRANSPORT', '시청역 8번 출구 1분 거리');
-    define('MK_BLOG_BOARD', 'free'); // TODO: 게시판 생성 후 'blog' 로 변경
+    define('MK_BLOG_BOARD', 'blog');
     define('MK_RESERVE_URL', G5_BBS_URL . '/qalist.php');
     define('MK_KAKAO_URL', 'https://pf.kakao.com/');
     define('MK_MAP_URL', 'https://map.kakao.com/');

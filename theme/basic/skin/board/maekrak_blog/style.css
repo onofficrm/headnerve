@@ -1,0 +1,392 @@
+@charset "utf-8";
+
+/* 맥락한의원 블로그 게시판 (theme/maekrak_blog) */
+
+.maekrak-board-blog {
+    background: var(--maekrak-bg, #FAF9F6);
+}
+
+.maekrak-board-hero {
+    background: linear-gradient(135deg, #002B5B 0%, #1a4a7a 100%);
+    color: #fff;
+}
+
+.maekrak-board-hero--compact {
+    padding-bottom: 0;
+}
+
+.maekrak-board-hero-inner {
+    max-width: var(--maekrak-content-max, 1120px);
+    margin: 0 auto;
+    padding: 48px var(--maekrak-gutter-m, 20px) 40px;
+}
+
+.maekrak-board-breadcrumb ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 20px;
+    padding: 0;
+    list-style: none;
+    font-size: 13px;
+    opacity: 0.85;
+}
+
+.maekrak-board-breadcrumb a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.maekrak-board-breadcrumb li + li::before {
+    content: "/";
+    margin-right: 8px;
+    opacity: 0.6;
+}
+
+.maekrak-board-hero-label {
+    margin: 0 0 8px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+.maekrak-board-hero-title {
+    margin: 0;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.maekrak-board-hero-desc {
+    margin: 16px 0 0;
+    max-width: 640px;
+    font-size: 1rem;
+    line-height: 1.65;
+    opacity: 0.9;
+}
+
+.maekrak-board-body {
+    padding: 40px 0 64px;
+}
+
+.maekrak-board-inner {
+    max-width: var(--maekrak-content-max, 1120px);
+    margin: 0 auto;
+    padding: 0 var(--maekrak-gutter-m, 20px);
+}
+
+.maekrak-board-cate {
+    margin-bottom: 28px;
+}
+
+.maekrak-board-cate ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.maekrak-board-cate a {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #002B5B;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 999px;
+    text-decoration: none;
+}
+
+.maekrak-board-cate #bo_cate_on,
+.maekrak-board-cate a:hover,
+.maekrak-board-cate a:focus {
+    background: #002B5B;
+    border-color: #002B5B;
+    color: #fff;
+}
+
+.maekrak-board-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.maekrak-board-total {
+    margin: 0;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.maekrak-board-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.maekrak-board-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    background: #fff;
+    color: #002B5B;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.maekrak-board-card-list {
+    margin-bottom: 32px;
+}
+
+.maekrak-board-paging {
+    margin-top: 32px;
+    text-align: center;
+}
+
+.maekrak-board-paging .pg_wrap {
+    display: inline-flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.maekrak-board-paging a,
+.maekrak-board-paging strong {
+    display: inline-flex;
+    min-width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.maekrak-board-paging a {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    color: #333;
+}
+
+.maekrak-board-paging strong {
+    background: #002B5B;
+    color: #fff;
+}
+
+.maekrak-board-sch {
+    display: none;
+    max-width: var(--maekrak-content-max, 1120px);
+    margin: 0 auto 40px;
+    padding: 20px var(--maekrak-gutter-m, 20px);
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+}
+
+.maekrak-board-sch form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.maekrak-board-sch select,
+.maekrak-board-sch input[type="text"] {
+    min-height: 44px;
+    padding: 0 12px;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.maekrak-board-sch input[type="text"] {
+    flex: 1;
+    min-width: 160px;
+}
+
+/* 글보기 */
+.maekrak-board-article {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 var(--maekrak-gutter-m, 20px) 48px;
+}
+
+.maekrak-board-article-head {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.maekrak-board-article-title {
+    margin: 12px 0 16px;
+    font-size: clamp(1.5rem, 3.5vw, 2rem);
+    font-weight: 700;
+    line-height: 1.4;
+    color: #111;
+}
+
+.maekrak-board-article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.maekrak-board-article-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.maekrak-board-article-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.maekrak-board-content {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: #333;
+}
+
+.maekrak-board-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.maekrak-board-content h2,
+.maekrak-board-content h3 {
+    margin-top: 1.5em;
+    color: #002B5B;
+}
+
+.maekrak-board-nav-posts {
+    display: grid;
+    gap: 12px;
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.maekrak-board-nav-post {
+    display: block;
+    padding: 16px 20px;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.maekrak-board-nav-post:hover {
+    border-color: #002B5B;
+}
+
+.maekrak-board-nav-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: #002B5B;
+    margin-bottom: 4px;
+}
+
+.maekrak-board-nav-subject {
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+}
+
+.maekrak-board-cta {
+    background: #002B5B;
+    color: #fff;
+    padding: 48px 0 56px;
+}
+
+.maekrak-board-cta-inner {
+    text-align: center;
+}
+
+.maekrak-board-cta-title {
+    margin: 0 0 24px;
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 700;
+}
+
+.maekrak-board-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+/* 글쓰기 (basic 스킨 구조 보정) */
+body.maekrak-site--blog #bo_w {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 24px var(--maekrak-gutter-m, 20px) 48px;
+}
+
+body.maekrak-site--blog #bo_w .write_div {
+    margin-bottom: 16px;
+}
+
+body.maekrak-site--blog #bo_w .frm_input,
+body.maekrak-site--blog #bo_w select,
+body.maekrak-site--blog #bo_w textarea {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 8px;
+    border-color: #e5e5e5;
+}
+
+body.maekrak-site--blog #bo_w .btn_submit {
+    background: #002B5B;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 28px;
+    font-weight: 700;
+}
+
+@media (min-width: 1024px) {
+    .maekrak-board-hero-inner,
+    .maekrak-board-inner {
+        padding-left: var(--maekrak-gutter-d, 40px);
+        padding-right: var(--maekrak-gutter-d, 40px);
+    }
+
+    .maekrak-board-card-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .maekrak-board-hero-inner {
+        padding-top: 36px;
+        padding-bottom: 32px;
+    }
+
+    .maekrak-board-cta-actions .maekrak-btn-xl {
+        width: 100%;
+        justify-content: center;
+    }
+}
