@@ -17,8 +17,17 @@ if (!defined('MK_CLINIC_NAME')) {
     define('MK_BLOG_BOARD', 'blog');
     define('MK_RESERVE_URL', G5_BBS_URL . '/qalist.php');
     define('MK_KAKAO_URL', 'https://pf.kakao.com/');
-    define('MK_MAP_URL', 'https://map.kakao.com/');
+    /** 카카오맵 JavaScript 키 (비우면 관리자 환경설정 cf_kakao_js_apikey 사용) */
+    define('MK_KAKAO_MAP_APP_KEY', '');
+    define('MK_MAP_URL', 'https://map.kakao.com/link/search/' . rawurlencode('맥락한의원 서울시 중구 서소문로 134'));
 }
+
+$maekrak_local_config = dirname(__FILE__) . '/maekrak_local_config.php';
+if (is_file($maekrak_local_config)) {
+    include_once $maekrak_local_config;
+}
+
+include_once dirname(__FILE__) . '/map_embed.php';
 
 if (!function_exists('maekrak_condition_url')) {
     include_once dirname(__FILE__) . '/condition_data.php';

@@ -233,6 +233,7 @@ global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_app
                             <h3><i class="fa fa-map-marker" aria-hidden="true"></i> 오시는 길</h3>
                             <p><?php echo MK_CLINIC_ADDRESS; ?></p>
                             <span class="maekrak-info-badge"><?php echo MK_CLINIC_TRANSPORT; ?></span>
+                            <p class="maekrak-info-map-link"><a href="<?php echo maekrak_map_external_url(); ?>" target="_blank" rel="noopener noreferrer">카카오맵에서 위치 보기 <i class="fa fa-external-link" aria-hidden="true"></i></a></p>
                         </div>
                         <div class="maekrak-info-block">
                             <h3><i class="fa fa-clock-o" aria-hidden="true"></i> 진료시간</h3>
@@ -254,13 +255,7 @@ global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_app
                             <p><?php echo MK_CLINIC_PARKING; ?></p>
                         </div>
                     </div>
-                    <div class="maekrak-map-placeholder" role="img" aria-label="지도 영역">
-                        <div class="maekrak-map-placeholder-inner">
-                            <span class="maekrak-map-placeholder-icon"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
-                            <strong>맥락한의원 위치</strong>
-                            <p>카카오맵 연동 예정 · 서울시 중구 서소문로 134</p>
-                        </div>
-                    </div>
+                    <?php maekrak_render_kakao_map(); ?>
                 </div>
             </div>
         </div>
