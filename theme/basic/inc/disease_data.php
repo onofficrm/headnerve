@@ -102,7 +102,7 @@ function maekrak_diseases_handcrafted_data()
             'related' => array(
                 array('co_id' => 'cluster_headache', 'name' => '군발두통'),
                 array('co_id' => 'tension_headache', 'name' => '긴장형두통'),
-                array('co_id' => 'cervicogenic_headache', 'name' => '경추성두통'),
+                array('co_id' => 'cervicogenic_hd', 'name' => '경추성두통'),
             ),
             'blog_category' => '편두통',
         ),
@@ -168,7 +168,7 @@ function maekrak_diseases_handcrafted_data()
             'related' => array(
                 array('co_id' => 'migraine', 'name' => '편두통'),
                 array('co_id' => 'tension_headache', 'name' => '긴장형두통'),
-                array('co_id' => 'cervicogenic_headache', 'name' => '경추성두통'),
+                array('co_id' => 'cervicogenic_hd', 'name' => '경추성두통'),
             ),
             'blog_category' => '군발두통',
         ),
@@ -233,7 +233,7 @@ function maekrak_diseases_handcrafted_data()
                 ),
             ),
             'related' => array(
-                array('co_id' => 'orthostatic_hypotension', 'name' => '기립성저혈압'),
+                array('co_id' => 'orthostatic_hp', 'name' => '기립성저혈압'),
                 array('co_id' => 'panic_disorder', 'name' => '공황장애'),
                 array('co_id' => 'insomnia_disorder', 'name' => '불면'),
             ),
