@@ -27,27 +27,6 @@ if (!function_exists('maekrak_disease_url')) {
     include_once dirname(__FILE__) . '/disease_data.php';
 }
 
-$maekrak_nav_fallback = array(
-    array('name' => '맥락한의원', 'href' => G5_URL . '/#maekrak_philosophy'),
-    array('name' => '두통', 'href' => maekrak_condition_url('headache')),
-    array('name' => '어지럼증', 'href' => maekrak_condition_url('dizziness')),
-    array('name' => '자율신경', 'href' => maekrak_condition_url('autonomic')),
-    array('name' => '말초신경병증', 'href' => maekrak_condition_url('peripheral')),
-    array('name' => '브레인포그', 'href' => maekrak_condition_url('brainfog')),
-    array('name' => '치료 프로그램', 'href' => G5_URL . '/#maekrak_program'),
-    array('name' => '블로그', 'href' => G5_URL . '/#maekrak_blog'),
-    array('name' => '진료시간·오시는 길', 'href' => G5_URL . '/#maekrak_info'),
-);
-
-$maekrak_nav_primary = array(
-    array('name' => '브랜드 철학', 'href' => G5_URL . '/#maekrak_philosophy'),
-    array('name' => '진료과목', 'href' => G5_URL . '/#maekrak_dept', 'mega' => true),
-    array('name' => '치료 프로그램', 'href' => G5_URL . '/#maekrak_program'),
-    array('name' => '의료진', 'href' => G5_URL . '/#maekrak_doctor'),
-    array('name' => '블로그', 'href' => G5_URL . '/#maekrak_blog'),
-    array('name' => '오시는 길', 'href' => G5_URL . '/#maekrak_info'),
-);
-
 $maekrak_departments = array(
     array('id' => 'headache', 'title' => '두통', 'desc' => '편두통, 긴장형두통, 군발두통, 경추성두통을 통증 억제가 아닌 원인 분석의 관점에서 봅니다.', 'tags' => array('편두통', '긴장형두통', '경추성두통'), 'link' => maekrak_condition_url('headache')),
     array('id' => 'dizziness', 'title' => '어지럼증', 'desc' => '귀만 보는 것이 아니라 경추 고유수용성 감각과 자율신경 불균형을 함께 확인합니다.', 'tags' => array('현훈', '어지러움', '자율신경'), 'link' => maekrak_condition_url('dizziness')),

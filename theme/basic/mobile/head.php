@@ -8,6 +8,7 @@ if (G5_COMMUNITY_USE === false) {
 }
 
 include_once(G5_THEME_PATH . '/inc/site_config.php');
+include_once(G5_THEME_PATH . '/inc/menu_render.php');
 
 $maekrak_condition_page = null;
 $maekrak_disease_page = null;
@@ -42,6 +43,9 @@ foreach ($menu_datas as $row) {
         break;
     }
 }
+if ($use_fallback_nav) {
+    $menu_datas = maekrak_get_fallback_menu();
+}
 ?>
 
 <header id="maekrak_hd" class="maekrak-header maekrak-header--mobile maekrak-header--solid">
@@ -68,21 +72,7 @@ foreach ($menu_datas as $row) {
     <div id="maekrak_gnb_drawer" class="maekrak-gnb-drawer maekrak-gnb-drawer--full" hidden>
         <button type="button" class="maekrak-gnb-drawer-close" id="maekrak_gnb_close"><i class="fa fa-times"></i></button>
         <ul>
-            <?php if ($use_fallback_nav) {
-                global $maekrak_nav_primary, $maekrak_departments;
-                foreach ($maekrak_nav_primary as $link) { ?>
-            <li><a href="<?php echo $link['href']; ?>"><?php echo $link['name']; ?></a></li>
-            <?php }
-                foreach ($maekrak_departments as $dept) { ?>
-            <li class="maekrak-drawer-sub"><a href="<?php echo $dept['link']; ?>"><?php echo $dept['title']; ?></a></li>
-            <?php }
-            } else {
-                foreach ($menu_datas as $row) {
-                    if (empty($row)) continue;
-            ?>
-            <li><a href="<?php echo $row['me_link']; ?>" target="_<?php echo $row['me_target']; ?>"><?php echo $row['me_name']; ?></a></li>
-            <?php }
-            } ?>
+            <?php maekrak_render_drawer_menu($menu_datas); ?>
         </ul>
         <div class="maekrak-drawer-actions">
             <a href="<?php echo maekrak_tel_href(); ?>" class="maekrak-btn maekrak-btn-gray"><i class="fa fa-phone"></i> 전화상담</a>
