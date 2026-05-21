@@ -152,6 +152,108 @@
     margin-bottom: 32px;
 }
 
+.maekrak-blog-cards-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+@media (min-width: 640px) {
+    .maekrak-blog-cards-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.maekrak-blog-cards-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 14px;
+    overflow: hidden;
+    transition: box-shadow 0.2s var(--maekrak-ease, ease), transform 0.2s var(--maekrak-ease, ease);
+}
+
+.maekrak-blog-cards-link:hover {
+    box-shadow: 0 12px 32px rgba(0, 43, 91, 0.1);
+    transform: translateY(-2px);
+}
+
+.maekrak-blog-cards-thumb {
+    flex-shrink: 0;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--maekrak-gray-light, #F4F5F7);
+}
+
+.maekrak-blog-cards-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.maekrak-blog-cards-body {
+    padding: 20px 22px 22px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.maekrak-blog-cards-cat {
+    display: inline-block;
+    margin-bottom: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #002B5B;
+    letter-spacing: 0.04em;
+}
+
+.maekrak-blog-cards-subject {
+    margin: 0 0 10px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #002B5B;
+    line-height: 1.4;
+}
+
+.maekrak-blog-cards-summary {
+    margin: 0 0 14px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: #666;
+    flex: 1;
+}
+
+.maekrak-blog-cards-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: #8A92A6;
+}
+
+.maekrak-blog-cards-read {
+    font-weight: 600;
+    color: #002B5B;
+}
+
+.maekrak-blog-cards-empty {
+    grid-column: 1 / -1;
+    padding: 48px 24px;
+    text-align: center;
+    color: #8A92A6;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px dashed #e5e5e5;
+}
+
 .maekrak-board-paging {
     margin-top: 32px;
     text-align: center;

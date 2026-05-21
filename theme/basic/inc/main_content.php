@@ -28,23 +28,18 @@ global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_app
                             <a href="#maekrak_dept" class="maekrak-btn maekrak-btn-outline maekrak-btn-xl">진료과목 안내</a>
                         </div>
                     </div>
-                    <div class="maekrak-hero-visual" aria-hidden="true">
-                        <div class="maekrak-hero-visual-panel">
-                            <span class="maekrak-hero-visual-mesh"></span>
-                            <span class="maekrak-hero-visual-orb maekrak-hero-visual-orb--a"></span>
-                            <span class="maekrak-hero-visual-orb maekrak-hero-visual-orb--b"></span>
-                            <span class="maekrak-hero-visual-arc"></span>
-                            <div class="maekrak-hero-visual-glow"></div>
-                            <div class="maekrak-hero-visual-ring maekrak-hero-visual-ring--1"></div>
-                            <div class="maekrak-hero-visual-ring maekrak-hero-visual-ring--2"></div>
-                            <div class="maekrak-hero-visual-line"></div>
-                            <ul class="maekrak-hero-keywords">
-                                <li>두개경추</li>
-                                <li>자율신경</li>
-                                <li>뇌 에너지</li>
-                            </ul>
-                            <p class="maekrak-hero-visual-caption">Functional Neuro · Structural Care</p>
-                        </div>
+                    <div class="maekrak-hero-visual">
+                        <?php
+                        $mk_home_hero = defined('MK_HERO_HOME') ? maekrak_hero_img_url(MK_HERO_HOME) : maekrak_hero_img_url('home');
+                        maekrak_render_hero_visual(array(
+                            'context' => 'home',
+                            'image_url' => $mk_home_hero,
+                            'alt' => MK_CLINIC_NAME,
+                            'keywords' => array('두개경추', '자율신경', '뇌 에너지'),
+                            'decorative' => true,
+                            'fetchpriority' => true,
+                        ));
+                        ?>
                     </div>
                 </div>
             </div>
@@ -173,17 +168,7 @@ global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_app
                     <h2 class="maekrak-section-title maekrak-section-title--lg">두통과 신경계를 <strong>설명하는 한의사</strong></h2>
                     <p class="maekrak-section-desc maekrak-section-desc--italic">환자가 이해할 수 있는 설명, 지속가능한 치료, 해가 되지 않는 치료를 중요하게 생각합니다.</p>
                 </header>
-                <ul class="maekrak-doctor-grid">
-                    <?php foreach ($maekrak_doctors as $doc) { ?>
-                    <li class="maekrak-doctor-card">
-                        <div class="maekrak-doctor-photo"><i class="fa fa-user-md" aria-hidden="true"></i></div>
-                        <h3><?php echo $doc['name']; ?> <span><?php echo $doc['title']; ?></span></h3>
-                        <p class="maekrak-doctor-divider"></p>
-                        <p class="maekrak-doctor-field">주요 진료: <?php echo $doc['field']; ?></p>
-                        <a href="<?php echo get_pretty_url('content', 'company'); ?>" class="maekrak-btn maekrak-btn-pill">프로필 보기</a>
-                    </li>
-                    <?php } ?>
-                </ul>
+                <?php maekrak_render_doctor_grid('maekrak-doctor-grid'); ?>
             </div>
         </div>
     </section>

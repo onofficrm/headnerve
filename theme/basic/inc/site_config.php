@@ -26,6 +26,8 @@ if (!defined('MK_CLINIC_NAME')) {
     define('MK_MAP_URL', 'https://map.kakao.com/link/search/' . rawurlencode('맥락한의원 서울시 중구 서소문로 134'));
     define('MK_OG_IMAGE_URL', G5_THEME_URL . '/img/og-maekrak.svg');
     define('MK_SITEMAP_URL', G5_THEME_URL . '/sitemap_maekrak.php');
+    /** 홈 히어로 이미지 basename (theme/basic/img/hero/{name}.svg|jpg) */
+    define('MK_HERO_HOME', 'home');
 }
 
 $maekrak_local_config = dirname(__FILE__) . '/maekrak_local_config.php';
@@ -34,6 +36,7 @@ if (is_file($maekrak_local_config)) {
 }
 
 include_once dirname(__FILE__) . '/map_embed.php';
+include_once dirname(__FILE__) . '/hero_helper.php';
 
 if (!function_exists('maekrak_condition_url')) {
     include_once dirname(__FILE__) . '/condition_data.php';
@@ -83,8 +86,8 @@ $maekrak_programs = array(
 );
 
 $maekrak_doctors = array(
-    array('name' => '이재성', 'title' => '대표원장', 'field' => '두통, 어지럼증, 자율신경'),
-    array('name' => '김윤서', 'title' => '원장', 'field' => '말초신경병증, 브레인포그'),
+    array('name' => '이재성', 'title' => '대표원장', 'field' => '두통, 어지럼증, 자율신경', 'photo' => ''),
+    array('name' => '김윤서', 'title' => '원장', 'field' => '말초신경병증, 브레인포그', 'photo' => ''),
 );
 
 $maekrak_home_meta = array(
@@ -105,4 +108,42 @@ function maekrak_reserve_link_attr()
     return (defined('MK_RESERVE_URL') && preg_match('#^https?://#i', MK_RESERVE_URL))
         ? ' target="_blank" rel="noopener noreferrer"'
         : '';
+}
+
+/** 의료진 카드 그리드 (photo URL 있으면 실사진, 없으면 아이콘) */
+function maekrak_render_doctor_grid($grid_class = 'maekrak-doctor-grid')
+{
+    global $maekrak_doctors;
+    if (empty($maekrak_doctors) || !is_array($maekrak_doctors)) {
+        return;
+    }
+    $profile_url = get_pretty_url('content', 'company');
+    echo '<ul class="' . htmlspecialchars($grid_class, ENT_QUOTES, 'UTF-8') . '">';
+    foreach ($maekrak_doctors as $doc) {
+        $photo = '';
+        if (!empty($doc['photo'])) {
+            if (preg_match('#^https?://#i', $doc['photo'])) {
+                $photo = $doc['photo'];
+            } else {
+                $basename = preg_replace('/[^a-z0-9_\-\.]/i', '', $doc['photo']);
+                $path = G5_THEME_PATH . '/img/doctors/' . $basename;
+                if (is_file($path)) {
+                    $photo = G5_THEME_URL . '/img/doctors/' . $basename;
+                }
+            }
+        }
+        $photo_class = $photo ? ' maekrak-doctor-photo--has-img' : '';
+        echo '<li class="maekrak-doctor-card">';
+        echo '<div class="maekrak-doctor-photo' . $photo_class . '" role="img" aria-label="' . htmlspecialchars($doc['name'] . ' ' . $doc['title'], ENT_QUOTES, 'UTF-8') . '">';
+        if ($photo) {
+            echo '<img src="' . htmlspecialchars($photo, ENT_QUOTES, 'UTF-8') . '" alt="" width="120" height="120" loading="lazy">';
+        }
+        echo '<i class="fa fa-user-md" aria-hidden="true"></i></div>';
+        echo '<h3>' . $doc['name'] . ' <span>' . $doc['title'] . '</span></h3>';
+        echo '<p class="maekrak-doctor-divider"></p>';
+        echo '<p class="maekrak-doctor-field">주요 진료: ' . $doc['field'] . '</p>';
+        echo '<a href="' . $profile_url . '" class="maekrak-btn maekrak-btn-pill">프로필 보기</a>';
+        echo '</li>';
+    }
+    echo '</ul>';
 }

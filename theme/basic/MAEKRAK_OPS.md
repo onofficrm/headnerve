@@ -9,8 +9,16 @@
 | `MK_RESERVE_URL` | [네이버 예약](https://m.booking.naver.com/booking/13/bizes/1120036) |
 | `MK_KAKAO_URL` | [카카오톡 채널](https://pf.kakao.com/_PxdavG/chat) |
 | `MK_KAKAO_MAP_APP_KEY` | 카카오맵 JS 키 (또는 관리자 `cf_kakao_js_apikey`) |
+| `MK_HERO_HOME` | 홈 히어로 이미지 basename (`img/hero/home.svg` 등) |
 
 서버 전용 override: `inc/maekrak_local_config.php` (git 제외 권장)
+
+## 히어로·에셋 (10차)
+
+- **경로**: `theme/basic/img/hero/` — `home`, `headache`, `dizziness`, `autonomic`, `peripheral`, `brainfog` (SVG placeholder, JPG/WebP로 교체 가능)
+- **의료진 사진**: `theme/basic/img/doctors/` — `site_config.php` `$maekrak_doctors[].photo`에 파일명 (예: `lee.jpg`)
+- **1층 FAQ**: `condition_data.php` · JSON-LD `inc/faq_jsonld.php`
+- **2층 builder**: `hero_variant` + parent별 accent (`--maekrak-dis-accent`)
 
 ## 페이지 구조
 
@@ -44,6 +52,15 @@ macOS `._*` 파일이 있으면 `git restore` 후 push.
 ## 2층 수작업 보강 (9차)
 
 수작업 상세: 편두통, 군발두통, 자율신경실조 + 긴장형, 경추성두통, 경추성어지럼, 공황, 당뇨성신경, 장기코로나 브레인포그 (총 9개)
+
+## 10차 QA 체크리스트
+
+- [ ] 홈·1층 5·2층 23: 히어로 이미지 표시, 없을 때 CSS fallback
+- [ ] 1층 5개: FAQ 아코디언 + FAQPage JSON-LD
+- [ ] 2층 builder 14개: parent별 accent·variant 구분
+- [ ] 블로그 목록: 썸네일 없을 때 카테고리별 기본 이미지
+- [ ] 의료진: `img/doctors/` 실사진 교체 시 카드 반영
+- [ ] 모바일: 히어로·FAQ·블로그 카드 레이아웃
 
 ## 런칭 체크리스트
 

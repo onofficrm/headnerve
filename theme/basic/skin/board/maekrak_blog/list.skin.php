@@ -1,6 +1,7 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
 
+include_once G5_THEME_PATH . '/inc/hero_helper.php';
 add_stylesheet('<link rel="stylesheet" href="' . $board_skin_url . '/style.css">', 0);
 
 $list_count = is_array($list) ? count($list) : 0;
@@ -71,6 +72,13 @@ $list_count = is_array($list) ? count($list) : 0;
                         $summary = cut_str(strip_tags($list[$i]['content']), 120);
                     }
                     $cate = !empty($list[$i]['ca_name']) ? $list[$i]['ca_name'] : $board['bo_subject'];
+                    $thumb_url = '';
+                    if (!empty($list[$i]['file']['count']) && !empty($list[$i]['file'][0]['path']) && !empty($list[$i]['file'][0]['file'])) {
+                        $thumb_url = $list[$i]['file'][0]['path'] . '/' . $list[$i]['file'][0]['file'];
+                    }
+                    if ($thumb_url === '') {
+                        $thumb_url = maekrak_blog_default_thumb_url($cate);
+                    }
                 ?>
                     <li class="maekrak-blog-cards-item">
                         <?php if ($is_checkbox) { ?>
@@ -80,6 +88,11 @@ $list_count = is_array($list) ? count($list) : 0;
                         </label>
                         <?php } ?>
                         <a href="<?php echo $wr_href; ?>" class="maekrak-blog-cards-link">
+                            <?php if ($thumb_url) { ?>
+                            <div class="maekrak-blog-cards-thumb">
+                                <img src="<?php echo htmlspecialchars($thumb_url, ENT_QUOTES, 'UTF-8'); ?>" alt="" width="280" height="175" loading="lazy">
+                            </div>
+                            <?php } ?>
                             <div class="maekrak-blog-cards-body">
                                 <span class="maekrak-blog-cards-cat"><?php echo $cate; ?></span>
                                 <h2 class="maekrak-blog-cards-subject"><?php echo $subject; ?></h2>

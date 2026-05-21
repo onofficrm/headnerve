@@ -140,6 +140,8 @@ function maekrak_build_disease_from_subtype($parent, $subtype, $co_id)
         'page_name' => $name,
         'parent_co_id' => $parent_id,
         'parent_name' => $parent_name,
+        'hero_image' => $parent_id,
+        'hero_variant' => $parent_id . '-' . $subtype['slug'],
         'hero_copy' => '반복되는 ' . $name . ', 원인을 함께 확인해야 합니다',
         'hero_desc' => '맥락한의원은 ' . $name . '을 단순 증상이 아니라 ' . $profile['view_extra'] . '의 관점에서 분석합니다. ' . $subtype['desc'],
         'visual_keywords' => $profile['visual'],

@@ -4,6 +4,8 @@ if (!defined('_GNUBOARD_')) exit;
 include_once G5_THEME_PATH . '/inc/disease_data.php';
 include_once G5_THEME_PATH . '/inc/condition_data.php';
 include_once G5_THEME_PATH . '/inc/blog_latest.php';
+include_once G5_THEME_PATH . '/inc/hero_helper.php';
+include_once G5_THEME_PATH . '/inc/faq_jsonld.php';
 
 function maekrak_render_disease_page($page)
 {
@@ -18,8 +20,11 @@ function maekrak_render_disease_page($page)
     $reserve_url = defined('MK_RESERVE_URL') ? MK_RESERVE_URL : (G5_BBS_URL . '/qalist.php');
     $info_url = G5_URL . '/#maekrak_info';
     $dept_list_url = G5_URL . '/#maekrak_dept';
+    $dis_accent = maekrak_disease_accent($page['parent_co_id']);
+    $dis_hero_img = maekrak_hero_image_for_page($page);
+    $dis_variant = maekrak_hero_variant_class($page);
     ?>
-<main class="maekrak-dis" id="maekrak_dis_<?php echo $co_id; ?>">
+<main class="maekrak-dis maekrak-dis--<?php echo $page['parent_co_id']; ?> <?php echo $dis_variant; ?>" id="maekrak_dis_<?php echo $co_id; ?>" style="--maekrak-dis-accent: <?php echo $dis_accent; ?>;">
     <!-- 1. 서브 히어로 -->
     <section class="maekrak-dis-hero" aria-labelledby="maekrak_dis_hero_title">
         <div class="maekrak-dis-hero-inner">
@@ -41,12 +46,17 @@ function maekrak_render_disease_page($page)
                         <a href="<?php echo $parent_url; ?>" class="maekrak-btn maekrak-btn-outline maekrak-btn-xl">상위 진료과목 보기</a>
                     </div>
                 </div>
-                <div class="maekrak-dis-hero-visual" aria-hidden="true">
-                    <div class="maekrak-dis-hero-visual-card">
-                        <?php foreach ($page['visual_keywords'] as $kw) { ?>
-                        <span><?php echo $kw; ?></span>
-                        <?php } ?>
-                    </div>
+                <div class="maekrak-dis-hero-visual">
+                    <?php
+                    maekrak_render_hero_visual(array(
+                        'context' => 'disease',
+                        'image_url' => $dis_hero_img,
+                        'alt' => $page['page_name'],
+                        'keywords' => $page['visual_keywords'],
+                        'decorative' => true,
+                        'variant_class' => $dis_variant,
+                    ));
+                    ?>
                 </div>
             </div>
         </div>
@@ -163,7 +173,7 @@ function maekrak_render_disease_page($page)
                 </details>
                 <?php } ?>
             </div>
-            <?php maekrak_render_disease_faq_jsonld($page['faq']); ?>
+            <?php maekrak_render_faq_jsonld($page['faq']); ?>
         </div>
     </section>
 
@@ -215,23 +225,7 @@ function maekrak_render_disease_page($page)
                 <h2 id="maekrak_dis_byline_title" class="sound_only">의료진 감수</h2>
                 <p class="maekrak-dis-byline-lead">이 페이지는 맥락한의원 의료진의 진료 관점과 치료 경험을 바탕으로 작성되었습니다.</p>
             </header>
-            <ul class="maekrak-doctor-grid maekrak-dis-byline-grid">
-                <?php
-                if (!isset($maekrak_doctors)) {
-                    include_once G5_THEME_PATH . '/inc/site_config.php';
-                }
-                foreach ($maekrak_doctors as $doc) {
-                    $profile_url = get_pretty_url('content', 'company');
-                    ?>
-                <li class="maekrak-doctor-card">
-                    <div class="maekrak-doctor-photo" role="img" aria-label="<?php echo $doc['name']; ?> <?php echo $doc['title']; ?>"><i class="fa fa-user-md" aria-hidden="true"></i></div>
-                    <h3><?php echo $doc['name']; ?> <span><?php echo $doc['title']; ?></span></h3>
-                    <p class="maekrak-doctor-divider"></p>
-                    <p class="maekrak-doctor-field">주요 진료: <?php echo $doc['field']; ?></p>
-                    <a href="<?php echo $profile_url; ?>" class="maekrak-btn maekrak-btn-pill">프로필 보기</a>
-                </li>
-                <?php } ?>
-            </ul>
+            <?php maekrak_render_doctor_grid('maekrak-doctor-grid maekrak-dis-byline-grid'); ?>
         </div>
     </section>
 
@@ -248,32 +242,6 @@ function maekrak_render_disease_page($page)
     </section>
 </main>
     <?php
-}
-
-function maekrak_render_disease_faq_jsonld($faq_list)
-{
-    if (empty($faq_list) || !is_array($faq_list)) {
-        return;
-    }
-
-    $entities = array();
-    foreach ($faq_list as $faq) {
-        $entities[] = array(
-            '@type' => 'Question',
-            'name' => $faq['q'],
-            'acceptedAnswer' => array(
-                '@type' => 'Answer',
-                'text' => $faq['a'],
-            ),
-        );
-    }
-
-    $json = array(
-        '@context' => 'https://schema.org',
-        '@type' => 'FAQPage',
-        'mainEntity' => $entities,
-    );
-    echo '<script type="application/ld+json">' . json_encode($json, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . '</script>';
 }
 
 function maekrak_render_disease_blog($page)

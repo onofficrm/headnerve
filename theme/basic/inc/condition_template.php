@@ -4,7 +4,8 @@ if (!defined('_GNUBOARD_')) exit;
 include_once G5_THEME_PATH . '/inc/condition_data.php';
 include_once G5_THEME_PATH . '/inc/blog_latest.php';
 include_once G5_THEME_PATH . '/inc/disease_data.php';
-include_once G5_THEME_PATH . '/inc/disease_data.php';
+include_once G5_THEME_PATH . '/inc/hero_helper.php';
+include_once G5_THEME_PATH . '/inc/faq_jsonld.php';
 
 function maekrak_render_condition_page($page)
 {
@@ -18,8 +19,10 @@ function maekrak_render_condition_page($page)
     $dept_list_url = G5_URL . '/#maekrak_dept';
     $reserve_url = defined('MK_RESERVE_URL') ? MK_RESERVE_URL : (G5_BBS_URL . '/qalist.php');
     $info_url = G5_URL . '/#maekrak_info';
+    $cond_accent = maekrak_condition_accent($co_id);
+    $cond_hero_img = maekrak_hero_image_for_page($page);
     ?>
-<main class="maekrak-cond" id="maekrak_cond_<?php echo $co_id; ?>">
+<main class="maekrak-cond" id="maekrak_cond_<?php echo $co_id; ?>" style="--maekrak-cond-accent: <?php echo $cond_accent; ?>;">
     <!-- 1. 서브 히어로 -->
     <section class="maekrak-cond-hero" aria-labelledby="maekrak_cond_hero_title">
         <div class="maekrak-cond-hero-inner">
@@ -40,12 +43,16 @@ function maekrak_render_condition_page($page)
                         <a href="#maekrak_cond_subtypes" class="maekrak-btn maekrak-btn-outline maekrak-btn-xl">하위 질환 보기</a>
                     </div>
                 </div>
-                <div class="maekrak-cond-hero-visual" aria-hidden="true">
-                    <div class="maekrak-cond-hero-visual-card">
-                        <?php foreach ($page['visual_keywords'] as $kw) { ?>
-                        <span><?php echo $kw; ?></span>
-                        <?php } ?>
-                    </div>
+                <div class="maekrak-cond-hero-visual">
+                    <?php
+                    maekrak_render_hero_visual(array(
+                        'context' => 'condition',
+                        'image_url' => $cond_hero_img,
+                        'alt' => $page['page_name'] . ' 진료',
+                        'keywords' => $page['visual_keywords'],
+                        'decorative' => true,
+                    ));
+                    ?>
                 </div>
             </div>
         </div>
@@ -167,7 +174,29 @@ function maekrak_render_condition_page($page)
         </div>
     </section>
 
-    <!-- 7. 관련 블로그 -->
+    <?php if (!empty($page['faq'])) { ?>
+    <!-- 7. FAQ -->
+    <section class="maekrak-cond-section maekrak-cond-faq" aria-labelledby="maekrak_cond_faq_title">
+        <div class="maekrak-cond-inner maekrak-cond-inner--narrow">
+            <header class="maekrak-cond-head">
+                <h2 id="maekrak_cond_faq_title" class="maekrak-cond-title">자주 묻는 질문</h2>
+            </header>
+            <div class="maekrak-cond-faq-list" itemscope itemtype="https://schema.org/FAQPage">
+                <?php foreach ($page['faq'] as $i => $faq) { ?>
+                <details class="maekrak-cond-faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question"<?php echo $i === 0 ? ' open' : ''; ?>>
+                    <summary itemprop="name"><?php echo $faq['q']; ?></summary>
+                    <div class="maekrak-cond-faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <p itemprop="text"><?php echo $faq['a']; ?></p>
+                    </div>
+                </details>
+                <?php } ?>
+            </div>
+            <?php maekrak_render_faq_jsonld($page['faq']); ?>
+        </div>
+    </section>
+    <?php } ?>
+
+    <!-- 8. 관련 블로그 -->
     <section class="maekrak-cond-section maekrak-cond-blog" aria-labelledby="maekrak_cond_blog_title">
         <div class="maekrak-cond-inner">
             <header class="maekrak-cond-head">
@@ -177,34 +206,18 @@ function maekrak_render_condition_page($page)
         </div>
     </section>
 
-    <!-- 8. Byline -->
+    <!-- 9. Byline -->
     <section class="maekrak-cond-section maekrak-cond-byline" aria-labelledby="maekrak_cond_byline_title">
         <div class="maekrak-cond-inner">
             <header class="maekrak-cond-head maekrak-cond-head--center">
                 <h2 id="maekrak_cond_byline_title" class="maekrak-cond-title sound_only">의료진 감수</h2>
                 <p class="maekrak-cond-byline-lead">이 페이지는 맥락한의원 의료진의 진료 관점과 치료 경험을 바탕으로 작성되었습니다.</p>
             </header>
-            <ul class="maekrak-doctor-grid maekrak-cond-byline-grid">
-                <?php
-                if (!isset($maekrak_doctors)) {
-                    include_once G5_THEME_PATH . '/inc/site_config.php';
-                }
-                foreach ($maekrak_doctors as $doc) {
-                    $profile_url = get_pretty_url('content', 'company');
-                    ?>
-                <li class="maekrak-doctor-card">
-                    <div class="maekrak-doctor-photo" role="img" aria-label="<?php echo $doc['name']; ?> <?php echo $doc['title']; ?>"><i class="fa fa-user-md" aria-hidden="true"></i></div>
-                    <h3><?php echo $doc['name']; ?> <span><?php echo $doc['title']; ?></span></h3>
-                    <p class="maekrak-doctor-divider"></p>
-                    <p class="maekrak-doctor-field">주요 진료: <?php echo $doc['field']; ?></p>
-                    <a href="<?php echo $profile_url; ?>" class="maekrak-btn maekrak-btn-pill">프로필 보기</a>
-                </li>
-                <?php } ?>
-            </ul>
+            <?php maekrak_render_doctor_grid('maekrak-doctor-grid maekrak-cond-byline-grid'); ?>
         </div>
     </section>
 
-    <!-- 9. CTA -->
+    <!-- 10. CTA -->
     <section id="maekrak_cond_cta" class="maekrak-cond-section maekrak-cond-cta" aria-labelledby="maekrak_cond_cta_title">
         <div class="maekrak-cond-cta-inner">
             <h2 id="maekrak_cond_cta_title" class="maekrak-cond-cta-title">반복되는 증상, <strong>이제 원인을 확인해보세요</strong></h2>
@@ -216,10 +229,6 @@ function maekrak_render_condition_page($page)
         </div>
     </section>
 
-    <!-- FAQ 스키마 구조만 준비 (2층 상세에서 확장) -->
-    <script type="application/ld+json" class="maekrak-cond-faq-placeholder">
-    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[]}
-    </script>
 </main>
     <?php
 }

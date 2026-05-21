@@ -4045,3 +4045,170 @@ body.maekrak-site--disease #ctt_con {
         font-size: 2rem;
     }
 }
+
+/* ===== 10차: 히어로 이미지·accent·variant ===== */
+.maekrak-hero-visual-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 540px;
+    margin: 0 auto;
+}
+
+.maekrak-hero-visual-wrap--condition,
+.maekrak-hero-visual-wrap--disease {
+    max-width: 100%;
+}
+
+.maekrak-hero-visual-photo {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    min-height: 220px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 16px 48px rgba(0, 43, 91, 0.12);
+}
+
+.maekrak-hero-visual-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.maekrak-hero-visual-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(0, 43, 91, 0.35) 100%);
+    pointer-events: none;
+}
+
+.maekrak-hero-visual-wrap--has-img .maekrak-hero-visual-fallback {
+    display: none;
+}
+
+.maekrak-hero-visual-wrap:not(.maekrak-hero-visual-wrap--has-img) .maekrak-hero-visual-photo {
+    display: none;
+}
+
+.maekrak-cond {
+    --maekrak-cond-accent: var(--maekrak-navy);
+}
+
+.maekrak-cond-hero {
+    background: linear-gradient(
+        135deg,
+        var(--maekrak-ivory) 0%,
+        #fff 45%,
+        color-mix(in srgb, var(--maekrak-cond-accent) 12%, #fff) 100%
+    );
+}
+
+.maekrak-cond-hero-label {
+    color: var(--maekrak-cond-accent);
+}
+
+.maekrak-cond-subtype-card {
+    border-top: 3px solid var(--maekrak-cond-accent);
+}
+
+.maekrak-dis {
+    --maekrak-dis-accent: var(--maekrak-navy);
+}
+
+.maekrak-dis-hero {
+    background: linear-gradient(
+        160deg,
+        #fff 0%,
+        var(--maekrak-ivory) 40%,
+        color-mix(in srgb, var(--maekrak-dis-accent) 10%, var(--maekrak-gray-light)) 100%
+    );
+}
+
+.maekrak-dis-hero-visual-card span {
+    background: var(--maekrak-dis-accent);
+}
+
+.maekrak-dis-variant--headache-medication .maekrak-dis-hero-visual-card,
+.maekrak-dis-variant--headache-pediatric .maekrak-dis-hero-visual-card,
+.maekrak-dis-variant--headache-menstrual .maekrak-dis-hero-visual-card,
+.maekrak-dis-variant--headache-student .maekrak-dis-hero-visual-card {
+    border: 2px solid color-mix(in srgb, var(--maekrak-dis-accent) 35%, transparent);
+}
+
+.maekrak-dis-variant--dizziness-meniere .maekrak-dis-hero-visual-card,
+.maekrak-dis-variant--dizziness-bppv .maekrak-dis-hero-visual-card,
+.maekrak-dis-variant--dizziness-vestibular .maekrak-dis-hero-visual-card {
+    border: 2px solid color-mix(in srgb, var(--maekrak-dis-accent) 35%, transparent);
+}
+
+.maekrak-dis-variant--autonomic-orthostatic .maekrak-dis-hero-visual-card,
+.maekrak-dis-variant--autonomic-anxiety .maekrak-dis-hero-visual-card,
+.maekrak-dis-variant--autonomic-insomnia .maekrak-dis-hero-visual-card {
+    border: 2px solid color-mix(in srgb, var(--maekrak-dis-accent) 35%, transparent);
+}
+
+.maekrak-dis-variant--brainfog-fatigue .maekrak-dis-hero-visual-card,
+.maekrak-dis-variant--brainfog-sleep .maekrak-dis-hero-visual-card {
+    border: 2px solid color-mix(in srgb, var(--maekrak-dis-accent) 35%, transparent);
+}
+
+@media (max-width: 899px) {
+    .maekrak-hero-visual-photo {
+        min-height: 200px;
+        border-radius: 16px;
+    }
+
+    .maekrak-cond-hero-grid .maekrak-hero-visual-wrap,
+    .maekrak-dis-hero-grid .maekrak-hero-visual-wrap {
+        order: -1;
+    }
+}
+
+/* 의료진 사진 */
+.maekrak-doctor-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.maekrak-doctor-photo--has-img i {
+    display: none;
+}
+
+/* 1층 FAQ (condition) */
+.maekrak-cond-faq .maekrak-cond-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.maekrak-cond-faq-item {
+    border: 1px solid var(--maekrak-border);
+    border-radius: 12px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.maekrak-cond-faq-item summary {
+    padding: 18px 22px;
+    font-weight: 600;
+    color: var(--maekrak-navy);
+    cursor: pointer;
+    list-style: none;
+}
+
+.maekrak-cond-faq-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.maekrak-cond-faq-answer {
+    padding: 0 22px 18px;
+    color: var(--maekrak-text);
+    line-height: 1.75;
+}
+
+.maekrak-cond-faq-answer p {
+    margin: 0;
+}
