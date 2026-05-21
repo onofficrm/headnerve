@@ -38,7 +38,9 @@ function maekrak_disease_co_id_for_subtype($parent_co_id, $slug)
 
 function maekrak_diseases_handcrafted_data()
 {
-    return array(
+    include_once G5_THEME_PATH . '/inc/disease_handcrafted_extra.php';
+
+    $core = array(
         'migraine' => array(
             'co_id' => 'migraine',
             'page_name' => '편두통',
@@ -240,6 +242,8 @@ function maekrak_diseases_handcrafted_data()
             'blog_category' => '자율신경',
         ),
     );
+
+    return array_merge(maekrak_diseases_handcrafted_extra(), $core);
 }
 
 function maekrak_diseases_data()

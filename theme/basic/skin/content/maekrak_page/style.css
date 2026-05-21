@@ -1,0 +1,52 @@
+@charset "utf-8";
+
+.maekrak-static-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+}
+
+.maekrak-static-head h1 {
+    margin: 0 0 32px;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--maekrak-navy, #002B5B);
+    letter-spacing: -0.02em;
+}
+
+.maekrak-static-body {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--maekrak-text, #333);
+}
+
+.maekrak-static-body h2 {
+    margin: 40px 0 16px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--maekrak-navy, #002B5B);
+}
+
+.maekrak-static-body p {
+    margin: 0 0 16px;
+}
+
+.maekrak-static-body ul {
+    margin: 0 0 16px;
+    padding-left: 1.25em;
+}
+
+.maekrak-static-note {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+@media (max-width: 768px) {
+    .maekrak-static-page {
+        padding: 32px 20px 64px;
+    }
+
+    .maekrak-static-head h1 {
+        font-size: 22px;
+    }
+}

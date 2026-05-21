@@ -63,6 +63,7 @@ if (!empty($mk_meta)) {
     $mk_desc = get_text($mk_meta['meta_description']);
     $mk_canonical = $mk_meta['canonical'];
     $mk_og_title = get_text($mk_meta['meta_title']);
+    $mk_og_image = (defined('MK_OG_IMAGE_URL') && MK_OG_IMAGE_URL) ? MK_OG_IMAGE_URL : '';
 ?>
 <meta name="description" content="<?php echo $mk_desc; ?>">
 <link rel="canonical" href="<?php echo $mk_canonical; ?>">
@@ -70,6 +71,13 @@ if (!empty($mk_meta)) {
 <meta property="og:title" content="<?php echo $mk_og_title; ?>">
 <meta property="og:description" content="<?php echo $mk_desc; ?>">
 <meta property="og:url" content="<?php echo $mk_canonical; ?>">
+<?php if ($mk_og_image) { ?>
+<meta property="og:image" content="<?php echo $mk_og_image; ?>">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="<?php echo $mk_og_image; ?>">
+<?php } ?>
 <?php } ?>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

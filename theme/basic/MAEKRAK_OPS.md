@@ -31,13 +31,29 @@ git ftp push   # ftp://headnerve.iwinv.net/public_html/
 
 macOS `._*` 파일이 있으면 `git restore` 후 push.
 
+## SEO (9차)
+
+- **OG 이미지**: `theme/basic/img/og-maekrak.svg` · `MK_OG_IMAGE_URL`
+- **사이트맵**: [theme/basic/sitemap_maekrak.php](sitemap_maekrak.php) — Search Console·네이버 서치어드바이저에 URL 제출
+- **카카오맵 키**: [Kakao Developers](https://developers.kakao.com) → 앱 키 → **플랫폼**에 `headnerve.iwinv.net` 등록. 코드 키는 `maekrak_local_config.php`로 옮기는 것을 권장
+
+## 정적 페이지 (9차)
+
+- `company` · `privacy` · `provision` — 스킨 `theme/maekrak_page` (install 1회 등록)
+
+## 2층 수작업 보강 (9차)
+
+수작업 상세: 편두통, 군발두통, 자율신경실조 + 긴장형, 경추성두통, 경추성어지럼, 공황, 당뇨성신경, 장기코로나 브레인포그 (총 9개)
+
 ## 런칭 체크리스트
 
 - [ ] 홈: 지도·네이버 예약·카카오톡 버튼
 - [ ] GNB: 진료과목 2단·블로그 URL
 - [ ] 1층 5개 + 2층 23개 URL 200 및 본문 표시
-- [ ] 블로그 샘플/실제 글·카테고리 매칭
+- [ ] 블로그 샘플/실제 글·카테고리 매칭 (샘플 최대 19건)
+- [ ] 푸터: 소개·개인정보·이용약관 페이지
 - [ ] 모바일 하단 CTA (예약·전화·카카오)
+- [ ] 사이트맵 제출
 - [ ] 관리자: install 스크립트 삭제 여부
 
 ## 블로그 카테고리

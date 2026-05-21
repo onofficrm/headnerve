@@ -17,9 +17,15 @@ if (!defined('MK_CLINIC_NAME')) {
     define('MK_BLOG_BOARD', 'blog');
     define('MK_RESERVE_URL', 'https://m.booking.naver.com/booking/13/bizes/1120036?theme=place&service-target=map-pc&lang=ko&area=plt&map-search=1');
     define('MK_KAKAO_URL', 'https://pf.kakao.com/_PxdavG/chat');
-    /** 카카오맵 JavaScript 키 (비우면 관리자 환경설정 cf_kakao_js_apikey 사용) */
-    define('MK_KAKAO_MAP_APP_KEY', 'a99bd18dd8875fd56c2406a14b68766c');
+    /**
+     * 카카오맵 JavaScript 키 (비우면 관리자 cf_kakao_js_apikey 사용, maekrak_local_config.php 권장)
+     */
+    if (!defined('MK_KAKAO_MAP_APP_KEY')) {
+        define('MK_KAKAO_MAP_APP_KEY', 'a99bd18dd8875fd56c2406a14b68766c');
+    }
     define('MK_MAP_URL', 'https://map.kakao.com/link/search/' . rawurlencode('맥락한의원 서울시 중구 서소문로 134'));
+    define('MK_OG_IMAGE_URL', G5_THEME_URL . '/img/og-maekrak.svg');
+    define('MK_SITEMAP_URL', G5_THEME_URL . '/sitemap_maekrak.php');
 }
 
 $maekrak_local_config = dirname(__FILE__) . '/maekrak_local_config.php';
