@@ -7,3 +7,4 @@ if (!defined('_GNUBOARD_')) exit;
 
 // 카카오톡 채널 (실제 채널 URL로 교체)
 // define('MK_KAKAO_URL', 'https://pf.kakao.com/_PxdavG/chat');
+// define('MK_RESERVE_URL', 'https://m.booking.naver.com/booking/13/bizes/1120036?theme=place&service-target=map-pc&lang=ko&area=plt&map-search=1');

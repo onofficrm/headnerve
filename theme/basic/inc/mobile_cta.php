@@ -5,7 +5,7 @@ if (!G5_IS_MOBILE || !defined('_INDEX_')) return;
 include_once(G5_THEME_PATH . '/inc/site_config.php');
 ?>
 <aside class="maekrak-mobile-cta" aria-label="빠른 상담">
-    <a href="<?php echo MK_RESERVE_URL; ?>" class="maekrak-mobile-cta-btn maekrak-mobile-cta-reserve">
+    <a href="<?php echo MK_RESERVE_URL; ?>" class="maekrak-mobile-cta-btn maekrak-mobile-cta-reserve"<?php echo maekrak_reserve_link_attr(); ?>>
         <i class="fa fa-calendar" aria-hidden="true"></i>
         <span>예약하기</span>
     </a>

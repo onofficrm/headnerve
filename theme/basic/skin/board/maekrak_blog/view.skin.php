@@ -74,7 +74,7 @@ add_stylesheet('<link rel="stylesheet" href="' . $board_skin_url . '/style.css">
         <div class="maekrak-board-inner maekrak-board-cta-inner">
             <h2 class="maekrak-board-cta-title">비슷한 증상으로 상담이 필요하신가요?</h2>
             <div class="maekrak-board-cta-actions">
-                <a href="<?php echo defined('MK_RESERVE_URL') ? MK_RESERVE_URL : G5_BBS_URL . '/qalist.php'; ?>" class="maekrak-btn maekrak-btn-primary maekrak-btn-xl">상담 예약</a>
+                <a href="<?php echo defined('MK_RESERVE_URL') ? MK_RESERVE_URL : G5_BBS_URL . '/qalist.php'; ?>" class="maekrak-btn maekrak-btn-primary maekrak-btn-xl"<?php echo function_exists('maekrak_reserve_link_attr') ? maekrak_reserve_link_attr() : ''; ?>>상담 예약</a>
                 <a href="<?php echo maekrak_tel_href(); ?>" class="maekrak-btn maekrak-btn-outline maekrak-btn-xl">전화 문의</a>
             </div>
         </div>

@@ -40,7 +40,7 @@ include_once(G5_THEME_PATH . '/inc/site_config.php');
                         <li><a href="<?php echo get_pretty_url('content', 'company'); ?>">맥락한의원 소개</a></li>
                         <li><a href="<?php echo G5_URL; ?>/#maekrak_program">치료 프로그램</a></li>
                         <li><a href="<?php echo get_pretty_url(MK_BLOG_BOARD); ?>">사례 및 블로그</a></li>
-                        <li><a href="#maekrak_cta">상담 예약</a></li>
+                        <li><a href="<?php echo MK_RESERVE_URL; ?>"<?php echo maekrak_reserve_link_attr(); ?>>상담 예약</a></li>
                     </ul>
                 </div>
                 <div class="maekrak-footer-menu">

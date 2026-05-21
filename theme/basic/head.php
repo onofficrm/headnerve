@@ -47,7 +47,8 @@ if (defined('_INDEX_')) {
     $g5['body_script'] = ' class="maekrak-site"';
 }
 
-$maekrak_reserve_anchor = !empty($maekrak_disease_page) ? '#maekrak_dis_cta' : (!empty($maekrak_condition_page) ? '#maekrak_cond_cta' : '#maekrak_cta');
+$maekrak_reserve_href = defined('MK_RESERVE_URL') ? MK_RESERVE_URL : (G5_BBS_URL . '/qalist.php');
+$maekrak_reserve_attr = function_exists('maekrak_reserve_link_attr') ? maekrak_reserve_link_attr() : '';
 
 include_once(G5_THEME_PATH . '/head.sub.php');
 include_once(G5_LIB_PATH . '/latest.lib.php');
@@ -86,7 +87,7 @@ if ($use_fallback_nav) {
                 <ul class="maekrak-gnb-list">
                     <?php maekrak_render_gnb_menu($menu_datas); ?>
                 </ul>
-                <a href="<?php echo $maekrak_reserve_anchor; ?>" class="maekrak-btn maekrak-btn-primary maekrak-btn-reserve">상담 예약</a>
+                <a href="<?php echo $maekrak_reserve_href; ?>" class="maekrak-btn maekrak-btn-primary maekrak-btn-reserve"<?php echo $maekrak_reserve_attr; ?>>상담 예약</a>
             </nav>
 
             <button type="button" class="maekrak-header-toggle" id="maekrak_gnb_open" aria-expanded="false" aria-controls="maekrak_gnb_drawer">
@@ -103,7 +104,7 @@ if ($use_fallback_nav) {
         <div class="maekrak-drawer-actions">
             <a href="<?php echo maekrak_tel_href(); ?>" class="maekrak-btn maekrak-btn-gray"><i class="fa fa-phone"></i> 전화상담</a>
             <a href="<?php echo MK_KAKAO_URL; ?>" class="maekrak-btn maekrak-btn-gray" target="_blank" rel="noopener noreferrer"><i class="fa fa-comment"></i> 카카오톡</a>
-            <a href="<?php echo $maekrak_reserve_anchor; ?>" class="maekrak-btn maekrak-btn-primary">예약하기</a>
+            <a href="<?php echo $maekrak_reserve_href; ?>" class="maekrak-btn maekrak-btn-primary"<?php echo $maekrak_reserve_attr; ?>>예약하기</a>
         </div>
     </div>
     <div class="maekrak-gnb-overlay" id="maekrak_gnb_overlay" hidden></div>

@@ -15,7 +15,7 @@ if (!defined('MK_CLINIC_NAME')) {
     define('MK_CLINIC_PARKING', '옆건물 주차장 주차지원');
     define('MK_CLINIC_TRANSPORT', '시청역 8번 출구 1분 거리');
     define('MK_BLOG_BOARD', 'blog');
-    define('MK_RESERVE_URL', G5_BBS_URL . '/qalist.php');
+    define('MK_RESERVE_URL', 'https://m.booking.naver.com/booking/13/bizes/1120036?theme=place&service-target=map-pc&lang=ko&area=plt&map-search=1');
     define('MK_KAKAO_URL', 'https://pf.kakao.com/_PxdavG/chat');
     /** 카카오맵 JavaScript 키 (비우면 관리자 환경설정 cf_kakao_js_apikey 사용) */
     define('MK_KAKAO_MAP_APP_KEY', 'a99bd18dd8875fd56c2406a14b68766c');
@@ -91,4 +91,12 @@ function maekrak_tel_href($tel = '')
 {
     $tel = $tel ? $tel : MK_CLINIC_TEL_LINK;
     return 'tel:' . preg_replace('/[^0-9+]/', '', $tel);
+}
+
+/** 네이버 예약 등 외부 URL일 때 새 탭 속성 */
+function maekrak_reserve_link_attr()
+{
+    return (defined('MK_RESERVE_URL') && preg_match('#^https?://#i', MK_RESERVE_URL))
+        ? ' target="_blank" rel="noopener noreferrer"'
+        : '';
 }

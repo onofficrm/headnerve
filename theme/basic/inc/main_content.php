@@ -24,7 +24,7 @@ global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_app
                         </h1>
                         <p class="maekrak-hero-desc">검사에서는 정상인데 통증이 계속된다면, 두개경추 구조와 자율신경, 뇌 에너지 균형을 함께 분석해야 합니다.</p>
                         <div class="maekrak-hero-actions">
-                            <a href="#maekrak_cta" class="maekrak-btn maekrak-btn-primary maekrak-btn-xl">정밀 검사 예약</a>
+                            <a href="<?php echo MK_RESERVE_URL; ?>" class="maekrak-btn maekrak-btn-primary maekrak-btn-xl"<?php echo maekrak_reserve_link_attr(); ?>>정밀 검사 예약</a>
                             <a href="#maekrak_dept" class="maekrak-btn maekrak-btn-outline maekrak-btn-xl">진료과목 안내</a>
                         </div>
                     </div>
@@ -213,7 +213,7 @@ global $maekrak_departments, $maekrak_philosophy, $maekrak_targets, $maekrak_app
                 <h2 class="maekrak-cta-title">반복되는 증상, <strong>이제 원인을 확인해보세요</strong></h2>
                 <p class="maekrak-cta-desc">검사에서 이상이 없다는 말만 듣고 돌아오셨다면, 몸의 기능과 구조를 함께 보는 진료가 필요할 수 있습니다.</p>
                 <div class="maekrak-cta-actions">
-                    <a href="<?php echo MK_RESERVE_URL; ?>" class="maekrak-btn maekrak-btn-white maekrak-btn-xl">상담 예약하기</a>
+                    <a href="<?php echo MK_RESERVE_URL; ?>" class="maekrak-btn maekrak-btn-white maekrak-btn-xl"<?php echo maekrak_reserve_link_attr(); ?>>상담 예약하기</a>
                     <a href="<?php echo MK_KAKAO_URL; ?>" class="maekrak-btn maekrak-btn-ghost maekrak-btn-xl" target="_blank" rel="noopener noreferrer"><i class="fa fa-comment" aria-hidden="true"></i> 카카오톡 상담</a>
                     <a href="<?php echo maekrak_tel_href(); ?>" class="maekrak-btn maekrak-btn-ghost maekrak-btn-xl">전화 문의하기</a>
                     <a href="#maekrak_info" class="maekrak-btn maekrak-btn-ghost maekrak-btn-xl"><i class="fa fa-map-marker" aria-hidden="true"></i> 오시는 길</a>

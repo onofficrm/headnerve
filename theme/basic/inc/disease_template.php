@@ -37,7 +37,7 @@ function maekrak_render_disease_page($page)
                     <h1 id="maekrak_dis_hero_title" class="maekrak-dis-hero-title"><?php echo $page['hero_copy']; ?></h1>
                     <p class="maekrak-dis-hero-desc"><?php echo $page['hero_desc']; ?></p>
                     <div class="maekrak-dis-hero-actions">
-                        <a href="<?php echo $reserve_url; ?>" class="maekrak-btn maekrak-btn-primary maekrak-btn-xl">상담 예약</a>
+                        <a href="<?php echo $reserve_url; ?>" class="maekrak-btn maekrak-btn-primary maekrak-btn-xl"<?php echo maekrak_reserve_link_attr(); ?>>상담 예약</a>
                         <a href="<?php echo $parent_url; ?>" class="maekrak-btn maekrak-btn-outline maekrak-btn-xl">상위 진료과목 보기</a>
                     </div>
                 </div>
@@ -240,7 +240,7 @@ function maekrak_render_disease_page($page)
         <div class="maekrak-dis-cta-inner">
             <h2 id="maekrak_dis_cta_title" class="maekrak-dis-cta-title">반복되는 증상, <strong>이제 원인을 확인해보세요</strong></h2>
             <div class="maekrak-dis-cta-actions">
-                <a href="<?php echo $reserve_url; ?>" class="maekrak-btn maekrak-btn-white maekrak-btn-xl">상담 예약하기</a>
+                <a href="<?php echo $reserve_url; ?>" class="maekrak-btn maekrak-btn-white maekrak-btn-xl"<?php echo maekrak_reserve_link_attr(); ?>>상담 예약하기</a>
                 <a href="<?php echo maekrak_tel_href(); ?>" class="maekrak-btn maekrak-btn-ghost maekrak-btn-xl"><i class="fa fa-phone"></i> 전화 문의</a>
                 <a href="<?php echo $info_url; ?>" class="maekrak-btn maekrak-btn-ghost maekrak-btn-xl">오시는 길 보기</a>
             </div>
