@@ -16,7 +16,7 @@ check_url() {
   local url="$1"
   local expect="${2:-maekrak-}"
   local code body
-  code=$(curl -sL -o /tmp/qa_body.html -w "%{http_code}" "$url" || echo "000")
+  code=$(curl -sL --retry 2 --retry-delay 1 -o /tmp/qa_body.html -w "%{http_code}" "$url" || echo "000")
   body=$(cat /tmp/qa_body.html 2>/dev/null || true)
   if [[ "$code" != "200" ]]; then
     echo "FAIL HTTP $code $url"
