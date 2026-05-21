@@ -1,0 +1,9 @@
+<?php
+/**
+ * 로컬/서버 전용 설정 (복사 후 maekrak_local_config.php 로 사용)
+ * site_config.php 하단에서 자동 로드됩니다.
+ */
+if (!defined('_GNUBOARD_')) exit;
+
+// 카카오톡 채널 (실제 채널 URL로 교체)
+// define('MK_KAKAO_URL', 'https://pf.kakao.com/_xxxxx');
