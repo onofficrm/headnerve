@@ -89,10 +89,6 @@ body.maekrak-site:not(.maekrak-site--home) .maekrak-container {
     padding: 32px var(--maekrak-gutter-m) 100px;
 }
 
-body.maekrak-site--home .maekrak-main--home {
-    padding-top: var(--maekrak-header-h);
-}
-
 body.maekrak-site #container_title {
     margin: 0 0 24px;
     padding-bottom: 14px;
@@ -423,8 +419,7 @@ body.maekrak-site--home .maekrak-container {
     width: 100%;
 }
 
-/* ===== Scroll Snap (PC 홈만 — html/document 스크롤 기준) ===== */
-/* .maekrak-snap-container 는 스크롤 컨테이너가 아님. snap은 html + 섹션에 적용 */
+/* ===== Scroll Snap (PC 홈만) ===== */
 .maekrak-snap-container {
     height: auto;
     overflow: visible;
@@ -432,22 +427,21 @@ body.maekrak-site--home .maekrak-container {
 }
 
 @media (min-width: 769px) {
-    /* 실제 스크롤은 html(뷰포트) — body에 snap-type만 주면 대부분 브라우저에서 무시됨 */
+    /*
+     * 스크롤 루트가 html 또는 body로 달라지는 브라우저 모두 대응
+     * + 푸터까지 문서 스크롤 유지
+     */
     html.maekrak-home-page,
-    html:has(body.maekrak-home-page) {
+    html:has(body.maekrak-home-page),
+    body.maekrak-home-page {
         scroll-snap-type: y proximity;
         scroll-behavior: smooth;
+        scroll-padding-top: var(--maekrak-header-h);
     }
 
     body.maekrak-home-page {
-        scroll-snap-type: none;
         overflow-x: hidden;
         overflow-y: visible;
-    }
-
-    /* 고정 헤더 여백은 scroll-margin-top으로 처리 (padding-top 이중 적용 방지) */
-    body.maekrak-home-page .maekrak-main--home {
-        padding-top: 0;
     }
 
     body.maekrak-home-page #wrapper,
@@ -459,40 +453,40 @@ body.maekrak-site--home .maekrak-container {
         scroll-snap-type: none;
     }
 
-    html.maekrak-home-page .maekrak-snap-section,
-    html:has(body.maekrak-home-page) .maekrak-snap-section {
+    body.maekrak-home-page .maekrak-main--home {
+        padding-top: var(--maekrak-header-h);
+    }
+
+    body.maekrak-home-page .maekrak-snap-section {
         scroll-snap-align: start;
         scroll-snap-stop: normal;
-        scroll-margin-top: var(--maekrak-header-h);
+        scroll-margin-top: 0;
         min-height: 100vh;
+        min-height: 100dvh;
         box-sizing: border-box;
     }
 
-    html.maekrak-home-page .maekrak-snap-section > .maekrak-section-full,
-    html:has(body.maekrak-home-page) .maekrak-snap-section > .maekrak-section-full {
+    body.maekrak-home-page .maekrak-snap-section > .maekrak-section-full {
         min-height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
 
-    html.maekrak-home-page .maekrak-hero-inner,
-    html:has(body.maekrak-home-page) .maekrak-hero-inner {
+    body.maekrak-home-page .maekrak-hero.maekrak-snap-section .maekrak-hero-inner {
         min-height: 100%;
         padding-top: 32px;
         padding-bottom: 32px;
     }
 
-    html.maekrak-home-page .maekrak-normal-section,
-    html:has(body.maekrak-home-page) .maekrak-normal-section {
+    body.maekrak-home-page .maekrak-normal-section {
         scroll-snap-align: none;
         scroll-snap-stop: normal;
         min-height: auto;
         scroll-margin-top: 0;
     }
 
-    html.maekrak-home-page .maekrak-footer,
-    html:has(body.maekrak-home-page) .maekrak-footer {
+    body.maekrak-home-page .maekrak-footer {
         scroll-snap-align: none;
     }
 }
@@ -504,6 +498,10 @@ body.maekrak-site--home .maekrak-container {
     body.maekrak-site--home.maekrak-home-page {
         scroll-snap-type: none;
         scroll-padding-top: 0;
+    }
+
+    body.maekrak-site--home .maekrak-main--home {
+        padding-top: var(--maekrak-header-h);
     }
 
     body.maekrak-site--home .maekrak-snap-container {
