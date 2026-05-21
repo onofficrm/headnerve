@@ -51,7 +51,9 @@ macOS `._*` 파일이 있으면 `git restore` 후 push.
 
 ## 2층 수작업 보강 (9·11차)
 
-**전체 23개** 수작업 — [`disease_data.php`](inc/disease_data.php) core 3종 + [`disease_handcrafted_extra.php`](inc/disease_handcrafted_extra.php) 20종. builder 14종(11차) 포함: 약물과용·소아·생리·수험생두통, 메니에르·BPPV·전정신경염, 기립성저혈압·불안·불면, 말초신경·CIPN, 만성피로·수면연관 브레인포그
+**전체 23개** 수작업 — [`disease_data.php`](inc/disease_data.php) core 3종 + [`disease_handcrafted_extra.php`](inc/disease_handcrafted_extra.php) 20종.
+
+**어지럼 4종 원장 문안 반영** (DOCX): `cervical_dizziness`, `meniere`, `bppv`, `vestibular_neuritis` — AI 앵커·맥락 관점·치료(두맥탕/약침/추나)·FAQ·사례 요약
 
 ## 10차 QA 체크리스트
 
