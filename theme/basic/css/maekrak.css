@@ -1,25 +1,40 @@
 @charset "utf-8";
 
-/* 맥락한의원 — 빌더 시안 포팅 (네이비 #002B5B) */
+/* 맥락한의원 — 프리미엄 메디컬 톤 (웜 스톤 + 딥 네이비 + 브래스 골드) */
 
 :root {
-    --maekrak-navy: #002B5B;
-    --maekrak-navy-light: #003E82;
-    --maekrak-ivory: #FAF9F6;
-    --maekrak-gray-light: #F4F5F7;
-    --maekrak-gray: #8A92A6;
-    --maekrak-text: #333333;
-    --maekrak-accent: #D4AF37;
-    --maekrak-border: #e5e5e5;
+    --maekrak-navy: #0B2744;
+    --maekrak-navy-deep: #061A2E;
+    --maekrak-navy-light: #1A4A6E;
+    --maekrak-ivory: #E8E2D6;
+    --maekrak-stone: #DDD6C8;
+    --maekrak-stone-deep: #CEC6B8;
+    --maekrak-surface: #F3F0E9;
+    --maekrak-surface-elevated: #FBF9F5;
+    --maekrak-gray-light: #D9D3C8;
+    --maekrak-gray: #7A8494;
+    --maekrak-text: #1C2636;
+    --maekrak-text-muted: #5A6472;
+    --maekrak-accent: #B8925A;
+    --maekrak-accent-light: #D4B87A;
+    --maekrak-accent-soft: rgba(184, 146, 90, 0.18);
+    --maekrak-border: rgba(11, 39, 68, 0.11);
+    --maekrak-border-subtle: rgba(11, 39, 68, 0.07);
+    --maekrak-shadow-sm: 0 4px 24px rgba(6, 24, 41, 0.06);
+    --maekrak-shadow-md: 0 14px 44px rgba(6, 24, 41, 0.09);
+    --maekrak-shadow-lg: 0 28px 72px rgba(6, 24, 41, 0.14);
+    --maekrak-radius-lg: 20px;
+    --maekrak-radius-xl: 26px;
     --maekrak-header-h: 72px;
     --maekrak-content-max: 1240px;
     --maekrak-gutter-m: 20px;
     --maekrak-gutter-d: 40px;
     --maekrak-gutter-xl: 56px;
-    --maekrak-section-y: 80px;
+    --maekrak-section-y: 88px;
     --maekrak-ease: cubic-bezier(0.22, 1, 0.36, 1);
     --maekrak-cta-h: 58px;
     --maekrak-font: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    --maekrak-font-display: "Cormorant Garamond", "Noto Serif KR", Georgia, serif;
 }
 
 /* 그누보드 기본 숨김 */
@@ -38,7 +53,8 @@ body.maekrak-site {
     font-weight: 400;
     line-height: 1.7;
     color: var(--maekrak-text);
-    background: #fff;
+    background: var(--maekrak-surface);
+    -webkit-font-smoothing: antialiased;
 }
 
 @media (min-width: 1024px) {
@@ -87,6 +103,7 @@ body.maekrak-site:not(.maekrak-site--home) .maekrak-container {
     max-width: var(--maekrak-content-max);
     margin: 0 auto;
     padding: 32px var(--maekrak-gutter-m) 100px;
+    background: var(--maekrak-surface);
 }
 
 body.maekrak-site #container_title {
@@ -104,14 +121,17 @@ body.maekrak-site #container_title {
     left: 0;
     right: 0;
     z-index: 1000;
-    transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
-    border-bottom: 1px solid var(--maekrak-border);
-    background: #fff;
-    box-shadow: 0 1px 0 rgba(0, 43, 91, 0.06);
+    transition: background 0.35s var(--maekrak-ease), border-color 0.35s, box-shadow 0.35s;
+    border-bottom: 1px solid var(--maekrak-border-subtle);
+    background: rgba(243, 240, 233, 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 1px 0 rgba(11, 39, 68, 0.04);
 }
 
 .maekrak-header--scrolled {
-    box-shadow: 0 4px 24px rgba(0, 43, 91, 0.08);
+    background: rgba(251, 249, 245, 0.94);
+    box-shadow: var(--maekrak-shadow-sm);
 }
 
 .maekrak-header-inner {
@@ -152,11 +172,12 @@ body.maekrak-site #container_title {
     justify-content: center;
     width: 48px;
     height: 48px;
-    background: var(--maekrak-navy);
+    background: linear-gradient(145deg, var(--maekrak-navy-deep) 0%, var(--maekrak-navy) 100%);
     color: #fff;
     font-weight: 700;
     font-size: 1.125rem;
-    border-radius: 6px;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(6, 24, 41, 0.2);
 }
 
 .maekrak-logo-text {
@@ -200,7 +221,7 @@ body.maekrak-site #container_title {
     padding: 10px 16px;
     font-size: 15px;
     font-weight: 500;
-    color: #4b5563;
+    color: var(--maekrak-text-muted);
     text-decoration: none;
     white-space: nowrap;
     transition: color 0.2s;
@@ -226,10 +247,10 @@ body.maekrak-site #container_title {
     margin: 0;
     padding: 8px 0;
     list-style: none;
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
     border: 1px solid var(--maekrak-border);
     border-radius: 12px;
-    box-shadow: 0 12px 40px rgba(0, 43, 91, 0.12);
+    box-shadow: var(--maekrak-shadow-md);
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
@@ -330,33 +351,36 @@ body.maekrak-site--home .maekrak-container {
 }
 
 .maekrak-btn-primary {
-    background: var(--maekrak-navy);
+    background: linear-gradient(145deg, var(--maekrak-navy-deep) 0%, var(--maekrak-navy) 100%);
     color: #fff;
+    box-shadow: 0 6px 20px rgba(6, 24, 41, 0.22);
 }
 
 .maekrak-btn-primary:hover {
-    background: var(--maekrak-navy-light);
+    background: linear-gradient(145deg, var(--maekrak-navy) 0%, var(--maekrak-navy-light) 100%);
     color: #fff;
+    box-shadow: 0 10px 28px rgba(6, 24, 41, 0.28);
 }
 
 .maekrak-btn-outline {
-    background: transparent;
+    background: rgba(251, 249, 245, 0.6);
     color: var(--maekrak-navy);
-    border-color: var(--maekrak-navy);
+    border-color: rgba(11, 39, 68, 0.28);
 }
 
 .maekrak-btn-outline:hover {
-    background: rgba(0, 43, 91, 0.05);
+    background: var(--maekrak-surface-elevated);
+    border-color: var(--maekrak-navy);
 }
 
 .maekrak-btn-white {
-    background: #fff;
-    color: var(--maekrak-navy);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    background: var(--maekrak-surface-elevated);
+    color: var(--maekrak-navy-deep);
+    box-shadow: 0 10px 32px rgba(6, 24, 41, 0.18);
 }
 
 .maekrak-btn-white:hover {
-    background: #f9fafb;
+    background: #FFFCF8;
 }
 
 .maekrak-btn-ghost {
@@ -370,7 +394,7 @@ body.maekrak-site--home .maekrak-container {
 }
 
 .maekrak-btn-gray {
-    background: var(--maekrak-gray-light);
+    background: linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-ivory) 100%);
     color: var(--maekrak-navy);
 }
 
@@ -537,20 +561,20 @@ body.maekrak-site--home .maekrak-container {
 }
 
 .maekrak-section-full--ivory {
-    background: var(--maekrak-ivory);
+    background: linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-ivory) 100%);
 }
 
 .maekrak-section-full--white {
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
 }
 
 .maekrak-section-full--gray {
-    background: var(--maekrak-gray-light);
+    background: linear-gradient(180deg, var(--maekrak-ivory) 0%, var(--maekrak-stone-deep) 100%);
 }
 
 .maekrak-section-full--navy {
     position: relative;
-    background: var(--maekrak-navy);
+    background: linear-gradient(165deg, var(--maekrak-navy-deep) 0%, var(--maekrak-navy) 42%, var(--maekrak-navy-light) 100%);
     color: #fff;
     overflow: hidden;
 }
@@ -613,14 +637,18 @@ body.maekrak-site--home .maekrak-container {
 .maekrak-section-title {
     margin: 0 0 16px;
     font-size: 30px;
-    font-weight: 300;
-    letter-spacing: -0.03em;
-    color: var(--maekrak-navy);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: var(--maekrak-navy-deep);
     line-height: 1.28;
 }
 
 .maekrak-section-title strong {
-    font-weight: 700;
+    font-family: var(--maekrak-font-display);
+    font-weight: 600;
+    font-style: italic;
+    color: var(--maekrak-navy);
+    letter-spacing: 0.01em;
 }
 
 @media (min-width: 768px) {
@@ -642,7 +670,7 @@ body.maekrak-site--home .maekrak-container {
     max-width: 680px;
     font-size: 16px;
     font-weight: 400;
-    color: #5c6578;
+    color: var(--maekrak-text-muted);
     line-height: 1.75;
 }
 
@@ -669,7 +697,10 @@ body.maekrak-site--home .maekrak-container {
 
 /* ===== Hero ===== */
 .maekrak-hero .maekrak-section-full {
-    background: linear-gradient(135deg, var(--maekrak-ivory) 0%, #fff 48%, var(--maekrak-ivory) 100%);
+    background:
+        radial-gradient(ellipse 90% 70% at 85% 15%, var(--maekrak-accent-soft) 0%, transparent 55%),
+        radial-gradient(ellipse 70% 50% at 10% 90%, rgba(11, 39, 68, 0.07) 0%, transparent 50%),
+        linear-gradient(168deg, var(--maekrak-surface) 0%, var(--maekrak-stone) 48%, var(--maekrak-ivory) 100%);
 }
 
 .maekrak-hero-inner {
@@ -729,14 +760,15 @@ body.maekrak-site--home .maekrak-container {
 .maekrak-hero-label {
     display: inline-block;
     margin: 0 0 20px;
-    padding: 8px 16px;
-    background: rgba(255, 255, 255, 0.85);
-    border: 1px solid rgba(0, 43, 91, 0.12);
+    padding: 8px 18px;
+    background: rgba(251, 249, 245, 0.75);
+    border: 1px solid var(--maekrak-border);
     border-radius: 999px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     color: var(--maekrak-navy);
-    letter-spacing: 0.04em;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
 }
 
 .maekrak-hero-title {
@@ -745,7 +777,7 @@ body.maekrak-site--home .maekrak-container {
     font-weight: 300;
     line-height: 1.2;
     letter-spacing: -0.03em;
-    color: var(--maekrak-navy);
+    color: var(--maekrak-navy-deep);
     word-break: keep-all;
 }
 
@@ -764,7 +796,10 @@ body.maekrak-site--home .maekrak-container {
 }
 
 .maekrak-hero-title strong {
-    font-weight: 700;
+    font-family: var(--maekrak-font-display);
+    font-weight: 600;
+    font-style: italic;
+    color: var(--maekrak-navy);
 }
 
 .maekrak-hero-desc {
@@ -772,7 +807,7 @@ body.maekrak-site--home .maekrak-container {
     max-width: 560px;
     font-size: 17px;
     font-weight: 400;
-    color: #4a5568;
+    color: var(--maekrak-text-muted);
     line-height: 1.85;
     word-break: keep-all;
 }
@@ -829,7 +864,7 @@ body.maekrak-site--home .maekrak-container {
     border-radius: 28px;
     background:
         radial-gradient(ellipse 80% 60% at 70% 20%, rgba(255, 255, 255, 0.14) 0%, transparent 55%),
-        linear-gradient(155deg, #001f42 0%, var(--maekrak-navy) 38%, var(--maekrak-navy-light) 72%, #0a5cad 100%);
+        linear-gradient(155deg, var(--maekrak-navy-deep) 0%, var(--maekrak-navy) 38%, var(--maekrak-navy-light) 72%, #1A5F8C 100%);
     overflow: hidden;
     box-shadow:
         0 4px 0 rgba(255, 255, 255, 0.06) inset,
@@ -1005,7 +1040,7 @@ body.maekrak-site--home .maekrak-container {
 
 /* ===== Philosophy ===== */
 .maekrak-philosophy {
-    border-bottom: 1px solid var(--maekrak-border);
+    border-bottom: 1px solid var(--maekrak-border-subtle);
 }
 
 .maekrak-philosophy-grid {
@@ -1025,12 +1060,25 @@ body.maekrak-site--home .maekrak-container {
 
 .maekrak-medical-card {
     padding: 36px 32px;
-    background: #fff;
+    background: linear-gradient(160deg, var(--maekrak-surface-elevated) 0%, rgba(251, 249, 245, 0.92) 100%);
     border: 1px solid var(--maekrak-border);
-    border-radius: 18px;
-    box-shadow: 0 6px 28px rgba(0, 43, 91, 0.05);
+    border-radius: var(--maekrak-radius-lg);
+    box-shadow: var(--maekrak-shadow-sm);
     transition: border-color 0.35s var(--maekrak-ease), box-shadow 0.35s var(--maekrak-ease), transform 0.35s var(--maekrak-ease);
     list-style: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.maekrak-medical-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--maekrak-accent), var(--maekrak-navy-light));
+    opacity: 0.55;
 }
 
 @media (min-width: 1024px) {
@@ -1040,19 +1088,23 @@ body.maekrak-site--home .maekrak-container {
 }
 
 .maekrak-medical-card:hover {
-    border-color: var(--maekrak-navy);
-    box-shadow: 0 16px 40px rgba(0, 43, 91, 0.12);
+    border-color: rgba(11, 39, 68, 0.22);
+    box-shadow: var(--maekrak-shadow-md);
     transform: translateY(-5px);
+}
+
+.maekrak-medical-card:hover::before {
+    opacity: 1;
 }
 
 .maekrak-medical-card-icon {
     width: 48px;
     height: 48px;
     margin-bottom: 32px;
-    border: 1px solid var(--maekrak-border);
-    border-radius: 8px;
-    background: #fff;
-    transition: border-color 0.3s;
+    border: 1px solid var(--maekrak-border-subtle);
+    border-radius: 12px;
+    background: var(--maekrak-accent-soft);
+    transition: border-color 0.3s, background 0.3s;
 }
 
 .maekrak-medical-card:hover .maekrak-medical-card-icon {
@@ -1096,7 +1148,7 @@ body.maekrak-site--home .maekrak-container {
     margin: 0;
     font-size: 15px;
     font-weight: 400;
-    color: #5c6578;
+    color: var(--maekrak-text-muted);
     line-height: 1.75;
     word-break: keep-all;
 }
@@ -1160,10 +1212,10 @@ body.maekrak-site--home .maekrak-container {
     padding: 32px 28px 28px;
     text-decoration: none;
     color: inherit;
-    background: #fff;
-    border: 1px solid rgba(0, 43, 91, 0.1);
-    border-radius: 22px;
-    box-shadow: 0 8px 32px rgba(0, 43, 91, 0.07);
+    background: linear-gradient(165deg, var(--maekrak-surface-elevated) 0%, var(--maekrak-ivory) 100%);
+    border: 1px solid var(--maekrak-border);
+    border-radius: var(--maekrak-radius-xl);
+    box-shadow: var(--maekrak-shadow-sm);
     transition: transform 0.4s var(--maekrak-ease), box-shadow 0.4s var(--maekrak-ease), border-color 0.4s var(--maekrak-ease), background 0.4s var(--maekrak-ease);
     overflow: hidden;
 }
@@ -1181,17 +1233,17 @@ body.maekrak-site--home .maekrak-container {
     top: 0;
     left: 0;
     right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--maekrak-navy), var(--maekrak-navy-light));
-    opacity: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--maekrak-accent), var(--maekrak-navy-light));
+    opacity: 0.45;
     transition: opacity 0.35s;
 }
 
 .maekrak-dept-card:hover {
     transform: translateY(-6px);
-    border-color: var(--maekrak-navy);
-    background: var(--maekrak-navy);
-    box-shadow: 0 24px 56px rgba(0, 43, 91, 0.22);
+    border-color: rgba(11, 39, 68, 0.35);
+    background: linear-gradient(165deg, var(--maekrak-navy-deep) 0%, var(--maekrak-navy) 100%);
+    box-shadow: var(--maekrak-shadow-lg);
 }
 
 .maekrak-dept-card:hover::before {
@@ -1203,7 +1255,7 @@ body.maekrak-site--home .maekrak-container {
     width: 40px;
     height: 3px;
     margin-bottom: 20px;
-    background: rgba(0, 43, 91, 0.15);
+    background: linear-gradient(90deg, var(--maekrak-accent), transparent);
     border-radius: 2px;
     transition: background 0.35s;
 }
@@ -1232,7 +1284,7 @@ body.maekrak-site--home .maekrak-container {
     flex: 1;
     font-size: 14px;
     font-weight: 400;
-    color: #5c6578;
+    color: var(--maekrak-text-muted);
     line-height: 1.75;
     word-break: keep-all;
     transition: color 0.4s var(--maekrak-ease);
@@ -1255,9 +1307,9 @@ body.maekrak-site--home .maekrak-container {
     padding: 5px 12px;
     font-size: 12px;
     font-weight: 500;
-    color: #6b7280;
-    background: var(--maekrak-ivory);
-    border: 1px solid var(--maekrak-border);
+    color: var(--maekrak-text-muted);
+    background: rgba(251, 249, 245, 0.7);
+    border: 1px solid var(--maekrak-border-subtle);
     border-radius: 999px;
     transition: background 0.35s, color 0.35s, border-color 0.35s;
 }
@@ -1294,16 +1346,15 @@ body.maekrak-site--home .maekrak-container {
 
 /* ===== Target ===== */
 .maekrak-target {
-    background: #fff;
-    border-bottom: 1px solid var(--maekrak-border);
+    border-bottom: 1px solid var(--maekrak-border-subtle);
 }
 
 .maekrak-target-box {
     padding: 32px 28px;
-    background: #fff;
+    background: linear-gradient(160deg, rgba(251, 249, 245, 0.95) 0%, var(--maekrak-ivory) 100%);
     border: 1px solid var(--maekrak-border);
-    border-radius: 20px;
-    box-shadow: 0 8px 32px rgba(0, 43, 91, 0.05);
+    border-radius: var(--maekrak-radius-xl);
+    box-shadow: var(--maekrak-shadow-md);
 }
 
 @media (min-width: 768px) {
@@ -1351,7 +1402,7 @@ body.maekrak-site--home .maekrak-container {
 .maekrak-target-list span {
     font-size: 15px;
     font-weight: 400;
-    color: #4a5568;
+    color: var(--maekrak-text-muted);
     line-height: 1.75;
     word-break: keep-all;
 }
@@ -1365,9 +1416,8 @@ body.maekrak-site--home .maekrak-container {
 
 /* ===== Approach ===== */
 .maekrak-approach {
-    background: #fff;
-    border-top: 1px solid var(--maekrak-border);
-    border-bottom: 1px solid var(--maekrak-border);
+    border-top: 1px solid var(--maekrak-border-subtle);
+    border-bottom: 1px solid var(--maekrak-border-subtle);
 }
 
 .maekrak-approach-grid {
@@ -1399,20 +1449,19 @@ body.maekrak-site--home .maekrak-container {
     display: block;
     margin-bottom: 12px;
     padding-bottom: 8px;
-    border-bottom: 1px solid rgba(0, 43, 91, 0.2);
-    font-size: 12px;
+    border-bottom: 1px solid var(--maekrak-accent-soft);
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--maekrak-navy);
-    opacity: 0.6;
+    color: var(--maekrak-accent);
 }
 
 .maekrak-approach-grid h3 {
     margin: 0 0 12px;
     font-size: 19px;
     font-weight: 700;
-    color: #111;
+    color: var(--maekrak-navy-deep);
 }
 
 @media (min-width: 1024px) {
@@ -1425,7 +1474,7 @@ body.maekrak-site--home .maekrak-container {
     margin: 0;
     font-size: 15px;
     font-weight: 400;
-    color: #5c6578;
+    color: var(--maekrak-text-muted);
     line-height: 1.75;
     word-break: keep-all;
 }
@@ -1468,11 +1517,11 @@ body.maekrak-site--home .maekrak-container {
     flex-direction: column;
     height: 100%;
     padding: 32px 28px;
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
     border: 1px solid var(--maekrak-border);
-    border-radius: 18px;
-    box-shadow: 0 6px 24px rgba(0, 43, 91, 0.04);
-    transition: border-color 0.35s var(--maekrak-ease), box-shadow 0.35s var(--maekrak-ease);
+    border-radius: var(--maekrak-radius-lg);
+    box-shadow: var(--maekrak-shadow-sm);
+    transition: border-color 0.35s var(--maekrak-ease), box-shadow 0.35s var(--maekrak-ease), transform 0.35s var(--maekrak-ease);
     list-style: none;
 }
 
@@ -1483,8 +1532,9 @@ body.maekrak-site--home .maekrak-container {
 }
 
 .maekrak-program-card:hover {
-    border-color: var(--maekrak-navy);
-    box-shadow: 0 12px 36px rgba(0, 43, 91, 0.1);
+    border-color: rgba(11, 39, 68, 0.2);
+    box-shadow: var(--maekrak-shadow-md);
+    transform: translateY(-3px);
 }
 
 .maekrak-program-card-head {
@@ -1501,8 +1551,9 @@ body.maekrak-site--home .maekrak-container {
     width: 44px;
     height: 44px;
     flex-shrink: 0;
-    border: 1px solid var(--maekrak-border);
-    border-radius: 10px;
+    border: 1px solid var(--maekrak-border-subtle);
+    border-radius: 12px;
+    background: var(--maekrak-accent-soft);
     color: var(--maekrak-navy);
     font-size: 1.125rem;
 }
@@ -1511,7 +1562,7 @@ body.maekrak-site--home .maekrak-container {
     margin: 0;
     font-size: 18px;
     font-weight: 700;
-    color: #111;
+    color: var(--maekrak-navy-deep);
     line-height: 1.35;
 }
 
@@ -1539,8 +1590,7 @@ body.maekrak-site--home .maekrak-container {
 
 /* ===== Doctor ===== */
 .maekrak-doctor {
-    background: #fff;
-    border-top: 1px solid var(--maekrak-border);
+    border-top: 1px solid var(--maekrak-border-subtle);
 }
 
 .maekrak-doctor-grid {
@@ -1565,11 +1615,19 @@ body.maekrak-site--home .maekrak-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 32px;
+    padding: 36px 32px;
     text-align: center;
+    background: linear-gradient(165deg, var(--maekrak-surface-elevated) 0%, var(--maekrak-ivory) 100%);
     border: 1px solid var(--maekrak-border);
-    border-radius: 16px;
+    border-radius: var(--maekrak-radius-lg);
+    box-shadow: var(--maekrak-shadow-sm);
     list-style: none;
+    transition: box-shadow 0.35s var(--maekrak-ease), transform 0.35s var(--maekrak-ease);
+}
+
+.maekrak-doctor-card:hover {
+    box-shadow: var(--maekrak-shadow-md);
+    transform: translateY(-4px);
 }
 
 .maekrak-doctor-photo {
@@ -1577,7 +1635,7 @@ body.maekrak-site--home .maekrak-container {
     height: 160px;
     margin-bottom: 32px;
     border-radius: 50%;
-    background: var(--maekrak-gray-light);
+    background: linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-ivory) 100%);
     border: 1px solid var(--maekrak-border);
     display: flex;
     align-items: center;
@@ -1590,7 +1648,7 @@ body.maekrak-site--home .maekrak-container {
     margin: 0 0 4px;
     font-size: 1.5rem;
     font-weight: 700;
-    color: #111;
+    color: var(--maekrak-navy-deep);
 }
 
 .maekrak-doctor-card h3 span {
@@ -1672,9 +1730,11 @@ body.maekrak-site--home .maekrak-container {
 .maekrak-cta-pattern {
     position: absolute;
     inset: 0;
-    opacity: 0.1;
-    background-image: radial-gradient(circle at 2px 2px, #fff 1px, transparent 0);
-    background-size: 32px 32px;
+    opacity: 0.12;
+    background-image:
+        radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.35) 1px, transparent 0),
+        radial-gradient(ellipse 60% 40% at 20% 80%, var(--maekrak-accent-soft) 0%, transparent 70%);
+    background-size: 32px 32px, 100% 100%;
     pointer-events: none;
 }
 
@@ -1767,16 +1827,16 @@ body.maekrak-site--home .maekrak-container {
 
 /* ===== Info ===== */
 .maekrak-info {
-    background: #fff;
-    border-top: 1px solid var(--maekrak-border);
+    border-top: 1px solid var(--maekrak-border-subtle);
 }
 
 .maekrak-info-card {
     display: flex;
     flex-direction: column;
-    background: var(--maekrak-ivory);
+    background: linear-gradient(160deg, var(--maekrak-surface-elevated) 0%, var(--maekrak-ivory) 100%);
     border: 1px solid var(--maekrak-border);
-    border-radius: 16px;
+    border-radius: var(--maekrak-radius-lg);
+    box-shadow: var(--maekrak-shadow-md);
     overflow: hidden;
 }
 
@@ -1872,7 +1932,7 @@ body.maekrak-site--home .maekrak-container {
 .maekrak-info-badge {
     display: inline-block;
     padding: 4px 12px;
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
     border: 1px solid var(--maekrak-border);
     border-radius: 999px;
     font-size: 12px;
@@ -1927,8 +1987,8 @@ body.maekrak-site--home .maekrak-container {
     width: 100%;
     min-height: 320px;
     background:
-        linear-gradient(160deg, rgba(0, 43, 91, 0.04) 0%, transparent 50%),
-        linear-gradient(180deg, #eef1f6 0%, #f8f9fb 45%, #e8ecf2 100%);
+        linear-gradient(160deg, rgba(11, 39, 68, 0.06) 0%, transparent 50%),
+        linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-surface) 45%, var(--maekrak-ivory) 100%);
     border-top: 1px solid var(--maekrak-border);
     display: flex;
     align-items: center;
@@ -1972,7 +2032,7 @@ body.maekrak-site--home .maekrak-container {
     width: 64px;
     height: 64px;
     margin-bottom: 16px;
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
     border: 1px solid var(--maekrak-border);
     border-radius: 50%;
     box-shadow: 0 8px 24px rgba(0, 43, 91, 0.08);
@@ -2024,7 +2084,7 @@ body.maekrak-site--home .maekrak-container {
     display: flex;
     flex-direction: column;
     border-top: 1px solid var(--maekrak-border);
-    background: #eef1f6;
+    background: var(--maekrak-stone);
 }
 
 @media (min-width: 1024px) {
@@ -2057,13 +2117,13 @@ body.maekrak-site--home .maekrak-container {
     font-size: 13px;
     font-weight: 600;
     color: var(--maekrak-navy);
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
     border-top: 1px solid var(--maekrak-border);
     text-decoration: none;
 }
 
 .maekrak-kakao-map-link:hover {
-    background: #FAF9F6;
+    background: var(--maekrak-ivory);
 }
 
 .maekrak-kakao-map-infowin {
@@ -2086,9 +2146,10 @@ body.maekrak-site--home .maekrak-container {
 
 /* ===== Footer ===== */
 .maekrak-footer {
-    background: #fff;
-    border-top: 1px solid var(--maekrak-border);
+    background: linear-gradient(180deg, var(--maekrak-navy-deep) 0%, #040f1a 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
     padding: 64px 16px 32px;
+    color: rgba(255, 255, 255, 0.88);
 }
 
 .maekrak-footer-inner {
@@ -2115,19 +2176,19 @@ body.maekrak-site--home .maekrak-container {
     margin-bottom: 24px;
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--maekrak-navy);
+    color: #fff;
 }
 
 .maekrak-footer-contact p {
     margin: 0 0 8px;
     font-size: 13px;
     font-weight: 300;
-    color: #6b7280;
+    color: rgba(255, 255, 255, 0.65);
     line-height: 1.65;
 }
 
 .maekrak-footer-contact a {
-    color: var(--maekrak-navy);
+    color: var(--maekrak-accent-light, #D4B87A);
     font-weight: 700;
     text-decoration: none;
 }
@@ -2135,7 +2196,7 @@ body.maekrak-site--home .maekrak-container {
 .maekrak-footer-hours {
     margin-top: 16px;
     padding-top: 16px;
-    border-top: 1px solid var(--maekrak-border);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .maekrak-footer-closed {
@@ -2155,7 +2216,7 @@ body.maekrak-site--home .maekrak-container {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: #374151;
+    color: rgba(255, 255, 255, 0.45);
 }
 
 .maekrak-footer-menu ul {
@@ -2170,14 +2231,14 @@ body.maekrak-site--home .maekrak-container {
 
 .maekrak-footer-menu a {
     font-size: 13px;
-    color: #6b7280;
+    color: rgba(255, 255, 255, 0.62);
     text-decoration: none;
     transition: color 0.2s;
 }
 
 .maekrak-footer-menu a:hover,
 .maekrak-footer-em {
-    color: var(--maekrak-navy);
+    color: #fff;
 }
 
 .maekrak-footer-em {
@@ -2190,7 +2251,7 @@ body.maekrak-site--home .maekrak-container {
     align-items: center;
     gap: 16px;
     padding-top: 32px;
-    border-top: 1px solid var(--maekrak-border);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 @media (min-width: 768px) {
@@ -2203,24 +2264,25 @@ body.maekrak-site--home .maekrak-container {
 .maekrak-footer-copy {
     margin: 0;
     font-size: 12px;
-    color: #9ca3af;
+    color: rgba(255, 255, 255, 0.4);
 }
 
 .maekrak-footer-top-btn {
     width: 32px;
     height: 32px;
-    border: 1px solid var(--maekrak-border);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 50%;
-    background: #fff;
-    color: #9ca3af;
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.55);
     font-size: 14px;
     cursor: pointer;
-    transition: border-color 0.2s, color 0.2s;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
 }
 
 .maekrak-footer-top-btn:hover {
-    border-color: #6b7280;
-    color: #6b7280;
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 /* Mobile drawer */
@@ -2233,9 +2295,9 @@ body.maekrak-site--home .maekrak-container {
     width: min(320px, 88vw);
     z-index: 1002;
     padding: 48px 24px 24px;
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
     overflow-y: auto;
-    box-shadow: -8px 0 32px rgba(0, 0, 0, 0.1);
+    box-shadow: -8px 0 32px rgba(6, 24, 41, 0.15);
 }
 
 .maekrak-gnb-drawer--full:not([hidden]) {
@@ -2263,7 +2325,7 @@ body.maekrak-site--home .maekrak-container {
     margin: 0;
     padding: 0 0 8px;
     list-style: none;
-    background: var(--maekrak-gray-light);
+    background: linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-ivory) 100%);
 }
 
 .maekrak-drawer-sub-list a {
@@ -2271,7 +2333,7 @@ body.maekrak-site--home .maekrak-container {
     font-size: 15px !important;
     font-weight: 500 !important;
     color: var(--maekrak-text) !important;
-    border-bottom: 1px solid #eef0f3;
+    border-bottom: 1px solid var(--maekrak-border-subtle);
 }
 
 .maekrak-drawer-sub-list li:last-child a {
@@ -2720,7 +2782,7 @@ body.maekrak-site--home .maekrak-container {
     .maekrak-info-block {
         margin-bottom: 24px;
         padding: 20px 18px;
-        background: #fff;
+        background: var(--maekrak-surface-elevated);
         border: 1px solid var(--maekrak-border);
         border-radius: 14px;
     }
@@ -2820,9 +2882,11 @@ body.maekrak-site--home .maekrak-container {
         bottom: 0;
         z-index: 1050;
         min-height: var(--maekrak-cta-h);
-        background: #fff;
+        background: rgba(251, 249, 245, 0.94);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         border-top: 1px solid var(--maekrak-border);
-        box-shadow: 0 -6px 24px rgba(0, 43, 91, 0.1);
+        box-shadow: 0 -8px 32px rgba(6, 24, 41, 0.12);
         padding-bottom: env(safe-area-inset-bottom, 0);
     }
 
@@ -2838,7 +2902,7 @@ body.maekrak-site--home .maekrak-container {
         font-size: 13px;
         font-weight: 600;
         text-decoration: none;
-        border-right: 1px solid #eef0f3;
+        border-right: 1px solid var(--maekrak-border-subtle);
         line-height: 1.3;
     }
 
@@ -2873,6 +2937,24 @@ body.maekrak-site--home .maekrak-container {
     .maekrak-mobile-cta-kakao i {
         color: #ca8a04;
     }
+}
+
+/* ===== 블로그 게시판 (maekrak_blog 스킨) ===== */
+body.maekrak-site--blog .maekrak-container {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+}
+
+body.maekrak-site--blog #container_title {
+    display: none !important;
+}
+
+body.maekrak-site--blog #bo_list,
+body.maekrak-site--blog #bo_v {
+    margin: 0;
+    padding: 0;
 }
 
 /* ===== 1층 진료과목 페이지 (content + maekrak_condition 스킨) ===== */
@@ -2939,8 +3021,10 @@ body.maekrak-site--condition #ctt_con {
     min-height: 420px;
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, var(--maekrak-ivory) 0%, #fff 55%, var(--maekrak-gray-light) 100%);
-    border-bottom: 1px solid var(--maekrak-border);
+    background:
+        radial-gradient(ellipse 80% 60% at 90% 10%, var(--maekrak-accent-soft) 0%, transparent 50%),
+        linear-gradient(165deg, var(--maekrak-surface) 0%, var(--maekrak-stone) 55%, var(--maekrak-ivory) 100%);
+    border-bottom: 1px solid var(--maekrak-border-subtle);
 }
 
 .maekrak-cond-hero-inner {
@@ -3026,15 +3110,15 @@ body.maekrak-site--condition #ctt_con {
     gap: 10px;
     padding: 28px;
     border-radius: 16px;
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
     border: 1px solid var(--maekrak-border);
-    box-shadow: 0 12px 40px rgba(0, 43, 91, 0.08);
+    box-shadow: var(--maekrak-shadow-md);
 }
 
 .maekrak-cond-hero-visual-card span {
     padding: 10px 16px;
     border-radius: 999px;
-    background: var(--maekrak-gray-light);
+    background: linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-ivory) 100%);
     color: var(--maekrak-navy);
     font-size: 0.9rem;
     font-weight: 600;
@@ -3042,7 +3126,7 @@ body.maekrak-site--condition #ctt_con {
 
 /* AI 앵커 */
 .maekrak-cond-anchor {
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
 }
 
 .maekrak-cond-anchor-grid {
@@ -3092,7 +3176,7 @@ body.maekrak-site--condition #ctt_con {
 
 /* 원인 카드 */
 .maekrak-cond-causes {
-    background: var(--maekrak-gray-light);
+    background: linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-ivory) 100%);
 }
 
 .maekrak-cond-cause-grid {
@@ -3118,15 +3202,16 @@ body.maekrak-site--condition #ctt_con {
 
 .maekrak-cond-cause-card {
     padding: 24px;
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
     border: 1px solid var(--maekrak-border);
-    border-radius: 12px;
+    border-radius: 14px;
+    box-shadow: var(--maekrak-shadow-sm);
     transition: transform 0.25s var(--maekrak-ease), box-shadow 0.25s var(--maekrak-ease);
 }
 
 .maekrak-cond-cause-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(0, 43, 91, 0.1);
+    box-shadow: var(--maekrak-shadow-md);
 }
 
 .maekrak-cond-cause-num {
@@ -3152,7 +3237,7 @@ body.maekrak-site--condition #ctt_con {
 
 /* 하위 질환 */
 .maekrak-cond-subtypes {
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
 }
 
 .maekrak-cond-subtype-grid {
@@ -3209,7 +3294,7 @@ body.maekrak-site--condition #ctt_con {
     padding: 4px 10px;
     font-size: 0.8rem;
     border-radius: 999px;
-    background: #fff;
+    background: rgba(251, 249, 245, 0.9);
     color: var(--maekrak-navy-light);
     border: 1px solid var(--maekrak-border);
 }
@@ -3239,7 +3324,7 @@ body.maekrak-site--condition #ctt_con {
     align-items: flex-start;
     gap: 12px;
     padding: 16px 18px;
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
     border-radius: 10px;
     border: 1px solid var(--maekrak-border);
     font-size: 1rem;
@@ -3254,7 +3339,7 @@ body.maekrak-site--condition #ctt_con {
 
 /* 치료 프로그램 */
 .maekrak-cond-program {
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
 }
 
 .maekrak-cond-program-grid {
@@ -3271,8 +3356,8 @@ body.maekrak-site--condition #ctt_con {
 
 .maekrak-cond-program-col {
     padding: 28px;
-    border-radius: 12px;
-    background: var(--maekrak-gray-light);
+    border-radius: 14px;
+    background: linear-gradient(160deg, var(--maekrak-ivory) 0%, var(--maekrak-stone) 100%);
     border: 1px solid var(--maekrak-border);
 }
 
@@ -3300,21 +3385,21 @@ body.maekrak-site--condition #ctt_con {
 
 /* 블로그 */
 .maekrak-cond-blog {
-    background: var(--maekrak-gray-light);
+    background: linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-ivory) 100%);
 }
 
 .maekrak-cond-blog-empty {
     margin: 0;
     padding: 32px;
     text-align: center;
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
     border-radius: 12px;
     color: var(--maekrak-gray);
 }
 
 /* Byline */
 .maekrak-cond-byline {
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
 }
 
 .maekrak-cond-byline-lead {
@@ -3489,8 +3574,10 @@ body.maekrak-site--disease #ctt_con {
     min-height: 400px;
     display: flex;
     align-items: center;
-    background: linear-gradient(160deg, #fff 0%, var(--maekrak-ivory) 45%, var(--maekrak-gray-light) 100%);
-    border-bottom: 1px solid var(--maekrak-border);
+    background:
+        radial-gradient(ellipse 80% 60% at 90% 10%, var(--maekrak-accent-soft) 0%, transparent 50%),
+        linear-gradient(165deg, var(--maekrak-surface) 0%, var(--maekrak-stone) 55%, var(--maekrak-ivory) 100%);
+    border-bottom: 1px solid var(--maekrak-border-subtle);
 }
 
 .maekrak-dis-hero-inner {
@@ -3572,10 +3659,10 @@ body.maekrak-site--disease #ctt_con {
     flex-wrap: wrap;
     gap: 8px;
     padding: 24px;
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
     border: 1px solid var(--maekrak-border);
     border-radius: 14px;
-    box-shadow: 0 10px 36px rgba(0, 43, 91, 0.07);
+    box-shadow: var(--maekrak-shadow-sm);
 }
 
 .maekrak-dis-hero-visual-card span {
@@ -3589,7 +3676,7 @@ body.maekrak-site--disease #ctt_con {
 
 /* AI 앵커 */
 .maekrak-dis-anchor {
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
 }
 
 .maekrak-dis-anchor-grid {
@@ -3633,7 +3720,7 @@ body.maekrak-site--disease #ctt_con {
 
 /* 증상 */
 .maekrak-dis-symptoms {
-    background: var(--maekrak-gray-light);
+    background: linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-ivory) 100%);
 }
 
 .maekrak-dis-symptom-list {
@@ -3656,7 +3743,7 @@ body.maekrak-site--disease #ctt_con {
     gap: 12px;
     align-items: flex-start;
     padding: 16px 18px;
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
     border: 1px solid var(--maekrak-border);
     border-radius: 10px;
     font-size: 1rem;
@@ -3671,7 +3758,7 @@ body.maekrak-site--disease #ctt_con {
 
 /* 왜 생기는가 */
 .maekrak-dis-why {
-    background: #fff;
+    background: var(--maekrak-surface);
 }
 
 .maekrak-dis-prose {
@@ -3742,7 +3829,7 @@ body.maekrak-site--disease #ctt_con {
 
 /* 치료 */
 .maekrak-dis-treat {
-    background: var(--maekrak-gray-light);
+    background: linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-ivory) 100%);
 }
 
 .maekrak-dis-treat-grid {
@@ -3762,9 +3849,16 @@ body.maekrak-site--disease #ctt_con {
 
 .maekrak-dis-treat-card {
     padding: 24px;
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
     border: 1px solid var(--maekrak-border);
-    border-radius: 12px;
+    border-radius: 14px;
+    box-shadow: var(--maekrak-shadow-sm);
+    transition: transform 0.25s var(--maekrak-ease), box-shadow 0.25s var(--maekrak-ease);
+}
+
+.maekrak-dis-treat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--maekrak-shadow-md);
 }
 
 .maekrak-dis-treat-card h3 {
@@ -3787,7 +3881,7 @@ body.maekrak-site--disease #ctt_con {
 
 /* 사례 */
 .maekrak-dis-case {
-    background: #fff;
+    background: var(--maekrak-surface);
 }
 
 .maekrak-dis-case-grid {
@@ -3849,7 +3943,7 @@ body.maekrak-site--disease #ctt_con {
 
 /* FAQ */
 .maekrak-dis-faq {
-    background: var(--maekrak-gray-light);
+    background: linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-ivory) 100%);
 }
 
 .maekrak-dis-faq-list {
@@ -3859,7 +3953,7 @@ body.maekrak-site--disease #ctt_con {
 }
 
 .maekrak-dis-faq-item {
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
     border: 1px solid var(--maekrak-border);
     border-radius: 10px;
     overflow: hidden;
@@ -3891,7 +3985,7 @@ body.maekrak-site--disease #ctt_con {
 
 .maekrak-dis-faq-answer {
     padding: 0 20px 18px;
-    border-top: 1px solid #eef0f3;
+    border-top: 1px solid var(--maekrak-border-subtle);
 }
 
 .maekrak-dis-faq-answer p {
@@ -3902,14 +3996,14 @@ body.maekrak-site--disease #ctt_con {
 
 /* 블로그 */
 .maekrak-dis-blog {
-    background: #fff;
+    background: linear-gradient(180deg, var(--maekrak-surface) 0%, var(--maekrak-stone) 100%);
 }
 
 .maekrak-dis-blog-empty {
     margin: 0;
     padding: 32px;
     text-align: center;
-    background: var(--maekrak-gray-light);
+    background: linear-gradient(180deg, var(--maekrak-stone) 0%, var(--maekrak-ivory) 100%);
     border-radius: 12px;
     color: var(--maekrak-gray);
 }
@@ -3965,7 +4059,7 @@ body.maekrak-site--disease #ctt_con {
     align-items: center;
     justify-content: space-between;
     padding: 16px 18px;
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
     border: 1px solid var(--maekrak-border);
     border-radius: 10px;
     text-decoration: none;
@@ -3974,7 +4068,7 @@ body.maekrak-site--disease #ctt_con {
 }
 
 .maekrak-dis-byline {
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
 }
 
 .maekrak-dis-byline-lead {
@@ -4125,8 +4219,8 @@ body.maekrak-site--disease #ctt_con {
     background: linear-gradient(
         135deg,
         var(--maekrak-ivory) 0%,
-        #fff 45%,
-        color-mix(in srgb, var(--maekrak-cond-accent) 12%, #fff) 100%
+        var(--maekrak-surface-elevated) 45%,
+        color-mix(in srgb, var(--maekrak-cond-accent) 12%, var(--maekrak-surface-elevated)) 100%
     );
 }
 
@@ -4143,12 +4237,14 @@ body.maekrak-site--disease #ctt_con {
 }
 
 .maekrak-dis-hero {
-    background: linear-gradient(
-        160deg,
-        #fff 0%,
-        var(--maekrak-ivory) 40%,
-        color-mix(in srgb, var(--maekrak-dis-accent) 10%, var(--maekrak-gray-light)) 100%
-    );
+    background:
+        radial-gradient(ellipse 70% 55% at 88% 12%, color-mix(in srgb, var(--maekrak-dis-accent) 22%, transparent) 0%, transparent 55%),
+        linear-gradient(
+            165deg,
+            var(--maekrak-surface) 0%,
+            var(--maekrak-stone) 48%,
+            color-mix(in srgb, var(--maekrak-dis-accent) 8%, var(--maekrak-ivory)) 100%
+        );
 }
 
 .maekrak-dis-hero-visual-card span {
@@ -4213,7 +4309,7 @@ body.maekrak-site--disease #ctt_con {
 .maekrak-cond-faq-item {
     border: 1px solid var(--maekrak-border);
     border-radius: 12px;
-    background: #fff;
+    background: var(--maekrak-surface-elevated);
     overflow: hidden;
 }
 

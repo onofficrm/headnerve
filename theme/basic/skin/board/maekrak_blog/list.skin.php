@@ -76,8 +76,16 @@ $list_count = is_array($list) ? count($list) : 0;
                     if (!empty($list[$i]['file']['count']) && !empty($list[$i]['file'][0]['path']) && !empty($list[$i]['file'][0]['file'])) {
                         $thumb_url = $list[$i]['file'][0]['path'] . '/' . $list[$i]['file'][0]['file'];
                     }
+                    $thumb_is_default = false;
                     if ($thumb_url === '') {
                         $thumb_url = maekrak_blog_default_thumb_url($cate);
+                        $thumb_is_default = ($thumb_url !== '');
+                    }
+                    $thumb_class = 'maekrak-blog-cards-thumb';
+                    if ($thumb_is_default) {
+                        $thumb_class .= ' maekrak-blog-cards-thumb--placeholder';
+                    } elseif ($thumb_url === '') {
+                        $thumb_class .= ' maekrak-blog-cards-thumb--fallback';
                     }
                 ?>
                     <li class="maekrak-blog-cards-item">
@@ -88,11 +96,11 @@ $list_count = is_array($list) ? count($list) : 0;
                         </label>
                         <?php } ?>
                         <a href="<?php echo $wr_href; ?>" class="maekrak-blog-cards-link">
-                            <?php if ($thumb_url) { ?>
-                            <div class="maekrak-blog-cards-thumb">
-                                <img src="<?php echo htmlspecialchars($thumb_url, ENT_QUOTES, 'UTF-8'); ?>" alt="" width="280" height="175" loading="lazy">
+                            <div class="<?php echo $thumb_class; ?>" data-thumb-wrap>
+                                <?php if ($thumb_url) { ?>
+                                <img src="<?php echo htmlspecialchars($thumb_url, ENT_QUOTES, 'UTF-8'); ?>" alt="" width="280" height="175" loading="lazy" onerror="this.closest('[data-thumb-wrap]').classList.add('maekrak-blog-cards-thumb--fallback');this.remove();">
+                                <?php } ?>
                             </div>
-                            <?php } ?>
                             <div class="maekrak-blog-cards-body">
                                 <span class="maekrak-blog-cards-cat"><?php echo $cate; ?></span>
                                 <h2 class="maekrak-blog-cards-subject"><?php echo $subject; ?></h2>
