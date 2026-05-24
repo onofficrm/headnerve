@@ -224,6 +224,9 @@ if ($member['mb_id'] && ($is_admin === 'super' || $group['gr_admin'] === $member
 
 if (function_exists('headnerve_is_g5b_board') && headnerve_is_g5b_board()) {
     echo run_replace('board_content_head', html_purifier(stripslashes($board['bo_content_head'])), $board);
+    if (is_file(G5_PATH.'/components/maekrak-board-hero.php')) {
+        include_once(G5_PATH.'/components/maekrak-board-hero.php');
+    }
 } else {
     include_once(G5_BBS_PATH.'/board_head.php');
 }

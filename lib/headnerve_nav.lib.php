@@ -124,3 +124,21 @@ if (!function_exists('headnerve_nav_tel_href')) {
         return 'tel:'.preg_replace('/[^0-9+]/', '', $phone);
     }
 }
+
+if (!function_exists('headnerve_board_hero_image')) {
+    function headnerve_board_hero_image($bo_table)
+    {
+        $map = array(
+            'notice' => '/img/main/board-hero.png',
+            'news'   => '/img/main/board-hero.png',
+            'column' => '/img/main/board-hero.png',
+        );
+
+        $rel = isset($map[$bo_table]) ? $map[$bo_table] : '/img/main/board-hero.png';
+        if (is_file(G5_PATH.$rel)) {
+            return G5_URL.$rel;
+        }
+
+        return G5_URL.'/img/main/board-hero.png';
+    }
+}
