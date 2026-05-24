@@ -7,7 +7,7 @@ if (!isset($site_config) && is_file(G5_PATH.'/_site.config.php')) {
 
 run_event('pre_head');
 
-if (defined('G5_THEME_PATH')) {
+if (defined('G5_THEME_PATH') && !defined('G5_USE_BASE_HEAD')) {
     require_once(G5_THEME_PATH.'/head.php');
     return;
 }

@@ -8,6 +8,16 @@ if (!defined('_GNUBOARD_')) exit;
  * news    → basic-modern
  * column  → post-thumb
  */
+if (!function_exists('headnerve_is_g5b_board')) {
+    function headnerve_is_g5b_board()
+    {
+        global $bo_table;
+
+        return !empty($bo_table)
+            && isset($GLOBALS['headnerve_board_skin_map'][$bo_table]);
+    }
+}
+
 $GLOBALS['headnerve_board_skin_map'] = array(
     'notice' => array(
         'bo_skin'         => 'basic-notice',
@@ -34,6 +44,14 @@ if (!isset($GLOBALS['headnerve_board_skin_map'][$bo_table])) {
 $headnerve_skin = $GLOBALS['headnerve_board_skin_map'][$bo_table];
 $board['bo_skin'] = $headnerve_skin['bo_skin'];
 $board['bo_mobile_skin'] = $headnerve_skin['bo_mobile_skin'];
+
+// 그누보드 테마 헤더·default.css 충돌 방지 → 베이스 템플릿 레이아웃 (bbs/board.php 연동)
+if (!defined('G5_USE_BASE_HEAD')) {
+    define('G5_USE_BASE_HEAD', true);
+}
+$board['bo_include_head'] = '';
+$board['bo_include_tail'] = '';
+$g5['body_script'] = ' class="headnerve-g5b-board"';
 
 if (G5_IS_MOBILE) {
     $board_skin_path = get_skin_path('board', $board['bo_mobile_skin']);
@@ -66,6 +84,14 @@ if (!function_exists('headnerve_board_enqueue_styles')) {
         add_stylesheet(
             '<style>:root{--color-primary:'.$headnerve_primary.';--color-secondary:#5C6573;--color-on-primary:#fff;}</style>',
             6
+        );
+        add_stylesheet(
+            '<style>'
+            .'body.headnerve-g5b-board #container_wr,body.headnerve-g5b-board #container{float:none;width:100%;max-width:100%;}'
+            .'body.headnerve-g5b-board #container .board-wrap{max-width:1100px;margin:0 auto;}'
+            .'body.headnerve-g5b-board #hd_login_msg{display:none;}'
+            .'</style>',
+            7
         );
     }
 }

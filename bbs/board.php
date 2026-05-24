@@ -170,7 +170,11 @@ if ((isset($wr_id) && $wr_id) || (isset($wr_seo_title) && $wr_seo_title)) {
 
 $is_auth = $is_admin ? true : false;
 
-include_once(G5_PATH.'/head.sub.php');
+if (function_exists('headnerve_is_g5b_board') && headnerve_is_g5b_board()) {
+    include_once(G5_PATH.'/head.php');
+} else {
+    include_once(G5_PATH.'/head.sub.php');
+}
 
 $width = $board['bo_table_width'];
 if ($width <= 100)
@@ -218,7 +222,11 @@ $admin_href = "";
 if ($member['mb_id'] && ($is_admin === 'super' || $group['gr_admin'] === $member['mb_id']))
     $admin_href = G5_ADMIN_URL.'/board_form.php?w=u&amp;bo_table='.$bo_table;
 
-include_once(G5_BBS_PATH.'/board_head.php');
+if (function_exists('headnerve_is_g5b_board') && headnerve_is_g5b_board()) {
+    echo run_replace('board_content_head', html_purifier(stripslashes($board['bo_content_head'])), $board);
+} else {
+    include_once(G5_BBS_PATH.'/board_head.php');
+}
 
 // 게시물 아이디가 있다면 게시물 보기를 INCLUDE
 if (isset($wr_id) && $wr_id) {
@@ -230,7 +238,12 @@ if (isset($wr_id) && $wr_id) {
 if ($member['mb_level'] >= $board['bo_list_level'] && $board['bo_use_list_view'] || empty($wr_id))
     include_once (G5_BBS_PATH.'/list.php');
 
-include_once(G5_BBS_PATH.'/board_tail.php');
+if (function_exists('headnerve_is_g5b_board') && headnerve_is_g5b_board()) {
+    echo run_replace('board_content_tail', html_purifier(stripslashes($board['bo_content_tail'])), $board);
+    include_once(G5_PATH.'/tail.php');
+} else {
+    include_once(G5_BBS_PATH.'/board_tail.php');
+}
 
 echo "\n<!-- 사용스킨 : ".(G5_IS_MOBILE ? $board['bo_mobile_skin'] : $board['bo_skin'])." -->\n";
 
