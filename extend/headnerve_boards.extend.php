@@ -43,16 +43,30 @@ if (G5_IS_MOBILE) {
     $board_skin_url  = get_skin_url('board', $board['bo_skin']);
 }
 
-// 게시판 공통 CSS + 브랜드 색 (--color-primary 등, g5b-board.css 토큰)
-add_stylesheet('<link rel="stylesheet" href="'.G5_CSS_URL.'/custom.css?ver='.G5_CSS_VER.'">', 5);
-$headnerve_primary = '#0B2744';
-if (function_exists('g5site_cfg')) {
-    $cfg_primary = g5site_cfg('primary_color', '');
-    if ($cfg_primary !== '' && preg_match('/^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/', $cfg_primary)) {
-        $headnerve_primary = $cfg_primary;
+// CSS는 extend 로드 순서상 G5_CSS_VER 정의 전일 수 있음 → common_header 에서 enqueue
+if (!function_exists('headnerve_board_enqueue_styles')) {
+    function headnerve_board_enqueue_styles()
+    {
+        global $bo_table;
+
+        if (empty($bo_table) || !isset($GLOBALS['headnerve_board_skin_map'][$bo_table])) {
+            return;
+        }
+
+        $css_ver = defined('G5_CSS_VER') ? G5_CSS_VER : '1';
+        add_stylesheet('<link rel="stylesheet" href="'.G5_CSS_URL.'/custom.css?ver='.$css_ver.'">', 5);
+
+        $headnerve_primary = '#0B2744';
+        if (function_exists('g5site_cfg')) {
+            $cfg_primary = g5site_cfg('primary_color', '');
+            if ($cfg_primary !== '' && preg_match('/^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/', $cfg_primary)) {
+                $headnerve_primary = $cfg_primary;
+            }
+        }
+        add_stylesheet(
+            '<style>:root{--color-primary:'.$headnerve_primary.';--color-secondary:#5C6573;--color-on-primary:#fff;}</style>',
+            6
+        );
     }
 }
-add_stylesheet(
-    '<style>:root{--color-primary:'.$headnerve_primary.';--color-secondary:#5C6573;--color-on-primary:#fff;}</style>',
-    6
-);
+add_event('common_header', 'headnerve_board_enqueue_styles', 1);
