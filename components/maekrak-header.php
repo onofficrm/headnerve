@@ -10,10 +10,9 @@ $maekrak_booking_url = headnerve_nav_booking_url();
 $maekrak_tel_href = headnerve_nav_tel_href();
 $maekrak_site_title = isset($g5_site_title) ? $g5_site_title : (function_exists('g5site_cfg') ? g5site_cfg('site_name', $config['cf_title']) : $config['cf_title']);
 $maekrak_logo_inline = G5_PATH.'/components/maekrak-logo-inline.php';
+/* PNG 등 래스터만 img — SVG는 인라인(홈 빌더 Logo 와 동일, FTP 인코딩 이슈 방지) */
 $maekrak_logo_url = '';
-if (isset($g5_logo_url) && $g5_logo_url !== '' && !preg_match('/\.svg$/i', $g5_logo_url)) {
-    $maekrak_logo_url = $g5_logo_url;
-} elseif (isset($g5_logo_url) && $g5_logo_url !== '' && preg_match('/\.svg$/i', $g5_logo_url) && is_file(G5_PATH.parse_url($g5_logo_url, PHP_URL_PATH))) {
+if (isset($g5_logo_url) && $g5_logo_url !== '' && preg_match('/\.(png|jpe?g|webp|gif)$/i', $g5_logo_url)) {
     $maekrak_logo_url = $g5_logo_url;
 }
 ?>
