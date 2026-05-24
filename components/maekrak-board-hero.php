@@ -3,9 +3,9 @@ if (!defined('_GNUBOARD_')) {
     exit;
 }
 
-global $board, $bo_table;
+global $board, $bo_table, $title_msg;
 
-$hero_title = isset($board['bo_subject']) ? get_text($board['bo_subject']) : '커뮤니티';
+$board_name = isset($board['bo_subject']) ? get_text($board['bo_subject']) : '커뮤니티';
 $hero_desc = function_exists('g5site_cfg') ? g5site_cfg('site_desc', '') : '';
 $hero_image = function_exists('headnerve_board_hero_image')
     ? headnerve_board_hero_image($bo_table)
@@ -16,14 +16,25 @@ $hero_labels = array(
     'news'   => '언론과 대외 활동 소식을 모았습니다.',
     'column' => '원장이 전하는 건강 이야기입니다.',
 );
-$hero_sub = isset($hero_labels[$bo_table]) ? $hero_labels[$bo_table] : $hero_desc;
+$hero_board_sub = isset($hero_labels[$bo_table]) ? $hero_labels[$bo_table] : $hero_desc;
+
+$is_write_hero = (basename($_SERVER['SCRIPT_NAME']) === 'write.php' && !empty($title_msg));
+if ($is_write_hero) {
+    $hero_title = get_text($title_msg);
+    $hero_sub = $board_name.' · '.$hero_board_sub;
+    $hero_eyebrow = 'Write';
+} else {
+    $hero_title = $board_name;
+    $hero_sub = $hero_board_sub;
+    $hero_eyebrow = 'Community';
+}
 ?>
 
 <section class="maekrak-board-hero" aria-label="<?php echo $hero_title; ?> 소개">
     <div class="maekrak-board-hero__media" style="background-image:url('<?php echo $hero_image; ?>')"></div>
     <div class="maekrak-board-hero__overlay"></div>
     <div class="maekrak-board-hero__inner">
-        <p class="maekrak-board-hero__eyebrow">Community</p>
+        <p class="maekrak-board-hero__eyebrow"><?php echo $hero_eyebrow; ?></p>
         <h2 class="maekrak-board-hero__title"><?php echo $hero_title; ?></h2>
         <?php if ($hero_sub !== '') { ?>
         <p class="maekrak-board-hero__desc"><?php echo get_text($hero_sub); ?></p>

@@ -433,15 +433,28 @@ $editor_js .= chk_editor_js('wr_content', $is_dhtml_editor);
 // 임시 저장된 글 수
 $autosave_count = autosave_count($member['mb_id']);
 
-include_once(G5_PATH.'/head.sub.php');
-@include_once ($board_skin_path.'/write.head.skin.php');
-include_once('./board_head.php');
+$headnerve_g5b_write = function_exists('headnerve_is_g5b_board') && headnerve_is_g5b_board();
+
+if ($headnerve_g5b_write) {
+    include_once(G5_PATH.'/head.php');
+    if (is_file(G5_PATH.'/components/maekrak-board-hero.php')) {
+        include_once(G5_PATH.'/components/maekrak-board-hero.php');
+    }
+} else {
+    include_once(G5_PATH.'/head.sub.php');
+    @include_once ($board_skin_path.'/write.head.skin.php');
+    include_once('./board_head.php');
+}
 
 $action_url = https_url(G5_BBS_DIR)."/write_update.php";
 
 echo '<!-- skin : '.(G5_IS_MOBILE ? $board['bo_mobile_skin'] : $board['bo_skin']).' -->';
 include_once ($board_skin_path.'/write.skin.php');
 
-include_once('./board_tail.php');
-@include_once ($board_skin_path.'/write.tail.skin.php');
+if ($headnerve_g5b_write) {
+    include_once(G5_PATH.'/tail.php');
+} else {
+    include_once('./board_tail.php');
+    @include_once ($board_skin_path.'/write.tail.skin.php');
+}
 include_once(G5_PATH.'/tail.sub.php');
