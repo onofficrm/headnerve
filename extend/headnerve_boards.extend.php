@@ -95,6 +95,7 @@ if (!function_exists('headnerve_board_enqueue_styles')) {
             .'body.headnerve-g5b-board #hd_login_msg{display:none;}'
             .'body.headnerve-g5b-board #aside{display:none!important;}'
             .'body.headnerve-g5b-board .site-g5-widgets--tail{display:none!important;}'
+            .'body.headnerve-g5b-board #siteDock{display:none!important;}'
             .'</style>',
             8
         );

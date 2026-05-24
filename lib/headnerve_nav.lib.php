@@ -125,6 +125,62 @@ if (!function_exists('headnerve_nav_tel_href')) {
     }
 }
 
+if (!function_exists('headnerve_footer_address')) {
+    function headnerve_footer_address()
+    {
+        $addr = function_exists('g5site_cfg') ? g5site_cfg('address', '') : '';
+        if ($addr !== '' && $addr !== '주소를 입력하세요') {
+            return $addr;
+        }
+
+        return '서울시 중구 서소문로 134, 2층 맥락한의원';
+    }
+}
+
+if (!function_exists('headnerve_floating_menu_items')) {
+    function headnerve_floating_menu_items()
+    {
+        $consult_href = G5_URL.'/#consult';
+        $kakao = function_exists('g5site_cfg') ? g5site_cfg('kakao_url', '') : '';
+        if ($kakao !== '' && $kakao !== '#') {
+            $consult_href = $kakao;
+        }
+
+        return array(
+            array(
+                'label'  => '예약하기',
+                'href'   => headnerve_nav_booking_url(),
+                'external' => true,
+                'icon'   => 'naver',
+            ),
+            array(
+                'label'  => '네이버 티비',
+                'href'   => function_exists('g5site_cfg') ? g5site_cfg('naver_tv_url', 'https://tv.naver.com/headache123?tab=highlight') : 'https://tv.naver.com/headache123?tab=highlight',
+                'external' => true,
+                'icon'   => 'naver-tv',
+            ),
+            array(
+                'label'  => '유튜브',
+                'href'   => function_exists('g5site_cfg') ? g5site_cfg('youtube_url', 'https://youtube.com/channel/UC_DMpaxnafqqkS3cpdJz7GA?si=ZZfgZMLOaHqHgWGc') : 'https://youtube.com/channel/UC_DMpaxnafqqkS3cpdJz7GA?si=ZZfgZMLOaHqHgWGc',
+                'external' => true,
+                'icon'   => 'youtube',
+            ),
+            array(
+                'label'  => '칼럼보기',
+                'href'   => function_exists('g5site_cfg') ? g5site_cfg('naver_blog_url', 'https://blog.naver.com/rlarnwl67696') : 'https://blog.naver.com/rlarnwl67696',
+                'external' => true,
+                'icon'   => 'blog',
+            ),
+            array(
+                'label'  => '상담하기',
+                'href'   => $consult_href,
+                'external' => (strpos($consult_href, 'http') === 0),
+                'icon'   => 'kakao',
+            ),
+        );
+    }
+}
+
 if (!function_exists('headnerve_board_hero_image')) {
     function headnerve_board_hero_image($bo_table)
     {

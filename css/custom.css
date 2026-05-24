@@ -3279,3 +3279,316 @@ html:has(.site-dock) {
 body.headnerve-g5b-board #container .board-wrap {
   padding-top: 0.25rem;
 }
+
+/* ==========================================================================
+   맥락 푸터·플로팅 (게시판 — 빌더 Footer / FloatingQuickMenu 동일)
+   ========================================================================== */
+.site-footer-wrap--maekrak {
+  margin-top: 3rem;
+}
+
+.maekrak-footer {
+  background: #fff;
+  border-top: 1px solid #f3f4f6;
+  padding: 4rem 0 0;
+}
+
+.maekrak-footer__inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .maekrak-footer__inner {
+    padding: 0 2rem;
+  }
+}
+
+.maekrak-footer__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+@media (min-width: 1024px) {
+  .maekrak-footer__grid {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+}
+
+.maekrak-footer__brand {
+  flex: 1;
+  max-width: 24rem;
+}
+
+.maekrak-footer__logo-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  color: #0f172a;
+  text-decoration: none;
+}
+
+.maekrak-footer__logo-link svg {
+  height: 36px;
+  width: auto;
+  max-width: 200px;
+}
+
+.maekrak-footer__logo-text {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.maekrak-footer__info {
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: #6b7280;
+}
+
+.maekrak-footer__info a {
+  color: #0f172a;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.maekrak-footer__info a:hover {
+  text-decoration: underline;
+}
+
+.maekrak-footer__hours {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f3f4f6;
+}
+
+.maekrak-footer__hours-off {
+  margin-top: 0.25rem;
+  color: #f87171;
+}
+
+.maekrak-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+}
+
+.maekrak-footer__col-title {
+  margin: 0 0 1.5rem;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #1f2937;
+}
+
+.maekrak-footer__col ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.maekrak-footer__col li {
+  margin-bottom: 0.75rem;
+}
+
+.maekrak-footer__col a {
+  font-size: 13px;
+  color: #6b7280;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.maekrak-footer__col a:hover {
+  color: #0f172a;
+}
+
+.maekrak-footer__link--emph {
+  color: #1f2937 !important;
+  font-weight: 500;
+}
+
+.maekrak-footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 4rem;
+  padding: 2rem 0;
+  border-top: 1px solid #f3f4f6;
+}
+
+.maekrak-footer__copy {
+  margin: 0;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.maekrak-footer__top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  background: #fff;
+  color: #9ca3af;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.maekrak-footer__top:hover {
+  border-color: #9ca3af;
+  color: #4b5563;
+}
+
+/* 플로팅 퀵 메뉴 */
+.maekrak-float {
+  display: none;
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  z-index: 70;
+  flex-direction: column;
+  gap: 0.5rem;
+  transform: scale(0.7);
+  transform-origin: bottom right;
+}
+
+@media (min-width: 768px) {
+  .maekrak-float {
+    display: flex;
+  }
+}
+
+.maekrak-float__item {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  width: 156px;
+  padding: 0.875rem 1.25rem;
+  border: 1px solid rgba(249, 250, 251, 0.8);
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  color: #1f2937;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.maekrak-float__item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.maekrak-float__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.maekrak-float__icon--naver::before {
+  content: "N";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 2px;
+  background: #03c75a;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.maekrak-float__icon--naver-tv::before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 12px solid #03c75a;
+}
+
+.maekrak-float__icon--youtube::before {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 16px;
+  border-radius: 4px;
+  background: #ff0000;
+  box-shadow: inset 8px 0 0 #fff;
+  clip-path: polygon(35% 20%, 35% 80%, 75% 50%);
+}
+
+.maekrak-float__icon--blog::before {
+  content: "blog";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  background: #03c75a;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.maekrak-float__icon--kakao {
+  position: relative;
+  width: 24px;
+  height: 18px;
+}
+
+.maekrak-float__icon--kakao::before {
+  content: "TALK";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #3a1d1d;
+  color: #fee500;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.maekrak-float__top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 156px;
+  margin-top: 0.5rem;
+  padding: 1rem 1.25rem;
+  border: 0;
+  border-radius: 999px;
+  background: #00a650;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.maekrak-float__top:hover {
+  background: #009040;
+  transform: translateY(-4px);
+}

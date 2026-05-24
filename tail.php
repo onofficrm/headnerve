@@ -58,14 +58,18 @@ $g5_is_index_page = defined('_INDEX_');
 <hr>
 
 <!-- 하단 시작 { -->
-<div id="ft" class="site-footer-wrap">
-    <?php if (!(function_exists('headnerve_is_g5b_board') && headnerve_is_g5b_board())) { ?>
+<?php $g5_use_maekrak_footer = function_exists('headnerve_is_g5b_board') && headnerve_is_g5b_board(); ?>
+<div id="ft" class="site-footer-wrap<?php echo $g5_use_maekrak_footer ? ' site-footer-wrap--maekrak' : ''; ?>">
+    <?php if (!$g5_use_maekrak_footer) { ?>
     <div class="site-g5-widgets site-g5-widgets--tail">
         <?php echo latest('notice', 'notice', 4, 13); ?>
         <?php echo visit(); ?>
     </div>
     <?php } ?>
 
+    <?php if ($g5_use_maekrak_footer && is_file(G5_PATH.'/components/maekrak-footer.php')) { ?>
+    <?php include_once(G5_PATH.'/components/maekrak-footer.php'); ?>
+    <?php } else { ?>
     <footer id="siteFooter" class="site-footer">
         <div class="site-footer__inner">
             <div class="site-footer__brand">
@@ -137,12 +141,19 @@ $g5_is_index_page = defined('_INDEX_');
             </p>
         </div>
     </footer>
+    <?php } ?>
 </div>
 
 <?php
-include_once(G5_PATH.'/components/floating-buttons.php');
-include_once(G5_PATH.'/components/consult-modal.php');
-include_once(G5_PATH.'/components/popup-banner.php');
+if ($g5_use_maekrak_footer && is_file(G5_PATH.'/components/maekrak-floating-menu.php')) {
+    include_once(G5_PATH.'/components/maekrak-floating-menu.php');
+} else {
+    include_once(G5_PATH.'/components/floating-buttons.php');
+}
+if (!$g5_use_maekrak_footer) {
+    include_once(G5_PATH.'/components/consult-modal.php');
+    include_once(G5_PATH.'/components/popup-banner.php');
+}
 ?>
 
 <?php
