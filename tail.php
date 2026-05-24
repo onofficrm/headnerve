@@ -36,12 +36,14 @@ $g5_is_index_page = defined('_INDEX_');
 ?>
 
     </div>
+    <?php if (!(function_exists('headnerve_is_g5b_board') && headnerve_is_g5b_board())) { ?>
     <div id="aside" class="site-aside">
         <div class="site-g5-widgets site-g5-widgets--aside">
             <?php echo outlogin(); ?>
             <?php echo poll(); ?>
         </div>
     </div>
+    <?php } ?>
 </div>
 
 </div>

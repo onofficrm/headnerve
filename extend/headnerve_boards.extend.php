@@ -87,9 +87,11 @@ if (!function_exists('headnerve_board_enqueue_styles')) {
         );
         add_stylesheet(
             '<style>'
-            .'body.headnerve-g5b-board #container_wr,body.headnerve-g5b-board #container{float:none;width:100%;max-width:100%;}'
-            .'body.headnerve-g5b-board #container .board-wrap{max-width:1100px;margin:0 auto;}'
+            .'body.headnerve-g5b-board #container_wr{display:block;width:100%;max-width:1200px;margin:0 auto;padding:0 var(--space-md,1rem);}'
+            .'body.headnerve-g5b-board #container{float:none;width:100%;max-width:100%;flex:none;}'
+            .'body.headnerve-g5b-board #container .board-wrap{max-width:100%;margin:0 auto;}'
             .'body.headnerve-g5b-board #hd_login_msg{display:none;}'
+            .'body.headnerve-g5b-board #aside{display:none!important;}'
             .'</style>',
             7
         );
