@@ -43,6 +43,8 @@ $site_config = array(
     'inquiry_notify_webhook_url'     => '',
     /* 문의 접수 완료 페이지 (상대 경로) */
     'inquiry_thanks_url'      => '/page/inquiry-thanks.php',
+    /* 홈(/) — onoff-builder-bridge 프로젝트 ID (비우면 headnerve-main 시도) */
+    'home_builder_bridge_id'  => 'headnerve-main',
     /* 전환·방문 추적 ID — 비우면 출력 안 함 */
     'gtm_id'              => '',
     'ga4_id'              => '',

@@ -4,7 +4,29 @@ include_once('./_common.php');
 define('_INDEX_', true);
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
-// 테마 사용 시 테마 index로 위임 (기존 동작 유지)
+/**
+ * 빌더 메인 홈 (onoff-builder-bridge)
+ * - _site.config.php 의 home_builder_bridge_id (기본: headnerve-main)
+ * - 업로드된 dist 가 있으면 / 에서 빌더 SPA 출력, 없으면 아래 테마·섹션 폴백
+ */
+$g5_home_builder_id = function_exists('g5site_cfg') ? trim(g5site_cfg('home_builder_bridge_id', '')) : '';
+if ($g5_home_builder_id === '') {
+    $g5_home_builder_id = 'headnerve-main';
+}
+if ($g5_home_builder_id !== '') {
+    $g5_builder_bootstrap = G5_PLUGIN_PATH.'/onoff-builder-bridge/bootstrap.php';
+    if (is_file($g5_builder_bootstrap)) {
+        include_once($g5_builder_bootstrap);
+        if (function_exists('onoff_builder_has_import') && onoff_builder_has_import($g5_home_builder_id)) {
+            $_GET['id'] = $g5_home_builder_id;
+            $_REQUEST['id'] = $g5_home_builder_id;
+            include_once(G5_PLUGIN_PATH.'/onoff-builder-bridge/page.php');
+            return;
+        }
+    }
+}
+
+// 테마 사용 시 테마 index로 위임 (빌더 미업로드 시)
 if (defined('G5_THEME_PATH')) {
     require_once(G5_THEME_PATH.'/index.php');
     return;
