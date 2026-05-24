@@ -32,7 +32,7 @@ header("Pragma: no-cache"); // HTTP/1.0
 */
 ?>
 <!doctype html>
-<html lang="ko"<?php echo isset($g5['html_script']) ? $g5['html_script'] : ''; ?>>
+<html lang="ko">
 <head>
 <meta charset="utf-8">
 <?php
@@ -50,46 +50,9 @@ if($config['cf_add_meta'])
 ?>
 <title><?php echo $g5_head_title; ?></title>
 <?php
-if (!empty($maekrak_disease_page)) {
-    $mk_meta = $maekrak_disease_page;
-} elseif (!empty($maekrak_condition_page)) {
-    $mk_meta = $maekrak_condition_page;
-} elseif (defined('_INDEX_') && !empty($maekrak_home_meta)) {
-    $mk_meta = $maekrak_home_meta;
-} else {
-    $mk_meta = null;
-}
-if (!empty($mk_meta)) {
-    $mk_desc = get_text($mk_meta['meta_description']);
-    $mk_canonical = $mk_meta['canonical'];
-    $mk_og_title = get_text($mk_meta['meta_title']);
-    $mk_og_image = function_exists('maekrak_og_image_url') ? maekrak_og_image_url() : ((defined('MK_OG_IMAGE_URL') && MK_OG_IMAGE_URL) ? MK_OG_IMAGE_URL : '');
-?>
-<meta name="description" content="<?php echo $mk_desc; ?>">
-<link rel="canonical" href="<?php echo $mk_canonical; ?>">
-<?php if (defined('MK_SITEMAP_URL') && MK_SITEMAP_URL) { ?>
-<link rel="sitemap" type="application/xml" title="Sitemap" href="<?php echo MK_SITEMAP_URL; ?>">
-<?php } ?>
-<meta property="og:type" content="website">
-<meta property="og:title" content="<?php echo $mk_og_title; ?>">
-<meta property="og:description" content="<?php echo $mk_desc; ?>">
-<meta property="og:url" content="<?php echo $mk_canonical; ?>">
-<?php if ($mk_og_image) { ?>
-<meta property="og:image" content="<?php echo $mk_og_image; ?>">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="<?php echo $mk_og_image; ?>">
-<?php } ?>
-<?php } ?>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-<?php
 $shop_css = '';
 if (defined('_SHOP_')) $shop_css = '_shop';
 echo '<link rel="stylesheet" href="'.run_replace('head_css_url', G5_THEME_CSS_URL.'/'.(G5_IS_MOBILE?'mobile':'default').$shop_css.'.css?ver='.G5_CSS_VER, G5_THEME_URL).'">'.PHP_EOL;
-echo '<link rel="stylesheet" href="'.G5_THEME_CSS_URL.'/maekrak.css?ver='.G5_CSS_VER.'">'.PHP_EOL;
 ?>
 <!--[if lte IE 8]>
 <script src="<?php echo G5_JS_URL ?>/html5.js"></script>
@@ -133,9 +96,6 @@ if(G5_IS_MOBILE) {
 }
 if(!defined('G5_IS_ADMIN'))
     echo $config['cf_add_script'];
-if (function_exists('maekrak_render_ga4')) {
-    maekrak_render_ga4();
-}
 ?>
 </head>
 <body<?php echo isset($g5['body_script']) ? $g5['body_script'] : ''; ?>>
