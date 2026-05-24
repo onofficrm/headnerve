@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-maekrak-navy: #0F172A;
+  --color-maekrak-navy-light: #1E293B;
+  --color-maekrak-ivory: #F8FAFC;
+  --color-maekrak-gray-light: #F1F5F9;
+  --color-maekrak-gray: #94A3B8;
+  --color-maekrak-text: #0F172A;
+  --color-maekrak-accent: #3b82f6;
+  
+  --font-sans: "Noto Sans KR", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+}
+
+@layer utilities {
+  .maekrak-snap-container {
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .maekrak-snap-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .maekrak-snap-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    height: 100vh;
+    height: 100dvh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .maekrak-snap-section::-webkit-scrollbar {
+    display: none;
+  }
+
+  .maekrak-normal-section {
+    scroll-snap-align: none;
+  }
+
+  .glass-nav {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .medical-card {
+    border-bottom: 1px solid #E5E5E5;
+    transition: border-color 0.3s ease;
+  }
+  .medical-card:hover {
+    border-color: var(--color-maekrak-navy);
+  }
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-maekrak-text);
+  background-color: var(--color-maekrak-ivory);
+}
+
+.diagram-pattern {
+  background-image: 
+    linear-gradient(#f1f5f9 2px, transparent 2px),
+    linear-gradient(90deg, #f1f5f9 2px, transparent 2px);
+  background-size: 40px 40px;
+}

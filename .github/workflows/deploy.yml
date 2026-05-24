@@ -35,3 +35,6 @@ jobs:
             *.log
             .env
             .env.*
+            _BUILDER_INPUT/**
+            data/dbconfig.php
+            data/dbconfig.local.php

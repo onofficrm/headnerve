@@ -7,6 +7,49 @@
 
 ---
 
+## headnerve (맥락한의원) 빠른 참조
+
+| 항목 | 값 |
+|------|-----|
+| 운영 URL | https://headnerve.iwinv.net |
+| 빌더 소스 폴더 | `_BUILDER_INPUT/app/` (로컬: `/Volumes/onoff/cursor/headnerve/_BUILDER_INPUT/app`) |
+| 프로젝트 ID (제안) | `headnerve-main` |
+| ZIP 업로드 | `/plugin/onoff-builder-bridge/admin/upload.php` |
+| 공개 미리보기 | `/plugin/onoff-builder-bridge/page.php?id=headnerve-main` |
+| PHP·스킨 배포 | `git push` → GitHub Actions FTP (`data/`, `_BUILDER_INPUT/**` 제외 권장) |
+| 홈 UI 반영 | **관리자 ZIP 업로드 필수** (FTP만으로 React `dist` 미반영) |
+
+**현재 상태:** `_BUILDER_INPUT/app/` 에는 `.gitkeep`만 있음 → 구글 스튜디오 ZIP을 풀어 넣은 뒤 **프롬프트 ①** 실행.
+
+**프롬프트 ① (headnerve — 복사용)**
+
+```
+구글 스튜디오에서 받은 빌더 ZIP을 _BUILDER_INPUT/app/ 에 넣었습니다.
+onoff-builder-bridge 방식으로 headnerve(맥락한의원) 그누보드에 배포할 예정입니다.
+
+【프로젝트 정보】
+- 사이트/고객명: 맥락한의원
+- 빌더 소스 경로: /Volumes/onoff/cursor/headnerve/_BUILDER_INPUT/app
+- 업로드용 프로젝트 ID: headnerve-main
+- 관리용 표시 이름: 맥락한의원 메인
+- 공개 URL 예정: /plugin/onoff-builder-bridge/page.php?id=headnerve-main
+- 홈(/) 연결 여부: 루트 홈으로 쓸 예정 (index.php 또는 테마 index 연동 검토)
+
+【요청】
+1. package.json 확인 후 npm install, npm run build 실행
+2. dist/index.html, dist/assets/ 존재 확인
+3. dist 내용만 담은 ZIP 생성 (파일명: headnerve-main.zip, 루트에 index.html + assets/)
+4. 업로드 전 체크리스트 표로 정리
+5. _site.config.php·index.php 에서 빌더 홈 연결 방법 제안 (onlycebu 패턴 참고)
+
+【금지】
+- src/, node_modules/, package.json 을 ZIP에 넣지 말 것
+- data/dbconfig.php 등 비밀번호 파일 커밋 금지
+- git commit/push는 내가 요청할 때만
+```
+
+---
+
 ## 사전 준비 (직접 수행)
 
 | 단계 | 작업 |

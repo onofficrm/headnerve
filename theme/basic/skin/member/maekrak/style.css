@@ -1,0 +1,468 @@
+@charset "utf-8";
+
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap");
+
+/* 맥락한의원 — 회원 인증 (로그인·가입·찾기) */
+
+:root {
+    --mk-navy: #0B2744;
+    --mk-navy-deep: #061A2E;
+    --mk-navy-light: #1A4A6E;
+    --mk-white: #FFFFFF;
+    --mk-muted: #F5F7FA;
+    --mk-border: rgba(11, 39, 68, 0.1);
+    --mk-text: #1A2332;
+    --mk-text-muted: #5C6573;
+    --mk-accent: #B8925A;
+}
+
+body {
+    margin: 0;
+    font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--mk-text);
+    background: var(--mk-muted);
+    -webkit-font-smoothing: antialiased;
+}
+
+.maekrak-auth {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.maekrak-auth-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    background: var(--mk-white);
+    border-bottom: 1px solid var(--mk-border);
+}
+
+.maekrak-auth-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--mk-navy);
+}
+
+.maekrak-auth-logo-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(145deg, var(--mk-navy-deep), var(--mk-navy));
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 8px;
+}
+
+.maekrak-auth-logo-text {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.maekrak-auth-home {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--mk-navy-light);
+    text-decoration: none;
+}
+
+.maekrak-auth-home:hover {
+    color: var(--mk-navy);
+}
+
+.maekrak-auth-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px 48px;
+}
+
+.maekrak-auth-card {
+    width: 100%;
+    max-width: 440px;
+    padding: 40px 36px 36px;
+    background: var(--mk-white);
+    border: 1px solid var(--mk-border);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(6, 26, 46, 0.08);
+}
+
+.maekrak-auth-head {
+    margin-bottom: 28px;
+    text-align: center;
+}
+
+.maekrak-auth-label {
+    margin: 0 0 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mk-accent);
+}
+
+.maekrak-auth-title {
+    margin: 0;
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: var(--mk-navy-deep);
+    letter-spacing: -0.02em;
+}
+
+.maekrak-auth-desc {
+    margin: 10px 0 0;
+    font-size: 14px;
+    color: var(--mk-text-muted);
+    line-height: 1.6;
+}
+
+.maekrak-auth-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding: 4px;
+    background: var(--mk-muted);
+    border-radius: 10px;
+}
+
+.maekrak-auth-tabs a {
+    flex: 1;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    color: var(--mk-text-muted);
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.maekrak-auth-tabs a.is-active,
+.maekrak-auth-tabs a:hover {
+    background: var(--mk-white);
+    color: var(--mk-navy);
+    box-shadow: 0 1px 4px rgba(6, 26, 46, 0.06);
+}
+
+.maekrak-auth-field {
+    margin-bottom: 16px;
+}
+
+.maekrak-auth-field label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--mk-navy);
+}
+
+.maekrak-auth-field input[type="text"],
+.maekrak-auth-field input[type="password"],
+.maekrak-auth-field input[type="email"],
+.maekrak-auth-field input[type="tel"],
+.maekrak-auth-field select,
+.maekrak-auth-field textarea {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 48px;
+    padding: 0 14px;
+    font-size: 15px;
+    font-family: inherit;
+    color: var(--mk-text);
+    background: var(--mk-white);
+    border: 1px solid var(--mk-border);
+    border-radius: 10px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.maekrak-auth-field input:focus,
+.maekrak-auth-field select:focus,
+.maekrak-auth-field textarea:focus {
+    outline: none;
+    border-color: var(--mk-navy);
+    box-shadow: 0 0 0 3px rgba(11, 39, 68, 0.08);
+}
+
+.maekrak-auth-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 8px 0 20px;
+    font-size: 14px;
+}
+
+.maekrak-auth-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--mk-text-muted);
+    cursor: pointer;
+}
+
+.maekrak-auth-check input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--mk-navy);
+}
+
+.maekrak-auth-links a {
+    color: var(--mk-navy-light);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.maekrak-auth-links a:hover {
+    color: var(--mk-navy);
+    text-decoration: underline;
+}
+
+.maekrak-auth-btn {
+    display: block;
+    width: 100%;
+    min-height: 50px;
+    padding: 0 20px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(145deg, var(--mk-navy-deep), var(--mk-navy));
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+}
+
+.maekrak-auth-btn:hover {
+    opacity: 0.95;
+    transform: translateY(-1px);
+}
+
+.maekrak-auth-btn-outline {
+    display: block;
+    width: 100%;
+    min-height: 48px;
+    margin-top: 12px;
+    padding: 0 20px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 48px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--mk-navy);
+    background: var(--mk-white);
+    border: 1px solid var(--mk-border);
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.maekrak-auth-btn-outline:hover {
+    border-color: var(--mk-navy);
+}
+
+.maekrak-auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0;
+    font-size: 13px;
+    color: var(--mk-text-muted);
+}
+
+.maekrak-auth-divider::before,
+.maekrak-auth-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--mk-border);
+}
+
+.maekrak-auth-footer-note {
+    margin: 24px 0 0;
+    font-size: 12px;
+    color: var(--mk-text-muted);
+    text-align: center;
+}
+
+/* 회원가입 약관 */
+.maekrak-auth .register {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+
+.maekrak-auth #fregister_term,
+.maekrak-auth #fregister_private {
+    margin-bottom: 20px;
+}
+
+.maekrak-auth #fregister_term h2,
+.maekrak-auth #fregister_private h2,
+.maekrak-auth .register_form_inner h2 {
+    margin: 0 0 10px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--mk-navy);
+}
+
+.maekrak-auth #fregister_term textarea,
+.maekrak-auth #fregister_private textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 12px;
+    font-size: 13px;
+    border: 1px solid var(--mk-border);
+    border-radius: 8px;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+.maekrak-auth .fregister_agree {
+    margin-top: 10px;
+}
+
+.maekrak-auth #fregister_private table {
+    width: 100%;
+    font-size: 13px;
+    border-collapse: collapse;
+}
+
+.maekrak-auth #fregister_private th,
+.maekrak-auth #fregister_private td {
+    padding: 8px;
+    border: 1px solid var(--mk-border);
+}
+
+/* 회원가입 폼 (register_form) */
+.maekrak-auth--wide .maekrak-auth-card {
+    max-width: 560px;
+}
+
+.maekrak-auth .register_form_inner {
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--mk-border);
+}
+
+.maekrak-auth .register_form_inner:last-of-type {
+    border-bottom: none;
+}
+
+.maekrak-auth .form_01 ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.maekrak-auth .form_01 li {
+    margin-bottom: 14px;
+}
+
+.maekrak-auth .form_01 label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--mk-navy);
+}
+
+.maekrak-auth .frm_input,
+.maekrak-auth .full_input {
+    width: 100% !important;
+    box-sizing: border-box;
+    min-height: 46px;
+    padding: 0 14px;
+    border: 1px solid var(--mk-border) !important;
+    border-radius: 10px !important;
+    font-size: 15px !important;
+}
+
+.maekrak-auth .btn_submit,
+.maekrak-auth .btn_frmline {
+    min-height: 48px;
+    padding: 0 24px;
+    font-weight: 700;
+    border-radius: 10px;
+}
+
+.maekrak-auth .btn_submit {
+    background: linear-gradient(145deg, var(--mk-navy-deep), var(--mk-navy)) !important;
+    color: #fff !important;
+    border: none !important;
+}
+
+.maekrak-auth .btn_confirm {
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* 아이디/비밀번호 찾기 */
+.maekrak-auth #find_info {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+.maekrak-auth #find_info .new_win_con {
+    padding: 0;
+}
+
+.maekrak-auth #find_info h3 {
+    margin: 0 0 12px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--mk-navy);
+}
+
+.maekrak-auth #find_info .win_btn {
+    margin-top: 16px;
+}
+
+.maekrak-auth #find_info .btn_submit {
+    width: 100%;
+}
+
+.maekrak-auth .cert_btn {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+/* 소셜 로그인 */
+.maekrak-auth .login-sns {
+    margin-top: 8px;
+}
+
+.maekrak-auth .login-sns h3 {
+    font-size: 14px;
+    color: var(--mk-text-muted);
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+@media (max-width: 480px) {
+    .maekrak-auth-card {
+        padding: 28px 22px 24px;
+        border-radius: 12px;
+    }
+
+    .maekrak-auth-title {
+        font-size: 1.4rem;
+    }
+}

@@ -1,0 +1,31 @@
+{
+  "project": "headnerve",
+  "site": "맥락한의원",
+  "notes": "관리자 → 게시판관리에서 수동 생성. bo_table은 변경하지 마세요. 메뉴 URL은 빌더 헤더 COMMUNITY_NAV와 동일합니다.",
+  "boards": [
+    {
+      "bo_table": "notice",
+      "title": "공지사항",
+      "skin": "basic-notice",
+      "mobile_skin": "basic-notice",
+      "menu_label": "공지사항",
+      "url": "/bbs/board.php?bo_table=notice"
+    },
+    {
+      "bo_table": "news",
+      "title": "뉴스",
+      "skin": "basic-modern",
+      "mobile_skin": "basic-modern",
+      "menu_label": "뉴스",
+      "url": "/bbs/board.php?bo_table=news"
+    },
+    {
+      "bo_table": "column",
+      "title": "원장컬럼",
+      "skin": "post-thumb",
+      "mobile_skin": "post-thumb",
+      "menu_label": "원장컬럼",
+      "url": "/bbs/board.php?bo_table=column"
+    }
+  ]
+}
