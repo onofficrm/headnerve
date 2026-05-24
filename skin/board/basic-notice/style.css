@@ -1,12 +1,11 @@
 @charset "utf-8";
+/* @import 는 파일 최상단에만 — 그렇지 않으면 g5b-board.css 가 로드되지 않음 */
+@import url("../basic-clean/style.css");
 
 .board-list__h1 { margin: 0 0 0.35rem; font-size: var(--font-size-xl, 1.25rem); font-weight: var(--font-weight-bold, 700); }
 .board-title__heading { margin: 0; font-size: inherit; font-weight: inherit; }
 .board-article-title { margin: 0; font-size: var(--font-size-2xl, 1.5rem); }
 .related-posts-wrap.board-seo-related { margin: 1.5rem 0; }
-
-/* basic-notice — basic-clean 공통 + 공지/자료실 특화 */
-@import url("../basic-clean/style.css");
 
 .board-wrap--basic-notice .board-header--notice {
   border-bottom: 2px solid var(--color-primary, #2563eb);

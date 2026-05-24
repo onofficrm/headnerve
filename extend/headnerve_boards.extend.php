@@ -73,6 +73,7 @@ if (!function_exists('headnerve_board_enqueue_styles')) {
 
         $css_ver = defined('G5_CSS_VER') ? G5_CSS_VER : '1';
         add_stylesheet('<link rel="stylesheet" href="'.G5_CSS_URL.'/custom.css?ver='.$css_ver.'">', 5);
+        add_stylesheet('<link rel="stylesheet" href="'.G5_CSS_URL.'/g5b-board.css?ver='.$css_ver.'">', 6);
 
         $headnerve_primary = '#0B2744';
         if (function_exists('g5site_cfg')) {
@@ -83,17 +84,19 @@ if (!function_exists('headnerve_board_enqueue_styles')) {
         }
         add_stylesheet(
             '<style>:root{--color-primary:'.$headnerve_primary.';--color-secondary:#5C6573;--color-on-primary:#fff;}</style>',
-            6
+            7
         );
         add_stylesheet(
             '<style>'
+            .'body.headnerve-g5b-board .site-header{background-color:var(--color-bg,#fff);border-bottom:1px solid var(--color-line,#e2e8f0);box-shadow:var(--shadow-soft,0 1px 3px rgba(0,0,0,.08));}'
             .'body.headnerve-g5b-board #container_wr{display:block;width:100%;max-width:1200px;margin:0 auto;padding:0 var(--space-md,1rem);}'
             .'body.headnerve-g5b-board #container{float:none;width:100%;max-width:100%;flex:none;}'
             .'body.headnerve-g5b-board #container .board-wrap{max-width:100%;margin:0 auto;}'
             .'body.headnerve-g5b-board #hd_login_msg{display:none;}'
             .'body.headnerve-g5b-board #aside{display:none!important;}'
+            .'body.headnerve-g5b-board .site-g5-widgets--tail{display:none!important;}'
             .'</style>',
-            7
+            8
         );
     }
 }

@@ -1,4 +1,5 @@
 @charset "utf-8";
+@import url("../basic-clean/style.css");
 
 /* SEO markup (minimal) */
 .board-list__h1,
@@ -27,8 +28,6 @@
 .board-view__body.board-article .board-view__content {
   margin-top: 0.5rem;
 }
-
-@import url("../basic-clean/style.css");
 
 /* Fallback: /img/common/no-image.svg (PHP: G5B_FALLBACK_NO_IMAGE_URL) */
 

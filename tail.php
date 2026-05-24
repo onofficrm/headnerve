@@ -59,10 +59,12 @@ $g5_is_index_page = defined('_INDEX_');
 
 <!-- 하단 시작 { -->
 <div id="ft" class="site-footer-wrap">
+    <?php if (!(function_exists('headnerve_is_g5b_board') && headnerve_is_g5b_board())) { ?>
     <div class="site-g5-widgets site-g5-widgets--tail">
         <?php echo latest('notice', 'notice', 4, 13); ?>
         <?php echo visit(); ?>
     </div>
+    <?php } ?>
 
     <footer id="siteFooter" class="site-footer">
         <div class="site-footer__inner">
