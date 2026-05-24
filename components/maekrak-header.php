@@ -9,12 +9,12 @@ $maekrak_nav = headnerve_nav_menu_items();
 $maekrak_booking_url = headnerve_nav_booking_url();
 $maekrak_tel_href = headnerve_nav_tel_href();
 $maekrak_site_title = isset($g5_site_title) ? $g5_site_title : (function_exists('g5site_cfg') ? g5site_cfg('site_name', $config['cf_title']) : $config['cf_title']);
-$maekrak_logo_svg = G5_PATH.'/img/logo/logo-maekrak.svg';
+$maekrak_logo_inline = G5_PATH.'/components/maekrak-logo-inline.php';
 $maekrak_logo_url = '';
-if (isset($g5_logo_url) && $g5_logo_url !== '') {
+if (isset($g5_logo_url) && $g5_logo_url !== '' && !preg_match('/\.svg$/i', $g5_logo_url)) {
     $maekrak_logo_url = $g5_logo_url;
-} elseif (is_file($maekrak_logo_svg)) {
-    $maekrak_logo_url = G5_URL.'/img/logo/logo-maekrak.svg';
+} elseif (isset($g5_logo_url) && $g5_logo_url !== '' && preg_match('/\.svg$/i', $g5_logo_url) && is_file(G5_PATH.parse_url($g5_logo_url, PHP_URL_PATH))) {
+    $maekrak_logo_url = $g5_logo_url;
 }
 ?>
 
@@ -28,10 +28,10 @@ if (isset($g5_logo_url) && $g5_logo_url !== '') {
 
         <div class="maekrak-header__inner">
             <a href="<?php echo G5_URL; ?>" class="maekrak-header__logo-link" aria-label="<?php echo get_text($maekrak_site_title); ?> 홈">
-                <?php if ($maekrak_logo_url && preg_match('/\.svg$/i', $maekrak_logo_url)) { ?>
-                <img src="<?php echo $maekrak_logo_url; ?>" alt="" class="maekrak-header__logo-svg" width="220" height="52" decoding="async">
-                <?php } elseif ($maekrak_logo_url) { ?>
+                <?php if ($maekrak_logo_url) { ?>
                 <img src="<?php echo $maekrak_logo_url; ?>" alt="<?php echo get_text($maekrak_site_title); ?>" class="maekrak-header__logo-img" decoding="async">
+                <?php } elseif (is_file($maekrak_logo_inline)) { ?>
+                <?php include $maekrak_logo_inline; ?>
                 <?php } else { ?>
                 <span class="maekrak-header__logo-text"><?php echo get_text($maekrak_site_title); ?></span>
                 <?php } ?>
@@ -74,6 +74,8 @@ if (isset($g5_logo_url) && $g5_logo_url !== '') {
             <div class="maekrak-header__mobile-head">
                 <?php if ($maekrak_logo_url) { ?>
                 <img src="<?php echo $maekrak_logo_url; ?>" alt="<?php echo get_text($maekrak_site_title); ?>" class="maekrak-header__mobile-logo" decoding="async">
+                <?php } elseif (is_file($maekrak_logo_inline)) { ?>
+                <?php include $maekrak_logo_inline; ?>
                 <?php } else { ?>
                 <strong class="maekrak-header__mobile-title"><?php echo get_text($maekrak_site_title); ?></strong>
                 <?php } ?>

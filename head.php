@@ -83,7 +83,7 @@ if (function_exists('g5site_cfg')) {
     }
 }
 if ($g5_logo_url === '') {
-    foreach (array('logo.svg', 'logo.png') as $g5_logo_file) {
+    foreach (array('logo-maekrak.svg', 'logo.svg', 'logo.png') as $g5_logo_file) {
         if (is_file(G5_PATH.'/img/logo/'.$g5_logo_file)) {
             $g5_logo_url = G5_URL.'/img/logo/'.$g5_logo_file;
             break;

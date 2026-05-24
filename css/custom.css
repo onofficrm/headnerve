@@ -2868,19 +2868,18 @@ html:has(.site-dock) {
 }
 
 .maekrak-header__logo-img,
-.maekrak-header__logo-svg {
+.maekrak-header__logo-link svg.maekrak-header__logo-svg {
   display: block;
   height: 40px;
   width: auto;
-  max-width: min(220px, 42vw);
-  color: #0f172a;
+  max-width: min(240px, 48vw);
 }
 
 @media (min-width: 768px) {
   .maekrak-header__logo-img,
-  .maekrak-header__logo-svg {
+  .maekrak-header__logo-link svg.maekrak-header__logo-svg {
     height: 48px;
-    max-width: 240px;
+    max-width: 260px;
   }
 }
 
