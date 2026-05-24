@@ -8,17 +8,17 @@ if (!defined('_GNUBOARD_')) {
 }
 
 $site_config = array(
-    'site_name'           => '샘플 사이트',
-    'site_desc'           => '빌더 디자인 적용이 쉬운 그누보드 베이스 템플릿',
+    'site_name'           => '맥락한의원',
+    'site_desc'           => '두통·어지럼증·자율신경·말초신경병증·브레인포그 맥락 치료',
     'company_name'        => '회사명',
     'ceo_name'            => '대표자명',
     'business_no'         => '000-00-00000',
-    'phone'               => '010-0000-0000',
+    'phone'               => '02-6959-7252',
     'kakao_url'           => '#',
     'email'               => 'help@example.com',
     'address'             => '주소를 입력하세요',
-    'primary_color'       => '#2563eb',
-    'secondary_color'     => '#64748b',
+    'primary_color'       => '#0B2744',
+    'secondary_color'     => '#5C6573',
     'logo_path'           => '/img/logo/logo.svg',
     'og_image'            => '/img/common/og-image.jpg',
     /* SEO (components/seo-meta.php) */

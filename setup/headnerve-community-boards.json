@@ -1,7 +1,7 @@
 {
   "project": "headnerve",
   "site": "맥락한의원",
-  "notes": "관리자 → 게시판관리에서 수동 생성. bo_table은 변경하지 마세요. 메뉴 URL은 빌더 헤더 COMMUNITY_NAV와 동일합니다.",
+  "notes": "스킨: extend/headnerve_boards.extend.php 가 런타임 적용. DB 반영 1회: /setup/tools/headnerve-sync-community-boards.php (최고관리자). 게시판 미생성 시 관리자 → 게시판관리에서 생성.",
   "boards": [
     {
       "bo_table": "notice",
