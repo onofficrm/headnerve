@@ -142,6 +142,7 @@
         btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       });
       menu.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+      document.body.classList.toggle('maekrak-nav-open', isOpen && menu.classList.contains('maekrak-header__mobile'));
       G5Template.lockBodyScroll(isOpen);
     };
 

@@ -84,6 +84,7 @@ if (isset($g5_logo_url) && $g5_logo_url !== '' && preg_match('/\.(png|jpe?g|webp
                 </button>
             </div>
             <div class="maekrak-header__mobile-body">
+                <p class="maekrak-header__mobile-eyebrow">Menu</p>
                 <?php foreach ($maekrak_nav as $row) { ?>
                 <div class="maekrak-header__mobile-group">
                     <a href="<?php echo $row['href']; ?>" class="maekrak-header__mobile-link"><?php echo get_text($row['name']); ?></a>
