@@ -1,0 +1,126 @@
+<?php
+if (!defined('_GNUBOARD_')) {
+    exit;
+}
+
+/**
+ * 빌더 Header.tsx 와 동일한 메뉴 (HashRouter: /#/path)
+ */
+if (!function_exists('headnerve_spa_href')) {
+    function headnerve_spa_href($path)
+    {
+        return G5_URL.'/#'.ltrim($path, '/');
+    }
+}
+
+if (!function_exists('headnerve_board_href')) {
+    function headnerve_board_href($bo_table)
+    {
+        return G5_BBS_URL.'/board.php?bo_table='.urlencode($bo_table);
+    }
+}
+
+if (!function_exists('headnerve_nav_menu_items')) {
+    function headnerve_nav_menu_items()
+    {
+        return array(
+            array('name' => '맥락한의원소개', 'href' => headnerve_spa_href('/about')),
+            array(
+                'name' => '맥락 치료프로그램',
+                'href' => headnerve_spa_href('/programs'),
+                'sub' => array(
+                    array('name' => '두통치료프로그램', 'href' => headnerve_spa_href('/headache')),
+                    array('name' => '어지럼증치료프로그램', 'href' => headnerve_spa_href('/dizziness')),
+                    array('name' => '말초신경병증치료프로그램', 'href' => headnerve_spa_href('/neuropathy')),
+                    array('name' => '자율신경치료프로그램', 'href' => headnerve_spa_href('/autonomic')),
+                    array('name' => '브레인포그 치료 프로그램', 'href' => headnerve_spa_href('/brainfog')),
+                ),
+            ),
+            array(
+                'name' => '두통',
+                'href' => headnerve_spa_href('/headache'),
+                'sub' => array(
+                    array('name' => '편두통', 'href' => headnerve_spa_href('/headache/migraine')),
+                    array('name' => '긴장형 두통', 'href' => headnerve_spa_href('/headache/tension')),
+                    array('name' => '약물과용 두통', 'href' => headnerve_spa_href('/headache/medication-overuse')),
+                    array('name' => '경추성 두통', 'href' => headnerve_spa_href('/headache/cervicogenic')),
+                    array('name' => '군발성 두통', 'href' => headnerve_spa_href('/headache/cluster')),
+                    array('name' => '생리 두통', 'href' => headnerve_spa_href('/headache/menstrual')),
+                    array('name' => '소아 편두통', 'href' => headnerve_spa_href('/headache/pediatric')),
+                    array('name' => '수험생 두통', 'href' => headnerve_spa_href('/headache/student')),
+                ),
+            ),
+            array(
+                'name' => '어지럼증',
+                'href' => headnerve_spa_href('/dizziness'),
+                'sub' => array(
+                    array('name' => '경추성 어지럼증', 'href' => headnerve_spa_href('/dizziness/cervicogenic')),
+                    array('name' => '메니에르병', 'href' => headnerve_spa_href('/dizziness/menieres')),
+                    array('name' => '이석증', 'href' => headnerve_spa_href('/dizziness/bppv')),
+                    array('name' => '전정신경염', 'href' => headnerve_spa_href('/dizziness/vestibular-neuritis')),
+                ),
+            ),
+            array(
+                'name' => '자율신경',
+                'href' => headnerve_spa_href('/autonomic'),
+                'sub' => array(
+                    array('name' => '자율신경실조증', 'href' => headnerve_spa_href('/autonomic/dysautonomia')),
+                    array('name' => '기립성저혈압', 'href' => headnerve_spa_href('/autonomic/orthostatic-hypotension')),
+                    array('name' => '공항/불안장애', 'href' => headnerve_spa_href('/autonomic/panic-anxiety')),
+                    array('name' => '불면', 'href' => headnerve_spa_href('/autonomic/insomnia')),
+                ),
+            ),
+            array(
+                'name' => '말초신경병증',
+                'href' => headnerve_spa_href('/neuropathy'),
+                'sub' => array(
+                    array('name' => '특발성 말초신경병증', 'href' => headnerve_spa_href('/neuropathy/idiopathic')),
+                    array('name' => '당뇨병성 말초신경병증', 'href' => headnerve_spa_href('/neuropathy/diabetic')),
+                    array('name' => '항암후 말초신경병증', 'href' => headnerve_spa_href('/neuropathy/chemo')),
+                ),
+            ),
+            array(
+                'name' => '브레인포그',
+                'href' => headnerve_spa_href('/brainfog'),
+                'sub' => array(
+                    array('name' => '코로나 후유증 브레인포그', 'href' => headnerve_spa_href('/brainfog/post-covid')),
+                    array('name' => '만성피로 브레인포그', 'href' => headnerve_spa_href('/brainfog/chronic-fatigue')),
+                    array('name' => '수험생 브레인포그', 'href' => headnerve_spa_href('/brainfog/students')),
+                ),
+            ),
+            array(
+                'name' => '커뮤니티',
+                'href' => headnerve_board_href('notice'),
+                'sub' => array(
+                    array('name' => '공지사항', 'href' => headnerve_board_href('notice')),
+                    array('name' => '뉴스', 'href' => headnerve_board_href('news')),
+                    array('name' => '원장컬럼', 'href' => headnerve_board_href('column')),
+                ),
+            ),
+        );
+    }
+}
+
+if (!function_exists('headnerve_nav_booking_url')) {
+    function headnerve_nav_booking_url()
+    {
+        $url = function_exists('g5site_cfg') ? g5site_cfg('naver_booking_url', '') : '';
+        if ($url !== '') {
+            return $url;
+        }
+
+        return 'https://booking.naver.com/booking/13/bizes/1120036?area=pll&map-search=1';
+    }
+}
+
+if (!function_exists('headnerve_nav_tel_href')) {
+    function headnerve_nav_tel_href()
+    {
+        $phone = function_exists('g5site_cfg') ? g5site_cfg('phone', '02-6959-7252') : '02-6959-7252';
+        if (function_exists('g5site_tel_link')) {
+            return g5site_tel_link($phone);
+        }
+
+        return 'tel:'.preg_replace('/[^0-9+]/', '', $phone);
+    }
+}

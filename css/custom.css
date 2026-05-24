@@ -2824,3 +2824,298 @@ html:has(.site-dock) {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* ==========================================================================
+   맥락한의원 헤더 (게시판·PHP 서브 — 빌더 Header.tsx 와 동일 톤, 검색 없음)
+   ========================================================================== */
+.maekrak-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-line, #e2e8f0);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+}
+
+.maekrak-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md, 1rem);
+  max-width: 1440px;
+  height: 80px;
+  margin: 0 auto;
+  padding: 0 var(--space-lg, 1.5rem);
+}
+
+.maekrak-header__logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--color-primary, #0b2744);
+}
+
+.maekrak-header__logo-img {
+  height: 44px;
+  width: auto;
+}
+
+.maekrak-header__logo-text {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--color-primary, #0b2744);
+  white-space: nowrap;
+}
+
+.maekrak-header__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg, 1.5rem);
+  flex: 1;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.maekrak-header__gnb {
+  display: none;
+}
+
+.maekrak-header__gnb-list {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.35rem 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.maekrak-header__gnb-item {
+  position: relative;
+}
+
+.maekrak-header__gnb-link {
+  display: block;
+  padding: 0.35rem 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1f2937;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.maekrak-header__gnb-link:hover,
+.maekrak-header__gnb-link:focus {
+  color: var(--color-primary, #0b2744);
+  opacity: 0.85;
+}
+
+.maekrak-header__gnb-sub {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 12rem;
+  margin: 0.35rem 0 0;
+  padding: 0.5rem 0;
+  list-style: none;
+  background: #fff;
+  border: 1px solid var(--color-line, #e2e8f0);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  z-index: 50;
+}
+
+.maekrak-header__gnb-item.has-sub:hover .maekrak-header__gnb-sub,
+.maekrak-header__gnb-item.has-sub:focus-within .maekrak-header__gnb-sub {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.maekrak-header__gnb-sub-link {
+  display: block;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.875rem;
+  color: #374151;
+  text-decoration: none;
+}
+
+.maekrak-header__gnb-sub-link:hover {
+  background: #f8fafc;
+  color: var(--color-primary, #0b2744);
+}
+
+.maekrak-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.maekrak-header__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.maekrak-header__btn--ghost {
+  border-color: #e5e7eb;
+  color: var(--color-primary, #0b2744);
+  background: transparent;
+}
+
+.maekrak-header__btn--ghost:hover {
+  border-color: var(--color-primary, #0b2744);
+  background: #f8fafc;
+}
+
+.maekrak-header__btn--primary {
+  background: var(--color-primary, #0b2744);
+  border-color: var(--color-primary, #0b2744);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(11, 39, 68, 0.2);
+}
+
+.maekrak-header__btn--primary:hover {
+  filter: brightness(1.08);
+  color: #fff;
+}
+
+.maekrak-header__btn--block {
+  width: 100%;
+}
+
+.maekrak-header__menu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  background: #fff;
+  color: #1f2937;
+  cursor: pointer;
+}
+
+.maekrak-header__mobile.site-header__mobile-nav {
+  width: min(100%, 420px);
+  padding: 0;
+}
+
+.maekrak-header__mobile.site-header__mobile-nav.is-open {
+  display: flex;
+  flex-direction: column;
+}
+
+.maekrak-header__mobile-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  padding: 0 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+  flex-shrink: 0;
+}
+
+.maekrak-header__mobile-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-primary, #0b2744);
+}
+
+.maekrak-header__mobile-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.25rem;
+}
+
+.maekrak-header__mobile-link {
+  display: block;
+  font-size: 1.35rem;
+  font-weight: 300;
+  color: #1f2937;
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+}
+
+.maekrak-header__mobile-sub {
+  margin: 0 0 1.25rem;
+  padding: 0 0 0 1rem;
+  list-style: none;
+  border-left: 2px solid #f1f5f9;
+}
+
+.maekrak-header__mobile-sub a {
+  display: block;
+  padding: 0.35rem 0;
+  font-size: 1rem;
+  color: #4b5563;
+  text-decoration: none;
+}
+
+.maekrak-header__mobile-foot {
+  padding: 1rem 1.25rem 1.5rem;
+  border-top: 1px solid #f1f5f9;
+  flex-shrink: 0;
+}
+
+.maekrak-header__mobile-cta-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.maekrak-header__overlay.is-open {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+  background: rgba(15, 23, 42, 0.35);
+}
+
+@media (min-width: 1280px) {
+  .maekrak-header__gnb {
+    display: block;
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .maekrak-header__gnb::-webkit-scrollbar {
+    display: none;
+  }
+
+  .maekrak-header__menu-btn {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .maekrak-header__btn--ghost:not(.maekrak-header__btn--block) {
+    display: none;
+  }
+}

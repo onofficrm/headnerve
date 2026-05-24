@@ -109,6 +109,12 @@ if (!is_array($menu_datas_mo) || !count($menu_datas_mo)) {
 }
 ?>
 
+<?php
+$g5_use_maekrak_header = function_exists('headnerve_is_g5b_board') && headnerve_is_g5b_board();
+if ($g5_use_maekrak_header && is_file(G5_PATH.'/components/maekrak-header.php')) {
+    include_once(G5_PATH.'/components/maekrak-header.php');
+} else {
+?>
 <!-- 상단 시작 { -->
 <div id="hd">
     <header id="siteHeader" class="site-header">
@@ -308,6 +314,7 @@ function fsearchbox_submit(f)
 }
 </script>
 <!-- } 상단 끝 -->
+<?php } ?>
 
 <hr>
 
