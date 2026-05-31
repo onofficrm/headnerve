@@ -1,33 +1,38 @@
 import { Link } from 'react-router-dom';
+import { BOARD_URLS } from '../../lib/boardUrls';
 
 export function ContactFooterSection() {
   return (
     <>
-      <section className="maekrak-snap-section bg-maekrak-ivory w-full flex-col relative z-20" id="cta">
+      <section className="maekrak-snap-section bg-maekrak-navy w-full flex-col relative z-20" id="cta">
         <div className="w-full h-full flex flex-col md:flex-row max-w-7xl mx-auto px-6 md:px-12 py-20 items-center justify-between gap-10">
           <div className="flex flex-col text-center md:text-left pt-6">
-            <h3 className="text-[28px] md:text-[36px] font-bold text-gray-900 mb-4 tracking-tight leading-tight break-keep">
-              지금보다 나은 상태는<br className="md:hidden" /> 반드시 만들 수 있습니다
+            <h3 className="font-serif text-[26px] md:text-[34px] font-medium text-white mb-4 tracking-tight leading-snug break-keep">
+              지금보다 나은 상태는
+              <br />
+              반드시 만들 수 있습니다
             </h3>
-            <p className="text-[16px] text-gray-600 leading-relaxed font-light break-keep max-w-2xl">
-              진통제, 항CGRP 주사, 대학병원까지 다 해봤지만 나아지지 않은 분들을 위한 상담을 진행합니다.<br className="hidden md:block" />
-              초진 예약은 하루 제한 인원으로 운영합니다.
+            <p className="text-[15px] text-white/55 leading-relaxed font-light break-keep max-w-2xl">
+              진통제, 항CGRP 주사, 대학병원까지 다 해봤지만 나아지지 않은 분들을 위한 상담을 진행합니다.
+              <br className="hidden md:block" />
+              서울 시청역 인근 · 침구과 전문의 직접 진료 · 초진 예약제 운영
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 shrink-0 pb-6">
-            <a 
-              href="https://booking.naver.com/booking/13/bizes/1120036?area=pll&map-search=1" 
-              target="_blank" rel="noopener noreferrer"
-              className="inline-flex justify-center items-center px-10 py-5 text-[15px] font-bold rounded-lg text-white bg-maekrak-navy hover:bg-[#1a2f45] transition-colors shadow-lg min-w-[200px]"
+            <a
+              href="https://booking.naver.com/booking/13/bizes/1120036?area=pll&map-search=1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex justify-center items-center px-10 py-5 text-[15px] font-bold rounded-lg text-maekrak-navy bg-white hover:bg-gray-100 transition-colors min-w-[200px]"
             >
               진료 예약하기
             </a>
-            <Link 
-              to="/departments" 
-              className="inline-flex justify-center items-center px-10 py-5 text-[15px] font-bold rounded-lg text-maekrak-navy bg-white border border-gray-200 hover:border-maekrak-navy transition-colors min-w-[200px]"
+            <a
+              href={BOARD_URLS.column}
+              className="inline-flex justify-center items-center px-10 py-5 text-[15px] font-bold rounded-lg text-white/70 bg-transparent border border-white/25 hover:border-white/50 hover:text-white transition-colors min-w-[200px]"
             >
-              진료과목 보기
-            </Link>
+              블로그 보기
+            </a>
           </div>
         </div>
       </section>
