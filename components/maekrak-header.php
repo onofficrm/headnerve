@@ -19,7 +19,7 @@ if (isset($g5_logo_url) && $g5_logo_url !== '' && preg_match('/\.(png|jpe?g|webp
 
 <!-- 상단 시작 { -->
 <div id="hd">
-    <header id="siteHeader" class="maekrak-header site-header is-scrolled">
+    <header id="siteHeader" class="maekrak-header is-scrolled">
         <h1 id="hd_h1" class="sound_only"><?php echo $g5['title']; ?></h1>
         <div id="skip_to_container" class="site-header__skip">
             <a href="#container">본문 바로가기</a>
@@ -36,6 +36,7 @@ if (isset($g5_logo_url) && $g5_logo_url !== '' && preg_match('/\.(png|jpe?g|webp
                 <?php } ?>
             </a>
 
+            <div class="maekrak-header__cluster">
             <nav class="maekrak-header__gnb" aria-label="메인메뉴">
                 <ul class="maekrak-header__gnb-list">
                     <?php foreach ($maekrak_nav as $row) {
@@ -56,14 +57,17 @@ if (isset($g5_logo_url) && $g5_logo_url !== '' && preg_match('/\.(png|jpe?g|webp
             </nav>
 
             <div class="maekrak-header__actions">
-                <?php if (!$is_member) { ?>
-                <a href="<?php echo G5_BBS_URL; ?>/login.php" class="maekrak-header__btn maekrak-header__btn--ghost">로그인</a>
+                <?php if ($is_member) { ?>
+                <a href="<?php echo G5_BBS_URL; ?>/member_confirm.php?url=<?php echo G5_BBS_URL; ?>/register_form.php" class="maekrak-header__btn maekrak-header__btn--ghost maekrak-header__btn--login">내 정보</a>
+                <?php } else { ?>
+                <a href="<?php echo G5_BBS_URL; ?>/login.php" class="maekrak-header__btn maekrak-header__btn--ghost maekrak-header__btn--login">로그인</a>
                 <?php } ?>
                 <a href="<?php echo $maekrak_booking_url; ?>" class="maekrak-header__btn maekrak-header__btn--primary" target="_blank" rel="noopener noreferrer">상담 예약하기</a>
-                <button type="button" class="site-header__menu-btn maekrak-header__menu-btn" aria-controls="siteMobileNav" aria-expanded="false" title="전체메뉴">
+                <button type="button" class="maekrak-header__menu-btn" aria-controls="siteMobileNav" aria-expanded="false" title="전체메뉴">
                     <span class="maekrak-header__menu-icon" aria-hidden="true"></span>
                     <span class="sound_only">전체메뉴열기</span>
                 </button>
+            </div>
             </div>
         </div>
 

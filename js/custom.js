@@ -109,14 +109,14 @@
    * 1~3. 모바일 메뉴 (열기/닫기/바깥클릭/ESC)
    *
    * 지원 선택자 (빌더·기존 head.php 호환):
-   * - 열기: .mobile-menu-btn, .site-header__menu-btn
+   * - 열기: .mobile-menu-btn, .site-header__menu-btn, .maekrak-header__menu-btn
    * - 메뉴: .mobile-menu, #siteMobileNav
    * - 닫기: .mobile-menu-close, .site-header__mobile-close
    * - 오버레이: .mobile-menu-overlay, .site-header__overlay
    * - 열림 상태 class: is-open (메뉴·오버레이)
    * -------------------------------------------------------------------------- */
   G5Template.initMobileMenu = function () {
-    var openBtns = G5Template.qsa('.mobile-menu-btn, .site-header__menu-btn');
+    var openBtns = G5Template.qsa('.mobile-menu-btn, .site-header__menu-btn, .maekrak-header__menu-btn');
     var menus = G5Template.qsa('.mobile-menu, #siteMobileNav');
     var closeBtns = G5Template.qsa('.mobile-menu-close, .site-header__mobile-close');
     var overlays = G5Template.qsa('.mobile-menu-overlay, .site-header__overlay');
