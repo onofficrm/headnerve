@@ -34,7 +34,6 @@ export function AboutDoctorSection() {
                     학력 및 전문의 취득
                   </h4>
                   <ul className="space-y-2">
-                    <li className="text-[14px] text-gray-700 flex items-start gap-3"><span className="text-maekrak-accent mt-0.5">–</span> ○○대학교 한의과대학 졸업</li>
                     <li className="text-[14px] text-gray-700 flex items-start gap-3"><span className="text-maekrak-accent mt-0.5">–</span> 대학병원 인턴·레지던트 4년 수료 — 침구과 전문의 취득</li>
                     <li className="text-[14px] text-gray-700 flex items-start gap-3"><span className="text-maekrak-accent mt-0.5">–</span> 침구과 전문의 국가고시 합격</li>
                   </ul>
@@ -72,17 +71,6 @@ export function AboutDoctorSection() {
                       <span className="px-2 py-0.5 text-[11px] bg-[#f5f0e0] text-[#b8912a] border border-[#b8912a]/20 rounded-sm font-medium mt-0.5 sm:mt-0">장관 표창</span>
                     </li>
                     <li className="text-[14px] text-gray-700 flex items-start gap-3"><span className="text-maekrak-accent mt-0.5">–</span> 코로나19 방역 공로 — 충청남도 도지사 표창 수상</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="text-[11.5px] font-bold tracking-[0.15em] uppercase text-gray-400 mb-3 pb-2 border-b border-gray-200">
-                    임상 연구
-                  </h4>
-                  <ul className="space-y-2">
-                    <li className="text-[14px] text-gray-700 flex items-start gap-3"><span className="text-maekrak-accent mt-0.5">–</span> 두통-경추 관계 최신 국제 논문 지속 검토 및 임상 적용 연구</li>
-                    <li className="text-[14px] text-gray-700 flex items-start gap-3"><span className="text-maekrak-accent mt-0.5">–</span> 편두통-삼차신경경추복합체 CGRP 기전 연구 (British Journal of Pain, 2020 외)</li>
-                    <li className="text-[14px] text-gray-700 flex items-start gap-3"><span className="text-maekrak-accent mt-0.5">–</span> 두통 환자 케이스 정기 공유 — 원내 교육 운영</li>
                   </ul>
                 </div>
               </div>
