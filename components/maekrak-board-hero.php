@@ -54,7 +54,7 @@ if ($is_write_hero) {
     <div class="maekrak-board-hero__gradient" aria-hidden="true"></div>
     <div class="maekrak-board-hero__inner">
         <p class="maekrak-board-hero__eyebrow"><?php echo $hero_eyebrow; ?></p>
-        <h2 class="maekrak-board-hero__title"><?php echo $hero_title; ?></h2>
+        <h1 class="maekrak-board-hero__title"><?php echo $hero_title; ?></h1>
         <?php if ($hero_sub !== '') { ?>
         <p class="maekrak-board-hero__desc"><?php echo get_text($hero_sub); ?></p>
         <?php } ?>

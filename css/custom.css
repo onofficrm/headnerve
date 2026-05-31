@@ -3293,17 +3293,17 @@ body.maekrak-nav-open .maekrak-header__inner {
 }
 
 /* --------------------------------------------------------------------------
-   게시판 상단 히어로 (헤더 바로 아래, SPA 대메뉴와 동일 톤)
+   게시판 상단 히어로 (SPA 대메뉴 bg-maekrak-navy 섹션과 동일)
    -------------------------------------------------------------------------- */
 .maekrak-board-hero {
   position: relative;
   display: block;
   width: 100%;
   margin: 0;
-  min-height: 220px;
   overflow: hidden;
   background-color: #0f172a;
   flex-shrink: 0;
+  padding: 5rem 1.5rem;
 }
 
 .maekrak-board-hero__gradient {
@@ -3312,71 +3312,81 @@ body.maekrak-nav-open .maekrak-header__inner {
   top: 0;
   bottom: 0;
   width: 40%;
-  background: linear-gradient(135deg, transparent 0%, rgba(74, 143, 168, 0.15) 100%);
+  background: linear-gradient(to bottom right, transparent 0%, rgba(74, 143, 168, 0.15) 100%);
   pointer-events: none;
 }
 
 @media (min-width: 768px) {
   .maekrak-board-hero {
-    min-height: 280px;
+    padding: 6rem 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .maekrak-board-hero {
+    padding-left: 6rem;
+    padding-right: 6rem;
   }
 }
 
 .maekrak-board-hero__inner {
   position: relative;
   z-index: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: inherit;
   max-width: 80rem;
   margin: 0 auto;
-  padding: 5rem 1.5rem 3.5rem;
   color: #fff;
-}
-
-@media (min-width: 768px) {
-  .maekrak-board-hero__inner {
-    padding: 5rem 3rem 4rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .maekrak-board-hero__inner {
-    padding: 5rem 6rem 4rem;
-  }
 }
 
 .maekrak-board-hero__eyebrow {
   margin: 0 0 1rem;
-  font-size: 0.75rem;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #7ec8e0;
 }
 
+@media (min-width: 768px) {
+  .maekrak-board-hero__eyebrow {
+    font-size: 13px;
+  }
+}
+
 .maekrak-board-hero__title {
-  margin: 0 0 1rem;
+  margin: 0 0 1.5rem;
   font-family: var(--font-serif, "Playfair Display", Georgia, serif);
-  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-size: 32px;
   font-weight: 500;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   line-height: 1.3;
+  color: #fff;
+}
+
+@media (min-width: 768px) {
+  .maekrak-board-hero__title {
+    font-size: 42px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .maekrak-board-hero__title {
+    font-size: 52px;
+  }
 }
 
 .maekrak-board-hero__desc {
   margin: 0;
-  max-width: 36em;
-  font-size: 0.9375rem;
+  max-width: 42rem;
+  font-size: 16px;
   font-weight: 300;
   line-height: 1.8;
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.8);
+  word-break: keep-all;
 }
 
 @media (min-width: 768px) {
   .maekrak-board-hero__desc {
-    font-size: 1rem;
+    font-size: 18px;
   }
 }
 
