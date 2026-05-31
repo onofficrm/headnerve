@@ -373,7 +373,7 @@ include_once(G5_PATH.'/head.sub.php');
     </table>
     <p><strong>다음 단계</strong></p>
     <ul>
-        <li>손글씨 후기 사진은 관리자 → 글쓰기/수정에서 첨부파일로 등록하세요.</li>
+        <li>샘플 썸네일: <a href="<?php echo G5_URL; ?>/setup/tools/headnerve-seed-reviews-images.php">이미지 첨부 스크립트</a> 실행 (최고관리자 1회)</li>
         <li>React 헤더 반영: 관리자 → 빌더 ZIP 업로드 (<code>headnerve-main.zip</code>)</li>
     </ul>
     <div class="provision-result__actions">
