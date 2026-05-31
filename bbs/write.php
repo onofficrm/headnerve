@@ -437,9 +437,6 @@ $headnerve_g5b_write = function_exists('headnerve_is_g5b_board') && headnerve_is
 
 if ($headnerve_g5b_write) {
     include_once(G5_PATH.'/head.php');
-    if (is_file(G5_PATH.'/components/maekrak-board-hero.php')) {
-        include_once(G5_PATH.'/components/maekrak-board-hero.php');
-    }
 } else {
     include_once(G5_PATH.'/head.sub.php');
     @include_once ($board_skin_path.'/write.head.skin.php');

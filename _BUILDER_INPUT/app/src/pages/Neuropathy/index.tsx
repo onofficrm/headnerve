@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { CheckCircle2, ChevronRight, Stethoscope, Footprints } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Stethoscope, Footprints } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export function Neuropathy() {
   useEffect(() => {
@@ -37,7 +38,13 @@ export function Neuropathy() {
                 "말초신경병증과 일시적인 손발 저림의 결정적인 차이는 <span className="text-maekrak-blue relative inline-block">쉬어도, 자세를 바꿔도 나아지지 않는다<span className="absolute bottom-1 left-0 w-full h-[6px] bg-maekrak-blue/20 -z-10"></span></span>는 것입니다. 저림과 시림이 3개월 이상 지속된다면 단순 순환제가 아니라 신경 자체를 봐야 합니다."
               </p>
               <p className="text-[16px] md:text-[18px] text-gray-800">
-                말초신경 회복에는 두 가지가 반드시 필요합니다. 손상된 신경에 혈류와 영양을 공급하는 것, 그리고 신경이 눌린 부분을 풀어주는 것. 
+                말초신경 회복에는 두 가지가 반드시 필요합니다. 손상된 신경에 혈류와 영양을 공급하는 것, 그리고 신경이 눌린 부분을 풀어주는 것.
+              </p>
+              <p className="text-[16px] md:text-[18px] text-gray-800">
+                손발 저림과 다리 감각 이상이 오면 허리 디스크나 목 디스크를 먼저 의심합니다. 그런데 디스크 치료를 받아도 발바닥 증상이 낫지 않는다면 말초신경병증일 가능성이 높습니다.
+              </p>
+              <p className="text-[16px] md:text-[18px] text-gray-800">
+                말초신경병증의 원인 불명은 치료 불가능을 의미하지 않습니다. 현대 의학 검사는 신경이 얼마나 손상됐는지는 볼 수 있지만, 왜 손상이 시작됐는지는 잘 잡아내지 못합니다. 맥락한의원은 말초까지 기혈 순환이 제대로 이뤄지지 않아 신경이 제 기능을 잃어가는 과정으로 봅니다.
               </p>
             </div>
           </div>
@@ -50,10 +57,13 @@ export function Neuropathy() {
               <h2 className="text-[28px] md:text-[34px] font-bold text-gray-900 mb-6 tracking-tight">원인 불명은 치료 불가능을 의미하지 않습니다</h2>
               <div className="prose prose-lg max-w-none text-gray-800 leading-[1.8]">
                 <p>
-                  현대 의학 검사는 신경이 얼마나 손상됐는지는 볼 수 있지만, 왜 손상이 시작됐는지는 잘 잡아내지 못합니다. 허리디스크 치료를 받아도 발바닥 저림이 낫지 않는다면 말초 문제일 가능성이 높습니다.
+                  현대 의학 검사는 신경이 얼마나 손상됐는지는 볼 수 있지만, 왜 손상이 시작됐는지는 잘 잡아내지 못합니다. 허리 디스크 치료를 받아도 발바닥 저림이 낫지 않는다면 말초 문제일 가능성이 높습니다.
                 </p>
                 <p>
-                  한의학적으로는 말초까지 기혈 순환이 제대로 이뤄지지 않아 신경이 제 기능을 잃어가는 과정으로 봅니다. 공급이 끊기면 신경은 손상되기 시작하며, 이 손상은 점점 부위가 넓어집니다.
+                  디스크로 인한 신경 압박은 특정 신경 분절을 따라 증상이 나타나고 자세나 움직임에 따라 변합니다. 말초신경병증은 양쪽 발끝에서 시작해 점점 위로 올라오는 양상이고, 자세와 무관하게 지속됩니다. 두 가지는 원인도, 치료도, 경과도 다릅니다.
+                </p>
+                <p>
+                  한의학적으로는 말초까지 기혈 순환이 제대로 이뤄지지 않아 신경이 제 기능을 잃어가는 과정으로 봅니다. 공급이 끊기면 신경은 손상되기 시작하며, 이 손상은 점점 부위가 넓어집니다. 감각이 무뎌지기 시작하면 이미 신경 손상이 상당히 진행된 신호입니다.
                 </p>
               </div>
             </div>
@@ -74,6 +84,28 @@ export function Neuropathy() {
                 ))}
               </ul>
             </div>
+          </div>
+        </section>
+
+        <section className="mb-24 md:mb-32">
+          <h2 className="text-[28px] md:text-[34px] font-bold text-gray-900 mb-10 tracking-tight">말초신경병증의 종류</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {[
+              { name: '당뇨성 말초신경병증', path: '/neuropathy/diabetic' },
+              { name: '항암 유발 말초신경병증', path: '/neuropathy/chemo' },
+              { name: '특발성 말초신경병증', path: '/neuropathy/idiopathic' },
+            ].map((type) => (
+              <Link
+                key={type.path}
+                to={type.path}
+                className="group block p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:bg-maekrak-navy hover:border-transparent transition-all duration-300"
+              >
+                <h3 className="text-[18px] font-bold text-gray-900 group-hover:text-white mb-3 transition-colors">{type.name}</h3>
+                <div className="flex items-center text-[14px] font-medium text-maekrak-blue group-hover:text-[#7ec8e0] transition-colors">
+                  자세히 보기 <ArrowRight className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+            ))}
           </div>
         </section>
 

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { CheckCircle2, CloudFog, Stethoscope } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Stethoscope } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export function Brainfog() {
   useEffect(() => {
@@ -37,7 +38,10 @@ export function Brainfog() {
                 "브레인포그는 치매와 다릅니다. 20~30대에서도 흔히 나타나는 기능적 저하입니다. 그리고 의지의 문제도 아닙니다. <span className="text-maekrak-blue relative inline-block">뇌라는 기관에 연료와 산소가 원활히 공급되지 않는 구조망의 장애<span className="absolute bottom-1 left-0 w-full h-[6px] bg-maekrak-blue/20 -z-10"></span></span>입니다."
               </p>
               <p className="text-[16px] md:text-[18px] text-gray-800">
-                맥락한의원은 브레인포그를 영양 공급과 노폐물 배출이라는 대사적 관점, 그리고 자율신경과 경추 정렬이라는 구조적 관점에서 통합적으로 치료합니다.
+                브레인포그는 정신질환이 아닙니다. 뇌가 제대로 활동하려면 충분한 혈액 공급과 에너지 대사가 이루어져야 하는데, 이 공급에 문제가 생긴 것이 브레인포그입니다.
+              </p>
+              <p className="text-[16px] md:text-[18px] text-gray-800">
+                맥락한의원은 브레인포그를 두개경추 부정렬, 자율신경 불균형, 대사 문제 세 가지 축으로 봅니다. 뇌에 혈액과 에너지가 원활하게 공급되고 노폐물이 제대로 배출되는 환경을 회복하는 것이 치료 목표입니다.
               </p>
             </div>
           </div>
@@ -63,6 +67,49 @@ export function Brainfog() {
               <h3 className="text-[20px] font-bold text-gray-900 mb-4 leading-[1.4]">만성적인 대사 문제<br/><span className="text-gray-500 text-[15px] font-medium">불안정한 뇌 연료 공급</span></h3>
               <p className="text-[15px] font-light text-gray-600 leading-[1.7]">현대인의 급격한 혈당 롤러코스터는 포도당과 케톤체를 쓰는 뇌를 굶주리게 만들고 카페인 의존성을 키웁니다.</p>
             </div>
+          </div>
+        </section>
+
+        <section className="mb-24 md:mb-32">
+          <h2 className="text-[28px] md:text-[34px] font-bold text-gray-900 mb-10 tracking-tight">이런 증상이 있다면 브레인포그를 의심하세요</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              '집중력을 유지하기 어렵다',
+              '문장을 말하다가 단어가 잘 떠오르지 않는다',
+              '머리가 제대로 돌아가지 않는 것 같다',
+              '머리에 안개가 낀 것 같다',
+              '다른 사람과 대화할 때 내용이 바로 이해되지 않는다',
+              '커피 없이는 오전을 버티기 어렵다',
+              '잠을 자도 아침에 멍한 상태가 지속된다',
+              'MRI는 정상이라고 했는데 머리가 계속 이상하다',
+            ].map((item) => (
+              <div key={item} className="flex items-start gap-3 p-5 rounded-xl bg-gray-50 border border-gray-100">
+                <CheckCircle2 className="w-5 h-5 text-maekrak-blue shrink-0 mt-0.5" strokeWidth={2} />
+                <span className="text-[15px] text-gray-700 leading-[1.6] break-keep">{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mb-24 md:mb-32">
+          <h2 className="text-[28px] md:text-[34px] font-bold text-gray-900 mb-10 tracking-tight">브레인포그의 종류</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {[
+              { name: '수험생 브레인포그', path: '/brainfog/students' },
+              { name: '코로나 후유증', path: '/brainfog/post-covid' },
+              { name: '만성피로', path: '/brainfog/chronic-fatigue' },
+            ].map((type) => (
+              <Link
+                key={type.path}
+                to={type.path}
+                className="group block p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:bg-maekrak-navy hover:border-transparent transition-all duration-300"
+              >
+                <h3 className="text-[18px] font-bold text-gray-900 group-hover:text-white mb-3 transition-colors">{type.name}</h3>
+                <div className="flex items-center text-[14px] font-medium text-maekrak-blue group-hover:text-[#7ec8e0] transition-colors">
+                  자세히 보기 <ArrowRight className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+            ))}
           </div>
         </section>
 
@@ -186,24 +233,24 @@ export function Brainfog() {
                 </thead>
                 <tbody>
                   <tr className="border-b border-gray-100">
-                    <td className="py-4 px-6 text-[15px] font-medium text-gray-800">단순 영양제 (징코빌로바 등)</td>
-                    <td className="py-4 px-6 text-[15px] text-gray-600">일반적인 혈액순환 개선</td>
-                    <td className="py-4 px-6 text-[15px] text-gray-500">구조적 압박(경추 틀어짐)이나 심한 뇌 대사 저하시 효과 제한적</td>
+                    <td className="py-4 px-6 text-[15px] font-medium text-gray-800">항우울제·신경안정제</td>
+                    <td className="py-4 px-6 text-[15px] text-gray-600">뇌 신경전달물질 조절</td>
+                    <td className="py-4 px-6 text-[15px] text-gray-500">뇌 혈류·두개경추 원인 미해결</td>
                   </tr>
                   <tr className="border-b border-gray-100">
-                    <td className="py-4 px-6 text-[15px] font-medium text-gray-800">정신과 약물 (각성제 등)</td>
-                    <td className="py-4 px-6 text-[15px] text-gray-600">일시적 신경 전달 물질 조절</td>
-                    <td className="py-4 px-6 text-[15px] text-gray-500">약효 소진 시 증상 반복, 근본 뇌 환경 개선 안됨</td>
+                    <td className="py-4 px-6 text-[15px] font-medium text-gray-800">카페인·각성제</td>
+                    <td className="py-4 px-6 text-[15px] text-gray-600">일시적 각성 효과</td>
+                    <td className="py-4 px-6 text-[15px] text-gray-500">뇌 에너지 고갈 가속, 의존성 심화</td>
                   </tr>
                   <tr className="border-b border-gray-100">
-                    <td className="py-4 px-6 text-[15px] font-medium text-gray-800">카페인 의존</td>
-                    <td className="py-4 px-6 text-[15px] text-gray-600">아데노신 수용체 차단 (피로 은폐)</td>
-                    <td className="py-4 px-6 text-[15px] text-gray-500">각성 후 더 심한 브레인포그 유발 (크래시 현상)</td>
+                    <td className="py-4 px-6 text-[15px] font-medium text-gray-800">집중력 영양제</td>
+                    <td className="py-4 px-6 text-[15px] text-gray-600">뇌 영양 보충</td>
+                    <td className="py-4 px-6 text-[15px] text-gray-500">혈류 저하 시 흡수·전달 한계</td>
                   </tr>
                   <tr className="bg-blue-50/50">
                     <td className="py-4 px-6 text-[15px] font-bold text-maekrak-blue">맥락한의원</td>
-                    <td className="py-4 px-6 text-[15px] font-medium text-gray-900">뇌 영양 공급(한약) + 순환 방해 구조 교정(추나)</td>
-                    <td className="py-4 px-6 text-[15px] font-medium text-gray-900">뇌가 스스로 회복할 수 있는 근본 환경을 지속시켜 재발 방지</td>
+                    <td className="py-4 px-6 text-[15px] font-medium text-gray-900">두개경추 교정 + 뇌 혈류 회복 + 뇌 영양 직접 공급</td>
+                    <td className="py-4 px-6 text-[15px] font-medium text-gray-900">뇌에 에너지가 공급되는 환경 자체를 회복</td>
                   </tr>
                 </tbody>
               </table>
@@ -238,9 +285,9 @@ export function Brainfog() {
             <div className="absolute right-0 top-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
             <h3 className="text-[20px] md:text-[24px] font-serif font-bold mb-6 relative z-10">맥락한의원을 선택해야 하는 이유</h3>
             <p className="text-white/90 text-[16px] md:text-[18px] leading-[1.8] font-light max-w-4xl break-keep relative z-10">
-              쉬어도 낫지 않고 커피로 버티던 브레인포그가 호전되는 이유는 하나입니다. <strong className="text-white font-medium">뇌가 제 기능을 할 수 있는 두 가지 필수 조건 — 뇌척수액 순환을 통한 노폐물 배출(구조 교정)과 신경 세포 에너지 충전(기능 처방) — 을 동시에 해결했기 때문입니다.</strong>
+              카페인과 집중력 영양제로 해결되지 않던 브레인포그가 나아지는 이유는 하나입니다. <strong className="text-white font-medium">두개경추 부정렬을 교정해 뇌 혈류 공급 통로를 회복하고, 두맥탕으로 뇌에 직접 영양을 공급해 뇌가 제대로 작동하는 환경을 만들었기 때문입니다.</strong>
               <br /><br />
-              단순히 피로를 은폐하는 각성제나 영양제만으로는 구부러진 호스를 펴지 않고 물만 세게 트는 것과 같습니다. 맥락한의원은 경추 정렬을 통해 호스를 펴고(순환로 개방), 두맥탕을 통해 질 좋은 영양(연료)을 채워 뇌의 기능 저하를 근본에서부터 되돌립니다.
+              카페인은 에너지가 부족한 뇌를 채찍질할 뿐 통로를 열지 못합니다. 집중력 영양제는 혈류가 부족한 상태에서 뇌까지 닿지 못합니다. 두개경추가 틀어져 통로가 막혀 있는 한 무엇을 공급해도 한계가 있습니다. 맥락한의원은 통로를 먼저 열고 공급합니다.
             </p>
           </div>
         </section>

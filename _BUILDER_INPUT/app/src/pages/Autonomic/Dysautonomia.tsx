@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import { ArrowRight, CheckCircle2, ChevronRight, Activity } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { ConditionSubPage } from '../../components/condition/ConditionSubPage';
 
 export function Dysautonomia() {
   useEffect(() => {
@@ -8,178 +7,55 @@ export function Dysautonomia() {
   }, []);
 
   return (
-    <div className="bg-white min-h-[calc(100vh-80px)]">
-      {/* Hero Section */}
-      <div className="bg-[#1e1e1e] px-6 md:px-12 lg:px-24 py-20 md:py-24 relative overflow-hidden">
-        <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-l from-maekrak-navy/20 to-transparent" />
-        <div className="relative z-10 max-w-7xl mx-auto">
-          <div className="flex items-center gap-2 text-[13px] font-medium tracking-wider text-gray-400 mb-6 uppercase">
-            <Link to="/autonomic" className="hover:text-white transition-colors">자율신경</Link>
-            <ChevronRight className="w-3 h-3" />
-            <span className="text-[#89CFF0]">자율신경실조증</span>
-          </div>
-          <h1 className="font-serif text-[36px] md:text-[48px] lg:text-[56px] font-medium text-white leading-[1.25] mb-6 tracking-tight">
-            자율신경실조증
-          </h1>
-          <p className="text-[18px] md:text-[22px] text-gray-300 max-w-3xl leading-[1.7] break-keep font-light">
-            자율신경실조증은 심장박동·호흡·소화·혈압·체온 등을 자동으로 조율하는 자율신경계의 기능이 불균형해져 여러 장기에서 동시다발적으로 증상이 나타나는 상태입니다. 구조적 병변이 없기 때문에 일반 검사에서 정상으로 나오는 경우가 많습니다.
-          </p>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 py-20 md:py-32">
-        {/* 맥락한의원의 관점 */}
-        <section className="mb-24 md:mb-32">
-          <div className="bg-gray-50 rounded-3xl p-8 md:p-12 lg:p-16 border border-gray-100">
-            <div className="flex items-center gap-3 mb-8">
-              <Activity className="w-8 h-8 text-maekrak-blue" strokeWidth={1.5} />
-              <h2 className="text-[22px] md:text-[26px] font-bold text-gray-900 tracking-tight">맥락한의원의 관점</h2>
-            </div>
-            <div className="space-y-6 text-[18px] md:text-[20px] text-gray-800 leading-[1.8] font-light break-keep">
-              <p>
-                자율신경실조증은 특정 장기의 병이 아닙니다. 여러 장기를 동시에 조율하는 <strong>자율신경계 기능 자체가 무너진 것</strong>입니다. 심장·호흡·소화·순환이 각각 따로 이상한 것이 아니라 <strong>하나의 조율 시스템이 오작동</strong>하고 있는 것입니다.
-              </p>
-              <p>
-                자율신경실조증은 <strong>잘못된 동적 평형 상태</strong>입니다. 외부 환경에 대한 대응이 잘못된 방향으로 반복되면서 몸이 그것을 정상으로 인식하게 된 상태입니다. 교감신경이 항상 켜져 있는 상태, 소화기 혈류가 만성적으로 줄어든 상태를 몸이 새로운 평형점으로 받아들인 것입니다.
-              </p>
-              <p>
-                혈액검사·MRI·심초음파·내시경이 모두 정상이어도 자율신경 기능 이상은 잡히지 않습니다. 자율신경 기능 문제는 구조적 병변 검사가 아닌 <strong className="text-maekrak-navy font-bold inline-block relative">자율신경 기능 평가로 확인<span className="absolute bottom-1 left-0 w-full h-[6px] bg-maekrak-blue/20 -z-10"></span></strong>해야 합니다.
-              </p>
-              <p>
-                맥락한의원은 자율신경실조증을 교감신경절의 구조적 압박과 기능적 불균형이 복합된 문제로 봅니다. 증상을 억제하는 것이 아니라 <strong className="text-gray-900 font-bold">몸이 올바른 평형점을 회복하도록 돕는 것</strong>이 치료 목표입니다.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* 의심 증상 */}
-        <section className="mb-24 md:mb-32">
-          <h2 className="text-[32px] md:text-[40px] font-bold text-gray-900 mb-12 tracking-tight">이런 증상이 있다면 의심하세요</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              {
-                title: "심장이 두근거려 심장내과에 갔으나 정상",
-                desc: "심계항진은 자율신경 불균형의 흔한 증상입니다. 심장 검사가 정상이라면 자율신경 쪽을 봐야 합니다."
-              },
-              {
-                title: "숨이 막히고 가슴이 답답하나 폐는 정상",
-                desc: "기도나 폐에 문제가 없는데 숨이 불편하다면 자율신경 기능 이상이 호흡 조절에 영향을 준 것입니다."
-              },
-              {
-                title: "소화가 안 되고 속이 울렁이나 위내시경 깨끗",
-                desc: "만성적인 스트레스로 소화기 혈류가 줄어 위장 기능이 저하됩니다."
-              },
-              {
-                title: "이유 없는 극심한 피로감과 무기력",
-                desc: "몸이 24시간 긴장 상태에서 에너지를 소모해 충분히 쉬어도 피로가 풀리지 않습니다."
-              },
-              {
-                title: "미주신경성 실신 (어지럽고 쓰러질 듯함)",
-                desc: "긴장, 통증 시 혈압이 떨어지며 자율신경의 과반응으로 발생합니다."
-              },
-              {
-                title: "여러 과를 돌아다녀도 원인을 못 찾음",
-                desc: "각 장기는 정상이지만 장기를 조율하는 시스템에 문제가 생긴 전형적인 패턴입니다."
-              }
-            ].map((item, idx) => (
-              <div key={idx} className="bg-white p-8 rounded-2xl border border-gray-100 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] hover:border-maekrak-blue/30 transition-colors">
-                <div className="flex items-start gap-4">
-                  <CheckCircle2 className="w-6 h-6 text-maekrak-blue shrink-0 mt-1" strokeWidth={2} />
-                  <div>
-                    <h3 className="text-[18px] md:text-[20px] font-bold text-gray-900 mb-3">{item.title}</h3>
-                    <p className="text-[15px] md:text-[16px] text-gray-800 leading-[1.75] break-keep">{item.desc}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* 한의학적 원인 */}
-        <section className="mb-24 md:mb-32">
-          <h2 className="text-[32px] md:text-[40px] font-bold text-gray-900 mb-12 tracking-tight">왜 생기는가 — 원인</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
-            <div>
-              <h3 className="text-[24px] font-bold text-gray-900 mb-6">검사가 정상인 이유</h3>
-              <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep">
-                혈액검사·MRI·심초음파·내시경은 장기의 구조적 병변을 확인하는 검사입니다. 자율신경 기능 이상은 조절 신경의 오작동, 즉 기능적 문제입니다. 구조를 보는 검사로는 이런 조율의 불균형이 잡히지 않습니다.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-[24px] font-bold text-gray-900 mb-6">잘못된 동적 평형 상태</h3>
-              <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep">
-                만성 스트레스, 수면 부족 등이 지속되면 자율신경은 '비상 모드'를 정상으로 인식하기 시작합니다. 혈류가 줄어든 상태나 심박수가 늘 빠른 상태를 새로운 평형점으로 고착시키기 때문에 반복적으로 증상이 나타납니다.
-              </p>
-            </div>
-            <div className="md:col-span-2">
-              <h3 className="text-[24px] font-bold text-gray-900 mb-6">경추와 자율신경의 연결</h3>
-              <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep max-w-4xl">
-                경추 주변 교감신경절이 틀어지거나 주변 근육이 경직되면 지속적인 자극을 받습니다. 심리적 스트레스가 없어도 몸이 긴장 상태를 유지하는 구조적 이유가 바로 이 때문이며, 경추 교정이 필수적인 이유입니다.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* 맥락한의원 치료 */}
-        <section className="mb-24 md:mb-32">
-          <div className="bg-[#1e1e1e] rounded-[40px] p-10 md:p-16 lg:p-20 text-white relative overflow-hidden">
-            <div className="absolute right-0 bottom-0 w-2/3 h-2/3 bg-maekrak-blue/10 blur-[100px] rounded-full pointer-events-none" />
-            <h2 className="text-[32px] md:text-[40px] font-serif font-medium mb-12 relative z-10">맥락한의원 치료 과정</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 relative z-10">
-              <div>
-                <h3 className="text-[22px] font-bold text-[#89CFF0] mb-4">심맥탕</h3>
-                <p className="text-white/80 leading-[1.7] font-light break-keep">
-                  교감신경 과항진 완화와 전신 순환 회복에 초점을 맞춘 맞춤 처방입니다. 잘못된 동적 평형 상태를 올바른 방향으로 재설정합니다.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-[22px] font-bold text-[#89CFF0] mb-4">약침 요법</h3>
-                <p className="text-white/80 leading-[1.7] font-light break-keep">
-                  경·흉추 교감신경절 주변에 시술해 구조적으로 교감신경을 자극하는 긴장을 직접 완화시키고 과반응을 즉각적으로 진정시킵니다.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-[22px] font-bold text-[#89CFF0] mb-4">추나 / 자율신경검사</h3>
-                <p className="text-white/80 leading-[1.7] font-light break-keep">
-                  경추 정렬을 교정하여 교감신경절 압박을 구조적으로 해소하고, 자율신경검사를 통해 회복 추이를 객관적인 수치로 확인합니다.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ */}
-        <section>
-          <h2 className="text-[32px] md:text-[40px] font-bold text-gray-900 mb-12 tracking-tight">자주 묻는 질문</h2>
-          <div className="space-y-6">
-            {[
-              {
-                q: "자율신경실조증이라는 진단을 어디서도 안 해줬습니다",
-                a: "심장내과는 심장을, 호흡기내과는 폐를 봅니다. 각 장기 검사가 정상인데 여러 증상이 동시다발적으로 있다면 자율신경 기능 전체를 평가해봐야 합니다."
-              },
-              {
-                q: "약을 먹어도 소용이 없었습니다",
-                a: "심계항진에 베타차단제, 소화불량에 소화제는 일시적 억제입니다. 자율신경 불균형이라는 공통 원인을 다루지 않으면 증상은 계속 반복됩니다."
-              },
-              {
-                q: "스트레스를 받지 않으면 낫지 않나요?",
-                a: "스트레스는 방아쇠 중 하나일 뿐입니다. 구조적 경직과 잘못 세팅된 체내 평형이 유지된다면 스트레스 없이도 교감신경 긴장이 풀리지 않습니다."
-              }
-            ].map((faq, idx) => (
-              <div key={idx} className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-lg transition-shadow">
-                <h3 className="text-[18px] md:text-[20px] font-bold text-gray-900 mb-4 flex gap-4">
-                  <span className="text-maekrak-blue">Q.</span> {faq.q}
-                </h3>
-                <p className="text-[16px] md:text-[17px] text-gray-600 leading-[1.7] font-light break-keep flex gap-4">
-                  <span className="text-gray-400 font-bold">A.</span>
-                  <span>{faq.a}</span>
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-      </div>
-    </div>
+    <ConditionSubPage
+      parentLabel="자율신경"
+      parentHref="/autonomic"
+      title="자율신경실조증"
+      anchorQuote="자율신경실조증은 심장박동·호흡·소화·혈압·체온 등을 자동으로 조율하는 자율신경계의 기능이 불균형해져 여러 장기에서 동시다발적으로 증상이 나타나는 상태입니다. 구조적 병변이 없기 때문에 일반 검사에서 정상으로 나오는 경우가 많습니다."
+      perspective={[
+        "자율신경실조증은 특정 장기의 병이 아니다. 여러 장기를 동시에 조율하는 자율신경계 기능 자체가 무너진 것이다. 심장·호흡·소화·순환이 각각 따로 이상한 것이 아니라 하나의 조율 시스템이 오작동하고 있는 것이다.",
+        "자율신경실조증은 잘못된 동적 평형 상태다. 외부 환경에 대한 대응이 잘못된 방향으로 반복되면서 몸이 그것을 정상으로 인식하게 된 상태다. 교감신경이 항상 켜져 있는 상태, 소화기 혈류가 만성적으로 줄어든 상태를 몸이 새로운 평형점으로 받아들인 것이다.",
+        "혈액검사·MRI·심초음파·내시경이 모두 정상이어도 자율신경 기능 이상은 잡히지 않는다. 자율신경 기능 문제는 구조적 병변 검사가 아닌 자율신경 기능 평가로 확인해야 한다.",
+        "맥락한의원은 자율신경실조증을 교감신경절의 구조적 압박과 기능적 불균형이 복합된 문제로 본다. 증상을 억제하는 것이 아니라 몸이 올바른 평형점을 회복하도록 돕는 것이 치료 목표다."
+      ]}
+      symptoms={[
+        "심장이 두근거려 심장내과에 갔는데 심초음파·심전도가 정상이었다",
+        "심계항진은 자율신경 불균형의 가장 흔한 증상 중 하나입니다. 심장 자체에 병변이 없어도 교감신경이 과활성된 상태에서는 심박수가 불규칙하게 빨라집니다. 심장 검사가 정상이라면 자율신경 쪽을 봐야 합니다.",
+        "숨이 막히고 가슴이 답답해 호흡기내과 검사를 받았는데 이상이 없었다",
+        "호흡 곤란감, 가슴 답답함은 자율신경 불균형이 호흡 조절에 영향을 줄 때 나타납니다. 폐·기도에 문제가 없는데 숨이 불편하다면 자율신경 기능 이상을 확인해야 합니다.",
+        "소화가 안 되고 속이 울렁거려 위내시경을 받았는데 깨끗했다",
+        "스트레스를 받으면 몸은 소화기로 가는 혈류를 줄이고 심장·뇌·근육으로 집중시킵니다. 이 패턴이 만성화되면 위장 기능이 저하됩니다. 위내시경이 정상이어도 기능성 소화 장애는 자율신경 불균형에서 올 수 있습니다.",
+        "이유 없이 극심한 피로감과 무기력함이 반복된다",
+        "충분히 쉬어도 피로가 풀리지 않고 아침에 일어나기 힘든 상태가 지속됩니다. 교감신경이 항진된 상태가 유지되면 몸은 24시간 긴장 상태에서 에너지를 소모합니다. 아무것도 안 해도 피곤한 이유가 여기 있습니다.",
+        "갑자기 눈앞이 캄캄해지거나 쓰러질 것 같은 느낌이 든 적이 있다 (미주신경성 실신)",
+        "극도의 긴장이나 통증, 오랜 기립 상태에서 갑자기 혈압이 떨어지면서 나타납니다. 심장 문제가 아닌 자율신경의 과반응으로 발생하는 것으로, 자율신경 불균형의 또 다른 표현입니다.",
+        "여러 과를 돌아다녔는데 어디서도 원인을 못 찾았다 ★ 가장 많은 내원 패턴",
+        "심장내과·호흡기내과·소화기내과·신경과를 모두 다녀도 이상이 없다는 말만 들었다면 자율신경 기능 평가가 필요합니다. 각 장기는 정상이지만 그 장기들을 조율하는 시스템이 문제인 것입니다.."
+      ]}
+      cause={
+        <>
+            <p>혈액검사·MRI·심초음파·내시경은 장기의 구조적 병변을 확인하는 검사입니다. 자율신경 기능 이상은 구조적 병변이 아니라 기능적 문제입니다. 심장 근육이 손상된 것이 아니라 심장 박동을 조절하는 신경 기능이 불균형한 것, 위장 점막에 염증이 생긴 것이 아니라 위장으로 가는 혈류를 조절하는 신경 기능이 오작동하는 것입니다. 이런 기능적 문제는 구조를 보는 검사로는 잡히지 않습니다.</p>
+            <p className="font-medium text-gray-800 mt-6">잘못된 동적 평형 상태</p>
+            <p>자율신경 불균형은 단순히 교감신경이 항진된 상태가 아닙니다. 몸이 생명 유지를 위해 잘못된 방향으로 동적 평형을 맞춘 상태입니다. 만성 스트레스, 불규칙한 수면, 과도한 디지털 자극이 지속되면 자율신경은 비상 모드를 정상 상태로 인식하기 시작합니다.</p>
+            <p>교감신경이 항상 활성화된 상태, 소화기로 가는 혈류가 만성적으로 줄어든 상태, 심박수가 늘 빠른 상태를 몸이 새로운 평형점으로 받아들입니다. 이 평형점이 고착되면 증상 하나를 억제해도 다른 증상이 나타나고, 검사에서는 이상이 없는데 몸은 계속 힘든 상태가 지속됩니다.</p>
+            <p className="font-medium text-gray-800 mt-6">경추와 자율신경의 구조적 연결</p>
+            <p>경추 주변에는 교감신경절이 위치합니다. 경추 정렬이 틀어지고 주변 근육이 만성 경직되면 교감신경절이 지속적으로 자극받습니다. 심리적 스트레스가 없어도 몸이 긴장 상태를 유지하는 구조적 이유가 여기 있습니다. 자율신경 불균형에 경추 교정이 필요한 이유입니다.</p>
+        </>
+      }
+      treatments={[
+        { title: "심맥탕", description: "자율신경 균형 재설정\n심맥탕은 교감신경 과항진 완화와 전신 순환 회복에 초점을 맞춘 처방 프로그램입니다. 환자의 체질과 증상 패턴에 따라 구성이 달라집니다. 잘못된 동적 평형 상태를 올바른 방향으로 재설정하는 것이 목표입니다." },
+        { title: "약침", description: "교감신경절 직접 안정화\n경추·흉추 교감신경절 주변에 시술해 구조적으로 교감신경을 자극하는 긴장을 직접 완화합니다. 심리적 스트레스 없이도 몸이 긴장 상태를 유지하는 구조적 원인을 해소합니다." },
+        { title: "추나", description: "경추 정렬 교정\n경추 정렬을 교정해 교감신경절에 가해지는 만성 구조적 자극을 제거합니다. 경추가 안정되면 자율신경이 새로운 자극 없이 균형 회복에 집중할 수 있습니다." },
+        { title: "자율신경검사", description: "수치로 확인하는 회복 경과\n치료 시작 전 기저 상태를 측정하고 치료 중간에 다시 측정합니다. \"몸이 좀 나아진 것 같다\"는 느낌을 수치로 확인합니다. 자율신경 균형이 실제로 회복되고 있는지 객관적으로 추적하는 도구입니다" }
+      ]}
+      cases={[
+        { title: "사례 1", body: "주기적인 극심한 피로감과 무기력함으로 아침에 일어나기 힘든 상태가 반복됐습니다. 가슴 두근거림도 반복됐고 가끔 숨쉬기가 불편해졌습니다. 심장 검사를 받았지만 이상이 없다는 말을 들었습니다. 몸은 힘든데 원인을 찾지 못하는 답답함이 컸습니다." },
+        { title: "사례 2", body: "자율신경검사에서 부교감신경 항진 상태가 확인됐습니다. 신경계가 몸을 힘들고 지치게 만들고 있었던 것이었습니다. 심맥탕·약침·추나 치료 3개월로 증상이 호전됐고 중간 자율신경검사에서도 수치 개선이 확인됐습니다. 몸이 느끼는 변화가 수치로도 확인된 케이스입니다." }
+      ]}
+      faqs={[
+        { q: "스트레스를 받지 않으면 낫지 않나요?", a: "스트레스는 방아쇠 중 하나이지 유일한 원인이 아닙니다. 경추 정렬 이상으로 교감신경절이 구조적으로 자극받는 상태에서는 스트레스가 없어도 몸이 긴장 상태를 유지합니다. 스트레스 관리만으로 해결되지 않는 이유입니다." },
+        { q: "자율신경실조증이 심해지면 어떻게 되나요?", a: "잘못된 동적 평형 상태가 오래 지속되면 극심한 무기력감, 우울감, 절망감으로 이어질 수 있습니다. 몸이 에너지를 만성적으로 낭비하는 상태가 지속되기 때문입니다. 증상이 가볍더라도 오래 방치하면 회복에 더 긴 시간이 걸립니다." }
+      ]}
+    />
   );
 }

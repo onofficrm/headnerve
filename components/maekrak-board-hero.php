@@ -6,7 +6,6 @@ if (!defined('_GNUBOARD_')) {
 global $board, $bo_table, $title_msg, $wr_id;
 
 $board_name = isset($board['bo_subject']) ? get_text($board['bo_subject']) : '커뮤니티';
-$hero_desc = function_exists('g5site_cfg') ? g5site_cfg('site_desc', '') : '';
 
 $hero_labels = array(
     'notice' => '맥락한의원의 소식과 안내를 전합니다.',
@@ -14,7 +13,7 @@ $hero_labels = array(
     'column' => '원장이 전하는 건강 이야기입니다.',
     'reviews'=> '환자분들이 직접 작성해주신 소중한 치료후기입니다.',
 );
-$hero_board_sub = isset($hero_labels[$bo_table]) ? $hero_labels[$bo_table] : $hero_desc;
+$hero_board_sub = isset($hero_labels[$bo_table]) ? $hero_labels[$bo_table] : '';
 
 $is_write_hero = (basename($_SERVER['SCRIPT_NAME']) === 'write.php' && !empty($title_msg));
 $is_review_view = ($bo_table === 'reviews' && !empty($wr_id) && !$is_write_hero);
@@ -39,16 +38,20 @@ if ($bo_table === 'reviews' && !$is_write_hero) {
 
 if ($is_write_hero) {
     $hero_title = get_text($title_msg);
-    $hero_sub = $board_name.' · '.$hero_board_sub;
-    $hero_eyebrow = 'Write';
+    $hero_sub = $board_name;
+    if ($hero_board_sub !== '') {
+        $hero_sub .= ' · '.$hero_board_sub;
+    }
+    $hero_eyebrow = '글쓰기';
 } else {
     $hero_title = $board_name;
     $hero_sub = $hero_board_sub;
-    $hero_eyebrow = 'Community';
+    $hero_eyebrow = '커뮤니티';
 }
 ?>
 
 <section class="maekrak-board-hero" aria-label="<?php echo $hero_title; ?> 소개">
+    <div class="maekrak-board-hero__gradient" aria-hidden="true"></div>
     <div class="maekrak-board-hero__inner">
         <p class="maekrak-board-hero__eyebrow"><?php echo $hero_eyebrow; ?></p>
         <h2 class="maekrak-board-hero__title"><?php echo $hero_title; ?></h2>

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { ArrowRight, CheckCircle2, ChevronRight, Stethoscope, Activity } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Stethoscope, Activity } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export function Autonomic() {
   useEffect(() => {
@@ -64,6 +65,29 @@ export function Autonomic() {
                 <h3 className="text-[18px] font-bold text-gray-900 mb-3">{item.title}</h3>
                 <p className="text-[15px] font-light text-gray-600 leading-[1.6]">{item.desc}</p>
               </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mb-24 md:mb-32">
+          <h2 className="text-[28px] md:text-[34px] font-bold text-gray-900 mb-10 tracking-tight">자율신경실조증의 종류</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { name: '자율신경실조증', path: '/autonomic/dysautonomia' },
+              { name: '기립성 저혈압', path: '/autonomic/orthostatic-hypotension' },
+              { name: '공황/불안장애', path: '/autonomic/panic-anxiety' },
+              { name: '불면', path: '/autonomic/insomnia' },
+            ].map((type) => (
+              <Link
+                key={type.path}
+                to={type.path}
+                className="group block p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:bg-maekrak-navy hover:border-transparent transition-all duration-300"
+              >
+                <h3 className="text-[18px] font-bold text-gray-900 group-hover:text-white mb-3 transition-colors">{type.name}</h3>
+                <div className="flex items-center text-[14px] font-medium text-maekrak-blue group-hover:text-[#7ec8e0] transition-colors">
+                  자세히 보기 <ArrowRight className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
             ))}
           </div>
         </section>

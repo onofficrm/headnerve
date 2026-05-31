@@ -3296,21 +3296,18 @@ body.maekrak-nav-open .maekrak-header__inner {
 }
 
 /* --------------------------------------------------------------------------
-   게시판 상단 히어로 (메뉴–목록 사이)
+   게시판 상단 히어로 (헤더 바로 아래, SPA 대메뉴와 동일 톤)
    -------------------------------------------------------------------------- */
 .maekrak-board-hero {
   position: relative;
-  width: 100vw;
-  max-width: 100vw;
-  margin: 0 calc(50% - 50vw) 2rem;
+  width: 100%;
+  margin: 0;
   min-height: 220px;
   overflow: hidden;
-  border-radius: 0;
   background-color: #0f172a;
 }
 
-.maekrak-board-hero::after {
-  content: "";
+.maekrak-board-hero__gradient {
   position: absolute;
   right: 0;
   top: 0;
@@ -3322,8 +3319,7 @@ body.maekrak-nav-open .maekrak-header__inner {
 
 @media (min-width: 768px) {
   .maekrak-board-hero {
-    min-height: 300px;
-    margin-bottom: 2.5rem;
+    min-height: 280px;
   }
 }
 
@@ -3332,44 +3328,57 @@ body.maekrak-nav-open .maekrak-header__inner {
   z-index: 1;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   min-height: inherit;
-  max-width: 1200px;
+  max-width: 80rem;
   margin: 0 auto;
-  padding: 2.5rem 1.5rem 2.75rem;
+  padding: 5rem 1.5rem 3.5rem;
   color: #fff;
 }
 
 @media (min-width: 768px) {
   .maekrak-board-hero__inner {
-    padding: 3.5rem 3rem 3.25rem;
+    padding: 5rem 3rem 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .maekrak-board-hero__inner {
+    padding: 5rem 6rem 4rem;
   }
 }
 
 .maekrak-board-hero__eyebrow {
-  margin: 0 0 0.5rem;
+  margin: 0 0 1rem;
   font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
+  font-weight: 700;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #7ec8e0;
 }
 
 .maekrak-board-hero__title {
-  margin: 0 0 0.65rem;
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.2;
+  margin: 0 0 1rem;
+  font-family: var(--font-serif, "Playfair Display", Georgia, serif);
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
 }
 
 .maekrak-board-hero__desc {
   margin: 0;
   max-width: 36em;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.9375rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+@media (min-width: 768px) {
+  .maekrak-board-hero__desc {
+    font-size: 1rem;
+  }
 }
 
 /* 치료후기 목록 헤더 (다크 히어로 대신) */

@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import { CheckCircle2, ChevronRight, ArrowLeft, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { ConditionSubPage } from '../../components/condition/ConditionSubPage';
 
 export function CervicogenicHeadache() {
   useEffect(() => {
@@ -8,168 +7,49 @@ export function CervicogenicHeadache() {
   }, []);
 
   return (
-    <div className="bg-white min-h-[calc(100vh-80px)] pb-24">
-      {/* 2층 Header */}
-      <div className="bg-maekrak-navy px-6 md:px-12 lg:px-24 py-16 md:py-20 relative overflow-hidden">
-        <div className="absolute right-0 top-0 bottom-0 w-2/5 bg-gradient-to-br from-transparent to-[#4a8fa8]/15" />
-        <div className="relative z-10 max-w-7xl mx-auto">
-          <div className="flex items-center gap-2 text-[13px] font-medium text-white/60 mb-6">
-            <Link to="/headache" className="hover:text-white transition-colors">두통</Link>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-[#7ec8e0]">경추성 두통</span>
-          </div>
-          <h1 className="font-serif text-[32px] md:text-[42px] font-medium text-white leading-[1.3] mb-6">
-            경추성 두통
-          </h1>
-          <div className="bg-white/10 border border-white/20 p-6 rounded-xl max-w-3xl">
-            <p className="text-[16px] text-white/90 leading-[1.7] break-keep font-light">
-              "경추성 두통은 목 주변의 척추, 근육 등 경추 구조의 기능 이상과 신경 압박으로 인해 후두부뿐만 아니라 관자놀이, 눈 주변까지 통증이 번지는 구조적 두통 질환입니다."
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 py-16 md:py-24">
-        
-        {/* 맥락한의원 관점 */}
-        <section className="mb-20">
-          <div className="p-8 md:p-10 rounded-2xl bg-gray-50 border border-gray-100 mb-8">
-            <h3 className="text-[18px] font-bold text-maekrak-blue mb-4">맥락한의원의 관점</h3>
-            <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.8] break-keep">
-              경추성 두통은 통증 발생지가 환자가 체감하는 부위(머리)와 일치하지 않는 기만적인 성질을 띕니다.<br /><br />
-              맥락한의원은 진통제로 거짓 평화를 누리는 것을 지양하며, C1, C2 상부 경추의 구조적 압박점(TCC)을 정밀 타격하여 통증의 '방송국(원천)' 자체를 파괴하는 구조적 완치를 추구합니다.
-            </p>
-          </div>
-        </section>
-
-        {/* 증상 체크리스트 */}
-        <section className="mb-20">
-          <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">이런 증상이 있다면 의심하세요</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {[
-              "목이나 어깨를 특정 각도로 움직일 때 두통이 악화된다",
-              "뒷목에서 시작된 통증이 정수리, 이마, 눈가까지 퍼져나간다",
-              "스마트폰이나 모니터를 볼 때 증상이 예외 없이 증폭된다",
-              "어지럼증이나 눈 침침함이 종종 동반된다",
-              "도수치료나 마사지를 받아도 그때뿐이고 진통제가 잘 듣지 않는다"
-            ].map((item, idx) => (
-              <div key={idx} className="flex items-start gap-4 p-5 rounded-xl bg-white border border-gray-200">
-                <CheckCircle2 className="w-5 h-5 text-maekrak-blue shrink-0 mt-0.5" strokeWidth={2} />
-                <span className="text-[15px] md:text-[16px] text-gray-700 leading-[1.5] break-keep">{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* 한의학적 원인 */}
-        <section className="mb-20">
-          <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">왜 생기는가 — 한의학적 원인</h2>
-          <div className="prose prose-lg max-w-none text-gray-800 leading-[1.8] break-keep">
-            <p>
-              두개골을 받치고 있는 1번, 2번 경추 주변은 삼차신경핵과 경추신경이 한 덩어리로 뭉쳐있는 '삼차경추신경복합체(TCC)' 거점입니다.
-            </p>
-            <p className="mt-4 font-medium text-gray-800">
-              일자목·거북목 체형이 지속되면 좁은 경추 통로에 극심한 기계적 압박이 가해지고, 목에서 발생한 염증 신호가 삼차신경망을 타고 눈과 이마로 잘못 송출(연관통)되는 것입니다.
-            </p>
-          </div>
-        </section>
-
-        {/* 치료 방법 */}
-        <section className="mb-20">
-          <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">맥락한의원에서는 어떻게 치료하나요</h2>
-          
-          <div className="space-y-6 mb-12">
-            <div className="p-6 rounded-xl border border-gray-200 bg-white shadow-sm">
-              <h4 className="text-[18px] font-bold text-maekrak-navy mb-3">구조 정립 하드웨어 수리 (추나)</h4>
-              <p className="text-[15px] text-gray-600 leading-[1.6]">
-                후두하근 긴장을 해제하고 어긋난 두개경추 정렬을 하드웨어적으로 원상 복구합니다. 일시적인 근육 마사지와는 차원이 다른 원인 해체 작업입니다.
-              </p>
-            </div>
-            <div className="p-6 rounded-xl border border-gray-200 bg-white shadow-sm">
-              <h4 className="text-[18px] font-bold text-maekrak-navy mb-3">소염 & 인대 보수 (약침)</h4>
-              <p className="text-[15px] text-gray-600 leading-[1.6]">
-                경추 신경절이 물리적으로 압사하며 뿜어내는 극심한 신경 염증을 즉각 진화시키는 소형 소방수 약침을 투입합니다.
-              </p>
-            </div>
-             <div className="p-6 rounded-xl border border-gray-200 bg-white shadow-sm">
-              <h4 className="text-[18px] font-bold text-maekrak-navy mb-3">연비 강화 소프트웨어 수리 (청혈 두맥탕)</h4>
-              <p className="text-[15px] text-gray-600 leading-[1.6]">
-                하드웨어가 고쳐져도 혈액 속 노폐물이 신경을 자극하면 재발합니다. 전신 뇌척수액 순환을 정화하여 장기적인 완전 평형을 이룩합니다.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* 치료 사례 */}
-        <section className="mb-20">
-          <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">실제 치료 사례 요약</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
-              <div className="text-maekrak-blue font-bold mb-3">사례 1</div>
-              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
-                안구가 빠질 듯한 통증으로 안과부터 돌았던 직장인 환자. 추나 및 소염 약침 집중 연사 후 눈 통증이 목 디스크성 연관통이었음을 확인하며 증상 소실.
-              </p>
-            </div>
-            <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
-              <div className="text-maekrak-blue font-bold mb-3">사례 2</div>
-              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
-                진통제로 연명하며 수개월 차도가 없던 긴장성·경추성 복합 만성 두통 사례. C1, C2 정밀 교정 적용 후 2주차에 짓누르는 하중감 70% 증발, 안정 치료 후 완쾌.
-              </p>
-            </div>
-          </div>
-          <div className="text-center">
-            <Link to="/blog" className="inline-flex items-center text-[15px] font-medium text-maekrak-blue hover:text-[#7ec8e0] transition-colors border-b border-current pb-0.5">
-              자세한 사례 보기 (블로그) <ArrowRight className="w-4 h-4 ml-1" />
-            </Link>
-          </div>
-        </section>
-
-        {/* FAQ */}
-        <section className="mb-24">
-          <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">자주 묻는 질문 FAQ</h2>
-          <div className="space-y-4">
-            {[
-              {
-                q: "눈알이 아픈데 목이 원인이라고요?",
-                a: "네, 목 신경절과 뇌신경(삼차신경)이 두개골 한 곳에서 교차합니다. 뇌는 목뼈에서 보낸 통증을 안구 통증으로 착각(연관통)하여 인지합니다."
-              },
-              {
-                q: "도수치료랑 추나가 뭐가 다르죠?",
-                a: "단순 근육을 풀어주는 마사지성 이완은 하루짜리 임시방편입니다. 한의사가 직접 경추 코어 관절 구조의 비틀림 잠금을 따버리는 고차원 교정입니다."
-              },
-              {
-                q: "진통제가 잘 안 듣는 이유가 뭔가요?",
-                a: "진통제는 전신 염증 약화제이나, 경추성 두통은 물리적으로 목뼈가 신경을 짓누르는 압살 상황입니다. 바위를 치우지 않고 진통제만 먹어선 풀리지 않습니다."
-              }
-            ].map((faq, idx) => (
-              <div key={idx} className="p-6 rounded-xl border border-gray-200">
-                <h4 className="text-[16px] font-bold text-gray-900 mb-2 flex items-start gap-2">
-                  <span className="text-maekrak-blue">Q.</span> {faq.q}
-                </h4>
-                <p className="text-[15px] text-gray-600 leading-[1.6] pl-6 break-keep">
-                  <span className="font-bold text-gray-400 mr-2">A.</span> {faq.a}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Footer Navigation */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-10 border-t border-gray-100">
-          <Link to="/headache" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-            <ArrowLeft className="w-4 h-4 mr-2" /> 두통 전체 보기
-          </Link>
-          <div className="flex gap-4">
-            <Link to="/blog" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-              블로그 글 보기 <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-            <a href="tel:02-6959-7252" className="inline-flex items-center justify-center px-8 py-3 rounded-xl bg-maekrak-navy text-white hover:bg-[#1a3276] transition-colors font-medium">
-              상담 예약하기
-            </a>
-          </div>
-        </div>
-
-      </div>
-    </div>
+    <ConditionSubPage
+      parentLabel="두통"
+      parentHref="/headache"
+      title="경추성 두통"
+      anchorQuote="경추성 두통은 경추 구조의 문제가 원인이 되어 발생하는 두통으로, 목에서 시작된 통증이 머리로 퍼지거나 경추 자극이 직접 두통을 유발하는 유형입니다."
+      perspective={[
+        "경추성 두통의 원인은 중하부 경추가 아닌 상부경추(C0~C2)에 있습니다. 일반적인 MRI, CT는 C3 이하를 주로 보기 때문에, 목 mri, CT 검사에서 이상이 없어도 상부경추 문제는 놓칠 수 있습니다.",
+        "디스크가 있다는 진단을 받았더라도 그것이 경추성 두통의 원인이 아닐 수 있습니다. C4~C7의 디스크는 팔저림과 목 통증을 유발하지만 두통을 직접 일으키는 부분은 앞서 설명한 C0~C2입니다.",
+        "맥락한의원은 경추성 두통을 경추 기능부전 평가와 이학적 검사로 진단합니다. 상부 경추의 가동범위, 압통, 기능 이상을 직접 확인하는 것이 출발점입니다."
+      ]}
+      symptoms={[
+        "목을 움직이면 두통이 시작되거나 심해진다",
+        "두통이 뒷머리에서 시작해서 머리 앞쪽이나 눈 뒤쪽으로 퍼진다",
+        "뒷목과 어깨가 항상 뻣뻣하고 특정 부위를 누르면 머리쪽으로 통증이 있다.",
+        "오래 앉아 일하거나 스마트폰을 보고 두통이 심해진다",
+        "목 MRI, CT에서 이상이 없다는 말을 들었거나, 디스크가 있다는 진단을 받았다.",
+        "일자목이나 거북목 진단을 받은적이 있다."
+      ]}
+      cause={
+        <>
+            <p>두통을 일으키는 경추는 따로 있습니다. 경추는 7개의 뼈로 이루어져 있는데 일반적인 목 MRI, CT 검사는 디스크 탈출과 신경압박이 주로 생기는 C3~C7, 즉 중하부 경추를 중심으로 봅니다. 팔저림, 목 통증, 어깨 방사통의 원인이 여기 있기 때문입니다.</p>
+            <p>하지만 두통을 직접 일으키는 위치는 다릅니다. C0~C2 두개골과 경추가 만나는 두개경추입니다. 이부위에서 나오는 신경은 머리로 연결되어 있어 이 위치에서 기능 이상이 생겼을 때 경추성 두통이 유발됩니다.</p>
+            <p>이런 상부경추의 이상은 MRI에 잘 나타나지 않습니다. 그래서 검사상 이상이 없어도 두통이 반복되는 것입니다.</p>
+            <p>혹은 목 MRI에서 C4~C5, C5~C6 디스크가 발견되는 경우가 있습니다. 이 디스크는 팔 저림과 목, 어깨 통증의 원인이 될 수 있습니다. 하지만 이부분은 두통을 직접 유발하는 신경 경로와 다릅니다.</p>
+            <p>그래서 MRI 가 보지 못하는 것을 손으로 확인하고 치료해야 합니다. 경추 기능부전 평가는 상부경추의 가동범위를 측정하고 두통 방향과 기능이상 방향이 일치하는지 확인합니다. 이학적 검사는 후두하근과 상부경추 주변 압통점을 확인합니다. 경추성 두통의 원인 부위를 특정하고 어느 분절에서 어느 방향으로 어떤 신경, 근육이 두통을 만드는지를 파악합니다. 치료는 그 지점에서 시작합니다.</p>
+        </>
+      }
+      treatments={[
+        { title: "약침", description: "경추성 두통의 핵심 치료입니다. 후두하근 근육의 압통점과 상부경추에 시술해 신경 압박을 해소합니다. 시술 직후 뒷목 무게감이 가벼워지는 것을 바로 느끼는 경우가 많고 3~4회 이후 두통 강도 감소가 확인됩니다" },
+        { title: "추나", description: "경추성 두통에서 추나가 중요한 이유는 재발 방지입니다. 근육 긴장만 풀고 정렬을 교정하지 않으면 같은 자세와 생활 패턴에서 긴장은 반드시 다시 생깁니다. 교정 이후 목의 가동범위가 넓어지고 정렬이 맞춰지는 것을 확인할 수 있습니다." },
+        { title: "두맥탕", description: "오래된 경추성 두통은 신경 회복을 더디게 만듭니다. 국소 혈류 저하는 조직을 장시간 긴장하게 만들고 치료 효과가 오래 유지되지 않거나 느리게 나타납니다. 두맥탕은 후두하근과 경추 주변 조직에 충분한 혈류가 공급되는 환경을 만들어 신경 회복을 안정적으로 유지하는 역할을 합니다." }
+      ]}
+      prognosis={"증상이 호전되는 것은 2주 이내에 나타나고 완치까지는 1개월 ~ 6개월 기간이 걸립니다. 경추성 두통의 기간, 동반 증상, 약물과용 여부, 다른 질환이 겸하고 있는지에 따라 차이가 있습니다.\n\n첫 4주를 집중 치료 기간으로 잡습니다. 4주 치료 이후 두통 빈도, 강도, 자율신경 검사, 경추 기능 부전 검사를 재평가하고 안정기, 유지 치료를 합니다."}
+      cases={[
+        { title: "사례 1", body: "왼쪽 뒷목, 뒷골에서 시작되는 두통. 심해져서 귀뒤, 눈까지 통증이 생김. 앉아서 일하다보면 두통 때문에 집중을 할 수 없을 정도의 통증이 매일 반복. 정형외과에서 목 MRI 찍고 디스크 있다며 도수치료 받았지만 소용 없었음. 본원에서 경추성 두통 진단하고 두개경추 틀어짐을 바로잡는 치료. 1개월 치료로 완치되어 치료 종결" },
+        { title: "사례 2", body: "컴퓨터 작업 하다보면 두통이 심해지는 환자. 목어깨가 먼저 아프다가 오후가 되면 두통 발생. 이제는 자도 나아지지 않고 심하면 자다가도 두통 때문에 깨서 내원. 두통은 3년 되었고 그동안 진통제로 버티다가 안돼서 내원하게 됨. 본원에서 경추성 두통 진단받고 두맥탕, 약침, 추나 치료로 치료 2주만에 호전보이기 시작. 4주간 집중치료 이후 안정화, 유지 치료까지 마치고 치료 종결" }
+      ]}
+      faqs={[
+        { q: "목 MRI에서 이상이 없다고 했는데 경추성 두통이 맞나요?", a: "MRI 정상 소견은 중하부 경추에 디스크 탈출이나 신경 압박이 없다는 의미입니다. 경추성 두통의 원인인 상부경추 기능이상은 MRI에 나타나지 않습니다. 검사에서 이상이 없었더라도 경추 기능부전 평가와 이학적 검사에서 원인이 확인되는 경우가 많습니다." },
+        { q: "디스크 진단을 받았는데 경추 교정을 받아도 되나요?", a: "C4 이하의 디스크 소견이 있는 경우, 추나 시술 부위는 두통의 원인인 상부경추에 집중합니다. 디스크가 있는 분절에 무리한 교정을 가하지 않습니다. 초진시 이학적 검사로 시술 가능 여부를 먼저 확인합니다." },
+        { q: "거북목, 일자목이 있는데 경추성 두통과 관련이 있나요?", a: "직접적인 관련이 있습니다. 거북목은 머리 무게 중심이 앞으로 이동해 상부경추에 가해지는 부하를 만성적으로 높입니다. 이 상태가 지속되면 후두하근 경직과 C1~C2 기능 이상이 고착됩니다. 경추성 두통 환자 대부분에서 거북목, 일자목이 함께 발견되는 이유입니다. 구조 교정과 함께 습관 교정이 병행되어야 재발을 막을 수 있습니다." },
+        { q: "편두통이라고 했는데 경추성 두통일 수도 있나요?", a: "두가지가 함께 있는 경우도 많습니다. 편두통 환자의 상당수에서 상부 경추 기능 이상이 동반됩니다. 경추 문제가 편두통 발작의 방아쇠로 작용하는 구조입니다. 목 움직임에 의해 두통이 유발되거나 목어깨 통증이 항상 있다면 편두통과 경추성 두통이 복합되어 있을 가능성이 높습니다." }
+      ]}
+    />
   );
 }

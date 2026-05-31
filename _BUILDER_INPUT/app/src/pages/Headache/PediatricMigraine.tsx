@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import { CheckCircle2, ChevronRight, ArrowLeft, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { ConditionSubPage } from '../../components/condition/ConditionSubPage';
 
 export function PediatricMigraine() {
   useEffect(() => {
@@ -8,162 +7,50 @@ export function PediatricMigraine() {
   }, []);
 
   return (
-    <div className="bg-white min-h-[calc(100vh-80px)] pb-24">
-      {/* 2층 Header */}
-      <div className="bg-maekrak-navy px-6 md:px-12 lg:px-24 py-16 md:py-20 relative overflow-hidden">
-        <div className="absolute right-0 top-0 bottom-0 w-2/5 bg-gradient-to-br from-transparent to-[#4a8fa8]/15" />
-        <div className="relative z-10 max-w-7xl mx-auto">
-          <div className="flex items-center gap-2 text-[13px] font-medium text-white/60 mb-6">
-            <Link to="/headache" className="hover:text-white transition-colors">두통</Link>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-[#7ec8e0]">소아 편두통</span>
-          </div>
-          <h1 className="font-serif text-[32px] md:text-[42px] font-medium text-white leading-[1.3] mb-6">
-            소아 편두통
-          </h1>
-          <div className="bg-white/10 border border-white/20 p-6 rounded-xl max-w-3xl">
-            <p className="text-[16px] text-white/90 leading-[1.7] break-keep font-light">
-              "소아 편두통은 만 18세 이하에서 발생하는 편두통으로, 성인과 달리 양측성 두통이 많고 지속 시간이 짧으며 구역·구토·복통·어지럼증 같은 소화기·자율신경 증상이 두드러지는 경향이 있습니다."
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 py-16 md:py-24">
-        
-        {/* 맥락한의원 관점 */}
-        <section className="mb-20">
-          <div className="p-8 md:p-10 rounded-2xl bg-gray-50 border border-gray-100 mb-8">
-            <h3 className="text-[18px] font-bold text-maekrak-blue mb-4">맥락한의원의 관점</h3>
-            <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.8] break-keep">
-              성인과 다른 언어로 구조 신호를 보냅니다. "배 아파", "어지러워", 혹은 그냥 양호실에 엎드려 있는 행동이 편두통일 가능성이 높습니다.<br /><br />
-              맥락한의원은 자라나는 뇌의 에너지 대사를 철저하게 회복하여 무너진 집중력과 성장의 잠재력까지 한 번에 살려냅니다.
-            </p>
-          </div>
-        </section>
-
-        {/* 증상 체크리스트 */}
-        <section className="mb-20">
-          <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">이런 증상이 있다면 의심하세요</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {[
-              "잦은 양호실 방문 및 활동 기피",
-              "두통보다 복통, 구토 증세를 주로 호소함",
-              "어지럽다거나 시야가 이상하다는 표현",
-              "두통 발병 시 어두운 곳에 누우려 함",
-              "한 숨 깊게 자고 나면 귀신같이 쌩쌩해짐"
-            ].map((item, idx) => (
-              <div key={idx} className="flex items-start gap-4 p-5 rounded-xl bg-white border border-gray-200">
-                <CheckCircle2 className="w-5 h-5 text-maekrak-blue shrink-0 mt-0.5" strokeWidth={2} />
-                <span className="text-[15px] md:text-[16px] text-gray-700 leading-[1.5] break-keep">{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* 한의학적 원인 */}
-        <section className="mb-20">
-          <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">왜 생기는가 — 한의학적 원인</h2>
-          <div className="prose prose-lg max-w-none text-gray-800 leading-[1.8] break-keep">
-            <p>
-              성인과 뿌리 구조는 동일하나, <strong>성장기 특유의 방아쇠 3대 요인(수면부족, 디지털 기기 과로, 자세 망가짐)</strong>이 치명적으로 작용합니다.
-            </p>
-            <p className="mt-4">
-              학업 스케줄 탓에 뇌 글림프(청소) 시스템이 야간에 정지되고, 태블릿 영상물로 폭발적인 신경 피질 소모가 발생하며, 오랫동안 숙인 목뼈는 물리적인 신경 압박 파이프가 되어 버립니다. 이 사이클이 결국 뇌의 에너지 파산을 불러 소아 편두통을 완성합니다.
-            </p>
-          </div>
-        </section>
-
-        {/* 치료 방법 */}
-        <section className="mb-20">
-          <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">맥락한의원에서는 어떻게 치료하나요</h2>
-          
-          <div className="space-y-6 mb-12">
-            <div className="p-6 rounded-xl border border-gray-200 bg-white shadow-sm">
-              <h4 className="text-[18px] font-bold text-maekrak-navy mb-3">연령 맞춤형 두맥탕</h4>
-              <p className="text-[15px] text-gray-600 leading-[1.6]">
-                성인 약재를 줄여 쓰는 게 아닌 안전성과 성장 대사에 특화된 보육 처방입니다. 신경을 다독일 뿐만 아니라 뇌 에너지 고효율 연비를 이끌어 기억력과 학습 집중도까지 함께 개선하는 이중 효과를 노립니다.
-              </p>
-            </div>
-            <div className="p-6 rounded-xl border border-gray-200 bg-white shadow-sm">
-              <h4 className="text-[18px] font-bold text-maekrak-navy mb-3">소아 약침 & 성형 추나</h4>
-              <p className="text-[15px] text-gray-600 leading-[1.6]">
-                아이의 공포를 최소화한 부드럽고 가벼운 시술로 상부 경추의 구조적 막힘(Myodural bridge 견인)을 영리하게 해제합니다.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* 치료 사례 */}
-        <section className="mb-20">
-          <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">실제 치료 사례 요약</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
-              <div className="text-maekrak-blue font-bold mb-3">사례 1</div>
-              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
-                새벽에 잠을 깰 정도로 두통에 시달려 신경과 예방약 부작용만 안고 찾아온 고1 여학생. 두맥탕 병행 단 4주 만에 야간 발작 완전 소멸 및 무사히 정규 학업 복귀.
-              </p>
-            </div>
-            <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
-              <div className="text-maekrak-blue font-bold mb-3">사례 2</div>
-              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
-                잦은 양호실 방문으로 학업을 미끄러지던 중2 남학생. 모자(母子)가 동반 환자로 등록되어 단기간에 집중된 체질 교정과 추나를 통해 학습 집중력까지 극적으로 향상되며 치료 종결.
-              </p>
-            </div>
-          </div>
-          <div className="text-center">
-            <Link to="/blog" className="inline-flex items-center text-[15px] font-medium text-maekrak-blue hover:text-[#7ec8e0] transition-colors border-b border-current pb-0.5">
-              자세한 사례 보기 (블로그) <ArrowRight className="w-4 h-4 ml-1" />
-            </Link>
-          </div>
-        </section>
-
-        {/* FAQ */}
-        <section className="mb-24">
-          <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">자주 묻는 질문 FAQ</h2>
-          <div className="space-y-4">
-            {[
-              {
-                q: "애가 스트레스에 꾀병 부리는 건 아닐까요?",
-                a: "단호히 아닙니다. 빛을 회피하거나, 수면 후 말끔해지는 극적 패턴을 보인다면 소아 편두통 특유의 생물학적 발작 양상일 확률이 높습니다."
-              },
-              {
-                q: "성인이 되면 알아서 낫지 않나요?",
-                a: "과거엔 그렇게 생각했으나, 방치된 편두통은 뇌 신경구조를 퇴행시켜 불량한 성인 편두통으로 직결되는 징검다리입니다."
-              },
-              {
-                q: "소아에게 한약이 안전한가요?",
-                a: "원장이 직접 상태를 초정밀 타게팅하여 성장 방해나 무리가 되는 자극성 약재를 완벽히 배제한 식약처 인증 안심 등급 처방만을 진행합니다."
-              }
-            ].map((faq, idx) => (
-              <div key={idx} className="p-6 rounded-xl border border-gray-200">
-                <h4 className="text-[16px] font-bold text-gray-900 mb-2 flex items-start gap-2">
-                  <span className="text-maekrak-blue">Q.</span> {faq.q}
-                </h4>
-                <p className="text-[15px] text-gray-600 leading-[1.6] pl-6 break-keep">
-                  <span className="font-bold text-gray-400 mr-2">A.</span> {faq.a}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Footer Navigation */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-10 border-t border-gray-100">
-          <Link to="/headache" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-            <ArrowLeft className="w-4 h-4 mr-2" /> 두통 전체 보기
-          </Link>
-          <div className="flex gap-4">
-            <Link to="/blog" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-              블로그 글 보기 <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-            <a href="tel:02-6959-7252" className="inline-flex items-center justify-center px-8 py-3 rounded-xl bg-maekrak-navy text-white hover:bg-[#1a3276] transition-colors font-medium">
-              상담 예약하기
-            </a>
-          </div>
-        </div>
-
-      </div>
-    </div>
+    <ConditionSubPage
+      parentLabel="두통"
+      parentHref="/headache"
+      title="소아 편두통"
+      anchorQuote="소아 편두통은 만 18세 이하에서 발생하는 편두통으로, 성인과 달리 양측성 두통이 많고 지속 시간이 짧으며 구역·구토·복통·어지럼증 같은 소화기·자율신경 증상이 두드러지는 경향이 있습니다."
+      perspective={[
+        "소아 편두통은 아이가 “머리가 아파”라는 말을 잘 하지 않거나 그냥 일반적인 두통이라 여겨 진단까지 오래 걸립니다. 복통, 구역감, 어지럼증, 시야 이상을 호소할떄가 돼서야 병원을 찾는 경우가 많습니다.",
+        "소아 편두통도 성인 편두통과 같은 구조에서 발생합니다. 뇌 에너지 불균형과 두개경추 기능이상 위에 소화기 문제, 수면 문제, 디지털 자극이 영향을 줍니다.",
+        "맥락한의원은 소아 편두통을 연력과 체질에 맞는 두맥탕, 약침, 추나로 접근합니다. 성장기 아이의 뇌 에너지 대사를 회복하는 것이 치료의 핵심입니다."
+      ]}
+      symptoms={[
+        "학교에서 자주 양호실을 찾는다",
+        "머리가 아프다, 배가 아프다, 울렁거린다고 한다",
+        "어지럽다고 하거나 갑자기 눈앞이 이상하다고 한다",
+        "두통이 올 때 빛이나 소리를 극도로 싫어하고 어두운 곳에 눕고 싶어 한다",
+        "두통 후 잠을 자고 나면 언제 그랬냐는 듯 멀쩡해진다"
+      ]}
+      cause={
+        <>
+            <p>. 소아 편두통은 성인 편두통과 근본 구조가 같습니다. 뇌 에너지가 불안정하고 두개경추에 기능 이상이 있는 기반 위에, 방아쇠가 더해지면 발작이 일어납니다.</p>
+            <p>성장기 아이에게 특히 두드러지는 방아쇠는 세 가지입니다.</p>
+            <p>입시 경쟁이 빨라지면서 초등 고학년부터 학원, 과외, 숙제로 수면 시간이 줄어듭니다. 수면 중 작동하는 글림프 시스템이 뇌를 충분히 청소하지 못하면, 다음 날 뇌는 노폐물이 쌓인 상태로 하루를 시작합니다. 두통과 집중력 저하가 함께 나타나는 이유입니다..</p>
+            <p>태블릿으로 수업을 듣고, 스마트폰으로 쉬는 시간을 보냅니다. 성장 중인 뇌는 디지털 자극에 더 취약합니다. 피질 과흥분 상태가 지속되면 뇌 에너지 소모가 폭발적으로 늘어납니다..</p>
+            <p>책상에 오래 앉아 고개를 숙이는 자세가 일상화된 아이들에게서 상부 경추 기능 이상이 발견되는 경우가 많습니다. 성장 중인 경추는 자세의 영향을 더 크게 받습니다</p>
+            <p>아이들은 자신의 증상을 정확히 표현하는 데 한계가 있습니다. "머리가 욱신거린다", "박동성 통증"이라는 표현 대신 "머리가 무거워", "어지러워", "배가 이상해"라고 합니다. 부모님도, 학교도, 처음 찾은 병원도 이것을 성장통이나 스트레스로 넘기는 경우가 많습니다.</p>
+            <p>구역, 구토, 어지럼증, 시야 이상이 나타날 때가 돼서야 병원을 찾고 편두통 진단을 받습니다. 그 사이 두통은 반복되며 뇌의 두통 임계점을 낮춰왔습니다. 진단이 늦어질수록 만성화 가능성이 높아집니다.</p>
+        </>
+      }
+      treatments={[
+        { title: "두맥탕", description: "두맥탕은 아이의 연령과 체질에 맞게 용량과 구성을 조정합니다. 성인 처방을 그대로 줄여서 쓰는 것이 아니라, 성장기 아이의 뇌 에너지 대사와 자율신경 균형을 고려한 별도 구성으로 처방합니다.\n성장기 아이에게 뇌 에너지 대사 회복은 두통 치료를 넘어서는 의미가 있습니다. 뇌가 에너지를 효율적으로 쓸 수 있는 상태가 되면 집중력과 기억력도 함께 좋아집니다." },
+        { title: "약침", description: "약침은 아이의 연령과 상태에 따라 적용 여부와 시술 범위를 결정합니다. 적용 가능한 경우 후두하근과 상부 경추 주변에 시술해 경막 긴장을 해소하고 신경 과흥분을 안정시킵니다. 성인보다 자극을 최소화한 방식으로 진행합니다." },
+        { title: "추나", description: "성장 중인 경추는 자세 영향을 크게 받습니다. 상부 경추 기능 이상이 확인된 경우 추나로 정렬을 교정합니다. 아이의 경추 상태에 맞게 강도를 조정해 안전하게 진행합니다. 경추 교정과 함께 올바른 자세 습관을 잡아주는 것이 재발 방지에 중요합니다." }
+      ]}
+      cases={[
+        { title: "사례 1", body: "고등학교 1학년 올라가는 여학생. 편두통 때문에 잠에서 깰 정도로 심해져 신경과 진료 시작. MRI, CT 이상 없음. 편두통 진단받고 예방약 처방. 두통은 나아지지 않고 부작용만 생겨서 내원. 본원에서 두맥탕, 약침, 추나 치료로 4주 치료 이후 새벽에 깨는 두통 소실. 이후 안정기, 유지 치료로 치료 종결하고 두통, 어지럼 없이 현재까지 잘 지내고 있는 중" },
+        { title: "사례 2", body: "중2 남학생. 어머니가 편두통 환자로 본원 치료 받고 아들도 데리고 온 케이스. 처음에는 머리 아프다는 것에 큰 신경을 안썼는데 양호실에 가는 횟수가 늘어나고 공부에 집중을 못해서 내원. 본원에서 두맥탕, 약침, 추나 치료 시행했고 치료 초반부터 반응 나오기 시작함. 어머니도, 학생도 모두 완치되어 치료 종결." }
+      ]}
+      faqs={[
+        { q: "아이가 꾀병 아닌가요?", a: "소아 편두통 발작 중 아이가 느끼는 통증은 성인 편두통만큼 강합니다. 아이가 \"머리 아파\"를 자주 말하거나 두통을 이유로 활동을 회피한다면 진지하게 살펴볼 필요가 있습니다. 특히 어두운 곳에 눕고 싶어 하거나, 구역감을 동반하거나, 잠을 자고 나면 회복되는 패턴이 반복된다면 편두통 가능성이 높습니다." },
+        { q: "아이에게 한약을 먹여도 괜찮나요?", a: "두맥탕은 아이의 연령과 체질에 맞게 용량과 구성을 별도로 조정합니다. 성장기 아이에게 사용 가능한 약재로 구성하며, 초진 시 아이의 상태를 충분히 평가한 후 처방합니다." },
+        { q: "MRI가 정상인데 편두통이 맞나요?", a: "맞습니다. 소아 편두통도 성인과 마찬가지로 MRI에 구조적 병변이 나타나지 않습니다. MRI 정상 소견은 뇌종양, 출혈 같은 위험한 원인이 없다는 것을 확인하는 검사입니다. 편두통의 실제 원인인 뇌 에너지 대사 문제와 경추 기능 이상은 MRI로 확인되지 않습니다." },
+        { q: "성인이 되면 자연스럽게 낫지 않나요?", a: "일부 아이들은 성인이 되면서 편두통 빈도가 줄어들기도 합니다. 하지만 치료 없이 방치하면 만성화되어 성인편두통으로 이어지는 경우가 더 많습니다. 무엇보다 두통이 있는 상태로 보내는 학창 시절은 집중력, 기억력, 학습 효율 모두에 영향을 줍니다. 자연 회복을 기다리는 것보다 지금 원인을 다루는 것이 아이의 성장과 학습 모두에 더 유리합니다." },
+        { q: "아이가 치료를 무서워하면 어떻게 하나요?", a: "초진 상담에서 아이의 상태를 먼저 충분히 평가하고, 적용 가능한 치료를 단계적으로 시작합니다. 처음부터 모든 치료를 동시에 진행하지 않습니다. 아이가 익숙해지는 속도에 맞춰 치료 범위를 늘려갑니다." }
+      ]}
+    />
   );
 }

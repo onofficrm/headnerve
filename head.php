@@ -318,6 +318,17 @@ function fsearchbox_submit(f)
 
 <hr>
 
+<?php
+$headnerve_show_board_hero = function_exists('headnerve_is_g5b_board') && headnerve_is_g5b_board();
+if ($headnerve_show_board_hero) {
+    $headnerve_board_script = basename($_SERVER['SCRIPT_NAME']);
+    if (in_array($headnerve_board_script, array('board.php', 'write.php'), true)
+        && is_file(G5_PATH.'/components/maekrak-board-hero.php')) {
+        include_once(G5_PATH.'/components/maekrak-board-hero.php');
+    }
+}
+?>
+
 <!-- 콘텐츠 시작 { -->
 <div id="wrapper">
     <div id="container_wr">

@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import { CheckCircle2, ChevronRight, ArrowLeft, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { ConditionSubPage } from '../../components/condition/ConditionSubPage';
 
 export function MenstrualHeadache() {
   useEffect(() => {
@@ -8,163 +7,49 @@ export function MenstrualHeadache() {
   }, []);
 
   return (
-    <div className="bg-white min-h-[calc(100vh-80px)] pb-24">
-      {/* 2층 Header */}
-      <div className="bg-maekrak-navy px-6 md:px-12 lg:px-24 py-16 md:py-20 relative overflow-hidden">
-        <div className="absolute right-0 top-0 bottom-0 w-2/5 bg-gradient-to-br from-transparent to-[#4a8fa8]/15" />
-        <div className="relative z-10 max-w-7xl mx-auto">
-          <div className="flex items-center gap-2 text-[13px] font-medium text-white/60 mb-6">
-            <Link to="/headache" className="hover:text-white transition-colors">두통</Link>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-[#7ec8e0]">생리 두통</span>
-          </div>
-          <h1 className="font-serif text-[32px] md:text-[42px] font-medium text-white leading-[1.3] mb-6">
-            생리 두통
-          </h1>
-          <div className="bg-white/10 border border-white/20 p-6 rounded-xl max-w-3xl">
-            <p className="text-[16px] text-white/90 leading-[1.7] break-keep font-light">
-              "생리 두통은 월경 주기와 연관되어 발생하는 두통으로, 생리 전후 에스트로겐 수치가 급격히 떨어지는 시기에 주로 나타나며 편두통 양상을 동반하는 경우가 많습니다."
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 py-16 md:py-24">
-        
-        {/* 맥락한의원 관점 */}
-        <section className="mb-20">
-          <div className="p-8 md:p-10 rounded-2xl bg-gray-50 border border-gray-100 mb-8">
-            <h3 className="text-[18px] font-bold text-maekrak-blue mb-4">맥락한의원의 관점</h3>
-            <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.8] break-keep">
-              생리 두통에서 호르몬 변화는 원인이 아니라 방아쇠일 뿐입니다.<br /><br />
-              시간이 지나며 생리와 무관한 만성 두통으로 악화되는 과정은 호르몬의 문제가 아니라 '두통 임계점' 자체가 무너지고 있다는 뜻입니다. 맥락한의원은 호르몬 변동조차 가볍게 무시하고 지나갈 <strong>견고한 뇌 에너지·구조 기반</strong>을 구축합니다.
-            </p>
-          </div>
-        </section>
-
-        {/* 증상 체크리스트 */}
-        <section className="mb-20">
-          <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">이런 증상이 있다면 의심하세요</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {[
-              "생리 시작 1~2일 전부터 두통이 강하게 시작된다",
-              "생리 기간에 두통이 극대화되고 끝나면 사라진다",
-              "생리 두통이 편두통처럼 심장 박동과 같이 욱신거린다",
-              "처음엔 생리 때만 아팠는데 언제부턴가 수시로 아프다",
-              "수면 장애나 극심한 피로, 예민함이 함께 동반된다"
-            ].map((item, idx) => (
-              <div key={idx} className="flex items-start gap-4 p-5 rounded-xl bg-white border border-gray-200">
-                <CheckCircle2 className="w-5 h-5 text-maekrak-blue shrink-0 mt-0.5" strokeWidth={2} />
-                <span className="text-[15px] md:text-[16px] text-gray-700 leading-[1.5] break-keep">{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* 한의학적 원인 */}
-        <section className="mb-20">
-          <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">왜 생기는가 — 한의학적 원인</h2>
-          <div className="prose prose-lg max-w-none text-gray-800 leading-[1.8] break-keep">
-            <p>
-              동일한 에스트로겐 하락 시나리오를 겪으면서도 어떤 여성은 고통받고 어떤 여성은 무탈합니다. 차이는 내분비계 호르몬 자체가 아니라, 그 출렁임을 버텨낼 '뇌 에너지 내구성'에 있습니다.
-            </p>
-            <p className="mt-4">
-              매달 두통 신경망이 타오르면 점차 뇌의 통증 역치가 하락합니다. 결국 생리 방아쇠 없이도 조금만 체력이 떨어지면 만성 두통으로 번지게 됩니다. 
-              <strong>목표는 호르몬 인위적 조작이 아니라, 어떠한 출렁임에도 무너지지 않는 항체를 기르는 것</strong>입니다.
-            </p>
-          </div>
-        </section>
-
-        {/* 치료 방법 */}
-        <section className="mb-20">
-          <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">맥락한의원에서는 어떻게 치료하나요</h2>
-          
-          <div className="space-y-6 mb-12">
-            <div className="p-6 rounded-xl border border-gray-200 bg-white shadow-sm">
-              <h4 className="text-[18px] font-bold text-maekrak-navy mb-3">두맥탕 (소화, 수면, 피로 맞춤형)</h4>
-              <p className="text-[15px] text-gray-600 leading-[1.6]">
-                전신 순환 및 지방 대사를 활성화해 혈당과 에너지 롤러코스터에 저항 강도를 높입니다. 수면 불량 체질, 소화 연약 체질 등 환자별 취약점을 선제적으로 커버하여 에스트로겐 하락파도를 완충합니다.
-              </p>
-            </div>
-            <div className="p-6 rounded-xl border border-gray-200 bg-white shadow-sm">
-              <h4 className="text-[18px] font-bold text-maekrak-navy mb-3">약침 & 추나</h4>
-              <p className="text-[15px] text-gray-600 leading-[1.6]">
-                호르몬 변동 시기에 관절과 인대가 이완되며 경추가 더 잘 비틀어집니다. 이 구조적 균열을 추나로 미리 단단히 고정하고 약침으로 팽배해진 교감 신경 항진을 물리적으로 꺼트립니다.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* 치료 사례 */}
-        <section className="mb-20">
-          <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">실제 치료 사례 요약</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
-              <div className="text-maekrak-blue font-bold mb-3">사례 1</div>
-              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
-                매달 생리 전후 3일간 밤을 지새우는 극심한 통증 환자. 4주간 집중 치료 후 다음 주기엔 통증 절반으로 하락, 이후 점진적 안착 후 치료 종결. 호르몬 사이클의 두려움에서 완벽 해방.
-              </p>
-            </div>
-            <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
-              <div className="text-maekrak-blue font-bold mb-3">사례 2</div>
-              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
-                임신 중엔 마법같이 사라졌다 출산 보육 후 쏟아진 구역질 동반 만성 두통. 두맥탕 중심으로 약화된 뇌 대사를 집중 복구시켜 다음 주기엔 구토 없이 무탈. 완전 소실 종결.
-              </p>
-            </div>
-          </div>
-          <div className="text-center">
-            <Link to="/blog" className="inline-flex items-center text-[15px] font-medium text-maekrak-blue hover:text-[#7ec8e0] transition-colors border-b border-current pb-0.5">
-              자세한 사례 보기 (블로그) <ArrowRight className="w-4 h-4 ml-1" />
-            </Link>
-          </div>
-        </section>
-
-        {/* FAQ */}
-        <section className="mb-24">
-          <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">자주 묻는 질문 FAQ</h2>
-          <div className="space-y-4">
-            {[
-              {
-                q: "피임약을 끊으면 생리 두통이 낫나요?",
-                a: "단순 복용 부작용이라면 호전될 수 있으나, 이미 존재하던 두통 기반에 에스트로겐 촉발 인자가 거들기만 한 거라면 약을 끊어도 두통은 반복됩니다."
-              },
-              {
-                q: "생리통이 심한데 연관 관계가 있나요?",
-                a: "깊은 연관이 있습니다. 생리통 발현 기전인 프로스타글란딘의 전신 혈관 파이프 조절 능력이 뇌혈류를 거칠게 흔들며 시너지를 일으킵니다."
-              },
-              {
-                q: "임신 중엔 왜 통증이 없었을까요?",
-                a: "임신 중엔 호르몬 바다가 고요하게 유지되기 때문입니다. 출산 후 호르몬 태풍에 육아 수면부족까지 더해져 만성화의 초고속 도로에 진입하는 경우가 잦아 출산 후 재발은 빠른 방어가 필수입니다."
-              }
-            ].map((faq, idx) => (
-              <div key={idx} className="p-6 rounded-xl border border-gray-200">
-                <h4 className="text-[16px] font-bold text-gray-900 mb-2 flex items-start gap-2">
-                  <span className="text-maekrak-blue">Q.</span> {faq.q}
-                </h4>
-                <p className="text-[15px] text-gray-600 leading-[1.6] pl-6 break-keep">
-                  <span className="font-bold text-gray-400 mr-2">A.</span> {faq.a}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Footer Navigation */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-10 border-t border-gray-100">
-          <Link to="/headache" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-            <ArrowLeft className="w-4 h-4 mr-2" /> 두통 전체 보기
-          </Link>
-          <div className="flex gap-4">
-            <Link to="/blog" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-              블로그 글 보기 <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-            <a href="tel:02-6959-7252" className="inline-flex items-center justify-center px-8 py-3 rounded-xl bg-maekrak-navy text-white hover:bg-[#1a3276] transition-colors font-medium">
-              상담 예약하기
-            </a>
-          </div>
-        </div>
-
-      </div>
-    </div>
+    <ConditionSubPage
+      parentLabel="두통"
+      parentHref="/headache"
+      title="생리 두통"
+      anchorQuote="생리 두통은 월경 주기와 연관되어 발생하는 두통으로, 생리 전후 에스트로겐 수치가 급격히 떨어지는 시기에 주로 나타나며 편두통 양상을 동반하는 경우가 많습니다."
+      perspective={[
+        "생리 두통에서 호르몬 변화는 원인이 아니라 방아쇠입니다. 뇌 에너지가 불안정하고 두개경추 구조에 문제가 있는 상태에서 에스트로겐 급락이 임계점을 넘기는 것입니다.",
+        "처음에는 생리 기간에만 두통이 오다가, 시간이 지나면서 생리와 무관하게 두통이 나타나기 시작합니다. 이것은 두통이 생기는 구조는 점점 악화되고 두통 임계점 자체가 낮아지는 과정입니다.",
+        "맥락한의원에서는 생리 두통을 호르몬 문제가 아닌 두통이 생길 수 있는 구조적, 기능적 기반의 문제로 봅니다 호르몬 변동 없이도 두통이 오지 않는 상태를 만드는 것이 치료 목표입니다."
+      ]}
+      symptoms={[
+        "생리 시작 1~2일 전부터 두통이 시작된다",
+        "생리 기간 중 두통이 가장 심하고 생리가 끝나면 사라진다",
+        "생리 두통이 편두통처럼 한쪽에서 박동성으로 온다",
+        "처음에는 생리 때만 두통이 왔는데 언제부터인가 생리와 무관하게 두통이 온다",
+        "생리 전후 두통과 함께 예민함, 수면 장애, 극심한 피로가 동반된다"
+      ]}
+      cause={
+        <>
+            <p>생리 두통을 호르몬 문제로만 접근하면 치료의 한계가 명확합니다. 같은 여성이라도 어떤 사람은 생리 두통이 있고 어떤 사람은 없습니다. 에스트로겐은 모든 여성에서 생리 전후로 떨어집니다. 차이를 만드는 것은 호르몬 변동이 아니라 그 변동을 견디는 뇌의 상태입니다.</p>
+            <p>맥락한의원은 생리 두통을 두 가지 구조 위에서 봅니다. 기능적으로는 뇌 에너지가 불안정한 상태, 구조적으로는 두개경추에 기능 이상이 있는 상태. 이 두 가지 기반이 만들어진 위에서 에스트로겐 급락이 임계점을 넘기면 두통 발작이 일어납니다.</p>
+            <p>보통 처음에는 생리 기간에만 두통이 옵니다. 매달 반복되는 발작은 뇌의 통증 처리 시스템을 점점 민감하게 만듭니다. 두통 임계점이 낮아지면 호르몬 변동이 없어도 더 작은 자극, 예를 들어 수면 부족이나 스트레스만으로도 발작이 일어납니다. 생리 두통이 만성 두통으로 이어지는 경로입니다.</p>
+            <p>이 과정을 막으려면 매달 반복되는 발작 자체를 줄여야 합니다. 호르몬을 조절하는 것이 아니라, 호르몬 변동이 와도 임계점을 넘지 않는 뇌의 상태를 만드는 것이 핵심입니다.</p>
+            <p className="font-medium text-gray-800 mt-6">1유형 – 생리 기간에만 두통이 오는 경우</p>
+            <p>생리 시작 전후로 두통이 집중되고 생리가 끝나면 완전히 사라집니다. 호르몬 변동이 방아쇠로 작용하는 구조가 비교적 명확합니다. 이 단계에서 치료를 시작하면 만성화를 막을 수 있습니다. 치료의 목표는 매달 발작이 오는 강도와 빈도를 줄여 결국 생리 기간에도 발작이 오지 않는 상태를 만드는 것입니다.</p>
+            <p className="font-medium text-gray-800 mt-6">2유형 – 생리 기간에 심해지지만 생리와 무관한 두통이 있는 경우</p>
+            <p>이미 두통 임계점이 낮아진 상태입니다. 생리 기간이 가장 심하지만 평소에도 두통이 반복됩니다. 구조적·기능적 기반 문제가 더 깊어진 상태이기 때문에 치료 기간이 더 필요합니다. 생리 주기 변화와 전체 두통 빈도를 함께 추적하면서 회복 경과를 확인합니다.</p>
+        </>
+      }
+      treatments={[
+        { title: "두맥탕", description: "에스트로겐이 떨어져도 뇌가 버틸 수 있는 에너지 기반을 만드는 것이 핵심입니다. 전신 순환을 개선하고 지방 대사를 활성화해 혈당 변동에 덜 민감한 뇌 에너지 환경을 만듭니다. 생리 전후 에너지 급락을 완충할 수 있는 기반이 생기면 호르몬 변동이 와도 임계점을 넘기지 않습니다.\n체질에 따라 처방 구성이 달라집니다. 소화기 순환이 약한 분, 수면의 질이 낮은 분, 전신 피로가 심한 분은 두맥탕의 구성 방향이 각각 다릅니다." },
+        { title: "약침", description: "후두하근과 C1·C2 분절 주변 시술로 경막 긴장을 해소합니다. 생리 전후 자율신경 불균형이 심해지는 시기에 약침은 교감신경 항진을 완화하고 혈관 수축·확장의 과도한 반응을 안정시킵니다. 신경 염증이 동반된 경우 소염 약침을 적용합니다." },
+        { title: "추나", description: "두개경추 정렬을 교정해 구조적 재발 기반을 제거합니다. 생리 전후 호르몬 변동으로 인대 이완이 증가하는 시기에 경추 정렬이 더 쉽게 흐트러질 수 있습니다. 정렬이 안정적으로 유지되면 호르몬 변동 시기에도 경막 긴장이 급격히 높아지지 않습니다." }
+      ]}
+      prognosis={"생리 연관 두통 패턴을 재평가 하는 것이 중요합니다. 생리 주기에 따라 두통 강도, 빈도, 지속 시간 변화를 확인합니다."}
+      cases={[
+        { title: "사례 1", body: "생리 전후로 3일간 일상생활이 불가능한 두통 환자. 통증이 심한 날에는 잠도 못자고 밤을 새야했음. 매달 반복되는 두통에 진통제도 듣지 않아 내원하게 됨. 본원에서 두맥탕, 약침, 추나 치료로 4주후 다음 생리 기간에는 두통의 강도가 50% 이하로 줄어들었음. 이후 로는 생리 전후로 두통이 소실되어 유지 치료까지 마치고 치료 종결" },
+        { title: "사례 2", body: "생리 전후 두통이 있다가 임신기간 중 소실. 출산 이후 다시 심해져 이제는 생리 기간이 아닐때도 두통과 구토가 있음. 한번 두통이 있으면 새벽까지 구토를 할 정도로 힘든 상태로 내원. 본원에서 두맥탕, 약침 추나 치료로 다음 생리 기간에는 두통의 강도도 약하고 구토를 하는 일도 없었음. 이후 생리 두통 소실되어 유지 치료까지 마치고 치료 종결" }
+      ]}
+      faqs={[
+        { q: "피임약을 끊으면 생리 두통이 나아지나요?", a: "경우에 따라 다릅니다. 에스트로겐 포함 피임약이 두통을 악화시키는 경우라면 중단 후 호전되기도 합니다. 하지만 피임약 복용 전부터 두통 기반이 있었다면 끊어도 두통은 계속됩니다. 피임약이 방아쇠를 더 자주 당기게 만들었을 뿐, 근본 구조는 그대로 남아 있기 때문입니다." },
+        { q: "생리통도 심한데 생리 두통과 관련이 있나요?", a: "연관이 있을 수 있습니다. 생리통이 심한 경우 프로스타글란딘 분비가 많고 전신 혈관 수축·확장 반응이 강합니다. 이 과정이 뇌 혈류 변동을 심화시켜 두통을 악화시킵니다. 생리통과 생리 두통이 함께 있는 분들은 전신 순환과 자율신경 균형 회복이 두 증상 모두에 도움이 되는 경우가 많습니다." }
+      ]}
+    />
   );
 }
