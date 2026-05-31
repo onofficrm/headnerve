@@ -2845,8 +2845,8 @@ html:has(.site-dock) {
 .maekrak-header__inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  justify-content: flex-start;
+  gap: 0.75rem;
   width: 100%;
   max-width: none;
   height: 80px;
@@ -2857,12 +2857,14 @@ html:has(.site-dock) {
 @media (min-width: 768px) {
   .maekrak-header__inner {
     padding: 0 3rem;
+    gap: 1rem;
   }
 }
 
 .maekrak-header__logo-link {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
   text-decoration: none;
   color: var(--color-primary, #0b2744);
 }
@@ -2891,32 +2893,34 @@ html:has(.site-dock) {
   white-space: nowrap;
 }
 
-.maekrak-header__cluster {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 1.5rem;
-  min-width: 0;
-}
-
-@media (min-width: 768px) {
-  .maekrak-header__cluster {
-    gap: 3rem;
-  }
-}
-
 .maekrak-header__gnb {
   display: none;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-left: auto;
 }
 
 .maekrak-header__gnb-list {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  gap: 2.5rem;
+  justify-content: flex-end;
+  gap: 1rem;
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+@media (min-width: 1400px) {
+  .maekrak-header__gnb-list {
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .maekrak-header__gnb-list {
+    gap: 2rem;
+  }
 }
 
 .maekrak-header__gnb-item {
@@ -2984,11 +2988,18 @@ html:has(.site-dock) {
   align-items: center;
   gap: 0.75rem;
   flex-shrink: 0;
+  margin-left: auto;
 }
 
 @media (min-width: 768px) {
   .maekrak-header__actions {
     display: flex;
+  }
+}
+
+@media (min-width: 1280px) {
+  .maekrak-header__actions {
+    margin-left: 0.75rem;
   }
 }
 
@@ -3020,13 +3031,20 @@ html:has(.site-dock) {
 }
 
 .maekrak-header__btn--primary {
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
   font-weight: 700;
   background: #0f172a;
   border-color: #0f172a;
   color: #fff;
   box-shadow: 0 4px 14px rgba(15, 23, 42, 0.15);
+}
+
+@media (min-width: 1400px) {
+  .maekrak-header__btn--primary {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }
 
 .maekrak-header__btn--primary:hover {
@@ -3235,19 +3253,40 @@ body.maekrak-nav-open .maekrak-header__inner {
 }
 
 @media (min-width: 1280px) {
+  .maekrak-header__inner {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 0.75rem;
+  }
+
   .maekrak-header__gnb {
     display: block;
+    margin-left: 0;
+    min-width: 0;
+    overflow: visible;
+  }
+
+  .maekrak-header__actions {
+    margin-left: 0;
+  }
+
+  .maekrak-header__gnb-link {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .maekrak-header__gnb-link {
+    font-size: 15px;
   }
 }
 
 /* 모바일: 햄버거만 (홈과 동일) */
 @media (max-width: 767px) {
-  .maekrak-header__cluster {
-    gap: 0;
-  }
-
   .maekrak-header__actions {
     display: flex;
+    margin-left: auto;
   }
 
   .maekrak-header__btn--ghost,

@@ -36,36 +36,34 @@ if (isset($g5_logo_url) && $g5_logo_url !== '' && preg_match('/\.(png|jpe?g|webp
                 <?php } ?>
             </a>
 
-            <div class="maekrak-header__cluster">
-                <nav class="maekrak-header__gnb" aria-label="메인메뉴">
-                    <ul class="maekrak-header__gnb-list">
-                        <?php foreach ($maekrak_nav as $row) {
-                            $has_sub = !empty($row['sub']);
-                        ?>
-                        <li class="maekrak-header__gnb-item<?php echo $has_sub ? ' has-sub' : ''; ?>">
-                            <a href="<?php echo $row['href']; ?>" class="maekrak-header__gnb-link"><?php echo get_text($row['name']); ?></a>
-                            <?php if ($has_sub) { ?>
-                            <ul class="maekrak-header__gnb-sub">
-                                <?php foreach ($row['sub'] as $row2) { ?>
-                                <li><a href="<?php echo $row2['href']; ?>" class="maekrak-header__gnb-sub-link"><?php echo get_text($row2['name']); ?></a></li>
-                                <?php } ?>
-                            </ul>
+            <nav class="maekrak-header__gnb" aria-label="메인메뉴">
+                <ul class="maekrak-header__gnb-list">
+                    <?php foreach ($maekrak_nav as $row) {
+                        $has_sub = !empty($row['sub']);
+                    ?>
+                    <li class="maekrak-header__gnb-item<?php echo $has_sub ? ' has-sub' : ''; ?>">
+                        <a href="<?php echo $row['href']; ?>" class="maekrak-header__gnb-link"><?php echo get_text($row['name']); ?></a>
+                        <?php if ($has_sub) { ?>
+                        <ul class="maekrak-header__gnb-sub">
+                            <?php foreach ($row['sub'] as $row2) { ?>
+                            <li><a href="<?php echo $row2['href']; ?>" class="maekrak-header__gnb-sub-link"><?php echo get_text($row2['name']); ?></a></li>
                             <?php } ?>
-                        </li>
+                        </ul>
                         <?php } ?>
-                    </ul>
-                </nav>
-
-                <div class="maekrak-header__actions">
-                    <?php if (!$is_member) { ?>
-                    <a href="<?php echo G5_BBS_URL; ?>/login.php" class="maekrak-header__btn maekrak-header__btn--ghost">로그인</a>
+                    </li>
                     <?php } ?>
-                    <a href="<?php echo $maekrak_booking_url; ?>" class="maekrak-header__btn maekrak-header__btn--primary" target="_blank" rel="noopener noreferrer">상담 예약하기</a>
-                    <button type="button" class="site-header__menu-btn maekrak-header__menu-btn" aria-controls="siteMobileNav" aria-expanded="false" title="전체메뉴">
-                        <span class="maekrak-header__menu-icon" aria-hidden="true"></span>
-                        <span class="sound_only">전체메뉴열기</span>
-                    </button>
-                </div>
+                </ul>
+            </nav>
+
+            <div class="maekrak-header__actions">
+                <?php if (!$is_member) { ?>
+                <a href="<?php echo G5_BBS_URL; ?>/login.php" class="maekrak-header__btn maekrak-header__btn--ghost">로그인</a>
+                <?php } ?>
+                <a href="<?php echo $maekrak_booking_url; ?>" class="maekrak-header__btn maekrak-header__btn--primary" target="_blank" rel="noopener noreferrer">상담 예약하기</a>
+                <button type="button" class="site-header__menu-btn maekrak-header__menu-btn" aria-controls="siteMobileNav" aria-expanded="false" title="전체메뉴">
+                    <span class="maekrak-header__menu-icon" aria-hidden="true"></span>
+                    <span class="sound_only">전체메뉴열기</span>
+                </button>
             </div>
         </div>
 
