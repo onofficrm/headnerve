@@ -63,7 +63,7 @@ export function VestibularNeuritis() {
 
         <section className="mb-20">
           <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">왜 생기는가 — 한의학적 원인</h2>
-          <div className="prose prose-lg max-w-none text-gray-600 font-light leading-[1.8] break-keep">
+          <div className="prose prose-lg max-w-none text-gray-800 leading-[1.8] break-keep">
             <p className="font-medium text-gray-800">경추 고유수용성 감각 이상</p>
             <p>급성기 극심한 어지럼증을 버티면서 무의식적으로 목을 긴장합니다. 고착된 긴장은 뇌의 보상에 활용되는 경추 신호를 왜곡하여 회복을 지연시킵니다.</p>
             <p className="font-medium text-gray-800 mt-6">두개경추 기능 이상과 내이 혈류 저하</p>
@@ -102,13 +102,13 @@ export function VestibularNeuritis() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
               <div className="text-maekrak-blue font-bold mb-3">사례 1</div>
-              <p className="text-[14px] text-gray-600 leading-[1.7] break-keep mb-6">
+              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
                 30대 여성, 전정신경염 후 4개월째 잔여 어지러움. 4개월이 지나도 자연회복되지 않아 방문. 경추 저하 상태를 관찰하고 어지럼증 치료 프로그램으로 근방추 회복. 3개월 후 치료 종결. 시간이 해결해주지 못한 방해요소를 처치함.
               </p>
             </div>
             <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
               <div className="text-maekrak-blue font-bold mb-3">사례 2</div>
-              <p className="text-[14px] text-gray-600 leading-[1.7] break-keep mb-6">
+              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
                 40대 남성, 응급실 다녀온 후 약 복용 중이나 어지럼증 계속. 내이 혈류 저하와 배액 문제 해결 위해 치료 프로그램 개시. 정렬 교정과 혈류 재건으로 전정 신경 회복의 환경 조성. 4개월 이후 정상 궤도 진입.
               </p>
             </div>
@@ -151,11 +151,11 @@ export function VestibularNeuritis() {
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-10 border-t border-gray-100">
           <Link to="/dizziness" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-            <ArrowLeft className="w-4 h-4 mr-2" /> 어지럼증 전체 보기 (1층)
+            <ArrowLeft className="w-4 h-4 mr-2" /> 어지럼증 전체 보기
           </Link>
           <div className="flex gap-4">
             <Link to="/blog" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-              블로그 글 보기 (3층) <ArrowRight className="w-4 h-4 ml-2" />
+              블로그 글 보기 <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
             <a href="tel:02-6959-7252" className="inline-flex items-center justify-center px-8 py-3 rounded-xl bg-maekrak-navy text-white hover:bg-[#1a3276] transition-colors font-medium">
               상담 예약하기

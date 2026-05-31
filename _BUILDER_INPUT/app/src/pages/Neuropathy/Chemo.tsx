@@ -84,7 +84,7 @@ export function Chemo() {
                   <CheckCircle2 className="w-6 h-6 text-[#3a6b8c] shrink-0 mt-1" strokeWidth={2} />
                   <div>
                     <h3 className="text-[18px] md:text-[20px] font-bold text-gray-900 mb-3">{item.title}</h3>
-                    <p className="text-[15px] md:text-[16px] text-gray-600 leading-[1.7] break-keep font-light">{item.desc}</p>
+                    <p className="text-[15px] md:text-[16px] text-gray-800 leading-[1.75] break-keep">{item.desc}</p>
                   </div>
                 </div>
               </div>
@@ -96,10 +96,10 @@ export function Chemo() {
         <section className="mb-24 md:mb-32">
           <div className="bg-[#f8f9fa] rounded-2xl p-8 lg:p-12 mb-10">
             <h2 className="text-[28px] md:text-[34px] font-bold text-gray-900 mb-6">항암제의 강력한 신경 파괴력</h2>
-            <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep mb-6">
+            <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep mb-6">
               백금계열(옥살리플라틴 등), 탁산계열 등 강력한 표적·화학항암제들은 암세포를 터트리며 우리 몸의 가장 연약한 말초신경의 미토콘드리아와 껍질(수초)을 무참히 파괴합니다.
             </p>
-            <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep">
+            <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep">
               가장 길고 연약한 발가락 끝, 손가락 끝부터 타격을 입으며, 항암 약물이 체내에서 빠져나갔다 하더라도 이미 박살난 신경망에는 재생을 돕는 혈류가 들어오지 못해 <strong>영구 손상 상태</strong>로 굳어지게 됩니다. 이것을 뚫어 말초 펌프질을 해주는 것이 회복의 첫 단추입니다.
             </p>
           </div>

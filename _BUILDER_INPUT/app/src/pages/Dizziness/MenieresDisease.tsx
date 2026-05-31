@@ -63,7 +63,7 @@ export function MenieresDisease() {
 
         <section className="mb-20">
           <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">왜 생기는가 — 한의학적 원인</h2>
-          <div className="prose prose-lg max-w-none text-gray-600 font-light leading-[1.8] break-keep">
+          <div className="prose prose-lg max-w-none text-gray-800 leading-[1.8] break-keep">
             <p className="font-medium text-gray-800">두개경추 기능 이상과 경추 정맥계 배액 장애</p>
             <p>뇌의 체액과 노폐물은 경추 정맥계를 통해 뇌 밖으로 배출됩니다. 두개경추가 틀어지고 경추 주변 조직이 만성 경직되면 이 배액 통로가 좁아집니다. 배액이 제대로 이뤄지지 않으면 두개내압이 높아지고, 압력이 내림프액 흡수를 방해해 발작으로 이어질 수 있습니다.</p>
             <p className="font-medium text-gray-800 mt-6">귀로 가는 혈류 공급 저하</p>
@@ -102,13 +102,13 @@ export function MenieresDisease() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
               <div className="text-maekrak-blue font-bold mb-3">사례 1</div>
-              <p className="text-[14px] text-gray-600 leading-[1.7] break-keep mb-6">
+              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
                 40대 남성. 이명·난청·이충만감이 주된 문제였고 메니에르 진단을 받음. 이뇨제와 스테로이드를 복용했으나 중단시 증상 재발. 두개경추 기능 이상 확인 후 탕약, 침, 추나 치료 개시하여 3주차부터 이명 감소. 이후 안정기 유지 치료로 종결.
               </p>
             </div>
             <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
               <div className="text-maekrak-blue font-bold mb-3">사례 2</div>
-              <p className="text-[14px] text-gray-600 leading-[1.7] break-keep mb-6">
+              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
                 5년간 반복 재발하던 메니에르병 환자. 증상 완화와 재발의 반복, 최근 발작이 잦아져 방문. 두개경추 배액 통로가 좁아진 것을 바로잡아 순환을 확보하고 두맥탕 치료 결과 발작 빈도 감소, 안정화 확인 후 종결 성공.
               </p>
             </div>
@@ -155,11 +155,11 @@ export function MenieresDisease() {
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-10 border-t border-gray-100">
           <Link to="/dizziness" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-            <ArrowLeft className="w-4 h-4 mr-2" /> 어지럼증 전체 보기 (1층)
+            <ArrowLeft className="w-4 h-4 mr-2" /> 어지럼증 전체 보기
           </Link>
           <div className="flex gap-4">
             <Link to="/blog" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-              블로그 글 보기 (3층) <ArrowRight className="w-4 h-4 ml-2" />
+              블로그 글 보기 <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
             <a href="tel:02-6959-7252" className="inline-flex items-center justify-center px-8 py-3 rounded-xl bg-maekrak-navy text-white hover:bg-[#1a3276] transition-colors font-medium">
               상담 예약하기

@@ -14,9 +14,9 @@ export function OrthostaticHypotension() {
         <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-l from-[#4a8fa8]/20 to-transparent" />
         <div className="relative z-10 max-w-7xl mx-auto">
           <div className="flex items-center gap-2 text-[13px] font-medium tracking-wider text-gray-400 mb-6 uppercase">
-            <Link to="/autonomic" className="hover:text-white transition-colors">Autonomic</Link>
+            <Link to="/autonomic" className="hover:text-white transition-colors">자율신경</Link>
             <ChevronRight className="w-3 h-3" />
-            <span className="text-[#89CFF0]">Orthostatic Hypotension</span>
+            <span className="text-[#89CFF0]">기립성저혈압</span>
           </div>
           <h1 className="font-serif text-[36px] md:text-[48px] lg:text-[56px] font-medium text-white leading-[1.25] mb-6 tracking-tight">
             기립성 저혈압
@@ -84,7 +84,7 @@ export function OrthostaticHypotension() {
                   <CheckCircle2 className="w-6 h-6 text-[#4a8fa8] shrink-0 mt-1" strokeWidth={2} />
                   <div>
                     <h3 className="text-[18px] md:text-[20px] font-bold text-gray-900 mb-3">{item.title}</h3>
-                    <p className="text-[15px] md:text-[16px] text-gray-600 leading-[1.7] break-keep font-light">{item.desc}</p>
+                    <p className="text-[15px] md:text-[16px] text-gray-800 leading-[1.75] break-keep">{item.desc}</p>
                   </div>
                 </div>
               </div>
@@ -98,19 +98,19 @@ export function OrthostaticHypotension() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
             <div>
               <h3 className="text-[24px] font-bold text-gray-900 mb-6">혈압이 낮은 게 문제가 아니다</h3>
-              <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep">
+              <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep">
                 정상 상태라면 일어설 때 자율신경이 즉각(0.5~1초) 조율하여 하지 혈관을 수축시키고 심박수를 높입니다. 기립성 저혈압은 이 '보상 기능'이 저하되어 뇌 혈류가 순간적으로 떨어질 때 나타납니다.
               </p>
             </div>
             <div>
               <h3 className="text-[24px] font-bold text-gray-900 mb-6">자율신경 불균형과의 연결</h3>
-              <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep">
+              <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep">
                 자율신경실조증의 한 표현으로, 교감신경 기능이 전반적으로 떨어지거나 잘못된 동적 평형 상태에 있을 때 쉽게 피로하며 보상 반응이 늦어지게 됩니다.
               </p>
             </div>
             <div className="md:col-span-2">
               <h3 className="text-[24px] font-bold text-gray-900 mb-6">역설적인 교감신경 피로 현상</h3>
-              <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep max-w-4xl">
+              <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep max-w-4xl">
                 경추 정렬 이상이 교감신경절을 만성적으로 자극하면, 이에 적응해버린 교감신경이 급격한 변화(일어서는 동작)에 오히려 즉각적으로 반응하지 못하게 됩니다.
               </p>
             </div>

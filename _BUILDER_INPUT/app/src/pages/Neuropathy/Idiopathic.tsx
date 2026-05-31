@@ -87,7 +87,7 @@ export function Idiopathic() {
                   <CheckCircle2 className="w-6 h-6 text-maekrak-blue shrink-0 mt-1" strokeWidth={2} />
                   <div>
                     <h3 className="text-[18px] md:text-[20px] font-bold text-gray-900 mb-3">{item.title}</h3>
-                    <p className="text-[15px] md:text-[16px] text-gray-600 leading-[1.7] break-keep font-light">{item.desc}</p>
+                    <p className="text-[15px] md:text-[16px] text-gray-800 leading-[1.75] break-keep">{item.desc}</p>
                   </div>
                 </div>
               </div>
@@ -101,13 +101,13 @@ export function Idiopathic() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
             <div>
               <h3 className="text-[24px] font-bold text-gray-900 mb-6">1. 전신 문제 (순환 저하)</h3>
-              <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep">
+              <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep">
                 말초신경이 기능하려면 신경까지 혈류와 영양이 가야 합니다. 전신 순환 저하 시 심장에서 먼 말초부터 메마르기 시작하며 신경이 서서히 죽어갑니다. 맥진, 복진, 이학적 검사로 이 막힘을 찾습니다.
               </p>
             </div>
             <div>
               <h3 className="text-[24px] font-bold text-gray-900 mb-6">2. 국소 문제 (신경 포착)</h3>
-              <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep">
+              <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep">
                 발목, 무릎, 고관절, 손목 등 신경이 지나는 길목에서 꽉 눌린(포착) 상태라면, 아무리 위에서 피를 보내도 신경까지 닿지 못합니다. 이 닫힌 통로를 열어줘야 합니다.
               </p>
             </div>

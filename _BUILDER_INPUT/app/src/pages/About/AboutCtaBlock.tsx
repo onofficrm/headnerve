@@ -8,7 +8,7 @@ export function AboutCtaBlock() {
           <h3 className="font-serif text-[20.5px] font-medium text-gray-900 mb-2">
             지금보다 나은 상태는 반드시 만들 수 있습니다
           </h3>
-          <p className="text-[14px] text-gray-500 leading-[1.8] font-light break-keep flex-1">
+          <p className="text-[14px] text-gray-700 leading-[1.85] break-keep flex-1">
             진통제, 항CGRP 주사, 대학병원까지 다 해봤지만 나아지지 않은 분들을 위한 상담을 진행합니다.<br className="hidden md:inline" />
             초진 예약은 하루 제한 인원으로 운영합니다.
           </p>

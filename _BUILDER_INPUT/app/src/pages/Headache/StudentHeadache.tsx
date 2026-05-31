@@ -64,7 +64,7 @@ export function StudentHeadache() {
         {/* 한의학적 원인 */}
         <section className="mb-20">
           <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">왜 생기는가 — 한의학적 원인</h2>
-          <div className="prose prose-lg max-w-none text-gray-600 font-light leading-[1.8] break-keep">
+          <div className="prose prose-lg max-w-none text-gray-800 leading-[1.8] break-keep">
             <p>
               감각 처리 한계를 넘은 폭발적 디지털 인풋으로 뇌피질은 매일 과열됩니다. 이 과열을 냉각시켜 줄 거북목, 일자목의 경추 파이프라인은 공부 자세로 인해 꽉 막혀있으며, 야간 취침 중 쓰레기를 비워내야 할 글림프 청소 시스템마저 극단적 수면 억제로 파괴되어 있습니다. 
             </p>
@@ -100,13 +100,13 @@ export function StudentHeadache() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
               <div className="text-maekrak-blue font-bold mb-3">사례 1</div>
-              <p className="text-[14px] text-gray-600 leading-[1.7] break-keep mb-6">
+              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
                 공시 준비 중 진통제 한계치 초과(약물 과용 두통)로 찾아온 공시생. 억지로 진통제 중단 시 쏟아질 후폭풍을 두맥탕으로 선제 방어하며 연착륙 성공, 통증과 진통제 결별 성공.
               </p>
             </div>
             <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
               <div className="text-maekrak-blue font-bold mb-3">사례 2</div>
-              <p className="text-[14px] text-gray-600 leading-[1.7] break-keep mb-6">
+              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
                 회계사 2차 수험생 브레인포그 병합 케이스. 짧은 기간 안에 파워풀한 두맥탕 및 추나 투입으로 단기 통증 제압은 물론, 안개 낀 뇌 시야를 걷어내며 막판 집중력 스퍼트를 완성함.
               </p>
             </div>
@@ -151,11 +151,11 @@ export function StudentHeadache() {
         {/* Footer Navigation */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-10 border-t border-gray-100">
           <Link to="/headache" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-            <ArrowLeft className="w-4 h-4 mr-2" /> 두통 전체 보기 (1층)
+            <ArrowLeft className="w-4 h-4 mr-2" /> 두통 전체 보기
           </Link>
           <div className="flex gap-4">
             <Link to="/blog" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-              블로그 글 보기 (3층) <ArrowRight className="w-4 h-4 ml-2" />
+              블로그 글 보기 <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
             <a href="tel:02-6959-7252" className="inline-flex items-center justify-center px-8 py-3 rounded-xl bg-maekrak-navy text-white hover:bg-[#1a3276] transition-colors font-medium">
               상담 예약하기

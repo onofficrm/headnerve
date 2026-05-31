@@ -1,5 +1,6 @@
 import { ArrowRight } from 'lucide-react';
-import { Link, useEffect } from 'react';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export function Dizziness() {
   useEffect(() => {

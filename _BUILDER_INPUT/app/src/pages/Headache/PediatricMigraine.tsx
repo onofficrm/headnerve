@@ -64,7 +64,7 @@ export function PediatricMigraine() {
         {/* 한의학적 원인 */}
         <section className="mb-20">
           <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">왜 생기는가 — 한의학적 원인</h2>
-          <div className="prose prose-lg max-w-none text-gray-600 font-light leading-[1.8] break-keep">
+          <div className="prose prose-lg max-w-none text-gray-800 leading-[1.8] break-keep">
             <p>
               성인과 뿌리 구조는 동일하나, <strong>성장기 특유의 방아쇠 3대 요인(수면부족, 디지털 기기 과로, 자세 망가짐)</strong>이 치명적으로 작용합니다.
             </p>
@@ -100,13 +100,13 @@ export function PediatricMigraine() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
               <div className="text-maekrak-blue font-bold mb-3">사례 1</div>
-              <p className="text-[14px] text-gray-600 leading-[1.7] break-keep mb-6">
+              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
                 새벽에 잠을 깰 정도로 두통에 시달려 신경과 예방약 부작용만 안고 찾아온 고1 여학생. 두맥탕 병행 단 4주 만에 야간 발작 완전 소멸 및 무사히 정규 학업 복귀.
               </p>
             </div>
             <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
               <div className="text-maekrak-blue font-bold mb-3">사례 2</div>
-              <p className="text-[14px] text-gray-600 leading-[1.7] break-keep mb-6">
+              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
                 잦은 양호실 방문으로 학업을 미끄러지던 중2 남학생. 모자(母子)가 동반 환자로 등록되어 단기간에 집중된 체질 교정과 추나를 통해 학습 집중력까지 극적으로 향상되며 치료 종결.
               </p>
             </div>
@@ -151,11 +151,11 @@ export function PediatricMigraine() {
         {/* Footer Navigation */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-10 border-t border-gray-100">
           <Link to="/headache" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-            <ArrowLeft className="w-4 h-4 mr-2" /> 두통 전체 보기 (1층)
+            <ArrowLeft className="w-4 h-4 mr-2" /> 두통 전체 보기
           </Link>
           <div className="flex gap-4">
             <Link to="/blog" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-              블로그 글 보기 (3층) <ArrowRight className="w-4 h-4 ml-2" />
+              블로그 글 보기 <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
             <a href="tel:02-6959-7252" className="inline-flex items-center justify-center px-8 py-3 rounded-xl bg-maekrak-navy text-white hover:bg-[#1a3276] transition-colors font-medium">
               상담 예약하기

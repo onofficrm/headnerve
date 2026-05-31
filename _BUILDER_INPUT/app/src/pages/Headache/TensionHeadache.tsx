@@ -64,7 +64,7 @@ export function TensionHeadache() {
         {/* 한의학적 원인 */}
         <section className="mb-20">
           <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">왜 생기는가 — 한의학적 원인</h2>
-          <div className="prose prose-lg max-w-none text-gray-600 font-light leading-[1.8] break-keep">
+          <div className="prose prose-lg max-w-none text-gray-800 leading-[1.8] break-keep">
             <p>
               긴장형 두통은 단순한 근육 긴장이 아닌 <strong>두개경추 구조 문제와 신경계 긴장</strong>이 원인입니다. 특히 교감신경의 항진, 자율신경 불균형, 경추의 틀어짐이 주된 원인입니다.
             </p>
@@ -120,13 +120,13 @@ export function TensionHeadache() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
               <div className="text-maekrak-blue font-bold mb-3">사례 1</div>
-              <p className="text-[14px] text-gray-600 leading-[1.7] break-keep mb-6">
+              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
                 도수치료, 물리치료를 받아도 잠깐뿐이고 반복되는 긴장형 두통 환자. 근본 원인 해결 없이 마사지만 받았기 때문입니다. 내원 후 두맥탕·약침·추나 집중치료 2회차부터 호전 반응. 3주차부터는 머리가 눌리는 압박감이 완전히 소실되어 치료 종결.
               </p>
             </div>
             <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
               <div className="text-maekrak-blue font-bold mb-3">사례 2</div>
-              <p className="text-[14px] text-gray-600 leading-[1.7] break-keep mb-6">
+              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
                 예리한 통증보단 뭉툭한 막대로 누르는 듯 하루 종일 묵직한 통증. MRI 이상 없음 소견으로 진통제만 처방받은 2년 차 두통. 집중 치료 2주 만에 강도 70% 감소, 빈도 대폭 하락하여 치료 종결로 이어졌습니다.
               </p>
             </div>
@@ -171,11 +171,11 @@ export function TensionHeadache() {
         {/* Footer Navigation */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-10 border-t border-gray-100">
           <Link to="/headache" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-            <ArrowLeft className="w-4 h-4 mr-2" /> 두통 전체 보기 (1층)
+            <ArrowLeft className="w-4 h-4 mr-2" /> 두통 전체 보기
           </Link>
           <div className="flex gap-4">
             <Link to="/blog" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-              블로그 글 보기 (3층) <ArrowRight className="w-4 h-4 ml-2" />
+              블로그 글 보기 <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
             <a href="tel:02-6959-7252" className="inline-flex items-center justify-center px-8 py-3 rounded-xl bg-maekrak-navy text-white hover:bg-[#1a3276] transition-colors font-medium">
               상담 예약하기

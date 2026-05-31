@@ -63,7 +63,7 @@ export function BPPV() {
 
         <section className="mb-20">
           <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">왜 생기는가 — 한의학적 원인</h2>
-          <div className="prose prose-lg max-w-none text-gray-600 font-light leading-[1.8] break-keep">
+          <div className="prose prose-lg max-w-none text-gray-800 leading-[1.8] break-keep">
             <p className="font-medium text-gray-800">경추 고유수용성 감각 이상</p>
             <p>이석증 이후 어지럼증을 피하기 위해 무의식적으로 목을 긴장합니다. 이 긴장이 고착되면 고유수용성 감각 신호가 왜곡되어 시각, 전정기관, 경추 세 가지 기관의 정보가 충돌하여 잔존 어지럼증이 생성됩니다.</p>
             <p className="font-medium text-gray-800 mt-6">두개경추 기능 이상과 내이 혈류 저하</p>
@@ -102,13 +102,13 @@ export function BPPV() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
               <div className="text-maekrak-blue font-bold mb-3">사례 1</div>
-              <p className="text-[14px] text-gray-600 leading-[1.7] break-keep mb-6">
+              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
                 20대 남성. 이석 정복술 후 잔여 어지러움 잔존. 일상생활 지장될 정도의 증상 호소. 고유수용성 감각 왜곡으로 판단하여 3개월 어지럼증 치료 프로그램 적용 후 경추 긴장과 근방추 기능 회복으로 종결.
               </p>
             </div>
             <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
               <div className="text-maekrak-blue font-bold mb-3">사례 2</div>
-              <p className="text-[14px] text-gray-600 leading-[1.7] break-keep mb-6">
+              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
                 50대 여성. 이석증 재발의 무한반복 경험. 10년간 약과 이석정복술을 받음. 내이 혈류 불안정과 두개경추 정렬 불량 확인. 4주차에 증상 호전후 일시적 악화를 겪었으나 극복하고 결국 종결 성공. 반복 환경을 제거함.
               </p>
             </div>
@@ -151,11 +151,11 @@ export function BPPV() {
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-10 border-t border-gray-100">
           <Link to="/dizziness" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-            <ArrowLeft className="w-4 h-4 mr-2" /> 어지럼증 전체 보기 (1층)
+            <ArrowLeft className="w-4 h-4 mr-2" /> 어지럼증 전체 보기
           </Link>
           <div className="flex gap-4">
             <Link to="/blog" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-              블로그 글 보기 (3층) <ArrowRight className="w-4 h-4 ml-2" />
+              블로그 글 보기 <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
             <a href="tel:02-6959-7252" className="inline-flex items-center justify-center px-8 py-3 rounded-xl bg-maekrak-navy text-white hover:bg-[#1a3276] transition-colors font-medium">
               상담 예약하기

@@ -5,7 +5,7 @@ export function DoctorIntroSection() {
   const doctor = {
     name: "이재성",
     title: "대표원장",
-    field: "두통, 어지럼증, 자율신경",
+    field: "두통/어지럼증/자율신경/말초신경/브레인포그",
     image: doctor1Img, 
     historyLines: [
       "침구과 전문의 (대학병원 인턴, 레지던트 4년, 학회 활동 및 논문, 임상 실험, 전문의 국가고시)",
@@ -63,7 +63,7 @@ export function DoctorIntroSection() {
              
              <ul className="flex flex-col gap-2.5 border-t border-gray-100 pt-6">
                {doctor.historyLines.map((line, idx) => (
-                 <li key={idx} className="text-[13px] md:text-[14px] text-gray-600 font-medium leading-normal flex items-start gap-2 break-keep">
+                 <li key={idx} className="text-[13px] md:text-[15px] text-gray-800 font-medium leading-normal flex items-start gap-2 break-keep">
                    <span className="text-maekrak-accent text-[10px] mt-[5px] opacity-70">■</span>
                    <span className="flex-1">{line}</span>
                  </li>

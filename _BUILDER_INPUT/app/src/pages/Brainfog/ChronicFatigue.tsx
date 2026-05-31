@@ -84,7 +84,7 @@ export function ChronicFatigue() {
                   <CheckCircle2 className="w-6 h-6 text-maekrak-green shrink-0 mt-1" strokeWidth={2} />
                   <div>
                     <h3 className="text-[18px] md:text-[20px] font-bold text-gray-900 mb-3">{item.title}</h3>
-                    <p className="text-[15px] md:text-[16px] text-gray-600 leading-[1.7] break-keep font-light">{item.desc}</p>
+                    <p className="text-[15px] md:text-[16px] text-gray-800 leading-[1.75] break-keep">{item.desc}</p>
                   </div>
                 </div>
               </div>
@@ -97,20 +97,20 @@ export function ChronicFatigue() {
           <h2 className="text-[32px] md:text-[40px] font-bold text-gray-900 mb-12 tracking-tight">왜 생기는가 — 한의학적 주요 원인</h2>
           <div className="bg-[#f8f9fa] rounded-2xl p-8 lg:p-12 mb-10">
             <h3 className="text-[24px] font-bold text-gray-900 mb-6">부신 피로 (코르티솔의 파산)</h3>
-            <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep mb-6">
+            <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep mb-6">
               스트레스를 견디는 호르몬 공장인 '부신'은 마감, 성과, 야근 등 현대인의 연속된 재난 경보 속에서 코르티솔을 과다 분비하다 결국 공장 문을 닫아버립니다(고갈). 이 기관이 멈추면 아침에 에너지 시동이 절대 안 걸립니다.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
             <div>
               <h3 className="text-[24px] font-bold text-gray-900 mb-6">글림프 기능 저하 (뇌 하수도 마비)</h3>
-              <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep">
+              <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep">
                 깊은 수면인 '서파 수면' 상태에 도달해야만 뇌 세포가 쪼그라들면서 그 사이로 뇌척수액이 물청소를 하는 글림프액 작용이 일어납니다. 수박 겉핥기 잠으로는 이 물청소가 시작조차 되지 않아 염증물질이 뇌에 남습니다.
               </p>
             </div>
             <div>
               <h3 className="text-[24px] font-bold text-gray-900 mb-6">스마트폰과 거북목의 콜라보</h3>
-              <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep">
+              <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep">
                 멍 때리는 기본 휴식 망인 DMN(Deafault Mode Network)이 숏폼 등 자극으로 전혀 쉬질 못합니다. 여기에 모니터를 보는 거북목 자세가 두개경추(C1)를 눌러 뇌 혈관의 입구마저 틀어막습니다. 완전히 고립된 성과 같습니다.
               </p>
             </div>

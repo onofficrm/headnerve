@@ -64,7 +64,7 @@ export function CervicogenicHeadache() {
         {/* 한의학적 원인 */}
         <section className="mb-20">
           <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">왜 생기는가 — 한의학적 원인</h2>
-          <div className="prose prose-lg max-w-none text-gray-600 font-light leading-[1.8] break-keep">
+          <div className="prose prose-lg max-w-none text-gray-800 leading-[1.8] break-keep">
             <p>
               두개골을 받치고 있는 1번, 2번 경추 주변은 삼차신경핵과 경추신경이 한 덩어리로 뭉쳐있는 '삼차경추신경복합체(TCC)' 거점입니다.
             </p>
@@ -106,13 +106,13 @@ export function CervicogenicHeadache() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
               <div className="text-maekrak-blue font-bold mb-3">사례 1</div>
-              <p className="text-[14px] text-gray-600 leading-[1.7] break-keep mb-6">
+              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
                 안구가 빠질 듯한 통증으로 안과부터 돌았던 직장인 환자. 추나 및 소염 약침 집중 연사 후 눈 통증이 목 디스크성 연관통이었음을 확인하며 증상 소실.
               </p>
             </div>
             <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
               <div className="text-maekrak-blue font-bold mb-3">사례 2</div>
-              <p className="text-[14px] text-gray-600 leading-[1.7] break-keep mb-6">
+              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
                 진통제로 연명하며 수개월 차도가 없던 긴장성·경추성 복합 만성 두통 사례. C1, C2 정밀 교정 적용 후 2주차에 짓누르는 하중감 70% 증발, 안정 치료 후 완쾌.
               </p>
             </div>
@@ -157,11 +157,11 @@ export function CervicogenicHeadache() {
         {/* Footer Navigation */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-10 border-t border-gray-100">
           <Link to="/headache" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-            <ArrowLeft className="w-4 h-4 mr-2" /> 두통 전체 보기 (1층)
+            <ArrowLeft className="w-4 h-4 mr-2" /> 두통 전체 보기
           </Link>
           <div className="flex gap-4">
             <Link to="/blog" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-              블로그 글 보기 (3층) <ArrowRight className="w-4 h-4 ml-2" />
+              블로그 글 보기 <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
             <a href="tel:02-6959-7252" className="inline-flex items-center justify-center px-8 py-3 rounded-xl bg-maekrak-navy text-white hover:bg-[#1a3276] transition-colors font-medium">
               상담 예약하기

@@ -16,7 +16,7 @@ export function Autonomic() {
             맥락 치료과목
           </div>
           <h1 className="font-serif text-[32px] md:text-[42px] lg:text-[52px] font-medium text-white leading-[1.3] mb-6">
-            자율신경 <span className="font-sans font-light text-white/50 text-[24px] md:text-[32px] ml-2 tracking-wide">Autonomic</span>
+            자율신경
           </h1>
           <p className="text-[16px] md:text-[18px] text-white/80 max-w-2xl leading-[1.8] break-keep font-light">
             자율신경계는 심장박동·호흡·소화·혈압·체온 등 의식적으로 조절할 수 없는 신체 기능을 24시간 자동으로 조율하는 신경계로, 교감신경과 부교감신경이 균형을 이루며 작동합니다.
@@ -36,7 +36,7 @@ export function Autonomic() {
               <p>
                 "자율신경 불균형은 단순히 교감신경이나 부교감신경이 항진되어 있는 상태가 아닙니다. 몸이 생명 유지를 위해 <span className="text-maekrak-blue relative inline-block">잘못된 방향으로 동적 평형을 맞춘 상태<span className="absolute bottom-1 left-0 w-full h-[6px] bg-maekrak-blue/20 -z-10"></span></span>입니다. 정상이 아닌 균형점에서 몸이 작동하면서 다양한 오작동이 발생합니다."
               </p>
-              <p className="text-[16px] md:text-[18px] text-gray-600 font-light">
+              <p className="text-[16px] md:text-[18px] text-gray-800">
                 한 번의 스트레스가 아니라, 잘못된 반응 패턴이 쌓이면서 몸이 그것을 정상으로 인식하게 됩니다. 그래서 맥락한의원의 치료 목표는 증상을 억제하는 것이 아니라 올바른 평형점을 회복하도록 돕는 것입니다.
               </p>
             </div>
@@ -112,7 +112,7 @@ export function Autonomic() {
         <section>
           <div className="text-center mb-16">
             <h2 className="text-[28px] md:text-[34px] font-bold text-gray-900 mb-6 tracking-tight">맥락한의원의 자율신경 치료 프로그램</h2>
-            <p className="text-[16px] md:text-[18px] text-gray-600 font-light max-w-3xl mx-auto leading-[1.8] break-keep">
+            <p className="text-[16px] md:text-[18px] text-gray-800 max-w-3xl mx-auto leading-[1.8] break-keep">
               맥락한의원 자율신경 치료는 <strong className="font-semibold text-gray-900">기능적 치료(심맥탕)와 구조적 치료(약침·추나)를 동시에 진행</strong>합니다. 검사에서 이상이 없는데 몸이 힘든 것은 장기에 병이 생긴 것이 아니라 몸 전체가 잘못된 동적 평형 상태에 안착해버린 것입니다. 증상 하나를 억제하는 것이 아니라 자율신경이 올바른 평형점을 회복하도록 돕는 것이 치료 목표입니다.
             </p>
           </div>
@@ -170,11 +170,11 @@ export function Autonomic() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="p-6 rounded-xl bg-gray-50">
                 <h5 className="font-bold text-gray-900 mb-2">추나 <span className="text-sm font-normal text-gray-500">(경추 정렬 교정)</span></h5>
-                <p className="text-[14px] text-gray-600 leading-[1.6]">자율신경 이상에 경추 압박이 연관된 경우, 구조를 교정해 신경절이 새로운 자극을 받지 않도록 합니다.</p>
+                <p className="text-[15px] text-gray-800 leading-[1.6]">자율신경 이상에 경추 압박이 연관된 경우, 구조를 교정해 신경절이 새로운 자극을 받지 않도록 합니다.</p>
               </div>
               <div className="p-6 rounded-xl bg-gray-50">
                 <h5 className="font-bold text-gray-900 mb-2">자율신경검사</h5>
-                <p className="text-[14px] text-gray-600 leading-[1.6]">"나아지는 느낌"뿐 아니라 교감·부교감신경계의 기저 상태와 회복 추이를 객관적인 데이터로 추적합니다.</p>
+                <p className="text-[15px] text-gray-800 leading-[1.6]">"나아지는 느낌"뿐 아니라 교감·부교감신경계의 기저 상태와 회복 추이를 객관적인 데이터로 추적합니다.</p>
               </div>
             </div>
           </div>

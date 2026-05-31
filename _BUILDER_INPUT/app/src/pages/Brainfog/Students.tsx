@@ -84,7 +84,7 @@ export function Students() {
                   <CheckCircle2 className="w-6 h-6 text-[#3b82f6] shrink-0 mt-1" strokeWidth={2} />
                   <div>
                     <h3 className="text-[18px] md:text-[20px] font-bold text-gray-900 mb-3">{item.title}</h3>
-                    <p className="text-[15px] md:text-[16px] text-gray-600 leading-[1.7] break-keep font-light">{item.desc}</p>
+                    <p className="text-[15px] md:text-[16px] text-gray-800 leading-[1.75] break-keep">{item.desc}</p>
                   </div>
                 </div>
               </div>
@@ -96,7 +96,7 @@ export function Students() {
         <section className="mb-24 md:mb-32">
           <div className="bg-[#f8f9fa] rounded-2xl p-8 lg:p-12 mb-10">
             <h2 className="text-[28px] md:text-[34px] font-bold text-gray-900 mb-6">뇌 에너지 광탈의 3콤보</h2>
-            <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep mb-6">
+            <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep mb-6">
               인체 에너지의 20% 이상을 빨아먹는 블랙홀이 바로 뇌입니다. 집중 학습은 이를 초과 가동합니다. 그러나 공급은 끊깁니다. 모니터/인강과 숏폼의 <strong>쉬지 못하는 뇌(디지털 흥분)</strong>, 잠을 죽여 청소를 포기하는 <strong>글림프 마비(수행시간 증대)</strong>, 고개 숙인 <strong>일자목 통로 폐쇄</strong>가 맞물리니 뇌가 굶어 질식하는 것은 당연합니다.
             </p>
           </div>

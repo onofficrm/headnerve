@@ -63,7 +63,7 @@ export function CervicogenicDizziness() {
 
         <section className="mb-20">
           <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">왜 생기는가 — 한의학적 원인</h2>
-          <div className="prose prose-lg max-w-none text-gray-600 font-light leading-[1.8] break-keep">
+          <div className="prose prose-lg max-w-none text-gray-800 leading-[1.8] break-keep">
             <p className="font-medium text-gray-800">균형을 만드는 세 가지 감각 시스템</p>
             <p>우리 몸이 균형을 유지하는 데는 세 가지 감각 시스템이 함께 작동합니다. 귀의 전정기관, 눈의 시각 정보, 그리고 근육과 관절에서 오는 고유수용성 감각입니다. 이 세 가지가 일치해야 뇌는 "내가 지금 어디 있는가"를 정확하게 인식합니다.</p>
             
@@ -108,13 +108,13 @@ export function CervicogenicDizziness() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
               <div className="text-maekrak-blue font-bold mb-3">사례 1</div>
-              <p className="text-[14px] text-gray-600 leading-[1.7] break-keep mb-6">
+              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
                 30대 남성, 미용사, MRI·CT 정상인데 일하기 어려운 어지럼증. 서서 일하면서 고개를 좌우로 움직이는 특성상 경추 부하가 쌓여 나타남. 경추 기능부전 평가에서 상부 경추 기능 이상 확인, 두맥탕·약침·추나 치료 시작 후 4주 뒤 증상 대폭 완화.
               </p>
             </div>
             <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
               <div className="text-maekrak-blue font-bold mb-3">사례 2</div>
-              <p className="text-[14px] text-gray-600 leading-[1.7] break-keep mb-6">
+              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
                 30대 남성, 증권사 재직, 하루종일 모니터를 보며 숫자를 확인하는 업무 특성상 고개를 고정하여 긴장이 고착됨. 3개월 차부터 어지럼증 소실되며 유지기 이후 종결. 기존 검사에서 보지 못한 감각 이상을 찾아 해결함.
               </p>
             </div>
@@ -161,11 +161,11 @@ export function CervicogenicDizziness() {
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-10 border-t border-gray-100">
           <Link to="/dizziness" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-            <ArrowLeft className="w-4 h-4 mr-2" /> 어지럼증 전체 보기 (1층)
+            <ArrowLeft className="w-4 h-4 mr-2" /> 어지럼증 전체 보기
           </Link>
           <div className="flex gap-4">
             <Link to="/blog" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-              블로그 글 보기 (3층) <ArrowRight className="w-4 h-4 ml-2" />
+              블로그 글 보기 <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
             <a href="tel:02-6959-7252" className="inline-flex items-center justify-center px-8 py-3 rounded-xl bg-maekrak-navy text-white hover:bg-[#1a3276] transition-colors font-medium">
               상담 예약하기

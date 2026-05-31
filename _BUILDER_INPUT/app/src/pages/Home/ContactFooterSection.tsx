@@ -37,7 +37,7 @@ export function ContactFooterSection() {
         
         {/* Left Side: Contact Info */}
         <div className="w-full md:w-1/2 flex flex-col justify-center pr-0 md:pr-12 md:pb-10">
-          <h2 className="text-4xl lg:text-[52px] font-bold mb-8 tracking-tighter text-maekrak-navy uppercase">Contact Us</h2>
+          <h2 className="text-4xl lg:text-[52px] font-bold mb-8 tracking-tighter text-maekrak-navy">맥락한의원 오시는길</h2>
           
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-10">
             <span className="text-[15px] font-bold text-gray-500 tracking-widest hidden sm:block">대표번호</span>

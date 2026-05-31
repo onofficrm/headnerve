@@ -71,6 +71,53 @@ body {
   font-family: var(--font-sans);
   color: var(--color-maekrak-text);
   background-color: var(--color-maekrak-ivory);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* 본문 가독성: 연한 회색·얇은 글씨·과소 폰트 보정 */
+@layer utilities {
+  main .text-gray-500 {
+    color: #374151;
+  }
+
+  main .text-gray-600 {
+    color: #1f2937;
+  }
+
+  main .text-gray-400 {
+    color: #4b5563;
+  }
+
+  main p.font-light:not([class*="text-white"]):not([class*="text-gray-3"]),
+  main li.font-light:not([class*="text-white"]):not([class*="text-gray-3"]),
+  main dd.font-light:not([class*="text-white"]):not([class*="text-gray-3"]) {
+    font-weight: 400;
+  }
+
+  main p[class*="text-[13"],
+  main li[class*="text-[13"],
+  main p.text-\[14px\],
+  main li.text-\[14px\] {
+    font-size: 15px;
+  }
+
+  main p[class*="md:text-[14px]"],
+  main li[class*="md:text-[14px]"] {
+    font-size: 15px;
+  }
+
+  @media (min-width: 768px) {
+    main p[class*="md:text-[14px]"],
+    main li[class*="md:text-[14px]"] {
+      font-size: 16px;
+    }
+
+    main p[class*="md:text-[15px]"],
+    main li[class*="md:text-[15px]"] {
+      font-size: 16px;
+    }
+  }
 }
 
 .diagram-pattern {

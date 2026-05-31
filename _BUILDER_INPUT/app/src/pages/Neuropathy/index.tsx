@@ -36,7 +36,7 @@ export function Neuropathy() {
               <p>
                 "말초신경병증과 일시적인 손발 저림의 결정적인 차이는 <span className="text-maekrak-blue relative inline-block">쉬어도, 자세를 바꿔도 나아지지 않는다<span className="absolute bottom-1 left-0 w-full h-[6px] bg-maekrak-blue/20 -z-10"></span></span>는 것입니다. 저림과 시림이 3개월 이상 지속된다면 단순 순환제가 아니라 신경 자체를 봐야 합니다."
               </p>
-              <p className="text-[16px] md:text-[18px] text-gray-600 font-light">
+              <p className="text-[16px] md:text-[18px] text-gray-800">
                 말초신경 회복에는 두 가지가 반드시 필요합니다. 손상된 신경에 혈류와 영양을 공급하는 것, 그리고 신경이 눌린 부분을 풀어주는 것. 
               </p>
             </div>
@@ -48,7 +48,7 @@ export function Neuropathy() {
           <div className="flex items-start gap-8 flex-col lg:flex-row mb-12">
             <div className="flex-1">
               <h2 className="text-[28px] md:text-[34px] font-bold text-gray-900 mb-6 tracking-tight">원인 불명은 치료 불가능을 의미하지 않습니다</h2>
-              <div className="prose prose-lg max-w-none text-gray-600 font-light leading-[1.8]">
+              <div className="prose prose-lg max-w-none text-gray-800 leading-[1.8]">
                 <p>
                   현대 의학 검사는 신경이 얼마나 손상됐는지는 볼 수 있지만, 왜 손상이 시작됐는지는 잘 잡아내지 못합니다. 허리디스크 치료를 받아도 발바닥 저림이 낫지 않는다면 말초 문제일 가능성이 높습니다.
                 </p>
@@ -123,7 +123,7 @@ export function Neuropathy() {
         <section>
           <div className="text-center mb-16">
             <h2 className="text-[28px] md:text-[34px] font-bold text-gray-900 mb-6 tracking-tight">맥락한의원의 말초신경병증 치료 프로그램</h2>
-            <p className="text-[16px] md:text-[18px] text-gray-600 font-light max-w-3xl mx-auto leading-[1.8] break-keep">
+            <p className="text-[16px] md:text-[18px] text-gray-800 max-w-3xl mx-auto leading-[1.8] break-keep">
               맥락한의원 말초신경 치료는 <strong className="font-semibold text-gray-900">기능적 치료(통맥탕)와 구조적 치료(약침·침 치료)를 동시에 진행</strong>합니다. 손상된 신경에 혈류와 영양을 공급하는 것, 그리고 신경이 눌린 부분을 풀어주는 것 — 이 두 가지를 동시에 해결하지 않으면 한쪽만으로는 한계가 있습니다. 신경통 진통제로 통증 신호를 막는 것이 아니라, 말초신경이 실제로 회복되는 환경을 만드는 것이 치료 목표입니다.
             </p>
           </div>
@@ -182,15 +182,15 @@ export function Neuropathy() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="p-6 rounded-xl bg-gray-50">
                 <h5 className="font-bold text-gray-900 mb-2">침 치료 <span className="text-sm font-normal text-gray-500">(신경 포착 해소)</span></h5>
-                <p className="text-[14px] text-gray-600 leading-[1.6]">신경이 물리적으로 포착된(눌린) 부위에 침을 놓아 통로를 개방, 혈류가 끝까지 닿도록 합니다.</p>
+                <p className="text-[15px] text-gray-800 leading-[1.6]">신경이 물리적으로 포착된(눌린) 부위에 침을 놓아 통로를 개방, 혈류가 끝까지 닿도록 합니다.</p>
               </div>
               <div className="p-6 rounded-xl bg-gray-50">
                 <h5 className="font-bold text-gray-900 mb-2">추나 <span className="text-sm font-normal text-gray-500">(경추/요추 문제 시)</span></h5>
-                <p className="text-[14px] text-gray-600 leading-[1.6]">신경이 시작되는 척추에서 압박이 있을 때, 구조적 환경을 개선하기 위해 병행 처방합니다.</p>
+                <p className="text-[15px] text-gray-800 leading-[1.6]">신경이 시작되는 척추에서 압박이 있을 때, 구조적 환경을 개선하기 위해 병행 처방합니다.</p>
               </div>
               <div className="p-6 rounded-xl bg-gray-50">
                 <h5 className="font-bold text-gray-900 mb-2">자율신경검사</h5>
-                <p className="text-[14px] text-gray-600 leading-[1.6]">말초신경병증과 자율신경 불균형이 동반되는 경우가 잦아, 객관적인 지표로 경과를 확인합니다.</p>
+                <p className="text-[15px] text-gray-800 leading-[1.6]">말초신경병증과 자율신경 불균형이 동반되는 경우가 잦아, 객관적인 지표로 경과를 확인합니다.</p>
               </div>
             </div>
           </div>

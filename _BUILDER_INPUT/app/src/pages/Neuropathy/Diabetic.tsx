@@ -84,7 +84,7 @@ export function Diabetic() {
                   <CheckCircle2 className="w-6 h-6 text-[#4a8fa8] shrink-0 mt-1" strokeWidth={2} />
                   <div>
                     <h3 className="text-[18px] md:text-[20px] font-bold text-gray-900 mb-3">{item.title}</h3>
-                    <p className="text-[15px] md:text-[16px] text-gray-600 leading-[1.7] break-keep font-light">{item.desc}</p>
+                    <p className="text-[15px] md:text-[16px] text-gray-800 leading-[1.75] break-keep">{item.desc}</p>
                   </div>
                 </div>
               </div>
@@ -96,10 +96,10 @@ export function Diabetic() {
         <section className="mb-24 md:mb-32">
           <div className="bg-[#f8f9fa] rounded-2xl p-8 lg:p-12 mb-10">
             <h2 className="text-[28px] md:text-[34px] font-bold text-gray-900 mb-6">고혈당이 신경을 어떻게 죽이는가</h2>
-            <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep mb-6">
+            <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep mb-6">
               끈적해진 혈액(고혈당)이 지속되면 신경가지들을 감싸고 영양분을 대주는 <strong>미세 초소형 혈관들</strong>이 찌꺼기에 막혀 터지고 파괴됩니다. 
             </p>
-            <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep">
+            <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep">
               신경도 세포이기에 피를 먹어야 사는데, 이 밥줄이 끊기니 심장에서 가장 먼 발끝 신경부터 서서히 말라 비틀어지며 에러 신호(작열감, 찌릿함, 저림)를 무한 방출하는 것입니다.
             </p>
           </div>
@@ -107,7 +107,7 @@ export function Diabetic() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
             <div>
               <h3 className="text-[24px] font-bold text-gray-900 mb-6">전신 + 국소 동시 접근 필수</h3>
-              <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep">
+              <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep">
                 당뇨로 혈관이 좁아진 <strong>'전신 흐름 저하'</strong>뿐 아니라 발목이나 무릎에서 신경이 기계적으로 눌리는 <strong>'국소 포착'</strong>이 흔하게 동반됩니다. 둘 다 열어줘야 피가 갑니다.
               </p>
             </div>

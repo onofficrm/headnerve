@@ -64,7 +64,7 @@ export function ClusterHeadache() {
         {/* 한의학적 원인 */}
         <section className="mb-20">
           <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">왜 생기는가 — 한의학적 원인</h2>
-          <div className="prose prose-lg max-w-none text-gray-600 font-light leading-[1.8] break-keep">
+          <div className="prose prose-lg max-w-none text-gray-800 leading-[1.8] break-keep">
             <p>
               군발두통 발작은 '삼차경추신경복합체(TCC)'의 과흥분이 원인입니다. 이 핵이 두개골과 경추가 만나는 하부 구조에 위치하며, 약간의 구조적 비틀림이나 스트레스만으로도 폭발적인 통증 신호를 쏘아올립니다.
             </p>
@@ -100,13 +100,13 @@ export function ClusterHeadache() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
               <div className="text-maekrak-blue font-bold mb-3">사례 1</div>
-              <p className="text-[14px] text-gray-600 leading-[1.7] break-keep mb-6">
+              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
                 응급실을 제 집처럼 들락거리던 30대 남성 군발환자. 맥락 병행 2주차부터 발작 빈도가 매일에서 2일에 1회 꼴로 감소, 일상이 가능해질 정도로 강도 축소 후 치료 종결.
               </p>
             </div>
             <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
               <div className="text-maekrak-blue font-bold mb-3">사례 2</div>
-              <p className="text-[14px] text-gray-600 leading-[1.7] break-keep mb-6">
+              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
                 이번 주기엔 눈꺼풀 처짐까지 동반되며 진통제를 5~6알 달고살던 환자. 집중 치료 3주차부터 안면 거상(처짐 회복) 보이며 진통제 의존 극적 하락 후 3개월 치료 종결.
               </p>
             </div>
@@ -151,11 +151,11 @@ export function ClusterHeadache() {
         {/* Footer Navigation */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-10 border-t border-gray-100">
           <Link to="/headache" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-            <ArrowLeft className="w-4 h-4 mr-2" /> 두통 전체 보기 (1층)
+            <ArrowLeft className="w-4 h-4 mr-2" /> 두통 전체 보기
           </Link>
           <div className="flex gap-4">
             <Link to="/blog" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-              블로그 글 보기 (3층) <ArrowRight className="w-4 h-4 ml-2" />
+              블로그 글 보기 <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
             <a href="tel:02-6959-7252" className="inline-flex items-center justify-center px-8 py-3 rounded-xl bg-maekrak-navy text-white hover:bg-[#1a3276] transition-colors font-medium">
               상담 예약하기

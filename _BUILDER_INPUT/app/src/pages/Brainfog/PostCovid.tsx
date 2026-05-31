@@ -84,7 +84,7 @@ export function PostCovid() {
                   <CheckCircle2 className="w-6 h-6 text-maekrak-green shrink-0 mt-1" strokeWidth={2} />
                   <div>
                     <h3 className="text-[18px] md:text-[20px] font-bold text-gray-900 mb-3">{item.title}</h3>
-                    <p className="text-[15px] md:text-[16px] text-gray-600 leading-[1.7] break-keep font-light">{item.desc}</p>
+                    <p className="text-[15px] md:text-[16px] text-gray-800 leading-[1.75] break-keep">{item.desc}</p>
                   </div>
                 </div>
               </div>
@@ -97,20 +97,20 @@ export function PostCovid() {
           <h2 className="text-[32px] md:text-[40px] font-bold text-gray-900 mb-12 tracking-tight">왜 생기는가 — 한의학적 주요 원인</h2>
           <div className="bg-[#f8f9fa] rounded-2xl p-8 lg:p-12 mb-10">
             <h3 className="text-[24px] font-bold text-gray-900 mb-6">자율신경 에러와 뇌 혈류의 단전</h3>
-            <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep mb-6">
+            <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep mb-6">
               코로나 바이러스는 미주신경(안전을 담당하는 부교감신경)에 타격을 줍니다. 이는 비상 경보(교감신경)를 항시 켜두게 만들며, 수면의 질을 나빠지게 합니다. 잠이 나쁘면 글림프 시스템(뇌 청소기)이 멈추고 노폐물이 쌓이는 악순환이 브레인포그를 영속시킵니다.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
             <div>
               <h3 className="text-[24px] font-bold text-gray-900 mb-6">두개경추 조직 염증</h3>
-              <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep">
+              <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep">
                 잔기침과 고열을 겪으며 목 주변 두개경추 근육(후두하근)에 염증과 극심한 긴장이 유발됩니다. 이곳이 막히면 뇌로 들어가는 산소와 정맥 배액(하수도)이 통제됩니다. 뒷목이 막혀 뇌가 숨을 못 쉬는 구조입니다.
               </p>
             </div>
             <div>
               <h3 className="text-[24px] font-bold text-gray-900 mb-6">코로나 감염 vs 백신 후유증</h3>
-              <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep">
+              <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep">
                 백신 접종 후 갑작스레 발생한 멍함, 어지럼증 또한 바이러스 감염과 마찬가지로 자율신경계의 팽팽한 과항진과 경추 긴장이 뇌 혈류를 틀어막은 동일한 기전입니다.
               </p>
             </div>

@@ -14,9 +14,9 @@ export function Insomnia() {
         <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-l from-blue-900/40 to-transparent" />
         <div className="relative z-10 max-w-7xl mx-auto">
           <div className="flex items-center gap-2 text-[13px] font-medium tracking-wider text-gray-400 mb-6 uppercase">
-            <Link to="/autonomic" className="hover:text-white transition-colors">Autonomic</Link>
+            <Link to="/autonomic" className="hover:text-white transition-colors">자율신경</Link>
             <ChevronRight className="w-3 h-3" />
-            <span className="text-[#89CFF0]">Insomnia</span>
+            <span className="text-[#89CFF0]">불면</span>
           </div>
           <h1 className="font-serif text-[36px] md:text-[48px] lg:text-[56px] font-medium text-white leading-[1.25] mb-6 tracking-tight">
             불면
@@ -87,7 +87,7 @@ export function Insomnia() {
                   <CheckCircle2 className="w-6 h-6 text-[#4a8fa8] shrink-0 mt-1" strokeWidth={2} />
                   <div>
                     <h3 className="text-[18px] md:text-[20px] font-bold text-gray-900 mb-3">{item.title}</h3>
-                    <p className="text-[15px] md:text-[16px] text-gray-600 leading-[1.7] break-keep font-light">{item.desc}</p>
+                    <p className="text-[15px] md:text-[16px] text-gray-800 leading-[1.75] break-keep">{item.desc}</p>
                   </div>
                 </div>
               </div>
@@ -100,7 +100,7 @@ export function Insomnia() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
             <div>
               <h2 className="text-[28px] md:text-[34px] font-bold text-gray-900 mb-6">수면으로의 전환을 막는 장벽</h2>
-              <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep mb-6">
+              <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep mb-6">
                 수면은 전등 끄듯 바로 되는 것이 아닙니다. 각성 상태에서 교감신경이 충분히 낮아지고 부교감이 활성화되어야 하는 <strong className="text-gray-900">적극적인 전환 과정</strong>입니다.
               </p>
               <div className="space-y-6 mt-8">
@@ -117,10 +117,10 @@ export function Insomnia() {
             
             <div className="bg-[#f8f9fa] rounded-2xl p-8 lg:p-10">
               <h3 className="text-[22px] font-bold text-gray-900 mb-4">DMN (디폴트 모드 네트워크) 란?</h3>
-              <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep mb-6">
+              <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep mb-6">
                 특별한 외부 작업이 없이 멍때리거나 휴식할 때 뇌에서 활성화되는 회로입니다. 하지만 이 스위치가 꺼지지 않으면 과부하가 걸립니다.
               </p>
-              <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep">
+              <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep">
                 불면 환자는 눈을 감고 있어도 잠을 자기보단 끊임없이 과거나 미래를 시뮬레이션 합니다. 생각이 많은 것은 마음의 문제가 아니라 <strong>신경학적 회로의 오작동(종료 불능)</strong> 현상입니다.
               </p>
             </div>

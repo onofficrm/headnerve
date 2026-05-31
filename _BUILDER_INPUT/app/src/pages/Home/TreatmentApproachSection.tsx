@@ -61,13 +61,13 @@ export function TreatmentApproachSection() {
           {strengths.map((s, idx) => (
             <div key={idx} className="bg-white p-8 md:p-10 flex flex-col hover:bg-maekrak-ivory transition-colors">
               <span className="font-serif text-4xl font-light text-maekrak-navy/10 mb-4">{s.num}</span>
-              <span className="text-[11px] font-bold tracking-widest uppercase text-maekrak-accent mb-2">
+              <span className="text-[18px] md:text-[20px] font-bold tracking-wide text-maekrak-accent mb-2">
                 {s.icon}
               </span>
               <h3 className="text-[17px] font-bold text-maekrak-navy mb-3 leading-[1.4] break-keep">
                 {s.title}
               </h3>
-              <p className="text-[14px] text-gray-500 leading-relaxed break-keep font-light mb-6 flex-1">
+              <p className="text-[15px] text-gray-700 leading-relaxed break-keep font-light mb-6 flex-1">
                 {s.desc}
               </p>
               <div className="text-[12px] text-maekrak-accent pt-4 border-t border-gray-100 font-medium">

@@ -21,7 +21,7 @@ export function FloatingQuickMenu() {
       )
     },
     {
-      label: '네이버 티비',
+      label: '네이버 TV',
       href: 'https://tv.naver.com/headache123?tab=highlight',
       icon: (
         <div className="text-[#03C75A] -ml-0.5">
@@ -35,7 +35,7 @@ export function FloatingQuickMenu() {
       icon: <Youtube className="w-6 h-6 text-[#FF0000]" fill="currentColor" />
     },
     {
-      label: '칼럼보기',
+      label: '블로그',
       href: 'https://blog.naver.com/rlarnwl67696',
       icon: (
         <div className="w-[22px] h-[22px] bg-[#03C75A] text-white flex items-center justify-center rounded-[5px] font-bold text-[9px] leading-none tracking-tighter pt-0.5">

@@ -47,12 +47,12 @@ export function AboutStrengthSection() {
   return (
     <section className="py-20 md:py-24 px-6 md:px-12 lg:px-24 bg-[#f8f9fb]">
       <div className="max-w-7xl mx-auto">
-        <div className="text-[11px] font-bold tracking-[0.22em] uppercase text-maekrak-accent mb-3">맥락이 다른 이유</div>
+        <div className="text-[15px] md:text-[16px] font-bold tracking-wide text-maekrak-accent mb-3">맥락이 다른 이유</div>
         <h2 className="font-serif text-[28px] md:text-[34px] font-medium text-gray-900 leading-[1.5] mb-8 break-keep">
           다른 한의원, 신경과와<br className="md:hidden" /> 맥락한의원이 다른 6가지
         </h2>
         <div className="max-w-2xl mb-16">
-          <p className="text-[15px] md:text-[16px] text-gray-500 leading-[2] font-light break-keep">
+          <p className="text-[16px] md:text-[17px] text-gray-700 leading-[1.9] break-keep">
             두통 전문을 표방하는 곳은 많습니다. 그러나 어떤 관점으로 두통을 보는지, 어떤 치료를 어떤 기준으로 결정하는지는 전혀 다릅니다. 맥락한의원이 다른 이유를 구체적으로 말씀드립니다.
           </p>
         </div>
@@ -61,9 +61,9 @@ export function AboutStrengthSection() {
           {strengths.map((s, idx) => (
             <div key={idx} className="bg-white p-8 md:p-10 flex flex-col hover:bg-[#e8f4f8] transition-colors group">
               <span className="font-serif text-[44px] font-light text-maekrak-navy/10 leading-none mb-6">{s.num}</span>
-              <div className="text-[11px] font-bold tracking-[0.15em] uppercase text-maekrak-accent mb-3">{s.icon}</div>
+              <div className="text-[18px] md:text-[20px] font-bold tracking-wide text-maekrak-accent mb-3">{s.icon}</div>
               <h3 className="font-serif text-[16px] font-medium text-gray-900 mb-4 leading-[1.5] break-keep">{s.title}</h3>
-              <p className="text-[13.5px] md:text-[14px] text-gray-500 leading-[1.85] font-light mb-6 flex-1 break-keep">
+              <p className="text-[15px] md:text-[16px] text-gray-700 leading-[1.85] mb-6 flex-1 break-keep">
                 {s.desc}
               </p>
               <div className="text-[12.5px] text-maekrak-accent border-t border-gray-100 pt-4 font-medium">

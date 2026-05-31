@@ -86,7 +86,7 @@ export function PhilosophySection() {
                 <div key={i} className="bg-white p-8 md:p-10 flex flex-col hover:bg-gray-50 transition-colors">
                   <span className="font-serif text-4xl text-maekrak-navy/10 font-bold mb-4">{p.num}</span>
                   <h3 className="text-[17px] font-bold text-maekrak-navy mb-3">{p.title}</h3>
-                  <p className="text-[14px] text-gray-500 leading-relaxed font-light break-keep">
+                  <p className="text-[15px] text-gray-700 leading-relaxed font-light break-keep">
                     {p.desc}
                   </p>
                 </div>

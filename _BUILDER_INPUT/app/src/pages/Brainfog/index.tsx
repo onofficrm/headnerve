@@ -36,7 +36,7 @@ export function Brainfog() {
               <p>
                 "브레인포그는 치매와 다릅니다. 20~30대에서도 흔히 나타나는 기능적 저하입니다. 그리고 의지의 문제도 아닙니다. <span className="text-maekrak-blue relative inline-block">뇌라는 기관에 연료와 산소가 원활히 공급되지 않는 구조망의 장애<span className="absolute bottom-1 left-0 w-full h-[6px] bg-maekrak-blue/20 -z-10"></span></span>입니다."
               </p>
-              <p className="text-[16px] md:text-[18px] text-gray-600 font-light">
+              <p className="text-[16px] md:text-[18px] text-gray-800">
                 맥락한의원은 브레인포그를 영양 공급과 노폐물 배출이라는 대사적 관점, 그리고 자율신경과 경추 정렬이라는 구조적 관점에서 통합적으로 치료합니다.
               </p>
             </div>
@@ -104,7 +104,7 @@ export function Brainfog() {
         <section>
           <div className="text-center mb-16">
             <h2 className="text-[28px] md:text-[34px] font-bold text-gray-900 mb-6 tracking-tight">맥락한의원의 브레인포그 치료 프로그램</h2>
-            <p className="text-[16px] md:text-[18px] text-gray-600 font-light max-w-3xl mx-auto leading-[1.8] break-keep">
+            <p className="text-[16px] md:text-[18px] text-gray-800 max-w-3xl mx-auto leading-[1.8] break-keep">
               맥락한의원 브레인포그 치료는 <strong className="font-semibold text-gray-900">기능적 치료(두맥탕·총명공진단)와 구조적 치료(추나·약침)를 동시에 진행</strong>합니다. 뇌에 영양을 공급하는 것과 영양이 잘 전달될 수 있는 뇌의 환경을 만드는 것을 동시에 해결해야 만성적인 안개를 걷어낼 수 있습니다. 일시적인 각성이 아니라 영구적인 인지 기능 회복이 목표입니다.
             </p>
           </div>
@@ -160,15 +160,15 @@ export function Brainfog() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="p-6 rounded-xl bg-gray-50">
                 <h5 className="font-bold text-gray-900 mb-2">추나 요법 <span className="text-sm font-normal text-gray-500">(경추 정렬 교정)</span></h5>
-                <p className="text-[14px] text-gray-600 leading-[1.6]">두개경추(C1, C2)의 병리적 틀어짐을 교정해 신경 압박을 풀고 근본적인 뇌 산소 공급을 유도합니다.</p>
+                <p className="text-[15px] text-gray-800 leading-[1.6]">두개경추(C1, C2)의 병리적 틀어짐을 교정해 신경 압박을 풀고 근본적인 뇌 산소 공급을 유도합니다.</p>
               </div>
               <div className="p-6 rounded-xl bg-gray-50">
                 <h5 className="font-bold text-gray-900 mb-2">자율신경검사</h5>
-                <p className="text-[14px] text-gray-600 leading-[1.6]">교감신경 과항진으로 인한 뇌 에너지 낭비가 있는지 측정하여 치료 효율을 높입니다.</p>
+                <p className="text-[15px] text-gray-800 leading-[1.6]">교감신경 과항진으로 인한 뇌 에너지 낭비가 있는지 측정하여 치료 효율을 높입니다.</p>
               </div>
               <div className="p-6 rounded-xl bg-gray-50">
                 <h5 className="font-bold text-gray-900 mb-2">대사·생활 밀착 관리</h5>
-                <p className="text-[14px] text-gray-600 leading-[1.6]">혈당 롤러코스터와 카페인 의존을 줄이는 생활 습관 교정으로 뇌 연료 공급을 안정화합니다.</p>
+                <p className="text-[15px] text-gray-800 leading-[1.6]">혈당 롤러코스터와 카페인 의존을 줄이는 생활 습관 교정으로 뇌 연료 공급을 안정화합니다.</p>
               </div>
             </div>
           </div>

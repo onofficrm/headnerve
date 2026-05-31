@@ -18,7 +18,7 @@ export function Home() {
     { id: 'strengths', label: 'Strengths' },
     { id: 'doctors', label: 'Doctors' },
     { id: 'cases', label: 'Cases' },
-    { id: 'cta', label: 'CTA' },
+    { id: 'cta', label: '오시는 길' },
     { id: 'contact', label: 'Contact' },
   ];
 

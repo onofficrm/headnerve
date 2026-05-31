@@ -65,7 +65,7 @@ export function MedicationOveruseHeadache() {
         {/* 한의학적 원인 */}
         <section className="mb-20">
           <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">왜 생기는가 — 한의학적 원인</h2>
-          <div className="prose prose-lg max-w-none text-gray-600 font-light leading-[1.8] break-keep">
+          <div className="prose prose-lg max-w-none text-gray-800 leading-[1.8] break-keep">
             <h4 className="font-bold text-gray-900 mt-6 mb-3">진통제가 두통을 만드는 역설적 구조</h4>
             <p>
               뇌의 통증 조절 시스템은 약물이 반복적으로 통증을 억제하면 감각 수용체를 더 민감하게 보상 증폭시킵니다. 약이 떨어질 때마다 나타나는 반동 현상이 바로 그것입니다. 이 반동을 막기 위해 또 약을 먹고, 트립탄에 빈번히 노출되면 결국 CGRP라는 매개 물질 농도마저 높아져 쉽게 두통에 불이 붙는 체질로 변모합니다.
@@ -109,13 +109,13 @@ export function MedicationOveruseHeadache() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
               <div className="text-maekrak-blue font-bold mb-3">사례 1</div>
-              <p className="text-[14px] text-gray-600 leading-[1.7] break-keep mb-6">
+              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
                 10년간 처방약 복용, 월 트립탄 20회 이상. 약을 많이 먹어 통증 시스템이 과민화된 30대 여성. 두통 근본 원인을 다루는 테이퍼링을 병행하여 자연스럽게 트립탄 복용이 감소, 5개월 만에 치료 종결에 이른 케이스.
               </p>
             </div>
             <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
               <div className="text-maekrak-blue font-bold mb-3">사례 2</div>
-              <p className="text-[14px] text-gray-600 leading-[1.7] break-keep mb-6">
+              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
                 진통제를 달고 살다 더 이상 약이 듣지 않게 된 60대 여성. 예방치료, 앰겔러티 주사도 소용없던 한계를 극복하기 위해 맥락 치료 병행. 6개월 테이퍼링 이후 수십 년 고착되었던 진통제 인생에서 벗어날 수 있었습니다.
               </p>
             </div>
@@ -160,11 +160,11 @@ export function MedicationOveruseHeadache() {
         {/* Footer Navigation */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-10 border-t border-gray-100">
           <Link to="/headache" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-            <ArrowLeft className="w-4 h-4 mr-2" /> 두통 전체 보기 (1층)
+            <ArrowLeft className="w-4 h-4 mr-2" /> 두통 전체 보기
           </Link>
           <div className="flex gap-4">
             <Link to="/blog" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-              블로그 글 보기 (3층) <ArrowRight className="w-4 h-4 ml-2" />
+              블로그 글 보기 <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
             <a href="tel:02-6959-7252" className="inline-flex items-center justify-center px-8 py-3 rounded-xl bg-maekrak-navy text-white hover:bg-[#1a3276] transition-colors font-medium">
               상담 예약하기

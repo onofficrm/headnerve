@@ -42,7 +42,7 @@ export function Headache() {
         {/* 주요 원인 */}
         <section className="mb-24 md:mb-32">
           <h2 className="text-[28px] md:text-[34px] font-bold text-gray-900 mb-10 tracking-tight">두통, 왜 생기는 걸까요?</h2>
-          <div className="prose prose-lg max-w-none text-gray-600 font-light leading-[1.8]">
+          <div className="prose prose-lg max-w-none text-gray-800 leading-[1.8]">
             <p className="mb-6">
               편두통은 뇌가 에너지 위기 상황에서 보내는 SOS 신호입니다. 연료 공급이 부족하거나 공급에 비해 소모가 과도할 때 뇌는 스스로 혈류를 늘리려 합니다. 
             </p>
@@ -104,7 +104,7 @@ export function Headache() {
         <section>
           <div className="text-center mb-16">
             <h2 className="text-[28px] md:text-[34px] font-bold text-gray-900 mb-6 tracking-tight">맥락한의원의 두통 치료 프로그램</h2>
-            <p className="text-[16px] md:text-[18px] text-gray-600 font-light max-w-3xl mx-auto leading-[1.8] break-keep">
+            <p className="text-[16px] md:text-[18px] text-gray-800 max-w-3xl mx-auto leading-[1.8] break-keep">
               맥락한의원 두통 치료는 <strong className="font-semibold text-gray-900">기능적 치료(두맥탕·총명공진단)와 구조적 치료(약침·추나)를 동시에 진행</strong>합니다. 약으로 신경계를 안정시키는 동시에 두개경추 불균형을 교정해야 두통이 재발하지 않기 때문입니다. 증상만 억누르는 것이 아니라 두통이 반복되는 원인 자체를 없애는 것이 치료 목표입니다.
             </p>
           </div>
@@ -161,15 +161,15 @@ export function Headache() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="p-6 rounded-xl bg-gray-50">
                 <h5 className="font-bold text-gray-900 mb-2">추나 <span className="text-sm font-normal text-gray-500">(두개경추 정렬 교정)</span></h5>
-                <p className="text-[14px] text-gray-600 leading-[1.6]">두개경추의 틀어짐을 교정합니다. C0-C1, C1-C2 분절의 기능 이상을 바로잡아 두통의 구조적 원인을 제거합니다.</p>
+                <p className="text-[15px] text-gray-800 leading-[1.6]">두개경추의 틀어짐을 교정합니다. C0-C1, C1-C2 분절의 기능 이상을 바로잡아 두통의 구조적 원인을 제거합니다.</p>
               </div>
               <div className="p-6 rounded-xl bg-gray-50">
                 <h5 className="font-bold text-gray-900 mb-2">자율신경검사</h5>
-                <p className="text-[14px] text-gray-600 leading-[1.6]">자율신경 기능을 수치로 평가합니다. 치료 시작 전 기저 상태를 측정하고 중간에 다시 측정해 회복 정도를 확인합니다.</p>
+                <p className="text-[15px] text-gray-800 leading-[1.6]">자율신경 기능을 수치로 평가합니다. 치료 시작 전 기저 상태를 측정하고 중간에 다시 측정해 회복 정도를 확인합니다.</p>
               </div>
               <div className="p-6 rounded-xl bg-gray-50">
                 <h5 className="font-bold text-gray-900 mb-2">총명공진단</h5>
-                <p className="text-[14px] text-gray-600 leading-[1.6]">뇌 영양 공급을 목적으로 한 공진단입니다. 두맥탕과 함께 복용하면 두통 회복 속도를 높이는 데 도움이 됩니다.</p>
+                <p className="text-[15px] text-gray-800 leading-[1.6]">뇌 영양 공급을 목적으로 한 공진단입니다. 두맥탕과 함께 복용하면 두통 회복 속도를 높이는 데 도움이 됩니다.</p>
               </div>
             </div>
           </div>

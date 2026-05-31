@@ -14,9 +14,9 @@ export function Dysautonomia() {
         <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-l from-maekrak-navy/20 to-transparent" />
         <div className="relative z-10 max-w-7xl mx-auto">
           <div className="flex items-center gap-2 text-[13px] font-medium tracking-wider text-gray-400 mb-6 uppercase">
-            <Link to="/autonomic" className="hover:text-white transition-colors">Autonomic</Link>
+            <Link to="/autonomic" className="hover:text-white transition-colors">자율신경</Link>
             <ChevronRight className="w-3 h-3" />
-            <span className="text-[#89CFF0]">Dysautonomia</span>
+            <span className="text-[#89CFF0]">자율신경실조증</span>
           </div>
           <h1 className="font-serif text-[36px] md:text-[48px] lg:text-[56px] font-medium text-white leading-[1.25] mb-6 tracking-tight">
             자율신경실조증
@@ -87,7 +87,7 @@ export function Dysautonomia() {
                   <CheckCircle2 className="w-6 h-6 text-maekrak-blue shrink-0 mt-1" strokeWidth={2} />
                   <div>
                     <h3 className="text-[18px] md:text-[20px] font-bold text-gray-900 mb-3">{item.title}</h3>
-                    <p className="text-[15px] md:text-[16px] text-gray-600 leading-[1.7] break-keep font-light">{item.desc}</p>
+                    <p className="text-[15px] md:text-[16px] text-gray-800 leading-[1.75] break-keep">{item.desc}</p>
                   </div>
                 </div>
               </div>
@@ -101,19 +101,19 @@ export function Dysautonomia() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
             <div>
               <h3 className="text-[24px] font-bold text-gray-900 mb-6">검사가 정상인 이유</h3>
-              <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep">
+              <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep">
                 혈액검사·MRI·심초음파·내시경은 장기의 구조적 병변을 확인하는 검사입니다. 자율신경 기능 이상은 조절 신경의 오작동, 즉 기능적 문제입니다. 구조를 보는 검사로는 이런 조율의 불균형이 잡히지 않습니다.
               </p>
             </div>
             <div>
               <h3 className="text-[24px] font-bold text-gray-900 mb-6">잘못된 동적 평형 상태</h3>
-              <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep">
+              <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep">
                 만성 스트레스, 수면 부족 등이 지속되면 자율신경은 '비상 모드'를 정상으로 인식하기 시작합니다. 혈류가 줄어든 상태나 심박수가 늘 빠른 상태를 새로운 평형점으로 고착시키기 때문에 반복적으로 증상이 나타납니다.
               </p>
             </div>
             <div className="md:col-span-2">
               <h3 className="text-[24px] font-bold text-gray-900 mb-6">경추와 자율신경의 연결</h3>
-              <p className="text-[16px] md:text-[18px] text-gray-600 leading-[1.8] font-light break-keep max-w-4xl">
+              <p className="text-[16px] md:text-[18px] text-gray-800 leading-[1.85] break-keep max-w-4xl">
                 경추 주변 교감신경절이 틀어지거나 주변 근육이 경직되면 지속적인 자극을 받습니다. 심리적 스트레스가 없어도 몸이 긴장 상태를 유지하는 구조적 이유가 바로 이 때문이며, 경추 교정이 필수적인 이유입니다.
               </p>
             </div>

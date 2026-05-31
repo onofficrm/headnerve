@@ -64,7 +64,7 @@ export function Migraine() {
         {/* 한의학적 원인 */}
         <section className="mb-20">
           <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 mb-8 tracking-tight">왜 생기는가 — 한의학적 원인</h2>
-          <div className="prose prose-lg max-w-none text-gray-600 font-light leading-[1.8] break-keep">
+          <div className="prose prose-lg max-w-none text-gray-800 leading-[1.8] break-keep">
             <p>
               기존에는 편두통을 “뇌가 예민해서 그래요. 유전 영향이 있습니다”라고 설명합니다. 유전적 뇌 과민성은 틀린 말은 아니지만 그것이 전부가 아닙니다.
             </p>
@@ -120,13 +120,13 @@ export function Migraine() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
               <div className="text-maekrak-blue font-bold mb-3">사례 1</div>
-              <p className="text-[14px] text-gray-600 leading-[1.7] break-keep mb-6">
+              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
                 시야 전조 증상이 시작되면 빛 번짐과 시야 흐림이 생긴다. 20~30분 후 통증이 오는데 일상생활 불가능할 정도이고 구토를 해야 끝난다. 10년 된 증상으로 내원. 두맥탕, 약침, 추나 치료로 3주차에 두통 강도 50%로 감소, 집중치료 후 편두통 발작 없어짐. 3개월 내 치료 종결.
               </p>
             </div>
             <div className="p-8 rounded-xl bg-gray-50 border border-gray-100">
               <div className="text-maekrak-blue font-bold mb-3">사례 2</div>
-              <p className="text-[14px] text-gray-600 leading-[1.7] break-keep mb-6">
+              <p className="text-[15px] text-gray-800 leading-[1.7] break-keep mb-6">
                 출산 이후 심해진 편두통. 아조비, 트립탄 모두 듣지 않아 근본 치료를 위해 내원. 4주간 집중 치료 후 두통 강도와 빈도가 50%로 감소. 안정 및 유지 치료로 발작 소실. 4개월 내 치료 종결.
               </p>
             </div>
@@ -175,11 +175,11 @@ export function Migraine() {
         {/* Footer Navigation */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-10 border-t border-gray-100">
           <Link to="/headache" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-            <ArrowLeft className="w-4 h-4 mr-2" /> 두통 전체 보기 (1층)
+            <ArrowLeft className="w-4 h-4 mr-2" /> 두통 전체 보기
           </Link>
           <div className="flex gap-4">
             <Link to="/blog" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-              블로그 글 보기 (3층) <ArrowRight className="w-4 h-4 ml-2" />
+              블로그 글 보기 <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
             <a href="tel:02-6959-7252" className="inline-flex items-center justify-center px-8 py-3 rounded-xl bg-maekrak-navy text-white hover:bg-[#1a3276] transition-colors font-medium">
               상담 예약하기

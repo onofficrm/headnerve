@@ -25,11 +25,11 @@ export function AboutPhilosophySection() {
   return (
     <section className="py-20 md:py-24 px-6 md:px-12 lg:px-24">
       <div className="max-w-7xl mx-auto">
-        <div className="text-[11px] font-bold tracking-[0.22em] uppercase text-maekrak-accent mb-3">대표원장 진료철학</div>
+        <div className="text-[15px] md:text-[16px] font-bold tracking-wide text-maekrak-accent mb-3">대표원장 진료철학</div>
         <h2 className="font-serif text-[28px] md:text-[34px] font-medium text-gray-900 leading-[1.5] mb-4 break-keep">
           약은 증상을 가릴 뿐,<br className="md:hidden" /> 원인을 고치지 않습니다
         </h2>
-        <p className="text-[15px] md:text-[16px] text-gray-500 mb-14 max-w-2xl leading-[1.9] break-keep font-light">
+        <p className="text-[16px] md:text-[17px] text-gray-700 mb-14 max-w-2xl leading-[1.9] break-keep">
           편두통·어지럼증 환자분들이 수년간 신경과, 대학병원을 전전하며 듣는 말은 대부분 같습니다. "검사상 이상 없습니다. 약 꾸준히 드세요." 맥락한의원은 이 답이 틀렸다고 생각합니다.
         </p>
 
@@ -39,7 +39,7 @@ export function AboutPhilosophySection() {
               "아픈 사람의 꿈은 단 하나입니다.<br />어제처럼 살고 싶다는 것."
             </div>
             
-            <div className="space-y-6 text-[15px] text-gray-600 leading-[2] font-light break-keep">
+            <div className="space-y-6 text-[16px] md:text-[17px] text-gray-800 leading-[1.85] break-keep">
               <p>
                 좋아하는 운동을 두통 때문에 포기하고, 주말마다 누워 계신 분들을 봅니다.
                 직장에서 집중이 안 되고, 가족과 여행 한 번 못 가는 분들을 봅니다.
@@ -62,7 +62,7 @@ export function AboutPhilosophySection() {
                 "신경과, 내과, 이비인후과를 돌았지만 원인을 못 찾았습니다",
                 "약을 끊고 싶은데 끊으면 더 심해져서 못 끊겠습니다"
               ].map((text, idx) => (
-                <li key={idx} className="text-[14px] md:text-[15px] text-gray-500 py-3 pl-6 border-b border-gray-100 relative leading-[1.7] break-keep relative">
+                <li key={idx} className="text-[15px] md:text-[16px] text-gray-700 py-3 pl-6 border-b border-gray-100 relative leading-[1.75] break-keep relative">
                   <span className="absolute left-0 top-3 text-[18px] text-maekrak-accent font-serif leading-none">"</span>
                   {text}
                 </li>
@@ -71,13 +71,13 @@ export function AboutPhilosophySection() {
           </div>
 
           <div>
-            <div className="text-[11px] font-bold tracking-[0.22em] uppercase text-maekrak-accent mb-5">진료 원칙</div>
+            <div className="text-[18px] md:text-[20px] font-bold tracking-wide text-maekrak-accent mb-5">진료 원칙</div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-[1px] bg-gray-200 border border-gray-200">
               {principles.map((p, idx) => (
                 <div key={idx} className="bg-white p-8 md:p-10 flex flex-col hover:bg-gray-50/50 transition-colors">
                   <span className="font-serif text-4xl text-maekrak-navy/10 font-bold mb-4">{p.num}</span>
                   <h3 className="text-[15px] font-bold text-maekrak-navy mb-2">{p.title}</h3>
-                  <p className="text-[13.5px] md:text-[14px] text-gray-500 leading-[1.8] font-light break-keep">
+                  <p className="text-[15px] md:text-[16px] text-gray-700 leading-[1.85] break-keep">
                     {p.desc}
                   </p>
                 </div>

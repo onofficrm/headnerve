@@ -14,9 +14,9 @@ export function PanicAnxiety() {
         <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-l from-maekrak-navy/20 to-transparent" />
         <div className="relative z-10 max-w-7xl mx-auto">
           <div className="flex items-center gap-2 text-[13px] font-medium tracking-wider text-gray-400 mb-6 uppercase">
-            <Link to="/autonomic" className="hover:text-white transition-colors">Autonomic</Link>
+            <Link to="/autonomic" className="hover:text-white transition-colors">자율신경</Link>
             <ChevronRight className="w-3 h-3" />
-            <span className="text-[#89CFF0]">Panic / Anxiety</span>
+            <span className="text-[#89CFF0]">공항/불안장애</span>
           </div>
           <h1 className="font-serif text-[36px] md:text-[48px] lg:text-[56px] font-medium text-white leading-[1.25] mb-6 tracking-tight">
             공황/불안장애
@@ -87,7 +87,7 @@ export function PanicAnxiety() {
                   <CheckCircle2 className="w-6 h-6 text-maekrak-blue shrink-0 mt-1" strokeWidth={2} />
                   <div>
                     <h3 className="text-[18px] md:text-[20px] font-bold text-gray-900 mb-3">{item.title}</h3>
-                    <p className="text-[15px] md:text-[16px] text-gray-600 leading-[1.7] break-keep font-light">{item.desc}</p>
+                    <p className="text-[15px] md:text-[16px] text-gray-800 leading-[1.75] break-keep">{item.desc}</p>
                   </div>
                 </div>
               </div>
