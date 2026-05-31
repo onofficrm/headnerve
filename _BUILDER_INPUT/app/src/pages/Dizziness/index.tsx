@@ -16,7 +16,7 @@ export function Dizziness() {
             맥락 치료과목
           </div>
           <h1 className="font-serif text-[32px] md:text-[42px] lg:text-[52px] font-medium text-white leading-[1.3] mb-6">
-            어지럼증 <span className="font-sans font-light text-white/50 text-[24px] md:text-[32px] ml-2 tracking-wide">Dizziness</span>
+            어지럼증
           </h1>
           <p className="text-[16px] md:text-[18px] text-white/80 max-w-2xl leading-[1.8] break-keep font-light">
             어지럼증은 자신이나 주변이 움직이는 것처럼 느껴지거나, 균형을 잡기 어렵거나, 머리가 붕 뜨는 듯한 감각이 지속되는 증상으로 귀·눈·경추·자율신경계 등 다양한 원인에 의해 발생합니다.

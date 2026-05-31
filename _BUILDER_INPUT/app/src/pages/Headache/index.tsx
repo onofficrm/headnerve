@@ -17,7 +17,7 @@ export function Headache() {
             맥락 치료과목
           </div>
           <h1 className="font-serif text-[32px] md:text-[42px] lg:text-[52px] font-medium text-white leading-[1.3] mb-6">
-            두통 <span className="font-sans font-light text-white/50 text-[24px] md:text-[32px] ml-2 tracking-wide">Headache</span>
+            두통
           </h1>
           <p className="text-[16px] md:text-[18px] text-white/80 max-w-2xl leading-[1.8] break-keep font-light">
             두통은 머리 부위에 발생하는 통증을 말하며 크게 두 가지로 나뉩니다. 두통 자체가 질병인 일차성 두통과 다른 질병의 증상으로 나타나는 이차성 두통이 있으며, <strong>대부분의 만성 두통은 일차성 두통입니다.</strong>

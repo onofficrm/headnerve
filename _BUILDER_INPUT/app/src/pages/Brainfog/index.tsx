@@ -17,7 +17,7 @@ export function Brainfog() {
             맥락 치료과목
           </div>
           <h1 className="font-serif text-[32px] md:text-[42px] lg:text-[52px] font-medium text-white leading-[1.3] mb-6">
-            브레인포그 <span className="font-sans font-light text-white/50 text-[24px] md:text-[32px] ml-2 tracking-wide">Brainfog</span>
+            브레인포그
           </h1>
           <p className="text-[16px] md:text-[18px] text-white/80 max-w-2xl leading-[1.8] break-keep font-light">
             뇌에 안개가 낀 것처럼 사고가 흐릿해지고 집중력이 떨어지며 언어 처리가 어려워지는 상태입니다. 구조적 뇌 병변이 아닌 <strong>기능적 문제</strong>로 발생하기 때문에 보통 MRI 검사에서 정상으로 나옵니다.

@@ -17,7 +17,7 @@ export function Neuropathy() {
             맥락 치료과목
           </div>
           <h1 className="font-serif text-[32px] md:text-[42px] lg:text-[52px] font-medium text-white leading-[1.3] mb-6">
-            말초신경병증 <span className="font-sans font-light text-white/50 text-[24px] md:text-[32px] ml-2 tracking-wide">Neuropathy</span>
+            말초신경병증
           </h1>
           <p className="text-[16px] md:text-[18px] text-white/80 max-w-2xl leading-[1.8] break-keep font-light">
             뇌와 척수를 제외한 신경이 손상되어 저림, 시림, 작열감이 나타나는 질환입니다. 당뇨나 항암치료가 주요 원인이지만, 전체 환자의 30~40%는 원인을 찾지 못하는 <strong className="text-white">특발성</strong>입니다.
