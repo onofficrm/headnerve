@@ -8,12 +8,14 @@ export const BOARD_TABLES = {
   notice: 'notice',
   news: 'news',
   column: 'column',
+  reviews: 'reviews',
 } as const;
 
 export const BOARD_URLS = {
   notice: boardUrl(BOARD_TABLES.notice),
   news: boardUrl(BOARD_TABLES.news),
   column: boardUrl(BOARD_TABLES.column),
+  reviews: boardUrl(BOARD_TABLES.reviews),
 } as const;
 
 export type NavMenuItem = {
@@ -31,7 +33,7 @@ export const COMMUNITY_NAV: NavMenuItem = {
   subLinks: [
     { name: '공지사항', href: BOARD_URLS.notice, external: true },
     { name: '뉴스', href: BOARD_URLS.news, external: true },
-    { name: '원장컬럼', href: BOARD_URLS.column, external: true },
+    { name: '블로그', href: BOARD_URLS.column, external: true },
   ],
 };
 

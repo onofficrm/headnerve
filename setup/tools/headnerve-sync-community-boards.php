@@ -4,7 +4,7 @@
  *
  * URL: /setup/tools/headnerve-sync-community-boards.php
  * — 게시판이 이미 있을 때 bo_skin / bo_mobile_skin 만 갱신합니다.
- * — 없는 게시판은 관리자 → 게시판관리에서 생성 (setup/headnerve-community-boards.json 참고)
+ * — 없는 게시판은 /setup/tools/headnerve-provision-reviews-board.php (reviews) 또는 관리자에서 생성
  */
 $g5_path = realpath(__DIR__.'/../..');
 if (!$g5_path) {
@@ -48,16 +48,19 @@ foreach ($data['boards'] as $item) {
 
     $bo_skin = sql_real_escape_string($item['skin']);
     $bo_mobile_skin = sql_real_escape_string($item['mobile_skin']);
+    $bo_subject = isset($item['title']) ? sql_real_escape_string($item['title']) : '';
+
+    $subject_sql = ($bo_subject !== '') ? ", bo_subject = '{$bo_subject}'" : '';
 
     sql_query(" update {$g5['board_table']}
         set bo_skin = '{$bo_skin}',
-            bo_mobile_skin = '{$bo_mobile_skin}'
+            bo_mobile_skin = '{$bo_mobile_skin}'{$subject_sql}
         where bo_table = '{$bo_table}' ");
 
     $results[] = array(
         'bo_table' => $bo_table,
         'status'   => 'updated',
-        'message'  => "스킨 → PC: {$item['skin']}, MO: {$item['mobile_skin']}",
+        'message'  => "스킨 → PC: {$item['skin']}, MO: {$item['mobile_skin']}".($bo_subject !== '' ? ", 제목 → {$item['title']}" : ''),
     );
 }
 

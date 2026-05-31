@@ -26,15 +26,19 @@ if (!function_exists('headnerve_nav_menu_items')) {
         return array(
             array('name' => '맥락한의원소개', 'href' => headnerve_spa_href('/about')),
             array(
-                'name' => '맥락 치료프로그램',
+                'name' => '치료 프로그램',
                 'href' => headnerve_spa_href('/programs'),
                 'sub' => array(
-                    array('name' => '두통치료프로그램', 'href' => headnerve_spa_href('/headache')),
-                    array('name' => '어지럼증치료프로그램', 'href' => headnerve_spa_href('/dizziness')),
-                    array('name' => '말초신경병증치료프로그램', 'href' => headnerve_spa_href('/neuropathy')),
-                    array('name' => '자율신경치료프로그램', 'href' => headnerve_spa_href('/autonomic')),
-                    array('name' => '브레인포그 치료 프로그램', 'href' => headnerve_spa_href('/brainfog')),
+                    array('name' => '두통', 'href' => headnerve_spa_href('/headache')),
+                    array('name' => '어지럼증', 'href' => headnerve_spa_href('/dizziness')),
+                    array('name' => '말초신경병증', 'href' => headnerve_spa_href('/neuropathy')),
+                    array('name' => '자율신경', 'href' => headnerve_spa_href('/autonomic')),
+                    array('name' => '브레인포그', 'href' => headnerve_spa_href('/brainfog')),
                 ),
+            ),
+            array(
+                'name' => '후기',
+                'href' => headnerve_board_href('reviews'),
             ),
             array(
                 'name' => '두통',
@@ -94,7 +98,7 @@ if (!function_exists('headnerve_nav_menu_items')) {
                 'sub' => array(
                     array('name' => '공지사항', 'href' => headnerve_board_href('notice')),
                     array('name' => '뉴스', 'href' => headnerve_board_href('news')),
-                    array('name' => '원장컬럼', 'href' => headnerve_board_href('column')),
+                    array('name' => '블로그', 'href' => headnerve_board_href('column')),
                 ),
             ),
         );
@@ -154,7 +158,7 @@ if (!function_exists('headnerve_floating_menu_items')) {
                 'icon'   => 'naver',
             ),
             array(
-                'label'  => '네이버 티비',
+                'label'  => '네이버 TV',
                 'href'   => function_exists('g5site_cfg') ? g5site_cfg('naver_tv_url', 'https://tv.naver.com/headache123?tab=highlight') : 'https://tv.naver.com/headache123?tab=highlight',
                 'external' => true,
                 'icon'   => 'naver-tv',
@@ -166,7 +170,7 @@ if (!function_exists('headnerve_floating_menu_items')) {
                 'icon'   => 'youtube',
             ),
             array(
-                'label'  => '칼럼보기',
+                'label'  => '블로그',
                 'href'   => function_exists('g5site_cfg') ? g5site_cfg('naver_blog_url', 'https://blog.naver.com/rlarnwl67696') : 'https://blog.naver.com/rlarnwl67696',
                 'external' => true,
                 'icon'   => 'blog',
@@ -188,6 +192,7 @@ if (!function_exists('headnerve_board_hero_image')) {
             'notice' => '/img/main/board-hero.png',
             'news'   => '/img/main/board-hero.png',
             'column' => '/img/main/board-hero.png',
+            'reviews'=> '/img/main/board-hero.png',
         );
 
         $rel = isset($map[$bo_table]) ? $map[$bo_table] : '/img/main/board-hero.png';

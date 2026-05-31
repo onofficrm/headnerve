@@ -41,9 +41,10 @@ $mf_logo_inline = G5_PATH.'/components/maekrak-logo-inline.php';
                     <ul>
                         <li><a href="<?php echo headnerve_spa_href('/about'); ?>">맥락한의원 소개</a></li>
                         <li><a href="<?php echo headnerve_spa_href('/programs'); ?>">치료 프로그램</a></li>
+                        <li><a href="<?php echo headnerve_board_href('reviews'); ?>">치료후기</a></li>
                         <li><a href="<?php echo headnerve_board_href('notice'); ?>">공지사항</a></li>
                         <li><a href="<?php echo headnerve_board_href('news'); ?>">뉴스</a></li>
-                        <li><a href="<?php echo headnerve_board_href('column'); ?>">원장컬럼</a></li>
+                        <li><a href="<?php echo headnerve_board_href('column'); ?>">블로그</a></li>
                         <li><a href="<?php echo G5_URL; ?>/#consult">상담 예약</a></li>
                     </ul>
                 </div>

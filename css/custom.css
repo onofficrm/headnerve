@@ -3341,6 +3341,30 @@ body.maekrak-nav-open .maekrak-header__inner {
   color: rgba(255, 255, 255, 0.88);
 }
 
+/* 치료후기 목록 헤더 (다크 히어로 대신) */
+.reviews-page-head {
+  max-width: 720px;
+  margin: 0 auto 2.5rem;
+  padding: 2.5rem 1rem 0;
+  text-align: center;
+}
+
+.reviews-page-head__title {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-serif, "Playfair Display", Georgia, serif);
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 500;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.reviews-page-head__desc {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #374151;
+}
+
 body.headnerve-g5b-board #container .board-wrap {
   padding-top: 0.25rem;
 }

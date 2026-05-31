@@ -30,9 +30,10 @@ export function Footer() {
               <ul className="space-y-3 text-gray-500">
                 <li><Link to="/about" className="hover:text-maekrak-navy transition-colors">맥락한의원 소개</Link></li>
                 <li><Link to="/program" className="hover:text-maekrak-navy transition-colors">치료 프로그램</Link></li>
+                <li><a href={BOARD_URLS.reviews} className="hover:text-maekrak-navy transition-colors">치료후기</a></li>
                 <li><a href={BOARD_URLS.notice} className="hover:text-maekrak-navy transition-colors">공지사항</a></li>
                 <li><a href={BOARD_URLS.news} className="hover:text-maekrak-navy transition-colors">뉴스</a></li>
-                <li><a href={BOARD_URLS.column} className="hover:text-maekrak-navy transition-colors">원장컬럼</a></li>
+                <li><a href={BOARD_URLS.column} className="hover:text-maekrak-navy transition-colors">블로그</a></li>
                 <li><a href="#consult" className="hover:text-maekrak-navy transition-colors">상담 예약</a></li>
               </ul>
             </div>

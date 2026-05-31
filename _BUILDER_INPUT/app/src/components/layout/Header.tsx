@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { cn } from '../../lib/utils';
 import { Logo } from '../common/Logo';
 import { AUTH_URLS } from '../../lib/authUrls';
-import { COMMUNITY_NAV, type NavMenuItem } from '../../lib/boardUrls';
+import { COMMUNITY_NAV, BOARD_URLS, type NavMenuItem } from '../../lib/boardUrls';
 import { NavMenuLink } from './NavMenuLink';
 
 export function Header() {
@@ -35,16 +35,17 @@ export function Header() {
   const navLinks: NavMenuItem[] = [
     { name: '맥락한의원소개', href: '/about' },
     { 
-      name: '맥락 치료프로그램', 
+      name: '치료 프로그램', 
       href: '/programs',
       subLinks: [
-        { name: '두통치료프로그램', href: '/headache' },
-        { name: '어지럼증치료프로그램', href: '/dizziness' },
-        { name: '말초신경병증치료프로그램', href: '/neuropathy' },
-        { name: '자율신경치료프로그램', href: '/autonomic' },
-        { name: '브레인포그 치료 프로그램', href: '/brainfog' },
+        { name: '두통', href: '/headache' },
+        { name: '어지럼증', href: '/dizziness' },
+        { name: '말초신경병증', href: '/neuropathy' },
+        { name: '자율신경', href: '/autonomic' },
+        { name: '브레인포그', href: '/brainfog' },
       ]
     },
+    { name: '후기', href: BOARD_URLS.reviews, external: true },
     { 
       name: '두통', 
       href: '/headache', 

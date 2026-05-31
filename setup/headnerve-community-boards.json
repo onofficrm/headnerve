@@ -1,7 +1,7 @@
 {
   "project": "headnerve",
   "site": "맥락한의원",
-  "notes": "스킨: extend/headnerve_boards.extend.php 가 런타임 적용. DB 반영 1회: /setup/tools/headnerve-sync-community-boards.php (최고관리자). 게시판 미생성 시 관리자 → 게시판관리에서 생성.",
+  "notes": "스킨: extend/headnerve_boards.extend.php 가 런타임 적용. reviews 최초 1회: /setup/tools/headnerve-provision-reviews-board.php (생성·설정·샘플글). 스킨 DB 동기화: /setup/tools/headnerve-sync-community-boards.php (최고관리자).",
   "boards": [
     {
       "bo_table": "notice",
@@ -21,11 +21,26 @@
     },
     {
       "bo_table": "column",
-      "title": "원장컬럼",
+      "title": "블로그",
       "skin": "post-thumb",
       "mobile_skin": "post-thumb",
-      "menu_label": "원장컬럼",
+      "menu_label": "블로그",
       "url": "/bbs/board.php?bo_table=column"
+    },
+    {
+      "bo_table": "reviews",
+      "title": "치료후기",
+      "skin": "reviews",
+      "mobile_skin": "reviews",
+      "menu_label": "후기",
+      "url": "/bbs/board.php?bo_table=reviews",
+      "categories": "두통|어지럼증|자율신경|말초신경병증|브레인포그|기타",
+      "extra_fields": {
+        "wr_1": "환자",
+        "wr_2": "담당 원장",
+        "wr_3": "요약"
+      },
+      "admin_notes": "게시판 생성 시 분류 사용·첨부 1개 이상·여분필드 wr_1~3 활성화. wr_2 기본값 이재성."
     }
   ]
 }

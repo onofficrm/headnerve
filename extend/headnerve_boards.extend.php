@@ -7,6 +7,7 @@ if (!defined('_GNUBOARD_')) exit;
  * notice  → basic-notice
  * news    → basic-modern
  * column  → post-thumb
+ * reviews → reviews
  */
 if (!function_exists('headnerve_is_g5b_board')) {
     function headnerve_is_g5b_board()
@@ -30,6 +31,10 @@ $GLOBALS['headnerve_board_skin_map'] = array(
     'column' => array(
         'bo_skin'         => 'post-thumb',
         'bo_mobile_skin'  => 'post-thumb',
+    ),
+    'reviews' => array(
+        'bo_skin'         => 'reviews',
+        'bo_mobile_skin'  => 'reviews',
     ),
 );
 

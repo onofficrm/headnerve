@@ -130,6 +130,12 @@ $write_skin_modifier = isset($board_skin_modifier) ? $board_skin_modifier : '';
         </div>
     </div>
 
+    <?php
+    if (!empty($board_skin_modifier) && $board_skin_modifier === '--reviews') {
+        include_once(G5_SKIN_PATH.'/board/reviews/write-extra-fields.inc.php');
+    }
+    ?>
+
     <div class="board-write-form__row write_div board-write-form__content">
         <label for="wr_content" class="board-write-form__label">내용<strong class="required">필수</strong></label>
         <div class="wr_content board-write-form__editor <?php echo $is_dhtml_editor ? $config['cf_editor'] : ''; ?>">
