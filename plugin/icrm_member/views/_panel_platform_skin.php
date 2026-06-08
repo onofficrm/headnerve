@@ -68,6 +68,20 @@ $action_url = icrm_member_url('action.php');
       <?php } ?>
       (내 게시판 <?php echo (int) ($ps['board_log_count'] ?? 0); ?>개 연동 가능)
     </dd>
+    <?php if (!empty($ps['brand_color'])) { ?>
+    <dt>브랜드 컬러</dt>
+    <dd><code><?php echo icrm_member_h($ps['brand_color']); ?></code>
+      → <code>--onoff-accent</code> (플랫폼 스킨 적용 시)
+    </dd>
+    <?php } ?>
+    <dt>테마 연동</dt>
+    <dd>
+      <?php if (!empty($ps['theme_ready'])) { ?>
+      <span style="color:#0f766e">theme/basic · 루트 레이아웃</span> 아웃로그인 onoff 연동
+      <?php } else { ?>
+      플랫폼 스킨 적용 후 테마·사이드바에 자동 반영
+      <?php } ?>
+    </dd>
     <?php if (!empty($ps['applied_at'])) { ?>
     <dt>마지막 적용</dt>
     <dd><?php echo icrm_member_h($ps['applied_at']); ?></dd>

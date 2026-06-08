@@ -102,6 +102,113 @@ if (!function_exists('onoff_platform_outlogin_skin_id')) {
     }
 }
 
+if (!function_exists('onoff_platform_outlogin_skin_for_page')) {
+    /**
+     * @param string $fallback theme/basic 등 페이지 기본 아웃로그인 스킨
+     */
+    function onoff_platform_outlogin_skin_for_page($fallback = 'basic')
+    {
+        $platform = onoff_platform_outlogin_skin_id();
+
+        return ($platform !== 'basic') ? $platform : $fallback;
+    }
+}
+
+if (!function_exists('onoff_platform_skin_is_active')) {
+    function onoff_platform_skin_is_active()
+    {
+        global $config;
+
+        $member_skin = onoff_platform_skin_id_member();
+        if (function_exists('g5site_cfg') && trim(g5site_cfg('platform_member_skin', '')) === $member_skin) {
+            return true;
+        }
+
+        return isset($config['cf_member_skin'], $config['cf_mobile_member_skin'])
+            && (string) $config['cf_member_skin'] === $member_skin
+            && (string) $config['cf_mobile_member_skin'] === $member_skin;
+    }
+}
+
+if (!function_exists('onoff_platform_normalize_hex')) {
+    function onoff_platform_normalize_hex($hex)
+    {
+        $hex = trim((string) $hex);
+        if (!preg_match('/^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/', $hex, $m)) {
+            return '';
+        }
+        if (strlen($m[1]) === 3) {
+            $h = $m[1];
+
+            return '#' . strtoupper($h[0] . $h[0] . $h[1] . $h[1] . $h[2] . $h[2]);
+        }
+
+        return '#' . strtoupper($m[1]);
+    }
+}
+
+if (!function_exists('onoff_platform_hex_darken')) {
+    function onoff_platform_hex_darken($hex, $ratio = 0.12)
+    {
+        $hex = onoff_platform_normalize_hex($hex);
+        if ($hex === '') {
+            return '';
+        }
+        $ratio = max(0, min(1, (float) $ratio));
+        $r = hexdec(substr($hex, 1, 2));
+        $g = hexdec(substr($hex, 3, 2));
+        $b = hexdec(substr($hex, 5, 2));
+        $r = max(0, min(255, (int) round($r * (1 - $ratio))));
+        $g = max(0, min(255, (int) round($g * (1 - $ratio))));
+        $b = max(0, min(255, (int) round($b * (1 - $ratio))));
+
+        return sprintf('#%02X%02X%02X', $r, $g, $b);
+    }
+}
+
+if (!function_exists('onoff_platform_brand_css_vars')) {
+    /** @return string CSS custom properties (no wrapper) */
+    function onoff_platform_brand_css_vars()
+    {
+        if (!function_exists('g5site_cfg') || !onoff_platform_skin_is_active()) {
+            return '';
+        }
+
+        $primary = onoff_platform_normalize_hex(g5site_cfg('primary_color', ''));
+        if ($primary === '') {
+            return '';
+        }
+
+        $hover = onoff_platform_hex_darken($primary, 0.12);
+        $secondary = onoff_platform_normalize_hex(g5site_cfg('secondary_color', ''));
+        $vars = '--color-primary:' . $primary . ';'
+            . '--onoff-accent:' . $primary . ';'
+            . '--icrm-member-accent:' . $primary . ';'
+            . '--onoff-accent-hover:' . ($hover !== '' ? $hover : '#0f766e') . ';'
+            . '--onoff-accent-soft:color-mix(in srgb, ' . $primary . ' 12%, white);';
+
+        if ($secondary !== '') {
+            $vars .= '--color-secondary:' . $secondary . ';--color-muted:' . $secondary . ';';
+        }
+
+        return $vars;
+    }
+}
+
+if (!function_exists('onoff_platform_skin_enqueue_assets')) {
+    function onoff_platform_skin_enqueue_assets()
+    {
+        if (!function_exists('add_stylesheet') || !onoff_platform_skin_is_active()) {
+            return;
+        }
+
+        $brand = onoff_platform_brand_css_vars();
+        if ($brand !== '') {
+            add_stylesheet('<style>:root{' . $brand . '}</style>', -5);
+        }
+    }
+}
+
 if (!function_exists('onoff_platform_skin_board_exists')) {
     function onoff_platform_skin_board_exists($skin_id = '')
     {
@@ -169,6 +276,8 @@ if (!function_exists('onoff_platform_skin_get_status')) {
             'login_url'        => defined('G5_BBS_URL') ? G5_BBS_URL . '/login.php' : '/bbs/login.php',
             'register_url'     => defined('G5_BBS_URL') ? G5_BBS_URL . '/register.php' : '/bbs/register.php',
             'applied_at'       => function_exists('g5site_cfg') ? trim(g5site_cfg('platform_skin_applied_at', '')) : '',
+            'theme_ready'      => onoff_platform_skin_is_active(),
+            'brand_color'      => function_exists('g5site_cfg') ? trim(g5site_cfg('primary_color', '')) : '',
         );
     }
 }

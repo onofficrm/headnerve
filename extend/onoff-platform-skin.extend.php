@@ -22,6 +22,9 @@ if (!function_exists('onoff_platform_skin_on_common_header')) {
         if (function_exists('onoff_platform_skin_override_paths')) {
             onoff_platform_skin_override_paths();
         }
+        if (function_exists('onoff_platform_skin_enqueue_assets')) {
+            onoff_platform_skin_enqueue_assets();
+        }
     }
 }
 
