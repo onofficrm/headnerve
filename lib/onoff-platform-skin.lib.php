@@ -21,6 +21,42 @@ if (!function_exists('onoff_platform_skin_id_board_column')) {
     }
 }
 
+if (!function_exists('onoff_platform_skin_board_map')) {
+    /** @return array<string,string> template_key => skin_id */
+    function onoff_platform_skin_board_map()
+    {
+        return array(
+            'column'  => 'onoff-column',
+            'faq'     => 'onoff-faq',
+            'reviews' => 'onoff-reviews',
+            'inquiry' => 'onoff-inquiry',
+        );
+    }
+}
+
+if (!function_exists('onoff_platform_skin_board_for_template')) {
+    function onoff_platform_skin_board_for_template($template_key)
+    {
+        $template_key = preg_replace('/[^a-z_]/', '', (string) $template_key);
+        $map = onoff_platform_skin_board_map();
+
+        return isset($map[$template_key]) ? $map[$template_key] : onoff_platform_skin_id_board_column();
+    }
+}
+
+if (!function_exists('onoff_platform_skin_all_boards_exist')) {
+    function onoff_platform_skin_all_boards_exist()
+    {
+        foreach (array_unique(array_values(onoff_platform_skin_board_map())) as $skin_id) {
+            if (!onoff_platform_skin_board_exists($skin_id)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+
 if (!function_exists('onoff_platform_skin_member_exists')) {
     function onoff_platform_skin_member_exists()
     {
@@ -56,8 +92,19 @@ if (!function_exists('onoff_platform_skin_get_status')) {
         }
 
         $board_count = 0;
+        $board_templates = array();
         if (is_file(G5_LIB_PATH . '/icrm-member-board.lib.php')) {
             include_once G5_LIB_PATH . '/icrm-member-board.lib.php';
+            if (function_exists('icrm_member_board_templates')) {
+                foreach (icrm_member_board_templates() as $tpl_key => $tpl) {
+                    $skin_id = isset($tpl['skin']) ? (string) $tpl['skin'] : onoff_platform_skin_board_for_template($tpl_key);
+                    $board_templates[$tpl_key] = array(
+                        'label'   => isset($tpl['label']) ? (string) $tpl['label'] : $tpl_key,
+                        'skin'    => $skin_id,
+                        'exists'  => onoff_platform_skin_board_exists($skin_id),
+                    );
+                }
+            }
             if (function_exists('icrm_member_board_read_log')) {
                 foreach (icrm_member_board_read_log() as $row) {
                     if (!is_array($row) || empty($row['bo_table'])) {
@@ -69,12 +116,13 @@ if (!function_exists('onoff_platform_skin_get_status')) {
         }
 
         return array(
-            'ready'            => onoff_platform_skin_member_exists() && onoff_platform_skin_board_exists(),
+            'ready'            => onoff_platform_skin_member_exists() && onoff_platform_skin_all_boards_exist(),
             'member_skin'      => $member_skin,
             'board_skin'       => $board_skin,
+            'board_templates'  => $board_templates,
             'member_applied'   => $member_applied && $mobile_applied,
             'member_files_ok'  => onoff_platform_skin_member_exists(),
-            'board_files_ok'   => onoff_platform_skin_board_exists(),
+            'board_files_ok'   => onoff_platform_skin_all_boards_exist(),
             'board_log_count'  => $board_count,
             'login_url'        => defined('G5_BBS_URL') ? G5_BBS_URL . '/login.php' : '/bbs/login.php',
             'register_url'     => defined('G5_BBS_URL') ? G5_BBS_URL . '/register.php' : '/bbs/register.php',
@@ -130,7 +178,7 @@ if (!function_exists('onoff_platform_skin_write_site_config')) {
 
 if (!function_exists('onoff_platform_skin_apply')) {
     /**
-     * 플랫폼 기본 스킨 적용 (회원 스킨 + 회원이 만든 게시판 onoff-column)
+     * 플랫폼 기본 스킨 적용 (회원 스킨 + 템플릿별 게시판 스킨)
      *
      * @param array $options apply_boards(bool)
      * @return array
@@ -143,12 +191,11 @@ if (!function_exists('onoff_platform_skin_apply')) {
             return array('success' => false, 'message' => '플랫폼 스킨 적용은 최고관리자만 할 수 있습니다.');
         }
 
-        if (!onoff_platform_skin_member_exists() || !onoff_platform_skin_board_exists()) {
+        if (!onoff_platform_skin_member_exists() || !onoff_platform_skin_all_boards_exist()) {
             return array('success' => false, 'message' => '플랫폼 스킨 파일이 없습니다. iCRM 업데이트를 먼저 적용하세요.');
         }
 
         $member_skin = onoff_platform_skin_id_member();
-        $board_skin = onoff_platform_skin_id_board_column();
         $member_esc = sql_real_escape_string($member_skin);
 
         sql_query(" update {$g5['config_table']}
@@ -159,12 +206,12 @@ if (!function_exists('onoff_platform_skin_apply')) {
         $config['cf_mobile_member_skin'] = $member_skin;
 
         $boards_updated = 0;
+        $board_skin_summary = array();
         if (!isset($options['apply_boards']) || !empty($options['apply_boards'])) {
             if (is_file(G5_LIB_PATH . '/icrm-member-board.lib.php')) {
                 include_once G5_LIB_PATH . '/icrm-member-board.lib.php';
             }
             if (function_exists('icrm_member_board_read_log')) {
-                $board_esc = sql_real_escape_string($board_skin);
                 foreach (icrm_member_board_read_log() as $row) {
                     if (!is_array($row) || empty($row['bo_table'])) {
                         continue;
@@ -173,26 +220,40 @@ if (!function_exists('onoff_platform_skin_apply')) {
                     if ($bo_table === '') {
                         continue;
                     }
+                    $template_key = isset($row['template']) ? (string) $row['template'] : 'column';
+                    if (function_exists('icrm_member_board_fetch') && function_exists('icrm_member_board_guess_template')) {
+                        $board_row = icrm_member_board_fetch($bo_table);
+                        if (!empty($board_row)) {
+                            $template_key = icrm_member_board_guess_template(array_merge($row, $board_row));
+                        }
+                    }
+                    $board_skin = onoff_platform_skin_board_for_template($template_key);
+                    if (function_exists('icrm_member_board_resolve_skin')) {
+                        $board_skin = icrm_member_board_resolve_skin($board_skin);
+                    }
+                    $board_esc = sql_real_escape_string($board_skin);
                     sql_query(" update {$g5['board_table']}
                                    set bo_skin = '{$board_esc}',
                                        bo_mobile_skin = '{$board_esc}'
                                  where bo_table = '" . sql_real_escape_string($bo_table) . "' ", false);
                     $boards_updated++;
+                    $board_skin_summary[$template_key] = $board_skin;
                 }
             }
         }
 
         onoff_platform_skin_write_site_config(array(
-            'platform_member_skin'    => $member_skin,
-            'platform_board_skin_column' => $board_skin,
-            'platform_skin_applied_at'  => date('Y-m-d H:i:s'),
+            'platform_member_skin'       => $member_skin,
+            'platform_board_skin_column' => onoff_platform_skin_id_board_column(),
+            'platform_skin_applied_at'   => date('Y-m-d H:i:s'),
         ));
 
         return array(
             'success'         => true,
             'message'         => '플랫폼 스킨이 적용되었습니다.',
             'member_skin'     => $member_skin,
-            'board_skin'      => $board_skin,
+            'board_skin'      => onoff_platform_skin_id_board_column(),
+            'board_skins'     => $board_skin_summary,
             'boards_updated'  => $boards_updated,
             'login_url'       => defined('G5_BBS_URL') ? G5_BBS_URL . '/login.php' : '/bbs/login.php',
         );

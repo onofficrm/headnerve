@@ -78,24 +78,24 @@ if (!function_exists('icrm_member_board_templates')) {
             ),
             'faq' => array(
                 'label'            => 'FAQ',
-                'skin'             => 'faq-accordion',
-                'mobile_skin'      => 'faq-accordion',
+                'skin'             => 'onoff-faq',
+                'mobile_skin'      => 'onoff-faq',
                 'use_category'     => '0',
                 'category_list'    => '',
                 'bo_comment_level' => '1',
             ),
             'reviews' => array(
                 'label'            => '후기 · 리뷰',
-                'skin'             => 'reviews',
-                'mobile_skin'      => 'reviews',
+                'skin'             => 'onoff-reviews',
+                'mobile_skin'      => 'onoff-reviews',
                 'use_category'     => '1',
                 'category_list'    => '일반|추천',
                 'bo_comment_level' => '0',
             ),
             'inquiry' => array(
                 'label'            => '문의 · 상담',
-                'skin'             => 'landing-inquiry',
-                'mobile_skin'      => 'landing-inquiry',
+                'skin'             => 'onoff-inquiry',
+                'mobile_skin'      => 'onoff-inquiry',
                 'use_category'     => '0',
                 'category_list'    => '',
                 'bo_comment_level' => '0',
@@ -299,6 +299,15 @@ if (!function_exists('icrm_member_board_guess_template')) {
     function icrm_member_board_guess_template(array $board_row)
     {
         $skin = isset($board_row['bo_skin']) ? (string) $board_row['bo_skin'] : '';
+        $legacy_skins = array(
+            'faq-accordion'   => 'faq',
+            'landing-inquiry' => 'inquiry',
+            'reviews'         => 'reviews',
+            'basic-card'      => 'reviews',
+        );
+        if (isset($legacy_skins[$skin])) {
+            return $legacy_skins[$skin];
+        }
         foreach (icrm_member_board_templates() as $key => $tpl) {
             if ($skin === $tpl['skin'] || $skin === $tpl['mobile_skin']) {
                 return $key;

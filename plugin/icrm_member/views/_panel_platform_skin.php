@@ -35,7 +35,24 @@ $action_url = icrm_member_url('action.php');
       <?php echo !empty($ps['member_applied']) ? ' · <span style="color:#0f766e">적용됨</span>' : ' · 미적용'; ?>
     </dd>
     <dt>게시판 스킨</dt>
-    <dd><code><?php echo icrm_member_h($ps['board_skin'] ?? 'onoff-column'); ?></code>
+    <dd>
+      <?php if (!empty($ps['board_templates']) && is_array($ps['board_templates'])) { ?>
+      <ul style="margin:0;padding:0;list-style:none;line-height:1.7">
+        <?php foreach ($ps['board_templates'] as $tpl_key => $tpl_row) { ?>
+        <li>
+          <?php echo icrm_member_h($tpl_row['label'] ?? $tpl_key); ?>
+          · <code><?php echo icrm_member_h($tpl_row['skin'] ?? ''); ?></code>
+          <?php if (!empty($tpl_row['exists'])) { ?>
+          <span style="color:#0f766e">설치됨</span>
+          <?php } else { ?>
+          <span style="color:#b45309">없음</span>
+          <?php } ?>
+        </li>
+        <?php } ?>
+      </ul>
+      <?php } else { ?>
+      <code><?php echo icrm_member_h($ps['board_skin'] ?? 'onoff-column'); ?></code>
+      <?php } ?>
       (내 게시판 <?php echo (int) ($ps['board_log_count'] ?? 0); ?>개 연동 가능)
     </dd>
     <?php if (!empty($ps['applied_at'])) { ?>
@@ -70,7 +87,7 @@ $action_url = icrm_member_url('action.php');
   var actionUrl = <?php echo json_encode($action_url); ?>;
   if (!btn) return;
   btn.addEventListener('click', function() {
-    if (!confirm('회원 스킨(onoff)과 내 게시판 스킨(onoff-column)을 적용합니다. 계속할까요?')) return;
+    if (!confirm('회원 스킨(onoff)과 템플릿별 게시판 스킨(칼럼·FAQ·후기·문의)을 적용합니다. 계속할까요?')) return;
     btn.disabled = true;
     if (msg) { msg.textContent = '적용 중…'; msg.className = 'icp-msg'; }
     var fd = new FormData();
