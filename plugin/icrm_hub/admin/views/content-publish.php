@@ -104,7 +104,7 @@ function icp_h($s)
         ? 'AI 초안 생성을 쓰려면 사이트 관리자에게 SEO API 연결을 요청해 주세요. 직접 작성 후 발행은 가능합니다.'
         : 'AI 초안 생성을 쓰려면 <a href="' . icp_h(icrm_admin_page_url('seo', array('tab' => 'settings'))) . '">SEO API 연결</a>을 확인해 주세요. 직접 작성 후 발행은 가능합니다.'; ?></p>
     <?php } elseif ($icrm_member_publish_mode && $boards === array()) { ?>
-    <p class="icp-compose__alert">발행할 게시판이 없습니다. <a href="<?php echo icp_h(function_exists('icrm_member_url') ? icrm_member_url(array('m' => 'setup', 'tab' => 'boards')) : '#'); ?>">홈페이지 구성 → 게시판 추가</a>에서 먼저 게시판을 만드세요.</p>
+    <p class="icp-compose__alert">발행할 게시판이 없습니다. <a href="<?php echo icp_h(function_exists('icrm_member_url') ? icrm_member_url('boards') : '#'); ?>">게시판</a> 메뉴에서 먼저 게시판을 만드세요.</p>
     <?php } ?>
 
     <form id="icp_compose_form" class="icp-compose__layout" autocomplete="off">

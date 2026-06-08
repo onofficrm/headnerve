@@ -128,7 +128,7 @@ $edit_table = isset($_GET['edit']) ? preg_replace('/[^a-z0-9_]/', '', strtolower
                         location.href = publishUrl;
                         return;
                     }
-                    setTimeout(function() { location.href = <?php echo json_encode(icrm_member_url(array('m' => 'setup', 'tab' => 'boards'))); ?>; }, 900);
+                    setTimeout(function() { location.href = <?php echo json_encode(icrm_member_url('boards')); ?>; }, 900);
                 })
                 .catch(function(err) {
                     createMsg.textContent = err.message || '요청 실패';

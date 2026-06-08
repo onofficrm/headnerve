@@ -26,10 +26,13 @@ if (!function_exists('icrm_update_admin_menu')) {
     function icrm_update_admin_menu($admin_menu)
     {
         if (defined('G5_PLUGIN_URL')) {
+            $update_url = function_exists('icrm_update_admin_url')
+                ? icrm_update_admin_url()
+                : G5_PLUGIN_URL . '/icrm_update/admin/index.php';
             $admin_menu['menu100'][] = array(
                 '100425',
                 'iCRM 업데이트',
-                G5_PLUGIN_URL . '/icrm_update/admin/index.php',
+                $update_url,
                 'icrm_update',
             );
         }

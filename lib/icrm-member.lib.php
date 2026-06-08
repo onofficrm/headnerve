@@ -147,6 +147,15 @@ if (!function_exists('icrm_member_can_setup')) {
     }
 }
 
+if (!function_exists('icrm_member_can_update')) {
+    function icrm_member_can_update()
+    {
+        global $is_admin;
+
+        return $is_admin === 'super';
+    }
+}
+
 if (!function_exists('icrm_member_can_module')) {
     function icrm_member_can_module($module)
     {
@@ -163,8 +172,37 @@ if (!function_exists('icrm_member_can_module')) {
                 return icrm_member_can_publish();
             case 'boards':
                 return icrm_member_can_boards();
+            case 'update':
+                return icrm_member_can_update();
             default:
                 return false;
+        }
+    }
+}
+
+if (!function_exists('icrm_member_module_lock_reason')) {
+    function icrm_member_module_lock_reason($module)
+    {
+        $module = preg_replace('/[^a-z_]/', '', (string) $module);
+
+        switch ($module) {
+            case 'design':
+                if (!icrm_member_is_logged_in()) {
+                    return '로그인이 필요합니다.';
+                }
+                if (function_exists('onoff_builder_member_deploy_enabled') && !onoff_builder_member_deploy_enabled()) {
+                    return '디자인 배포가 비활성화되어 있습니다.';
+                }
+
+                return '레벨 ' . (function_exists('onoff_builder_member_deploy_min_level') ? onoff_builder_member_deploy_min_level() : 2) . ' 이상 필요';
+            case 'boards':
+                return '레벨 ' . icrm_member_board_min_level() . ' 이상 필요';
+            case 'publish':
+                return 'iCRM 라이선스 연동 후 이용 가능';
+            case 'update':
+                return '관리자 전용';
+            default:
+                return '이용 권한이 없습니다.';
         }
     }
 }
@@ -189,11 +227,9 @@ if (!function_exists('icrm_member_require')) {
             exit;
         }
 
-        $msg = '이 메뉴를 사용할 권한이 없습니다.';
-        if ($module === 'boards') {
-            $msg = '게시판 추가는 레벨 ' . icrm_member_board_min_level() . ' 이상 회원만 이용할 수 있습니다.';
-        } elseif ($module === 'setup') {
-            $msg = '홈페이지 구성 메뉴를 사용할 권한이 없습니다.';
+        $msg = icrm_member_module_lock_reason($module);
+        if ($msg === '이용 권한이 없습니다.') {
+            $msg = '이 메뉴를 사용할 권한이 없습니다.';
         }
 
         if (function_exists('alert')) {
@@ -235,10 +271,60 @@ if (!function_exists('icrm_member_modules')) {
     function icrm_member_modules()
     {
         return array(
-            'home'    => array('label' => '내 홈페이지', 'icon' => 'home', 'desc' => '한눈에 보기'),
-            'setup'   => array('label' => '홈페이지 구성', 'icon' => 'setup', 'desc' => '디자인 배포 · 게시판 추가'),
-            'publish' => array('label' => '콘텐츠 발행', 'icon' => 'publish', 'desc' => 'AI 글쓰기 · 게시판'),
+            'home'    => array('label' => '대시보드', 'icon' => 'home', 'desc' => '진행 상황 한눈에 보기', 'group' => ''),
+            'design'  => array('label' => '디자인 배포', 'icon' => 'design', 'desc' => '빌더 ZIP 업로드 · 사이트 적용', 'group' => '홈페이지'),
+            'boards'  => array('label' => '게시판', 'icon' => 'boards', 'desc' => '게시판 추가 · 수정', 'group' => '홈페이지'),
+            'publish' => array('label' => '콘텐츠 발행', 'icon' => 'publish', 'desc' => 'AI 글쓰기 · 게시판 발행', 'group' => '콘텐츠'),
+            'update'  => array('label' => '사이트 업데이트', 'icon' => 'update', 'desc' => '기능 업데이트 · 디자인 동기화', 'group' => '관리'),
         );
+    }
+}
+
+if (!function_exists('icrm_member_render_sidebar_nav')) {
+    function icrm_member_render_sidebar_nav($active_module)
+    {
+        $active_module = preg_replace('/[^a-z_]/', '', (string) $active_module);
+        $modules = icrm_member_modules();
+        $last_group = null;
+        $printed_menu_label = false;
+
+        foreach ($modules as $key => $item) {
+            if ($key === 'update' && !icrm_member_can_access()) {
+                continue;
+            }
+
+            $group = isset($item['group']) ? (string) $item['group'] : '';
+            if ($group === '' && !$printed_menu_label) {
+                echo '<div class="icrm-sidebar__label">메뉴</div>';
+                $printed_menu_label = true;
+            } elseif ($group !== '' && $group !== $last_group) {
+                echo '<div class="icrm-sidebar__label">' . icrm_member_h($group) . '</div>';
+                $last_group = $group;
+            }
+
+            $can = icrm_member_can_module($key);
+            $class = ($key === $active_module) ? ' is-active' : '';
+            $icon = icrm_member_shell_icon($item['icon']);
+
+            if ($can) {
+                ?>
+        <a href="<?php echo icrm_member_h(icrm_member_url($key)); ?>" class="icrm-sidebar__link<?php echo $class; ?>">
+            <span class="icrm-sidebar__icon" aria-hidden="true"><?php echo $icon; ?></span>
+            <span class="icrm-sidebar__link-text"><?php echo icrm_member_h($item['label']); ?></span>
+        </a>
+                <?php
+                continue;
+            }
+
+            $lock_reason = icrm_member_module_lock_reason($key);
+            ?>
+        <span class="icrm-sidebar__link is-locked<?php echo $class; ?>" title="<?php echo icrm_member_h($lock_reason); ?>">
+            <span class="icrm-sidebar__icon" aria-hidden="true"><?php echo $icon; ?></span>
+            <span class="icrm-sidebar__link-text"><?php echo icrm_member_h($item['label']); ?></span>
+            <span class="icrm-sidebar__lock" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
+        </span>
+            <?php
+        }
     }
 }
 
@@ -258,6 +344,7 @@ if (!function_exists('icrm_member_shell_icon')) {
             'design'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>',
             'publish' => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
             'boards'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>',
+            'update'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg>',
         );
 
         return isset($icons[$name]) ? $icons[$name] : $icons['home'];
@@ -300,24 +387,13 @@ if (!function_exists('icrm_member_shell_begin')) {
         <a href="<?php echo icrm_member_h(icrm_member_url('home')); ?>" class="icrm-sidebar__brand-link">
             <span class="icrm-sidebar__logo">iC</span>
             <div class="icrm-sidebar__title-wrap">
-                <span class="icrm-sidebar__title">iCRM 회원</span>
+                <span class="icrm-sidebar__title">iCRM</span>
                 <span class="icrm-sidebar__sub">내 홈페이지 관리</span>
             </div>
         </a>
     </div>
     <nav class="icrm-sidebar__nav">
-        <div class="icrm-sidebar__label">메뉴</div>
-        <?php foreach ($modules as $key => $item) {
-            if (!icrm_member_can_module($key)) {
-                continue;
-            }
-            $class = ($key === $active_module) ? ' is-active' : '';
-            ?>
-        <a href="<?php echo icrm_member_h(icrm_member_url($key)); ?>" class="icrm-sidebar__link<?php echo $class; ?>">
-            <span class="icrm-sidebar__icon" aria-hidden="true"><?php echo icrm_member_shell_icon($item['icon']); ?></span>
-            <span class="icrm-sidebar__link-text"><?php echo icrm_member_h($item['label']); ?></span>
-        </a>
-        <?php } ?>
+        <?php icrm_member_render_sidebar_nav($active_module); ?>
     </nav>
     <div class="icrm-sidebar__foot">
         <div class="icrm-sidebar__status">

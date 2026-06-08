@@ -237,6 +237,13 @@ if (!function_exists('icrm_update_download_file')) {
 if (!function_exists('icrm_update_admin_url')) {
     function icrm_update_admin_url()
     {
+        if (is_file(G5_LIB_PATH . '/icrm-member.lib.php')) {
+            include_once G5_LIB_PATH . '/icrm-member.lib.php';
+        }
+        if (function_exists('icrm_member_enabled') && icrm_member_enabled() && function_exists('icrm_member_url')) {
+            return icrm_member_url('update');
+        }
+
         return defined('G5_PLUGIN_URL') ? G5_PLUGIN_URL . '/icrm_update/admin/index.php' : '';
     }
 }

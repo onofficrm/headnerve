@@ -47,6 +47,28 @@
   display: inline-flex;
 }
 
+.icrm-member-card.is-locked {
+  opacity: 0.88;
+}
+
+.icrm-member-card__lock {
+  margin: 0;
+  font-size: 12px;
+  color: #b45309;
+}
+
+.icrm-sidebar__link.is-locked {
+  opacity: 0.55;
+  cursor: help;
+  user-select: none;
+}
+
+.icrm-sidebar__lock {
+  margin-left: auto;
+  font-size: 11px;
+  line-height: 1;
+}
+
 .icrm-member-card__actions {
   display: flex;
   flex-wrap: wrap;
