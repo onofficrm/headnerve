@@ -290,3 +290,229 @@ if (!function_exists('icrm_member_board_list_recent')) {
         return array_slice($log, 0, max(1, (int) $limit));
     }
 }
+
+if (!function_exists('icrm_member_board_guess_template')) {
+    function icrm_member_board_guess_template(array $board_row)
+    {
+        $skin = isset($board_row['bo_skin']) ? (string) $board_row['bo_skin'] : '';
+        foreach (icrm_member_board_templates() as $key => $tpl) {
+            if ($skin === $tpl['skin'] || $skin === $tpl['mobile_skin']) {
+                return $key;
+            }
+        }
+
+        return isset($board_row['template']) ? (string) $board_row['template'] : 'column';
+    }
+}
+
+if (!function_exists('icrm_member_board_can_manage')) {
+    function icrm_member_board_can_manage($bo_table, $mb_id = '')
+    {
+        global $is_admin, $member;
+
+        if (!function_exists('icrm_member_can_boards') || !icrm_member_can_boards()) {
+            return false;
+        }
+
+        $bo_table = preg_replace('/[^a-z0-9_]/', '', strtolower((string) $bo_table));
+        if ($bo_table === '') {
+            return false;
+        }
+
+        if ($is_admin === 'super') {
+            return true;
+        }
+
+        $mb_id = trim((string) $mb_id);
+        if ($mb_id === '' && !empty($member['mb_id'])) {
+            $mb_id = (string) $member['mb_id'];
+        }
+        if ($mb_id === '') {
+            return false;
+        }
+
+        foreach (icrm_member_board_read_log() as $row) {
+            if (!is_array($row) || empty($row['bo_table'])) {
+                continue;
+            }
+            if (preg_replace('/[^a-z0-9_]/', '', strtolower((string) $row['bo_table'])) !== $bo_table) {
+                continue;
+            }
+
+            return isset($row['mb_id']) && (string) $row['mb_id'] === $mb_id;
+        }
+
+        return false;
+    }
+}
+
+if (!function_exists('icrm_member_board_fetch')) {
+    function icrm_member_board_fetch($bo_table)
+    {
+        global $g5;
+
+        $bo_table = preg_replace('/[^a-z0-9_]/', '', strtolower((string) $bo_table));
+        if ($bo_table === '') {
+            return array();
+        }
+
+        $board = sql_fetch(" select bo_table, bo_subject, bo_mobile_subject, bo_skin, bo_mobile_skin,
+                                    bo_use_category, bo_category_list, bo_use_comment
+                             from {$g5['board_table']}
+                             where bo_table = '" . sql_real_escape_string($bo_table) . "' ");
+
+        return is_array($board) ? $board : array();
+    }
+}
+
+if (!function_exists('icrm_member_board_list_manageable')) {
+    function icrm_member_board_list_manageable($mb_id = '', $limit = 50)
+    {
+        global $member, $is_admin;
+
+        $mb_id = trim((string) $mb_id);
+        if ($mb_id === '' && !empty($member['mb_id'])) {
+            $mb_id = (string) $member['mb_id'];
+        }
+
+        $rows = array();
+        foreach (icrm_member_board_read_log() as $log_row) {
+            if (!is_array($log_row) || empty($log_row['bo_table'])) {
+                continue;
+            }
+
+            if ($is_admin !== 'super') {
+                if ($mb_id === '' || (string) ($log_row['mb_id'] ?? '') !== $mb_id) {
+                    continue;
+                }
+            }
+
+            $bo_table = preg_replace('/[^a-z0-9_]/', '', strtolower((string) $log_row['bo_table']));
+            if ($bo_table === '') {
+                continue;
+            }
+
+            $board = icrm_member_board_fetch($bo_table);
+            if (empty($board['bo_table'])) {
+                continue;
+            }
+
+            $rows[] = array(
+                'bo_table'         => $bo_table,
+                'bo_subject'       => (string) ($board['bo_subject'] ?? $log_row['bo_subject'] ?? $bo_table),
+                'bo_mobile_subject'=> (string) ($board['bo_mobile_subject'] ?? $board['bo_subject'] ?? ''),
+                'template'         => icrm_member_board_guess_template(array_merge($log_row, $board)),
+                'mb_id'            => (string) ($log_row['mb_id'] ?? ''),
+                'created_at'       => (string) ($log_row['created_at'] ?? ''),
+                'updated_at'       => (string) ($log_row['updated_at'] ?? ''),
+                'board_url'        => G5_BBS_URL . '/board.php?bo_table=' . rawurlencode($bo_table),
+            );
+        }
+
+        usort($rows, function ($a, $b) {
+            $a_ts = (string) ($a['updated_at'] ?: $a['created_at']);
+            $b_ts = (string) ($b['updated_at'] ?: $b['created_at']);
+
+            return strcmp($b_ts, $a_ts);
+        });
+
+        return array_slice($rows, 0, max(1, (int) $limit));
+    }
+}
+
+if (!function_exists('icrm_member_board_update_log_entry')) {
+    function icrm_member_board_update_log_entry($bo_table, array $changes)
+    {
+        $bo_table = preg_replace('/[^a-z0-9_]/', '', strtolower((string) $bo_table));
+        if ($bo_table === '') {
+            return;
+        }
+
+        $log = icrm_member_board_read_log();
+        foreach ($log as $idx => $row) {
+            if (!is_array($row) || empty($row['bo_table'])) {
+                continue;
+            }
+            if (preg_replace('/[^a-z0-9_]/', '', strtolower((string) $row['bo_table'])) !== $bo_table) {
+                continue;
+            }
+            foreach ($changes as $key => $value) {
+                $log[$idx][$key] = $value;
+            }
+            $log[$idx]['updated_at'] = date('Y-m-d H:i:s');
+            icrm_member_board_write_log($log);
+            return;
+        }
+    }
+}
+
+if (!function_exists('icrm_member_board_update')) {
+    /**
+     * @param array $input bo_table, bo_subject, template, mb_id
+     * @return array
+     */
+    function icrm_member_board_update(array $input)
+    {
+        global $g5, $member;
+
+        $mb_id = isset($input['mb_id']) ? trim((string) $input['mb_id']) : '';
+        if ($mb_id === '' && !empty($member['mb_id'])) {
+            $mb_id = (string) $member['mb_id'];
+        }
+
+        $bo_table = preg_replace('/[^a-z0-9_]/', '', strtolower(trim((string) ($input['bo_table'] ?? ''))));
+        $bo_subject = trim(strip_tags((string) ($input['bo_subject'] ?? '')));
+        $template_key = preg_replace('/[^a-z_]/', '', (string) ($input['template'] ?? ''));
+
+        if ($bo_table === '') {
+            return array('success' => false, 'message' => '게시판 ID가 없습니다.');
+        }
+        if ($bo_subject === '') {
+            return array('success' => false, 'message' => '게시판 이름을 입력하세요.');
+        }
+        if (!icrm_member_board_can_manage($bo_table, $mb_id)) {
+            return array('success' => false, 'message' => '이 게시판을 수정할 권한이 없습니다.');
+        }
+
+        $board = icrm_member_board_fetch($bo_table);
+        if (empty($board['bo_table'])) {
+            return array('success' => false, 'message' => '게시판을 찾을 수 없습니다.');
+        }
+
+        $templates = icrm_member_board_templates();
+        if ($template_key === '' || !isset($templates[$template_key])) {
+            $template_key = icrm_member_board_guess_template($board);
+        }
+        $tpl = $templates[$template_key];
+
+        $skin = icrm_member_board_resolve_skin($tpl['skin']);
+        $mobile_skin = icrm_member_board_resolve_skin($tpl['mobile_skin']);
+
+        sql_query(" update {$g5['board_table']}
+            set bo_subject = '" . sql_real_escape_string($bo_subject) . "',
+                bo_mobile_subject = '" . sql_real_escape_string($bo_subject) . "',
+                bo_comment_level = '" . sql_real_escape_string((string) $tpl['bo_comment_level']) . "',
+                bo_use_category = '" . sql_real_escape_string((string) $tpl['use_category']) . "',
+                bo_category_list = '" . sql_real_escape_string((string) $tpl['category_list']) . "',
+                bo_use_comment = '" . ($tpl['bo_comment_level'] === '0' ? '0' : '1') . "',
+                bo_skin = '" . sql_real_escape_string($skin) . "',
+                bo_mobile_skin = '" . sql_real_escape_string($mobile_skin) . "'
+            where bo_table = '" . sql_real_escape_string($bo_table) . "' ", false);
+
+        icrm_member_board_update_log_entry($bo_table, array(
+            'bo_subject' => $bo_subject,
+            'template'   => $template_key,
+        ));
+
+        $board_url = G5_BBS_URL . '/board.php?bo_table=' . rawurlencode($bo_table);
+
+        return array(
+            'success'    => true,
+            'message'    => '게시판이 수정되었습니다.',
+            'bo_table'   => $bo_table,
+            'bo_subject' => $bo_subject,
+            'template'   => $template_key,
+            'board_url'  => $board_url,
+        );
+    }
+}
