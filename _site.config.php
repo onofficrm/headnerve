@@ -114,6 +114,12 @@ $site_config = array(
     'icrm_member_board_min_level'     => '5',
     'icrm_member_board_max_per_month' => '3',
 
+    /* onoff-update */
+    'platform_member_skin'           => '',
+    'platform_outlogin_skin'         => '',
+    'platform_board_skin_column'     => 'onoff-column',
+    'platform_skin_applied_at'       => '',
+
 );
 
 /**

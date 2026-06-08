@@ -227,6 +227,21 @@
   margin-top: 4px;
 }
 
+.icrm-member-board-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+.icrm-member-board-badge--linked {
+  color: #0f766e;
+  background: rgba(13, 148, 136, 0.12);
+}
+
 .icrm-member-embed .onoff-builder-member__steps {
   margin-top: 0;
 }

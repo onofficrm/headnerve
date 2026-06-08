@@ -56,6 +56,9 @@ if (!function_exists('icrm_member_board_month_count')) {
                 continue;
             }
             if (isset($row['created_at']) && strpos((string) $row['created_at'], $ym) === 0) {
+                if ((string) ($row['source'] ?? 'created') === 'linked') {
+                    continue;
+                }
                 $count++;
             }
         }
@@ -266,6 +269,7 @@ if (!function_exists('icrm_member_board_create')) {
             'bo_subject'  => $bo_subject,
             'template'    => $template_key,
             'mb_id'       => $mb_id,
+            'source'      => 'created',
             'created_at'  => date('Y-m-d H:i:s'),
         );
         icrm_member_board_write_log($log);
@@ -545,9 +549,11 @@ if (!function_exists('icrm_member_board_list_manageable')) {
                 'bo_subject'       => (string) ($board['bo_subject'] ?? $log_row['bo_subject'] ?? $bo_table),
                 'bo_mobile_subject'=> (string) ($board['bo_mobile_subject'] ?? $board['bo_subject'] ?? ''),
                 'template'         => icrm_member_board_guess_template(array_merge($log_row, $board)),
+                'source'           => (string) ($log_row['source'] ?? 'created'),
                 'mb_id'            => (string) ($log_row['mb_id'] ?? ''),
                 'created_at'       => (string) ($log_row['created_at'] ?? ''),
                 'updated_at'       => (string) ($log_row['updated_at'] ?? ''),
+                'linked_at'        => (string) ($log_row['linked_at'] ?? ''),
                 'board_url'        => G5_BBS_URL . '/board.php?bo_table=' . rawurlencode($bo_table),
             );
         }
@@ -626,7 +632,126 @@ if (!function_exists('icrm_member_board_update')) {
         if ($template_key === '' || !isset($templates[$template_key])) {
             $template_key = icrm_member_board_guess_template($board);
         }
+
+        if (!icrm_member_board_apply_template($bo_table, $template_key, $bo_subject)) {
+            return array('success' => false, 'message' => '템플릿 적용에 실패했습니다.');
+        }
+
+        icrm_member_board_update_log_entry($bo_table, array(
+            'bo_subject' => $bo_subject,
+            'template'   => $template_key,
+        ));
+
+        $board_url = G5_BBS_URL . '/board.php?bo_table=' . rawurlencode($bo_table);
+
+        return array(
+            'success'    => true,
+            'message'    => '게시판이 수정되었습니다.',
+            'bo_table'   => $bo_table,
+            'bo_subject' => $bo_subject,
+            'template'   => $template_key,
+            'board_url'  => $board_url,
+        );
+    }
+}
+
+if (!function_exists('icrm_member_board_can_connect')) {
+    function icrm_member_board_can_connect()
+    {
+        global $is_admin;
+
+        return $is_admin === 'super';
+    }
+}
+
+if (!function_exists('icrm_member_board_is_logged')) {
+    function icrm_member_board_is_logged($bo_table)
+    {
+        $bo_table = preg_replace('/[^a-z0-9_]/', '', strtolower((string) $bo_table));
+        if ($bo_table === '') {
+            return false;
+        }
+
+        foreach (icrm_member_board_read_log() as $row) {
+            if (!is_array($row) || empty($row['bo_table'])) {
+                continue;
+            }
+            if (preg_replace('/[^a-z0-9_]/', '', strtolower((string) $row['bo_table'])) === $bo_table) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+
+if (!function_exists('icrm_member_board_list_connectable')) {
+    /**
+     * board-log에 없는 기존 그누보드 게시판 목록
+     */
+    function icrm_member_board_list_connectable($limit = 100)
+    {
+        global $g5;
+
+        $linked = array();
+        foreach (icrm_member_board_read_log() as $row) {
+            if (!is_array($row) || empty($row['bo_table'])) {
+                continue;
+            }
+            $bt = preg_replace('/[^a-z0-9_]/', '', strtolower((string) $row['bo_table']));
+            if ($bt !== '') {
+                $linked[$bt] = true;
+            }
+        }
+
+        $rows = array();
+        $res = sql_query(" select bo_table, bo_subject, bo_skin, bo_mobile_skin
+                           from {$g5['board_table']}
+                           order by bo_table ");
+        while ($b = sql_fetch_array($res)) {
+            if (empty($b['bo_table'])) {
+                continue;
+            }
+            $bt = preg_replace('/[^a-z0-9_]/', '', strtolower((string) $b['bo_table']));
+            if ($bt === '' || isset($linked[$bt])) {
+                continue;
+            }
+            $rows[] = array(
+                'bo_table'       => $bt,
+                'bo_subject'     => (string) ($b['bo_subject'] ?? $bt),
+                'bo_skin'        => (string) ($b['bo_skin'] ?? ''),
+                'template_guess' => icrm_member_board_guess_template($b),
+            );
+        }
+
+        return array_slice($rows, 0, max(1, (int) $limit));
+    }
+}
+
+if (!function_exists('icrm_member_board_apply_template')) {
+    function icrm_member_board_apply_template($bo_table, $template_key, $bo_subject = '')
+    {
+        global $g5;
+
+        $bo_table = preg_replace('/[^a-z0-9_]/', '', strtolower((string) $bo_table));
+        if ($bo_table === '') {
+            return false;
+        }
+
+        $templates = icrm_member_board_templates();
+        if (!isset($templates[$template_key])) {
+            $template_key = 'column';
+        }
         $tpl = $templates[$template_key];
+
+        $board = icrm_member_board_fetch($bo_table);
+        if (empty($board['bo_table'])) {
+            return false;
+        }
+
+        if ($bo_subject === '') {
+            $bo_subject = (string) ($board['bo_subject'] ?? $bo_table);
+        }
 
         $skin = icrm_member_board_resolve_skin($tpl['skin']);
         $mobile_skin = icrm_member_board_resolve_skin($tpl['mobile_skin']);
@@ -642,19 +767,85 @@ if (!function_exists('icrm_member_board_update')) {
                 bo_mobile_skin = '" . sql_real_escape_string($mobile_skin) . "'
             where bo_table = '" . sql_real_escape_string($bo_table) . "' ", false);
 
-        icrm_member_board_update_log_entry($bo_table, array(
-            'bo_subject' => $bo_subject,
+        return true;
+    }
+}
+
+if (!function_exists('icrm_member_board_connect')) {
+    /**
+     * 기존 게시판을 iCRM board-log에 연결 (최고관리자)
+     *
+     * @param array $input bo_table, template, mb_id(담당 회원)
+     * @return array
+     */
+    function icrm_member_board_connect(array $input)
+    {
+        global $member;
+
+        if (!icrm_member_board_can_connect()) {
+            return array('success' => false, 'message' => '기존 게시판 연결은 최고관리자만 할 수 있습니다.');
+        }
+
+        $bo_table = preg_replace('/[^a-z0-9_]/', '', strtolower(trim((string) ($input['bo_table'] ?? ''))));
+        $template_key = preg_replace('/[^a-z_]/', '', (string) ($input['template'] ?? ''));
+        $mb_id = isset($input['mb_id']) ? preg_replace('/[^a-z0-9_]/i', '', trim((string) $input['mb_id'])) : '';
+
+        if ($bo_table === '') {
+            return array('success' => false, 'message' => '연결할 게시판을 선택하세요.');
+        }
+
+        if ($mb_id === '' && !empty($member['mb_id'])) {
+            $mb_id = (string) $member['mb_id'];
+        }
+        if ($mb_id === '') {
+            return array('success' => false, 'message' => '담당 회원 ID를 입력하세요.');
+        }
+
+        $owner = get_member($mb_id);
+        if (empty($owner['mb_id'])) {
+            return array('success' => false, 'message' => '담당 회원을 찾을 수 없습니다.');
+        }
+
+        if (icrm_member_board_is_logged($bo_table)) {
+            return array('success' => false, 'message' => '이미 연결된 게시판입니다.');
+        }
+
+        $board = icrm_member_board_fetch($bo_table);
+        if (empty($board['bo_table'])) {
+            return array('success' => false, 'message' => '게시판을 찾을 수 없습니다.');
+        }
+
+        $templates = icrm_member_board_templates();
+        if ($template_key === '' || !isset($templates[$template_key])) {
+            $template_key = icrm_member_board_guess_template($board);
+        }
+
+        if (!icrm_member_board_apply_template($bo_table, $template_key, (string) ($board['bo_subject'] ?? $bo_table))) {
+            return array('success' => false, 'message' => '템플릿 적용에 실패했습니다.');
+        }
+
+        $now = date('Y-m-d H:i:s');
+        $log = icrm_member_board_read_log();
+        $log[] = array(
+            'bo_table'   => $bo_table,
+            'bo_subject' => (string) ($board['bo_subject'] ?? $bo_table),
             'template'   => $template_key,
-        ));
+            'mb_id'      => $mb_id,
+            'source'     => 'linked',
+            'linked_at'  => $now,
+            'created_at' => $now,
+        );
+        icrm_member_board_write_log($log);
 
         $board_url = G5_BBS_URL . '/board.php?bo_table=' . rawurlencode($bo_table);
 
         return array(
             'success'    => true,
-            'message'    => '게시판이 수정되었습니다.',
+            'message'    => '기존 게시판이 연결되었습니다. 콘텐츠 발행·플랫폼 스킨 적용 대상에 포함됩니다.',
             'bo_table'   => $bo_table,
-            'bo_subject' => $bo_subject,
+            'bo_subject' => (string) ($board['bo_subject'] ?? $bo_table),
             'template'   => $template_key,
+            'mb_id'      => $mb_id,
             'board_url'  => $board_url,
         );
     }

@@ -78,6 +78,21 @@ if ($action === 'board_update') {
     exit;
 }
 
+if ($action === 'board_connect') {
+    icrm_member_require('boards');
+    $result = icrm_member_board_connect(array(
+        'bo_table' => isset($_POST['bo_table']) ? (string) $_POST['bo_table'] : '',
+        'template' => isset($_POST['template']) ? (string) $_POST['template'] : '',
+        'mb_id'    => isset($_POST['mb_id']) ? (string) $_POST['mb_id'] : '',
+    ));
+    echo json_encode(array(
+        'ok'     => !empty($result['success']),
+        'result' => $result,
+        'error'  => empty($result['success']) ? ($result['message'] ?? '실패') : '',
+    ), JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
 if (in_array($action, array('publish_apply', 'builder_pull', 'builder_rollback', 'builder_status'), true)) {
     icrm_member_require('design');
     if ($action === 'builder_status') {
