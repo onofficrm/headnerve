@@ -111,7 +111,14 @@ $write_skin_modifier = isset($board_skin_modifier) ? $board_skin_modifier : '';
     </div>
     <?php } ?>
 
-    <div class="board-write-form__row bo_w_tit write_div">
+        <?php
+    $g5b_ai_write_inc = dirname(__FILE__) . '/../_inc/g5b-seo-ai-write-tools.php';
+    if (is_file($g5b_ai_write_inc)) {
+        include_once $g5b_ai_write_inc;
+    }
+    ?>
+
+<div class="board-write-form__row bo_w_tit write_div">
         <label for="wr_subject" class="board-write-form__label">제목<strong class="required">필수</strong></label>
         <div id="autosave_wrapper" class="board-write-form__subject">
             <input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="frm_input full_input board-write-form__control required" size="50" maxlength="255" placeholder="제목을 입력하세요">
@@ -182,6 +189,13 @@ $write_skin_modifier = isset($board_skin_modifier) ? $board_skin_modifier : '';
         <?php echo $captcha_html ?>
     </div>
     <?php } ?>
+
+    <?php
+    $g5b_seo_write_inc = dirname(__FILE__) . '/../_inc/g5b-seo-write-fields.php';
+    if (is_file($g5b_seo_write_inc)) {
+        include_once $g5b_seo_write_inc;
+    }
+    ?>
 
     <div class="btn_confirm write_div board-write-form__submit">
         <a href="<?php echo $list_href; ?>" class="btn_cancel btn board-btn board-btn-outline">취소</a>

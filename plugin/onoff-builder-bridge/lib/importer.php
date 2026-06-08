@@ -424,3 +424,57 @@ if (!function_exists('onoff_builder_handle_zip_upload')) {
         );
     }
 }
+
+if (!function_exists('onoff_builder_zip_project_dir')) {
+    /**
+     * 프로젝트 imports 폴더를 dist ZIP으로 압축 (iCRM 배포용)
+     *
+     * @return array{ok:bool,message?:string,path?:string}
+     */
+    function onoff_builder_zip_project_dir($project_id)
+    {
+        if (!onoff_builder_validate_project_id($project_id)) {
+            return array('ok' => false, 'message' => '프로젝트 ID가 올바르지 않습니다.');
+        }
+        if (!class_exists('ZipArchive')) {
+            return array('ok' => false, 'message' => 'PHP ZipArchive 확장이 필요합니다.');
+        }
+
+        $dir = onoff_builder_project_dir($project_id);
+        if ($dir === '' || !is_dir($dir)) {
+            return array('ok' => false, 'message' => '프로젝트 폴더를 찾을 수 없습니다.');
+        }
+
+        $zipPath = sys_get_temp_dir() . '/onoff-builder-' . onoff_builder_sanitize_project_id($project_id) . '-' . time() . '.zip';
+        $zip = new ZipArchive();
+        if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
+            return array('ok' => false, 'message' => 'ZIP 파일을 만들 수 없습니다.');
+        }
+
+        $baseLen = strlen(rtrim(str_replace('\\', '/', $dir), '/')) + 1;
+        $it = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS)
+        );
+
+        foreach ($it as $file) {
+            if (!$file->isFile()) {
+                continue;
+            }
+            $full = str_replace('\\', '/', $file->getPathname());
+            $rel = substr($full, $baseLen);
+            if ($rel === '' || onoff_builder_zip_blocked_entry($rel)) {
+                continue;
+            }
+            $zip->addFile($full, $rel);
+        }
+
+        $zip->close();
+
+        if (!is_file($zipPath) || filesize($zipPath) === 0) {
+            @unlink($zipPath);
+            return array('ok' => false, 'message' => 'ZIP 생성에 실패했습니다.');
+        }
+
+        return array('ok' => true, 'path' => $zipPath);
+    }
+}
