@@ -37,14 +37,11 @@ if (!function_exists('icrm_member_site_nav')) {
         echo '<a href="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '" style="color:#0f766e;font-weight:800;text-decoration:none">iCRM 내 홈페이지</a>';
         echo ' <span style="color:#64748b">— ';
         $links = array();
-        if (icrm_member_can_module('design')) {
-            $links[] = '<a href="' . htmlspecialchars(icrm_member_url('design'), ENT_QUOTES, 'UTF-8') . '" style="color:#0d9488">디자인</a>';
+        if (icrm_member_can_module('setup')) {
+            $links[] = '<a href="' . htmlspecialchars(icrm_member_url('setup'), ENT_QUOTES, 'UTF-8') . '" style="color:#0d9488">홈페이지 구성</a>';
         }
         if (icrm_member_can_module('publish')) {
             $links[] = '<a href="' . htmlspecialchars(icrm_member_url('publish'), ENT_QUOTES, 'UTF-8') . '" style="color:#0d9488">콘텐츠 발행</a>';
-        }
-        if (icrm_member_can_module('boards')) {
-            $links[] = '<a href="' . htmlspecialchars(icrm_member_url('boards'), ENT_QUOTES, 'UTF-8') . '" style="color:#0d9488">게시판 추가</a>';
         }
         echo implode(' · ', $links);
         echo '</span></div>';

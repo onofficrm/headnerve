@@ -140,6 +140,13 @@ if (!function_exists('icrm_member_can_boards')) {
     }
 }
 
+if (!function_exists('icrm_member_can_setup')) {
+    function icrm_member_can_setup()
+    {
+        return icrm_member_can_design() || icrm_member_can_boards();
+    }
+}
+
 if (!function_exists('icrm_member_can_module')) {
     function icrm_member_can_module($module)
     {
@@ -148,6 +155,8 @@ if (!function_exists('icrm_member_can_module')) {
         switch ($module) {
             case 'home':
                 return icrm_member_can_access();
+            case 'setup':
+                return icrm_member_can_setup();
             case 'design':
                 return icrm_member_can_design();
             case 'publish':
@@ -183,6 +192,8 @@ if (!function_exists('icrm_member_require')) {
         $msg = '이 메뉴를 사용할 권한이 없습니다.';
         if ($module === 'boards') {
             $msg = '게시판 추가는 레벨 ' . icrm_member_board_min_level() . ' 이상 회원만 이용할 수 있습니다.';
+        } elseif ($module === 'setup') {
+            $msg = '홈페이지 구성 메뉴를 사용할 권한이 없습니다.';
         }
 
         if (function_exists('alert')) {
@@ -225,9 +236,8 @@ if (!function_exists('icrm_member_modules')) {
     {
         return array(
             'home'    => array('label' => '내 홈페이지', 'icon' => 'home', 'desc' => '한눈에 보기'),
-            'design'  => array('label' => '홈페이지 디자인', 'icon' => 'design', 'desc' => 'ZIP 업로드 · 배포'),
+            'setup'   => array('label' => '홈페이지 구성', 'icon' => 'setup', 'desc' => '디자인 배포 · 게시판 추가'),
             'publish' => array('label' => '콘텐츠 발행', 'icon' => 'publish', 'desc' => 'AI 글쓰기 · 게시판'),
-            'boards'  => array('label' => '게시판 추가', 'icon' => 'boards', 'desc' => '새 코너 만들기'),
         );
     }
 }
@@ -244,6 +254,7 @@ if (!function_exists('icrm_member_shell_icon')) {
     {
         $icons = array(
             'home'    => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>',
+            'setup'   => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><path d="M3 14h18v7H3z"/></svg>',
             'design'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>',
             'publish' => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
             'boards'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>',
