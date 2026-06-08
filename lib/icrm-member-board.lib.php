@@ -321,7 +321,110 @@ if (!function_exists('icrm_member_board_guess_template')) {
 if (!function_exists('icrm_member_board_can_publish_to')) {
     function icrm_member_board_can_publish_to($bo_table, $mb_id = '')
     {
-        return icrm_member_board_can_manage($bo_table, $mb_id);
+        if (!icrm_member_board_can_manage($bo_table, $mb_id)) {
+            return false;
+        }
+
+        return icrm_member_board_can_write_to($bo_table, $mb_id);
+    }
+}
+
+if (!function_exists('icrm_member_board_can_write_to')) {
+    /**
+     * 게시판 글쓰기 레벨(bo_write_level) 충족 여부
+     */
+    function icrm_member_board_can_write_to($bo_table, $mb_id = '')
+    {
+        global $member, $is_admin;
+
+        if ($is_admin === 'super') {
+            return true;
+        }
+
+        $bo_table = preg_replace('/[^a-z0-9_]/', '', strtolower((string) $bo_table));
+        if ($bo_table === '') {
+            return false;
+        }
+
+        $board = icrm_member_board_fetch($bo_table);
+        if (empty($board['bo_table'])) {
+            return false;
+        }
+
+        $mb_id = trim((string) $mb_id);
+        if ($mb_id === '' && !empty($member['mb_id'])) {
+            $mb_id = (string) $member['mb_id'];
+        }
+        if ($mb_id === '') {
+            return false;
+        }
+
+        $author = get_member($mb_id);
+        if (empty($author['mb_id'])) {
+            return false;
+        }
+
+        $required = (int) ($board['bo_write_level'] ?? 1);
+
+        return (int) $author['mb_level'] >= $required;
+    }
+}
+
+if (!function_exists('icrm_member_board_publish_block_reason')) {
+    /**
+     * 발행 불가 사유 (빈 문자열이면 발행 가능)
+     */
+    function icrm_member_board_publish_block_reason($bo_table, $mb_id = '')
+    {
+        global $member, $is_admin;
+
+        if ($is_admin === 'super') {
+            return '';
+        }
+
+        $bo_table = preg_replace('/[^a-z0-9_]/', '', strtolower((string) $bo_table));
+        if ($bo_table === '') {
+            return '게시판 ID가 없습니다.';
+        }
+
+        if (!icrm_member_board_can_manage($bo_table, $mb_id)) {
+            return '내가 만든 게시판만 발행할 수 있습니다.';
+        }
+
+        if (icrm_member_board_can_write_to($bo_table, $mb_id)) {
+            return '';
+        }
+
+        $board = icrm_member_board_fetch($bo_table);
+        $required = (int) ($board['bo_write_level'] ?? 1);
+        $mb_id = trim((string) $mb_id);
+        if ($mb_id === '' && !empty($member['mb_id'])) {
+            $mb_id = (string) $member['mb_id'];
+        }
+        $author = $mb_id !== '' ? get_member($mb_id) : array();
+        $level = !empty($author['mb_level']) ? (int) $author['mb_level'] : 0;
+
+        return '이 게시판은 글쓰기 Lv.' . $required . ' 이상 필요합니다. (현재 Lv.' . $level . ')';
+    }
+}
+
+if (!function_exists('icrm_member_board_list_publishable')) {
+    function icrm_member_board_list_publishable($mb_id = '', $limit = 50)
+    {
+        $rows = array();
+        foreach (icrm_member_board_list_manageable($mb_id, $limit) as $row) {
+            if (empty($row['bo_table'])) {
+                continue;
+            }
+            if (!icrm_member_board_can_publish_to($row['bo_table'], $mb_id)) {
+                continue;
+            }
+            $board = icrm_member_board_fetch($row['bo_table']);
+            $row['bo_write_level'] = (int) ($board['bo_write_level'] ?? 1);
+            $rows[] = $row;
+        }
+
+        return $rows;
     }
 }
 
@@ -397,7 +500,7 @@ if (!function_exists('icrm_member_board_fetch')) {
         }
 
         $board = sql_fetch(" select bo_table, bo_subject, bo_mobile_subject, bo_skin, bo_mobile_skin,
-                                    bo_use_category, bo_category_list, bo_use_comment
+                                    bo_use_category, bo_category_list, bo_use_comment, bo_write_level
                              from {$g5['board_table']}
                              where bo_table = '" . sql_real_escape_string($bo_table) . "' ");
 

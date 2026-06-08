@@ -1067,6 +1067,57 @@ if (!function_exists('icrm_content_compose_ai_draft')) {
     }
 }
 
+if (!function_exists('icrm_content_validate_board_publish')) {
+    /**
+     * 발행·초안 저장 전 게시판·작성자 권한 검증
+     *
+     * @return array ok(bool), error, message
+     */
+    function icrm_content_validate_board_publish($bo_table, $mb_id)
+    {
+        $bo_table = preg_replace('/[^a-z0-9_]/i', '', (string) $bo_table);
+        $mb_id = preg_replace('/[^a-z0-9_]/i', '', (string) $mb_id);
+        if ($bo_table === '' || $mb_id === '') {
+            return array('ok' => false, 'error' => 'invalid_params', 'message' => '게시판과 작성자를 확인해 주세요.');
+        }
+
+        if (defined('ICRM_MEMBER_PUBLISH') && ICRM_MEMBER_PUBLISH) {
+            if (is_file(G5_LIB_PATH . '/icrm-member-board.lib.php')) {
+                include_once G5_LIB_PATH . '/icrm-member-board.lib.php';
+            }
+            if (function_exists('icrm_member_board_publish_block_reason')) {
+                $reason = icrm_member_board_publish_block_reason($bo_table, $mb_id);
+                if ($reason !== '') {
+                    return array('ok' => false, 'error' => 'forbidden_board', 'message' => $reason);
+                }
+            } elseif (function_exists('icrm_member_board_can_publish_to') && !icrm_member_board_can_publish_to($bo_table, $mb_id)) {
+                return array('ok' => false, 'error' => 'forbidden_board', 'message' => '내가 만든 게시판만 선택할 수 있습니다.');
+            }
+        } else {
+            global $is_admin;
+            if ($is_admin !== 'super') {
+                if (is_file(G5_LIB_PATH . '/icrm-member-board.lib.php')) {
+                    include_once G5_LIB_PATH . '/icrm-member-board.lib.php';
+                }
+                if (function_exists('icrm_member_board_can_write_to') && !icrm_member_board_can_write_to($bo_table, $mb_id)) {
+                    $board = function_exists('icrm_member_board_fetch') ? icrm_member_board_fetch($bo_table) : array();
+                    $required = (int) ($board['bo_write_level'] ?? 1);
+                    $author = get_member($mb_id);
+                    $level = !empty($author['mb_level']) ? (int) $author['mb_level'] : 0;
+
+                    return array(
+                        'ok'      => false,
+                        'error'   => 'write_level',
+                        'message' => '글쓰기 Lv.' . $required . ' 이상 필요합니다. (작성자 Lv.' . $level . ')',
+                    );
+                }
+            }
+        }
+
+        return array('ok' => true);
+    }
+}
+
 if (!function_exists('icrm_content_save_compose_draft')) {
     function icrm_content_save_compose_draft(array $fields, $ici_id = 0)
     {
@@ -1095,13 +1146,9 @@ if (!function_exists('icrm_content_save_compose_draft')) {
         if (!function_exists('icrm_validate_bo_table') || !icrm_validate_bo_table($bo_table)) {
             return array('ok' => false, 'error' => 'invalid_bo_table', 'message' => '유효하지 않은 게시판입니다.');
         }
-        if (defined('ICRM_MEMBER_PUBLISH') && ICRM_MEMBER_PUBLISH) {
-            if (is_file(G5_LIB_PATH . '/icrm-member-board.lib.php')) {
-                include_once G5_LIB_PATH . '/icrm-member-board.lib.php';
-            }
-            if (function_exists('icrm_member_board_can_publish_to') && !icrm_member_board_can_publish_to($bo_table, $mb_id)) {
-                return array('ok' => false, 'error' => 'forbidden_board', 'message' => '내가 만든 게시판만 선택할 수 있습니다.');
-            }
+        $publish_check = icrm_content_validate_board_publish($bo_table, $mb_id);
+        if (empty($publish_check['ok'])) {
+            return $publish_check;
         }
         $member = get_member($mb_id);
         if (empty($member['mb_id'])) {
@@ -1296,6 +1343,15 @@ if (!function_exists('icrm_content_insert_board_post')) {
             return array('ok' => false, 'error' => 'board_not_found');
         }
 
+        $publish_check = icrm_content_validate_board_publish($bo_table, $mb_id);
+        if (empty($publish_check['ok'])) {
+            return array(
+                'ok'      => false,
+                'error'   => isset($publish_check['error']) ? (string) $publish_check['error'] : 'forbidden_board',
+                'message' => isset($publish_check['message']) ? (string) $publish_check['message'] : '발행 권한이 없습니다.',
+            );
+        }
+
         $write_table = $g5['write_prefix'] . $bo_table;
         $subject = trim(stripslashes((string) $subject));
         $content_html = (string) $content_html;
@@ -1415,6 +1471,11 @@ if (!function_exists('icrm_content_publish_item')) {
         }
         if ($item['status'] === 'rejected') {
             return array('ok' => false, 'error' => 'rejected', 'message' => '반려된 초안은 발행할 수 없습니다.');
+        }
+
+        $publish_check = icrm_content_validate_board_publish($item['bo_table'], $item['mb_id']);
+        if (empty($publish_check['ok'])) {
+            return $publish_check;
         }
 
         $insert = icrm_content_insert_board_post(

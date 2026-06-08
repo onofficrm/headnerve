@@ -23,13 +23,32 @@ if ($icrm_member_publish_mode) {
     if (is_file(G5_LIB_PATH . '/icrm-member-board.lib.php')) {
         include_once G5_LIB_PATH . '/icrm-member-board.lib.php';
     }
-    $boards = function_exists('icrm_member_board_list_manageable')
-        ? icrm_member_board_list_manageable(!empty($member['mb_id']) ? $member['mb_id'] : '')
-        : array();
+    $boards = function_exists('icrm_member_board_list_publishable')
+        ? icrm_member_board_list_publishable(!empty($member['mb_id']) ? $member['mb_id'] : '')
+        : (function_exists('icrm_member_board_list_manageable')
+            ? icrm_member_board_list_manageable(!empty($member['mb_id']) ? $member['mb_id'] : '')
+            : array());
+    $boards_blocked = array();
+    if (function_exists('icrm_member_board_list_manageable') && function_exists('icrm_member_board_publish_block_reason')) {
+        foreach (icrm_member_board_list_manageable(!empty($member['mb_id']) ? $member['mb_id'] : '') as $row) {
+            if (empty($row['bo_table'])) {
+                continue;
+            }
+            $reason = icrm_member_board_publish_block_reason($row['bo_table'], !empty($member['mb_id']) ? $member['mb_id'] : '');
+            if ($reason !== '') {
+                $boards_blocked[] = array(
+                    'bo_table'   => $row['bo_table'],
+                    'bo_subject' => $row['bo_subject'],
+                    'reason'     => $reason,
+                );
+            }
+        }
+    }
     $boards = array_map(function ($row) {
         return array(
-            'bo_table'   => $row['bo_table'],
-            'bo_subject' => $row['bo_subject'],
+            'bo_table'       => $row['bo_table'],
+            'bo_subject'     => $row['bo_subject'],
+            'bo_write_level' => isset($row['bo_write_level']) ? (int) $row['bo_write_level'] : 0,
         );
     }, $boards);
 } else {
@@ -104,7 +123,20 @@ function icp_h($s)
         ? 'AI 초안 생성을 쓰려면 사이트 관리자에게 SEO API 연결을 요청해 주세요. 직접 작성 후 발행은 가능합니다.'
         : 'AI 초안 생성을 쓰려면 <a href="' . icp_h(icrm_admin_page_url('seo', array('tab' => 'settings'))) . '">SEO API 연결</a>을 확인해 주세요. 직접 작성 후 발행은 가능합니다.'; ?></p>
     <?php } elseif ($icrm_member_publish_mode && $boards === array()) { ?>
-    <p class="icp-compose__alert">발행할 게시판이 없습니다. <a href="<?php echo icp_h(function_exists('icrm_member_url') ? icrm_member_url('boards') : '#'); ?>">게시판</a> 메뉴에서 먼저 게시판을 만드세요.</p>
+    <p class="icp-compose__alert">
+      <?php if (!empty($boards_blocked)) { ?>
+      발행 가능한 게시판이 없습니다. 아래 게시판은 글쓰기 레벨 조건을 충족하지 못합니다.
+      <?php } else { ?>
+      발행할 게시판이 없습니다. <a href="<?php echo icp_h(function_exists('icrm_member_url') ? icrm_member_url('boards') : '#'); ?>">게시판</a> 메뉴에서 먼저 게시판을 만드세요.
+      <?php } ?>
+    </p>
+    <?php if (!empty($boards_blocked)) { ?>
+    <ul class="icp-compose__blocked" style="margin:0 0 24px;padding:0 0 0 18px;font-size:13px;line-height:1.7;color:#9a3412">
+      <?php foreach ($boards_blocked as $blocked) { ?>
+      <li><strong><?php echo icp_h($blocked['bo_subject']); ?></strong> (<?php echo icp_h($blocked['bo_table']); ?>) — <?php echo icp_h($blocked['reason']); ?></li>
+      <?php } ?>
+    </ul>
+    <?php } ?>
     <?php } ?>
 
     <form id="icp_compose_form" class="icp-compose__layout" autocomplete="off">
@@ -156,12 +188,12 @@ function icp_h($s)
                         <option value="">선택</option>
                         <?php foreach ($boards as $b) { ?>
                         <option value="<?php echo icp_h($b['bo_table']); ?>"<?php echo $default_bo === $b['bo_table'] ? ' selected' : ''; ?>>
-                            <?php echo icp_h($b['bo_subject']); ?> (<?php echo icp_h($b['bo_table']); ?>)
+                            <?php echo icp_h($b['bo_subject']); ?> (<?php echo icp_h($b['bo_table']); ?><?php if (!empty($b['bo_write_level'])) { ?>, Lv.<?php echo (int) $b['bo_write_level']; ?>+<?php } ?>)
                         </option>
                         <?php } ?>
                     </select>
                     <?php if ($icrm_member_publish_mode) { ?>
-                    <p class="icp-help">내가 만든 게시판만 표시됩니다.</p>
+                    <p class="icp-help">내 게시판 중 글쓰기 레벨(bo_write_level)을 충족하는 게시판만 표시됩니다.</p>
                     <?php } ?>
                 </div>
 
