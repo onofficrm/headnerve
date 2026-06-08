@@ -379,9 +379,7 @@ if (!function_exists('onoff_builder_handle_zip_upload')) {
             return array('ok' => false, 'message' => 'ZIP 파일만 업로드할 수 있습니다.');
         }
 
-        if (onoff_builder_project_exists($project_id)) {
-            return array('ok' => false, 'message' => '이미 사용 중인 프로젝트 ID입니다. 다른 ID를 사용하거나 기존 항목을 삭제해주세요.');
-        }
+        $replacing = onoff_builder_project_exists($project_id);
 
         $project_dir = onoff_builder_project_dir($project_id);
         if ($project_dir === '') {
@@ -417,10 +415,13 @@ if (!function_exists('onoff_builder_handle_zip_upload')) {
 
         return array(
             'ok'           => true,
-            'message'      => '업로드가 완료되었습니다.',
+            'message'      => $replacing
+                ? '기존 프로젝트를 새 ZIP으로 교체했습니다. [배포하고 바로 적용]을 눌러 주세요.'
+                : '업로드가 완료되었습니다.',
             'project_id'   => $project_id,
             'project_name' => $project_name,
             'entry'        => $entry,
+            'replaced'     => $replacing,
         );
     }
 }

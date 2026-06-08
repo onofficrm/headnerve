@@ -46,7 +46,7 @@ if (function_exists('icrm_member_enabled') && icrm_member_enabled() && is_file(G
         include_once G5_LIB_PATH . '/icrm-member.lib.php';
     }
     if (function_exists('icrm_member_url')) {
-        $redirect = icrm_member_url('design');
+        $redirect = icrm_member_url(array('m' => 'setup', 'tab' => 'design'));
         $redirect .= (strpos($redirect, '?') !== false ? '&' : '?') . 'msg=' . urlencode($msg);
     }
 }

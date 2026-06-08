@@ -1095,6 +1095,14 @@ if (!function_exists('icrm_content_save_compose_draft')) {
         if (!function_exists('icrm_validate_bo_table') || !icrm_validate_bo_table($bo_table)) {
             return array('ok' => false, 'error' => 'invalid_bo_table', 'message' => '유효하지 않은 게시판입니다.');
         }
+        if (defined('ICRM_MEMBER_PUBLISH') && ICRM_MEMBER_PUBLISH) {
+            if (is_file(G5_LIB_PATH . '/icrm-member-board.lib.php')) {
+                include_once G5_LIB_PATH . '/icrm-member-board.lib.php';
+            }
+            if (function_exists('icrm_member_board_can_publish_to') && !icrm_member_board_can_publish_to($bo_table, $mb_id)) {
+                return array('ok' => false, 'error' => 'forbidden_board', 'message' => '내가 만든 게시판만 선택할 수 있습니다.');
+            }
+        }
         $member = get_member($mb_id);
         if (empty($member['mb_id'])) {
             return array('ok' => false, 'error' => 'member_not_found', 'message' => '작성자 회원을 찾을 수 없습니다.');

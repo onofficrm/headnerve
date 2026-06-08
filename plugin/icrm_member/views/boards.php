@@ -64,6 +64,7 @@ $edit_table = isset($_GET['edit']) ? preg_replace('/[^a-z0-9_]/', '', strtolower
                     </span>
                 </div>
                 <div class="icrm-member-board-manage-item__actions">
+                    <a class="icc-btn icc-btn--sm icc-btn--primary" href="<?php echo icrm_member_h(icrm_member_url(array('m' => 'publish', 'bo_table' => $bt))); ?>">글 발행</a>
                     <a class="icc-btn icc-btn--sm" href="<?php echo icrm_member_h($row['board_url']); ?>" target="_blank" rel="noopener">보기</a>
                     <button type="button" class="icc-btn icc-btn--sm icrm-member-board-edit-toggle" data-bo-table="<?php echo icrm_member_h($bt); ?>"><?php echo $is_editing ? '닫기' : '수정'; ?></button>
                 </div>
@@ -119,6 +120,14 @@ $edit_table = isset($_GET['edit']) ? preg_replace('/[^a-z0-9_]/', '', strtolower
                     var res = data.result || {};
                     createMsg.textContent = res.message || '완료';
                     createMsg.className = 'icp-msg is-ok';
+                    var publishUrl = <?php echo json_encode(icrm_member_url('publish')); ?>;
+                    if (res.bo_table) {
+                        publishUrl += (publishUrl.indexOf('?') >= 0 ? '&' : '?') + 'bo_table=' + encodeURIComponent(res.bo_table);
+                    }
+                    if (confirm((res.message || '완료') + '\n\n이 게시판에 글을 발행할까요?')) {
+                        location.href = publishUrl;
+                        return;
+                    }
                     setTimeout(function() { location.href = <?php echo json_encode(icrm_member_url(array('m' => 'setup', 'tab' => 'boards'))); ?>; }, 900);
                 })
                 .catch(function(err) {

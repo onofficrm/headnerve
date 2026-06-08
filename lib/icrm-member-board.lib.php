@@ -305,6 +305,33 @@ if (!function_exists('icrm_member_board_guess_template')) {
     }
 }
 
+if (!function_exists('icrm_member_board_can_publish_to')) {
+    function icrm_member_board_can_publish_to($bo_table, $mb_id = '')
+    {
+        return icrm_member_board_can_manage($bo_table, $mb_id);
+    }
+}
+
+if (!function_exists('icrm_member_board_categories')) {
+    function icrm_member_board_categories($bo_table)
+    {
+        $board = icrm_member_board_fetch($bo_table);
+        if (empty($board['bo_table']) || empty($board['bo_use_category']) || (string) $board['bo_use_category'] === '0') {
+            return array();
+        }
+
+        $categories = array();
+        foreach (explode('|', (string) ($board['bo_category_list'] ?? '')) as $cat) {
+            $cat = trim($cat);
+            if ($cat !== '') {
+                $categories[] = $cat;
+            }
+        }
+
+        return $categories;
+    }
+}
+
 if (!function_exists('icrm_member_board_can_manage')) {
     function icrm_member_board_can_manage($bo_table, $mb_id = '')
     {

@@ -53,6 +53,14 @@ if (is_file(G5_LIB_PATH . '/icrm-builder-deploy.lib.php')) {
 
 $auto_home_default = function_exists('g5site_cfg_bool') ? g5site_cfg_bool('builder_deploy_auto_home', true) : true;
 
+$local_preview_url = '';
+if ($default_project_id !== '' && onoff_builder_project_exists($default_project_id)) {
+    $local_preview_url = G5_PLUGIN_URL . '/onoff-builder-bridge/page.php?id=' . rawurlencode($default_project_id);
+}
+$member_preview_url = (defined('ICRM_MEMBER_DESIGN_EMBED') && $local_preview_url !== '')
+    ? $local_preview_url
+    : (isset($builder_status['preview_url']) ? (string) $builder_status['preview_url'] : '');
+
 $upload_action = defined('ICRM_MEMBER_DESIGN_EMBED')
     ? G5_PLUGIN_URL . '/onoff-builder-bridge/member/upload_update.php'
     : onoff_builder_member_url('upload_update.php');
@@ -149,8 +157,8 @@ $design_action_url = defined('ICRM_MEMBER_DESIGN_EMBED') && function_exists('icr
         <?php echo ($license_ok && $default_project_id !== '' && function_exists('icrm_builder_deploy_publish_and_apply')) ? '' : 'disabled'; ?>>
         배포하고 바로 적용
       </button>
-      <?php if (!empty($builder_status['preview_url'])) { ?>
-      <a class="onoff-builder-admin__btn" href="<?php echo onoff_builder_escape($builder_status['preview_url']); ?>" target="_blank" rel="noopener">적용 전 미리보기</a>
+      <?php if ($member_preview_url !== '') { ?>
+      <a class="onoff-builder-admin__btn" href="<?php echo onoff_builder_escape($member_preview_url); ?>" target="_blank" rel="noopener"><?php echo (defined('ICRM_MEMBER_DESIGN_EMBED') && $local_preview_url !== '') ? '업로드본 미리보기' : '적용 전 미리보기'; ?></a>
       <?php } ?>
       <button type="button" class="onoff-builder-admin__btn" id="obb-rollback" <?php echo empty($builder_status['history']) ? 'disabled' : ''; ?>>이전 디자인 복구</button>
     </div>

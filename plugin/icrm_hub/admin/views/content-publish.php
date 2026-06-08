@@ -17,11 +17,54 @@ if (defined('ICRM_MEMBER_PUBLISH') && ICRM_MEMBER_PUBLISH) {
 } else {
     $action_url = G5_PLUGIN_URL . '/content_collector/admin/action.php';
 }
-$default_bo = icrm_content_get_default_bo_table();
-$default_mb = (defined('ICRM_MEMBER_PUBLISH') && ICRM_MEMBER_PUBLISH && !empty($member['mb_id']))
+$icrm_member_publish_mode = defined('ICRM_MEMBER_PUBLISH') && ICRM_MEMBER_PUBLISH;
+
+if ($icrm_member_publish_mode) {
+    if (is_file(G5_LIB_PATH . '/icrm-member-board.lib.php')) {
+        include_once G5_LIB_PATH . '/icrm-member-board.lib.php';
+    }
+    $boards = function_exists('icrm_member_board_list_manageable')
+        ? icrm_member_board_list_manageable(!empty($member['mb_id']) ? $member['mb_id'] : '')
+        : array();
+    $boards = array_map(function ($row) {
+        return array(
+            'bo_table'   => $row['bo_table'],
+            'bo_subject' => $row['bo_subject'],
+        );
+    }, $boards);
+} else {
+    $boards = array();
+    $board_res = sql_query(" select bo_table, bo_subject from {$g5['board_table']} order by bo_table ");
+    while ($b = sql_fetch_array($board_res)) {
+        $boards[] = $b;
+    }
+}
+
+$default_bo = '';
+if ($icrm_member_publish_mode) {
+    $requested_bo = isset($publish_bo_table) ? (string) $publish_bo_table : '';
+    if ($requested_bo !== '' && function_exists('icrm_member_board_can_publish_to') && icrm_member_board_can_publish_to($requested_bo)) {
+        $default_bo = $requested_bo;
+    } elseif ($boards !== array()) {
+        $default_bo = (string) $boards[0]['bo_table'];
+    }
+} else {
+    $default_bo = icrm_content_get_default_bo_table();
+}
+
+$default_mb = ($icrm_member_publish_mode && !empty($member['mb_id']))
     ? (string) $member['mb_id']
     : icrm_content_get_default_mb_id();
-$icrm_member_publish_mode = defined('ICRM_MEMBER_PUBLISH') && ICRM_MEMBER_PUBLISH;
+
+$board_meta = array();
+if ($icrm_member_publish_mode && function_exists('icrm_member_board_categories')) {
+    foreach ($boards as $b) {
+        $bt = (string) $b['bo_table'];
+        $board_meta[$bt] = array(
+            'categories' => icrm_member_board_categories($bt),
+        );
+    }
+}
 $license_ok = function_exists('icrm_admin_shell_license_ok') ? icrm_admin_shell_license_ok() : false;
 $ai_ready = function_exists('g5b_seo_meta_is_ai_configured') ? g5b_seo_meta_is_ai_configured() : false;
 $geo_enabled = function_exists('g5site_cfg_bool') ? g5site_cfg_bool('icrm_hub_geo_button', true) : true;
@@ -32,12 +75,6 @@ if (!empty($config['cf_editor']) && defined('G5_EDITOR_LIB') && is_file(G5_EDITO
     $icp_use_editor = function_exists('editor_html');
 }
 $icp_editor_id = 'content_html';
-
-$boards = array();
-$board_res = sql_query(" select bo_table, bo_subject from {$g5['board_table']} order by bo_table ");
-while ($b = sql_fetch_array($board_res)) {
-    $boards[] = $b;
-}
 
 function icp_h($s)
 {
@@ -59,9 +96,15 @@ function icp_h($s)
     </header>
 
     <?php if (!$license_ok) { ?>
-    <p class="icp-compose__alert">iCRM 연동이 필요합니다. <a href="<?php echo icp_h(icrm_admin_page_url('seo', array('tab' => 'settings'))); ?>">연동 설정</a></p>
+    <p class="icp-compose__alert"><?php echo $icrm_member_publish_mode
+        ? 'iCRM 연동이 필요합니다. 사이트 관리자에게 라이선스 설정을 요청해 주세요.'
+        : 'iCRM 연동이 필요합니다. <a href="' . icp_h(icrm_admin_page_url('seo', array('tab' => 'settings'))) . '">연동 설정</a>'; ?></p>
     <?php } elseif (!$ai_ready) { ?>
-    <p class="icp-compose__alert">AI 초안 생성을 쓰려면 <a href="<?php echo icp_h(icrm_admin_page_url('seo', array('tab' => 'settings'))); ?>">SEO API 연결</a>을 확인해 주세요. 직접 작성 후 발행은 가능합니다.</p>
+    <p class="icp-compose__alert"><?php echo $icrm_member_publish_mode
+        ? 'AI 초안 생성을 쓰려면 사이트 관리자에게 SEO API 연결을 요청해 주세요. 직접 작성 후 발행은 가능합니다.'
+        : 'AI 초안 생성을 쓰려면 <a href="' . icp_h(icrm_admin_page_url('seo', array('tab' => 'settings'))) . '">SEO API 연결</a>을 확인해 주세요. 직접 작성 후 발행은 가능합니다.'; ?></p>
+    <?php } elseif ($icrm_member_publish_mode && $boards === array()) { ?>
+    <p class="icp-compose__alert">발행할 게시판이 없습니다. <a href="<?php echo icp_h(function_exists('icrm_member_url') ? icrm_member_url(array('m' => 'setup', 'tab' => 'boards')) : '#'); ?>">홈페이지 구성 → 게시판 추가</a>에서 먼저 게시판을 만드세요.</p>
     <?php } ?>
 
     <form id="icp_compose_form" class="icp-compose__layout" autocomplete="off">
@@ -109,13 +152,23 @@ function icp_h($s)
 
                 <div class="icp-field">
                     <label class="icp-label" for="icp_bo_table">게시판</label>
-                    <select class="icp-input icp-select" id="icp_bo_table" name="bo_table" required>
+                    <select class="icp-input icp-select" id="icp_bo_table" name="bo_table" required<?php echo ($icrm_member_publish_mode && $boards === array()) ? ' disabled' : ''; ?>>
                         <option value="">선택</option>
                         <?php foreach ($boards as $b) { ?>
                         <option value="<?php echo icp_h($b['bo_table']); ?>"<?php echo $default_bo === $b['bo_table'] ? ' selected' : ''; ?>>
                             <?php echo icp_h($b['bo_subject']); ?> (<?php echo icp_h($b['bo_table']); ?>)
                         </option>
                         <?php } ?>
+                    </select>
+                    <?php if ($icrm_member_publish_mode) { ?>
+                    <p class="icp-help">내가 만든 게시판만 표시됩니다.</p>
+                    <?php } ?>
+                </div>
+
+                <div class="icp-field" id="icp_ca_wrap" hidden>
+                    <label class="icp-label" for="icp_ca_name">카테고리</label>
+                    <select class="icp-input icp-select" id="icp_ca_name" name="ca_name">
+                        <option value="">선택</option>
                     </select>
                 </div>
 
@@ -280,8 +333,33 @@ body .se2_layer{display:block}
 (function() {
     var actionUrl = <?php echo json_encode($action_url); ?>;
     var inboxUrl = <?php echo json_encode(!empty($icrm_member_publish_mode) ? '' : icrm_admin_page_url('content', array('tab' => 'inbox'))); ?>;
+    var icrmMemberPublish = <?php echo !empty($icrm_member_publish_mode) ? 'true' : 'false'; ?>;
+    var boardMeta = <?php echo json_encode($board_meta, JSON_UNESCAPED_UNICODE); ?>;
     var icpEditorId = <?php echo json_encode($icp_editor_id); ?>;
     var icpUseEditor = <?php echo $icp_use_editor ? 'true' : 'false'; ?>;
+
+    function icpSyncCategoryField() {
+        var boEl = document.getElementById('icp_bo_table');
+        var wrap = document.getElementById('icp_ca_wrap');
+        var caEl = document.getElementById('icp_ca_name');
+        if (!boEl || !wrap || !caEl) return;
+        var bt = boEl.value || '';
+        var meta = boardMeta && boardMeta[bt] ? boardMeta[bt] : null;
+        var cats = meta && meta.categories ? meta.categories : [];
+        caEl.innerHTML = '<option value="">선택</option>';
+        if (!cats.length) {
+            wrap.hidden = true;
+            caEl.value = '';
+            return;
+        }
+        cats.forEach(function(cat) {
+            var opt = document.createElement('option');
+            opt.value = cat;
+            opt.textContent = cat;
+            caEl.appendChild(opt);
+        });
+        wrap.hidden = false;
+    }
 
     function setMsg(el, text, ok) {
         if (!el) return;
@@ -337,7 +415,7 @@ body .se2_layer{display:block}
     function formFields() {
         icpSyncEditor();
         var fd = new FormData();
-        ['ici_id', 'topic', 'keywords', 'bo_table', 'mb_id', 'subject'].forEach(function(name) {
+        ['ici_id', 'topic', 'keywords', 'bo_table', 'mb_id', 'subject', 'ca_name'].forEach(function(name) {
             var el = document.querySelector('[name="' + name + '"]');
             if (el) fd.append(name, el.value);
         });
@@ -542,11 +620,13 @@ body .se2_layer{display:block}
     if (saveBtn) {
         saveBtn.addEventListener('click', function() {
             postCompose('compose_save', document.getElementById('icp_compose_msg'), '', function(res) {
-                if (res.ici_id) {
-                    setTimeout(function() {
-                        location.href = inboxUrl + '&ici_id=' + res.ici_id + '&tab=detail';
-                    }, 600);
+                if (!res.ici_id) return;
+                if (icrmMemberPublish) {
+                    return;
                 }
+                setTimeout(function() {
+                    location.href = inboxUrl + '&ici_id=' + res.ici_id + '&tab=detail';
+                }, 600);
             });
         });
     }
@@ -560,6 +640,12 @@ body .se2_layer{display:block}
                 }
             });
         });
+    }
+
+    var boTableEl = document.getElementById('icp_bo_table');
+    if (boTableEl) {
+        boTableEl.addEventListener('change', icpSyncCategoryField);
+        icpSyncCategoryField();
     }
 })();
 </script>
