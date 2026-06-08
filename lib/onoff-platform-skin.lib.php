@@ -14,6 +14,13 @@ if (!function_exists('onoff_platform_skin_id_member')) {
     }
 }
 
+if (!function_exists('onoff_platform_skin_id_outlogin')) {
+    function onoff_platform_skin_id_outlogin()
+    {
+        return 'onoff';
+    }
+}
+
 if (!function_exists('onoff_platform_skin_id_board_column')) {
     function onoff_platform_skin_id_board_column()
     {
@@ -60,16 +67,48 @@ if (!function_exists('onoff_platform_skin_all_boards_exist')) {
 if (!function_exists('onoff_platform_skin_member_exists')) {
     function onoff_platform_skin_member_exists()
     {
-        return is_dir(G5_SKIN_PATH . '/member/' . onoff_platform_skin_id_member());
+        $id = onoff_platform_skin_id_member();
+
+        return is_dir(G5_SKIN_PATH . '/member/' . $id)
+            && is_dir(G5_MOBILE_PATH . '/skin/member/' . $id);
+    }
+}
+
+if (!function_exists('onoff_platform_skin_outlogin_exists')) {
+    function onoff_platform_skin_outlogin_exists()
+    {
+        $id = onoff_platform_skin_id_outlogin();
+
+        return is_dir(G5_SKIN_PATH . '/outlogin/' . $id)
+            && is_dir(G5_MOBILE_PATH . '/skin/outlogin/' . $id);
+    }
+}
+
+if (!function_exists('onoff_platform_outlogin_skin_id')) {
+    /** @return string outlogin skin dir or basic */
+    function onoff_platform_outlogin_skin_id()
+    {
+        if (!function_exists('g5site_cfg')) {
+            return 'basic';
+        }
+        if (trim(g5site_cfg('platform_member_skin', '')) !== onoff_platform_skin_id_member()) {
+            return 'basic';
+        }
+        if (!onoff_platform_skin_outlogin_exists()) {
+            return 'basic';
+        }
+
+        return onoff_platform_skin_id_outlogin();
     }
 }
 
 if (!function_exists('onoff_platform_skin_board_exists')) {
     function onoff_platform_skin_board_exists($skin_id = '')
     {
-        $skin_id = $skin_id !== '' ? $skin_id : onoff_platform_skin_id_board_column();
+        $skin_id = preg_replace('/[^a-z0-9_-]/', '', $skin_id !== '' ? $skin_id : onoff_platform_skin_id_board_column());
 
-        return is_dir(G5_SKIN_PATH . '/board/' . preg_replace('/[^a-z0-9_-]/', '', $skin_id));
+        return is_dir(G5_SKIN_PATH . '/board/' . $skin_id)
+            && is_dir(G5_MOBILE_PATH . '/skin/board/' . $skin_id);
     }
 }
 
@@ -116,12 +155,15 @@ if (!function_exists('onoff_platform_skin_get_status')) {
         }
 
         return array(
-            'ready'            => onoff_platform_skin_member_exists() && onoff_platform_skin_all_boards_exist(),
+            'ready'            => onoff_platform_skin_member_exists() && onoff_platform_skin_all_boards_exist() && onoff_platform_skin_outlogin_exists(),
             'member_skin'      => $member_skin,
             'board_skin'       => $board_skin,
             'board_templates'  => $board_templates,
             'member_applied'   => $member_applied && $mobile_applied,
             'member_files_ok'  => onoff_platform_skin_member_exists(),
+            'mobile_member_ok' => is_dir(G5_MOBILE_PATH . '/skin/member/' . $member_skin),
+            'outlogin_skin'    => onoff_platform_skin_id_outlogin(),
+            'outlogin_files_ok'=> onoff_platform_skin_outlogin_exists(),
             'board_files_ok'   => onoff_platform_skin_all_boards_exist(),
             'board_log_count'  => $board_count,
             'login_url'        => defined('G5_BBS_URL') ? G5_BBS_URL . '/login.php' : '/bbs/login.php',
@@ -191,7 +233,7 @@ if (!function_exists('onoff_platform_skin_apply')) {
             return array('success' => false, 'message' => '플랫폼 스킨 적용은 최고관리자만 할 수 있습니다.');
         }
 
-        if (!onoff_platform_skin_member_exists() || !onoff_platform_skin_all_boards_exist()) {
+        if (!onoff_platform_skin_member_exists() || !onoff_platform_skin_all_boards_exist() || !onoff_platform_skin_outlogin_exists()) {
             return array('success' => false, 'message' => '플랫폼 스킨 파일이 없습니다. iCRM 업데이트를 먼저 적용하세요.');
         }
 
@@ -244,6 +286,7 @@ if (!function_exists('onoff_platform_skin_apply')) {
 
         onoff_platform_skin_write_site_config(array(
             'platform_member_skin'       => $member_skin,
+            'platform_outlogin_skin'     => onoff_platform_skin_id_outlogin(),
             'platform_board_skin_column' => onoff_platform_skin_id_board_column(),
             'platform_skin_applied_at'   => date('Y-m-d H:i:s'),
         ));

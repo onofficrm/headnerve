@@ -32,7 +32,20 @@ $action_url = icrm_member_url('action.php');
     </dd>
     <dt>회원 스킨</dt>
     <dd><code><?php echo icrm_member_h($ps['member_skin'] ?? 'onoff'); ?></code>
+      PC · 모바일
       <?php echo !empty($ps['member_applied']) ? ' · <span style="color:#0f766e">적용됨</span>' : ' · 미적용'; ?>
+      <?php if (empty($ps['member_files_ok'])) { ?>
+      · <span style="color:#b45309">PC/모바일 파일 없음</span>
+      <?php } ?>
+    </dd>
+    <dt>아웃로그인</dt>
+    <dd><code><?php echo icrm_member_h($ps['outlogin_skin'] ?? 'onoff'); ?></code>
+      <?php if (!empty($ps['outlogin_files_ok'])) { ?>
+      · <span style="color:#0f766e">설치됨</span>
+      <?php } else { ?>
+      · <span style="color:#b45309">없음</span>
+      <?php } ?>
+      (사이드·모바일 메뉴)
     </dd>
     <dt>게시판 스킨</dt>
     <dd>
@@ -87,7 +100,7 @@ $action_url = icrm_member_url('action.php');
   var actionUrl = <?php echo json_encode($action_url); ?>;
   if (!btn) return;
   btn.addEventListener('click', function() {
-    if (!confirm('회원 스킨(onoff)과 템플릿별 게시판 스킨(칼럼·FAQ·후기·문의)을 적용합니다. 계속할까요?')) return;
+    if (!confirm('회원·아웃로그인·템플릿별 게시판 스킨(PC·모바일)을 적용합니다. 계속할까요?')) return;
     btn.disabled = true;
     if (msg) { msg.textContent = '적용 중…'; msg.className = 'icp-msg'; }
     var fd = new FormData();

@@ -198,3 +198,19 @@
   border-bottom: 1px solid var(--icrm-border-light, #f4f4f5);
   text-align: left;
 }
+
+@media (max-width: 767px) {
+  .onoff-platform--member {
+    max-width: none;
+    margin: 24px auto 40px;
+    padding: 0 12px;
+  }
+
+  .onoff-platform__card {
+    padding: 22px 18px 18px;
+  }
+
+  .onoff-platform--outlogin form {
+    padding: 14px;
+  }
+}

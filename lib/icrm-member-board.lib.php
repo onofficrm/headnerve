@@ -113,7 +113,7 @@ if (!function_exists('icrm_member_board_skin_exists')) {
         }
 
         return is_dir(G5_SKIN_PATH . '/board/' . $skin)
-            || is_dir(G5_MOBILE_PATH . '/skin/board/' . $skin);
+            && is_dir(G5_MOBILE_PATH . '/skin/board/' . $skin);
     }
 }
 
