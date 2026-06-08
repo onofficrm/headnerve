@@ -13,6 +13,7 @@ if (is_file(G5_PLUGIN_PATH . '/onoff-builder-bridge/bootstrap.php')) {
 <div class="icrm-member-embed">
 <?php
 include G5_PLUGIN_PATH . '/onoff-builder-bridge/member/_panel_design.php';
+include __DIR__ . '/_panel_platform_skin.php';
 ?>
 </div>
 <link rel="stylesheet" href="<?php echo icrm_member_h(G5_PLUGIN_URL . '/onoff-builder-bridge/assets/css/admin.css'); ?>">

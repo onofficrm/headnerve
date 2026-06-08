@@ -21,8 +21,28 @@ if (is_file(G5_LIB_PATH . '/icrm-builder-deploy.lib.php')) {
 if (is_file(G5_PLUGIN_PATH . '/onoff-builder-bridge/bootstrap.php')) {
     include_once G5_PLUGIN_PATH . '/onoff-builder-bridge/bootstrap.php';
 }
+if (is_file(G5_LIB_PATH . '/onoff-platform-skin.lib.php')) {
+    include_once G5_LIB_PATH . '/onoff-platform-skin.lib.php';
+}
 
 $action = isset($_REQUEST['action']) ? preg_replace('/[^a-z_]/', '', $_REQUEST['action']) : '';
+
+if ($action === 'platform_skin_status') {
+    icrm_member_require('design');
+    echo json_encode(array('ok' => true, 'status' => onoff_platform_skin_get_status()), JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+if ($action === 'platform_skin_apply') {
+    icrm_member_require('design');
+    $result = onoff_platform_skin_apply(array('apply_boards' => true));
+    echo json_encode(array(
+        'ok'     => !empty($result['success']),
+        'result' => $result,
+        'error'  => empty($result['success']) ? ($result['message'] ?? '실패') : '',
+    ), JSON_UNESCAPED_UNICODE);
+    exit;
+}
 
 if ($action === 'board_create') {
     icrm_member_require('boards');

@@ -70,8 +70,8 @@ if (!function_exists('icrm_member_board_templates')) {
         return array(
             'column' => array(
                 'label'            => '칼럼 · 블로그',
-                'skin'             => 'basic-clean',
-                'mobile_skin'      => 'basic-clean',
+                'skin'             => 'onoff-column',
+                'mobile_skin'      => 'onoff-column',
                 'use_category'     => '0',
                 'category_list'    => '',
                 'bo_comment_level' => '1',
@@ -122,6 +122,10 @@ if (!function_exists('icrm_member_board_resolve_skin')) {
     {
         if (icrm_member_board_skin_exists($skin)) {
             return $skin;
+        }
+
+        if (icrm_member_board_skin_exists('onoff-column')) {
+            return 'onoff-column';
         }
 
         return 'basic-clean';
