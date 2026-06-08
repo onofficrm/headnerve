@@ -105,6 +105,15 @@ $site_config = array(
     'icrm_content_default_mb_id'     => '',
     'onoff_builder_bridge_enabled' => true,
 
+    /* onoff-update */
+    'builder_deploy_member_enabled' => true,
+    'builder_deploy_min_level'      => '2',
+    'builder_deploy_auto_home'        => true,
+    'icrm_member_enabled'           => true,
+    'icrm_member_min_level'           => '2',
+    'icrm_member_board_min_level'     => '5',
+    'icrm_member_board_max_per_month' => '3',
+
 );
 
 /**

@@ -3,14 +3,25 @@ if (!defined('_GNUBOARD_') || !defined('ICRM_HUB_ACTIVE')) {
     exit;
 }
 
+global $member;
+
 if (is_file(G5_LIB_PATH . '/icrm-content.lib.php')) {
     include_once G5_LIB_PATH . '/icrm-content.lib.php';
 }
 icrm_content_bootstrap();
 
-$action_url = G5_PLUGIN_URL . '/content_collector/admin/action.php';
+if (defined('ICRM_MEMBER_PUBLISH') && ICRM_MEMBER_PUBLISH) {
+    $action_url = isset($action_url) && $action_url !== ''
+        ? $action_url
+        : G5_PLUGIN_URL . '/icrm_member/action.php';
+} else {
+    $action_url = G5_PLUGIN_URL . '/content_collector/admin/action.php';
+}
 $default_bo = icrm_content_get_default_bo_table();
-$default_mb = icrm_content_get_default_mb_id();
+$default_mb = (defined('ICRM_MEMBER_PUBLISH') && ICRM_MEMBER_PUBLISH && !empty($member['mb_id']))
+    ? (string) $member['mb_id']
+    : icrm_content_get_default_mb_id();
+$icrm_member_publish_mode = defined('ICRM_MEMBER_PUBLISH') && ICRM_MEMBER_PUBLISH;
 $license_ok = function_exists('icrm_admin_shell_license_ok') ? icrm_admin_shell_license_ok() : false;
 $ai_ready = function_exists('g5b_seo_meta_is_ai_configured') ? g5b_seo_meta_is_ai_configured() : false;
 $geo_enabled = function_exists('g5site_cfg_bool') ? g5site_cfg_bool('icrm_hub_geo_button', true) : true;
@@ -110,7 +121,10 @@ function icp_h($s)
 
                 <div class="icp-field">
                     <label class="icp-label" for="icp_mb_id">작성자 ID</label>
-                    <input type="text" class="icp-input" id="icp_mb_id" name="mb_id" value="<?php echo icp_h($default_mb); ?>" required>
+                    <input type="text" class="icp-input" id="icp_mb_id" name="mb_id" value="<?php echo icp_h($default_mb); ?>" required<?php echo !empty($icrm_member_publish_mode) ? ' readonly' : ''; ?>>
+                    <?php if (!empty($icrm_member_publish_mode)) { ?>
+                    <p class="icp-help">로그인한 회원 계정으로 발행됩니다.</p>
+                    <?php } ?>
                 </div>
 
                 <div class="icp-aside__actions">
@@ -265,7 +279,7 @@ body .se2_layer{display:block}
 <script>
 (function() {
     var actionUrl = <?php echo json_encode($action_url); ?>;
-    var inboxUrl = <?php echo json_encode(icrm_admin_page_url('content', array('tab' => 'inbox'))); ?>;
+    var inboxUrl = <?php echo json_encode(!empty($icrm_member_publish_mode) ? '' : icrm_admin_page_url('content', array('tab' => 'inbox'))); ?>;
     var icpEditorId = <?php echo json_encode($icp_editor_id); ?>;
     var icpUseEditor = <?php echo $icp_use_editor ? 'true' : 'false'; ?>;
 

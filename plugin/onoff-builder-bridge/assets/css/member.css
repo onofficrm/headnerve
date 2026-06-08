@@ -1,0 +1,77 @@
+@charset "utf-8";
+
+.onoff-builder-member .onoff-builder-admin__brand-sub {
+  color: #0d9488;
+}
+
+.onoff-builder-member__steps {
+  display: grid;
+  gap: 1rem;
+  margin: 1.25rem 0 1.5rem;
+}
+
+.onoff-builder-member__step {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1.1rem 1.25rem;
+}
+
+.onoff-builder-member__step h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+}
+
+.onoff-builder-member__step p {
+  margin: 0 0 0.75rem;
+  color: #64748b;
+}
+
+.onoff-builder-member__status {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0.75rem 0 0;
+  font-size: 13px;
+}
+
+.onoff-builder-member__status dt {
+  font-weight: 700;
+  color: #334155;
+}
+
+.onoff-builder-member__status dd {
+  margin: 0 0 0.5rem;
+}
+
+.onoff-builder-member__msg {
+  margin-top: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.onoff-builder-member__msg.is-ok {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.onoff-builder-member__msg.is-err {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.onoff-builder-member__msg.is-busy {
+  background: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
+
+.onoff-builder-member__check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+  font-size: 14px;
+}

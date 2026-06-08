@@ -1,0 +1,85 @@
+@charset "utf-8";
+
+/* iCRM 회원 포털 — admin shell 재사용 + 회원 톤 */
+@import url("icrm-admin-shell.css");
+
+.icrm-member-app {
+  --icrm-member-accent: #0d9488;
+}
+
+.icrm-member-app .icrm-sidebar__logo {
+  background: linear-gradient(135deg, #0d9488, #0f766e);
+}
+
+.icrm-member-app .icrm-sidebar__link.is-active {
+  border-color: rgba(13, 148, 136, 0.35);
+  background: rgba(13, 148, 136, 0.08);
+}
+
+.icrm-member-dash {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.icrm-member-card {
+  background: var(--icrm-surface, #fff);
+  border: 1px solid var(--icrm-border, #e2e8f0);
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: var(--icrm-shadow-xs, 0 1px 2px rgba(15, 23, 42, 0.06));
+}
+
+.icrm-member-card h3 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.icrm-member-card p {
+  margin: 0 0 14px;
+  font-size: 13px;
+  color: var(--icrm-muted, #64748b);
+  line-height: 1.55;
+}
+
+.icrm-member-card .icc-btn {
+  display: inline-flex;
+}
+
+.icrm-member-board-form .icrm-field {
+  margin-bottom: 16px;
+}
+
+.icrm-member-board-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.icrm-member-board-form input,
+.icrm-member-board-form select {
+  width: 100%;
+  max-width: 420px;
+  padding: 11px 13px;
+  border: 1px solid var(--icrm-border, #e2e8f0);
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.icrm-member-board-list {
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.icrm-member-board-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 13px;
+}
+
+.icrm-member-embed .onoff-builder-member__steps {
+  margin-top: 0;
+}

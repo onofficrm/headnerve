@@ -841,3 +841,43 @@ if (!function_exists('icrm_builder_deploy_publish_project')) {
         return $resp;
     }
 }
+
+if (!function_exists('icrm_builder_deploy_publish_and_apply')) {
+    /**
+     * iCRM 등록 후 사이트에 즉시 적용 (일반회원 원클릭 배포)
+     *
+     * @param string $project_id
+     * @param string $project_name
+     * @param array  $options connect_home(bool)
+     * @return array
+     */
+    function icrm_builder_deploy_publish_and_apply($project_id, $project_name = '', array $options = array())
+    {
+        $publish = icrm_builder_deploy_publish_project($project_id, $project_name);
+        if (empty($publish['success'])) {
+            return $publish;
+        }
+
+        $pull = icrm_builder_deploy_pull(false);
+        if (empty($pull['success'])) {
+            $pull['published'] = true;
+            $pull['published_release_id'] = isset($publish['release_id']) ? (string) $publish['release_id'] : '';
+
+            return $pull;
+        }
+
+        if (!empty($options['connect_home']) && is_file(G5_PLUGIN_PATH . '/onoff-builder-bridge/lib/site-config.php')) {
+            include_once G5_PLUGIN_PATH . '/onoff-builder-bridge/lib/site-config.php';
+            if (function_exists('onoff_builder_set_home_bridge_id')) {
+                onoff_builder_set_home_bridge_id($project_id);
+            }
+        }
+
+        $pull['published'] = true;
+        $pull['published_release_id'] = isset($publish['release_id']) ? (string) $publish['release_id'] : '';
+        $pull['message'] = '디자인 배포 및 적용이 완료되었습니다.';
+        $pull['home_url'] = icrm_builder_deploy_home_url();
+
+        return $pull;
+    }
+}
