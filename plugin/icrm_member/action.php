@@ -138,6 +138,7 @@ $compose_actions = array(
     'compose_ai_draft',
     'compose_save',
     'compose_publish',
+    'compose_delete',
 );
 
 if (in_array($action, $compose_actions, true)) {
@@ -200,7 +201,7 @@ if (in_array($action, $compose_actions, true)) {
     }
     if ($action === 'compose_save') {
         $ici_id = isset($_POST['ici_id']) ? (int) $_POST['ici_id'] : 0;
-        echo json_encode(icrm_content_save_compose_draft(array(
+        $result = icrm_content_save_compose_draft(array(
             'subject'      => isset($_POST['subject']) ? (string) $_POST['subject'] : '',
             'content_html' => isset($_POST['content_html']) ? (string) $_POST['content_html'] : '',
             'bo_table'     => isset($_POST['bo_table']) ? (string) $_POST['bo_table'] : '',
@@ -208,12 +209,21 @@ if (in_array($action, $compose_actions, true)) {
             'ca_name'      => isset($_POST['ca_name']) ? (string) $_POST['ca_name'] : '',
             'keywords'     => isset($_POST['keywords']) ? (string) $_POST['keywords'] : '',
             'topic'        => isset($_POST['topic']) ? (string) $_POST['topic'] : '',
-        ), $ici_id), JSON_UNESCAPED_UNICODE);
+        ), $ici_id);
+        if (empty($result['ok']) && function_exists('icrm_content_publish_error_message')) {
+            $result['message'] = icrm_content_publish_error_message($result);
+        }
+        echo json_encode($result, JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+    if ($action === 'compose_delete') {
+        $ici_id = isset($_POST['ici_id']) ? (int) $_POST['ici_id'] : 0;
+        echo json_encode(icrm_content_member_delete_compose_item($ici_id, $member_mb_id), JSON_UNESCAPED_UNICODE);
         exit;
     }
     if ($action === 'compose_publish') {
         $options = array('geo_package' => !empty($_POST['geo_package']));
-        echo json_encode(icrm_content_compose_publish(array(
+        $result = icrm_content_compose_publish(array(
             'ici_id'       => isset($_POST['ici_id']) ? (int) $_POST['ici_id'] : 0,
             'subject'      => isset($_POST['subject']) ? (string) $_POST['subject'] : '',
             'content_html' => isset($_POST['content_html']) ? (string) $_POST['content_html'] : '',
@@ -222,7 +232,11 @@ if (in_array($action, $compose_actions, true)) {
             'ca_name'      => isset($_POST['ca_name']) ? (string) $_POST['ca_name'] : '',
             'keywords'     => isset($_POST['keywords']) ? (string) $_POST['keywords'] : '',
             'topic'        => isset($_POST['topic']) ? (string) $_POST['topic'] : '',
-        ), $options), JSON_UNESCAPED_UNICODE);
+        ), $options);
+        if (empty($result['ok']) && function_exists('icrm_content_publish_error_message')) {
+            $result['message'] = icrm_content_publish_error_message($result);
+        }
+        echo json_encode($result, JSON_UNESCAPED_UNICODE);
         exit;
     }
 }

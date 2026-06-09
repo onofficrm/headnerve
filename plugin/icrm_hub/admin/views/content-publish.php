@@ -88,6 +88,8 @@ $license_ok = function_exists('icrm_admin_shell_license_ok') ? icrm_admin_shell_
 $ai_ready = function_exists('g5b_seo_meta_is_ai_configured') ? g5b_seo_meta_is_ai_configured() : false;
 $geo_enabled = function_exists('g5site_cfg_bool') ? g5site_cfg_bool('icrm_hub_geo_button', true) : true;
 
+$icp_preload_item = (isset($icp_preload_item) && is_array($icp_preload_item)) ? $icp_preload_item : null;
+
 $icp_use_editor = false;
 if (!empty($config['cf_editor']) && defined('G5_EDITOR_LIB') && is_file(G5_EDITOR_LIB)) {
     include_once G5_EDITOR_LIB;
@@ -113,6 +115,13 @@ function icp_h($s)
             <p class="icp-compose__sub">주제를 입력하고 AI가 제목을 추천합니다. 제목을 선택한 뒤 분량·스타일에 맞춰 풍부한 본문을 생성할 수 있습니다.</p>
         </div>
     </header>
+
+    <?php if ($icrm_member_publish_mode && $icp_preload_item) { ?>
+    <p class="icp-compose__alert" style="border-color:#99f6e4;background:#f0fdfa;color:#0f766e">
+        초안 #<?php echo (int) $icp_preload_item['ici_id']; ?>을(를) 불러왔습니다. 수정 후 저장하거나 발행하세요.
+        <a href="<?php echo icp_h(function_exists('icrm_member_url') ? icrm_member_url(array('m' => 'publish', 'tab' => 'drafts')) : '#'); ?>" style="margin-left:8px;color:#0f766e">내 초안 목록</a>
+    </p>
+    <?php } ?>
 
     <?php if (!$license_ok) { ?>
     <p class="icp-compose__alert"><?php echo $icrm_member_publish_mode
@@ -369,6 +378,17 @@ body .se2_layer{display:block}
     var boardMeta = <?php echo json_encode($board_meta, JSON_UNESCAPED_UNICODE); ?>;
     var icpEditorId = <?php echo json_encode($icp_editor_id); ?>;
     var icpUseEditor = <?php echo $icp_use_editor ? 'true' : 'false'; ?>;
+    var icpPreload = <?php echo json_encode($icp_preload_item ? array(
+        'ici_id'       => (int) $icp_preload_item['ici_id'],
+        'topic'        => (string) ($icp_preload_item['source_title'] ?? ''),
+        'keywords'     => implode(', ', (array) ($icp_preload_item['rank_keywords'] ?? array())),
+        'bo_table'     => (string) ($icp_preload_item['bo_table'] ?? ''),
+        'subject'      => (string) ($icp_preload_item['subject'] ?? ''),
+        'content_html' => (string) ($icp_preload_item['content_html'] ?? ''),
+        'ca_name'      => (string) ($icp_preload_item['ca_name'] ?? ''),
+    ) : null, JSON_UNESCAPED_UNICODE); ?>;
+    var icpMemberDraftsUrl = <?php echo json_encode($icrm_member_publish_mode && function_exists('icrm_member_url') ? icrm_member_url(array('m' => 'publish', 'tab' => 'drafts')) : ''); ?>;
+    var icpMemberPublishedUrl = <?php echo json_encode($icrm_member_publish_mode && function_exists('icrm_member_url') ? icrm_member_url(array('m' => 'publish', 'tab' => 'published')) : ''); ?>;
 
     function icpSyncCategoryField() {
         var boEl = document.getElementById('icp_bo_table');
@@ -638,7 +658,11 @@ body .se2_layer{display:block}
             .then(function(r) { return r.json(); })
             .then(function(res) {
                 if (!res.ok) {
-                    setMsg(msgEl, res.message || res.error || '실패', false);
+                    var errMsg = res.message || res.error || '실패';
+                    if (res.error === 'forbidden_board' || res.error === 'write_level') {
+                        errMsg += ' (게시판·레벨 확인)';
+                    }
+                    setMsg(msgEl, errMsg, false);
                     return;
                 }
                 if (res.ici_id) document.getElementById('icp_ici_id').value = res.ici_id;
@@ -654,6 +678,7 @@ body .se2_layer{display:block}
             postCompose('compose_save', document.getElementById('icp_compose_msg'), '', function(res) {
                 if (!res.ici_id) return;
                 if (icrmMemberPublish) {
+                    setMsg(document.getElementById('icp_compose_msg'), (res.message || '저장 완료') + ' · 내 초안에서 이어서 작성할 수 있습니다.', true);
                     return;
                 }
                 setTimeout(function() {
@@ -670,6 +695,13 @@ body .se2_layer{display:block}
                 if (res.final_url) {
                     setTimeout(function() { window.open(res.final_url, '_blank'); }, 400);
                 }
+                if (icrmMemberPublish && icpMemberPublishedUrl) {
+                    setTimeout(function() {
+                        if (confirm((res.message || '발행 완료') + '\n\n발행 완료 목록을 볼까요?')) {
+                            location.href = icpMemberPublishedUrl;
+                        }
+                    }, 500);
+                }
             });
         });
     }
@@ -678,6 +710,30 @@ body .se2_layer{display:block}
     if (boTableEl) {
         boTableEl.addEventListener('change', icpSyncCategoryField);
         icpSyncCategoryField();
+    }
+
+    if (icpPreload && icpPreload.ici_id) {
+        var preloadFields = {
+            icp_ici_id: icpPreload.ici_id,
+            icp_topic: icpPreload.topic || '',
+            icp_keywords: icpPreload.keywords || '',
+            icp_subject: icpPreload.subject || '',
+            icp_bo_table: icpPreload.bo_table || ''
+        };
+        Object.keys(preloadFields).forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el && preloadFields[id] !== '') el.value = preloadFields[id];
+        });
+        if (icpPreload.content_html) {
+            icpSetContent(icpPreload.content_html);
+            icpShowExpandBar(true);
+            icpLoadExpandPresets();
+        }
+        icpSyncCategoryField();
+        if (icpPreload.ca_name) {
+            var caEl = document.getElementById('icp_ca_name');
+            if (caEl) caEl.value = icpPreload.ca_name;
+        }
     }
 })();
 </script>

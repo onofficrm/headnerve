@@ -667,6 +667,16 @@ if (!function_exists('icrm_content_fetch_items')) {
             $where .= " and source_type = '" . icrm_content_escape($source_type) . "' ";
         }
 
+        $mb_id = isset($options['mb_id']) ? preg_replace('/[^a-z0-9_]/i', '', (string) $options['mb_id']) : '';
+        if ($mb_id !== '') {
+            $where .= " and mb_id = '" . icrm_content_escape($mb_id) . "' ";
+        }
+
+        $collect_mode = isset($options['collect_mode']) ? preg_replace('/[^a-z_]/', '', (string) $options['collect_mode']) : '';
+        if ($collect_mode !== '') {
+            $where .= " and collect_mode = '" . icrm_content_escape($collect_mode) . "' ";
+        }
+
         $total_row = sql_fetch(" select count(*) as cnt from " . icrm_content_table('items') . $where);
         $total = isset($total_row['cnt']) ? (int) $total_row['cnt'] : 0;
 
@@ -1118,6 +1128,116 @@ if (!function_exists('icrm_content_validate_board_publish')) {
     }
 }
 
+if (!function_exists('icrm_content_member_can_access_item')) {
+    function icrm_content_member_can_access_item($ici_id, $mb_id = '')
+    {
+        global $member, $is_admin;
+
+        $ici_id = (int) $ici_id;
+        if ($ici_id < 1) {
+            return false;
+        }
+
+        $item = icrm_content_get_item($ici_id);
+        if (!$item) {
+            return false;
+        }
+
+        if ($is_admin === 'super' && defined('ICRM_MEMBER_PUBLISH') && ICRM_MEMBER_PUBLISH) {
+            return (string) ($item['collect_mode'] ?? '') === 'compose';
+        }
+
+        $mb_id = preg_replace('/[^a-z0-9_]/i', '', trim((string) $mb_id));
+        if ($mb_id === '' && !empty($member['mb_id'])) {
+            $mb_id = (string) $member['mb_id'];
+        }
+        if ($mb_id === '') {
+            return false;
+        }
+
+        return (string) ($item['mb_id'] ?? '') === $mb_id
+            && (string) ($item['collect_mode'] ?? '') === 'compose';
+    }
+}
+
+if (!function_exists('icrm_content_fetch_member_compose_items')) {
+    function icrm_content_fetch_member_compose_items($mb_id, $status = 'review', $page = 1, $per_page = 15)
+    {
+        $mb_id = preg_replace('/[^a-z0-9_]/i', '', trim((string) $mb_id));
+        if ($mb_id === '') {
+            return array('ok' => true, 'items' => array(), 'total' => 0, 'page' => 1, 'per_page' => $per_page);
+        }
+
+        return icrm_content_fetch_items($status, '', $page, $per_page, array(
+            'mb_id'        => $mb_id,
+            'collect_mode' => 'compose',
+        ));
+    }
+}
+
+if (!function_exists('icrm_content_member_item_post_url')) {
+    function icrm_content_member_item_post_url(array $item)
+    {
+        if (empty($item['bo_table']) || empty($item['wr_id'])) {
+            return '';
+        }
+
+        $bo_table = preg_replace('/[^a-z0-9_]/i', '', (string) $item['bo_table']);
+        $wr_id = (int) $item['wr_id'];
+        if ($bo_table === '' || $wr_id < 1 || !defined('G5_BBS_URL')) {
+            return '';
+        }
+
+        return G5_BBS_URL . '/board.php?bo_table=' . rawurlencode($bo_table) . '&wr_id=' . $wr_id;
+    }
+}
+
+if (!function_exists('icrm_content_member_delete_compose_item')) {
+    function icrm_content_member_delete_compose_item($ici_id, $mb_id = '')
+    {
+        global $member;
+
+        if ($mb_id === '' && !empty($member['mb_id'])) {
+            $mb_id = (string) $member['mb_id'];
+        }
+
+        if (!icrm_content_member_can_access_item($ici_id, $mb_id)) {
+            return array('ok' => false, 'error' => 'forbidden', 'message' => '이 초안에 접근할 수 없습니다.');
+        }
+
+        $item = icrm_content_get_item($ici_id);
+        if (!$item) {
+            return array('ok' => false, 'error' => 'not_found', 'message' => '초안을 찾을 수 없습니다.');
+        }
+        if ($item['status'] === 'published') {
+            return array('ok' => false, 'error' => 'already_published', 'message' => '발행된 글은 삭제할 수 없습니다.');
+        }
+
+        return icrm_content_delete_item($ici_id);
+    }
+}
+
+if (!function_exists('icrm_content_publish_error_message')) {
+    function icrm_content_publish_error_message(array $result)
+    {
+        $message = isset($result['message']) ? trim((string) $result['message']) : '';
+        if ($message === '') {
+            $message = isset($result['error']) ? (string) $result['error'] : '요청에 실패했습니다.';
+        }
+
+        $error = isset($result['error']) ? (string) $result['error'] : '';
+        if (in_array($error, array('forbidden_board', 'write_level'), true)) {
+            $message .= ' 게시판 메뉴에서 확인하거나 다른 게시판을 선택해 주세요.';
+        } elseif ($error === 'empty_board') {
+            $message .= ' 발행할 게시판을 먼저 선택해 주세요.';
+        } elseif ($error === 'already_published') {
+            $message .= ' 발행 완료 목록에서 확인할 수 있습니다.';
+        }
+
+        return $message;
+    }
+}
+
 if (!function_exists('icrm_content_save_compose_draft')) {
     function icrm_content_save_compose_draft(array $fields, $ici_id = 0)
     {
@@ -1168,6 +1288,12 @@ if (!function_exists('icrm_content_save_compose_draft')) {
 
         $ici_id = (int) $ici_id;
         if ($ici_id > 0) {
+            if (defined('ICRM_MEMBER_PUBLISH') && ICRM_MEMBER_PUBLISH && function_exists('icrm_content_member_can_access_item')) {
+                if (!icrm_content_member_can_access_item($ici_id, $mb_id)) {
+                    return array('ok' => false, 'error' => 'forbidden', 'message' => '이 초안을 수정할 수 없습니다.');
+                }
+            }
+
             $item = icrm_content_get_item($ici_id);
             if (!$item) {
                 return array('ok' => false, 'error' => 'not_found', 'message' => '초안을 찾을 수 없습니다.');
@@ -1244,7 +1370,12 @@ if (!function_exists('icrm_content_compose_publish')) {
             return $save;
         }
 
-        return icrm_content_publish_item((int) $save['ici_id'], $options);
+        $result = icrm_content_publish_item((int) $save['ici_id'], $options);
+        if (empty($result['ok']) && function_exists('icrm_content_publish_error_message')) {
+            $result['message'] = icrm_content_publish_error_message($result);
+        }
+
+        return $result;
     }
 }
 

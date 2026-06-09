@@ -207,6 +207,43 @@ if (!function_exists('icrm_member_module_lock_reason')) {
     }
 }
 
+if (!function_exists('icrm_member_denied_exit')) {
+    function icrm_member_denied_exit($message)
+    {
+        $message = trim(strip_tags((string) $message));
+        if ($message === '') {
+            $message = '이 메뉴를 사용할 권한이 없습니다.';
+        }
+
+        $home_url = icrm_member_url('home');
+        $tokens_css = defined('G5_URL') ? G5_URL . '/css/icrm-design-tokens.css' : '';
+        $shell_css = defined('G5_URL') ? G5_URL . '/css/icrm-member-shell.css' : '';
+
+        header('Content-Type: text/html; charset=utf-8');
+        header('HTTP/1.1 403 Forbidden');
+        ?>
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>iCRM · 이용 제한</title>
+<?php if ($tokens_css !== '') { ?><link rel="stylesheet" href="<?php echo icrm_member_h($tokens_css); ?>"><?php } ?>
+<?php if ($shell_css !== '') { ?><link rel="stylesheet" href="<?php echo icrm_member_h($shell_css); ?>"><?php } ?>
+</head>
+<body class="icrm-app icrm-member-app" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:#f7f8fa">
+<div style="max-width:420px;width:100%;padding:28px 24px;border:1px solid #e2e8f0;border-radius:16px;background:#fff;text-align:center">
+    <p style="margin:0 0 8px;font-size:15px;font-weight:800">이용할 수 없습니다</p>
+    <p style="margin:0 0 20px;font-size:14px;line-height:1.6;color:#64748b"><?php echo icrm_member_h($message); ?></p>
+    <a class="icc-btn icc-btn--primary" href="<?php echo icrm_member_h($home_url); ?>" style="display:inline-flex">iCRM 관리로 돌아가기</a>
+</div>
+</body>
+</html>
+        <?php
+        exit;
+    }
+}
+
 if (!function_exists('icrm_member_require')) {
     function icrm_member_require($module = 'home')
     {
@@ -232,13 +269,7 @@ if (!function_exists('icrm_member_require')) {
             $msg = '이 메뉴를 사용할 권한이 없습니다.';
         }
 
-        if (function_exists('alert')) {
-            alert($msg, defined('G5_URL') ? G5_URL : '/');
-        }
-
-        header('Content-Type: text/html; charset=utf-8');
-        echo '<script>alert(' . json_encode($msg, JSON_UNESCAPED_UNICODE) . ');location.href=' . json_encode(defined('G5_URL') ? G5_URL : '/') . ';</script>';
-        exit;
+        icrm_member_denied_exit($msg);
     }
 }
 
