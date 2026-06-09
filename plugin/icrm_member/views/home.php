@@ -17,12 +17,16 @@ $license_ok = function_exists('icrm_admin_shell_license_ok') ? icrm_admin_shell_
         $lock_reason = $can ? '' : icrm_member_module_lock_reason($key);
         ?>
     <div class="icrm-member-card<?php echo $can ? '' : ' is-locked'; ?>">
-        <h3><?php echo icrm_member_h($item['label']); ?></h3>
-        <p><?php echo icrm_member_h($item['desc']); ?></p>
+        <div class="icrm-member-card__body">
+            <h3><?php echo icrm_member_h($item['label']); ?></h3>
+            <p><?php echo icrm_member_h($item['desc']); ?></p>
+        </div>
         <?php if ($can) { ?>
-        <a class="icc-btn icc-btn--primary" href="<?php echo icrm_member_h(icrm_member_url($key)); ?>">
-            <?php echo $key === 'home' ? '바로가기' : '열기'; ?>
-        </a>
+        <div class="icrm-member-card__footer">
+            <a class="icc-btn icc-btn--primary" href="<?php echo icrm_member_h(icrm_member_url($key)); ?>">
+                <?php echo $key === 'home' ? '바로가기' : '열기'; ?>
+            </a>
+        </div>
         <?php } else { ?>
         <p class="icrm-member-card__lock"><?php echo icrm_member_h($lock_reason); ?></p>
         <?php } ?>
@@ -30,7 +34,7 @@ $license_ok = function_exists('icrm_admin_shell_license_ok') ? icrm_admin_shell_
     <?php } ?>
 </div>
 
-<div class="icrm-member-dash-status" style="margin-top:20px;padding:14px 16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;font-size:13px;line-height:1.6">
+<div class="icrm-member-dash-status">
     <strong>iCRM 연동</strong>
     <?php if ($license_ok) { ?>
     <span style="color:#0f766e"> · 연동됨</span>

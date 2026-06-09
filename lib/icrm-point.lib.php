@@ -914,6 +914,12 @@ if (!function_exists('icrm_point_check_before_call')) {
         }
 
         $balance = icrm_point_get_balance($check['mb_id']);
+        if ($balance < (int) $min_points && function_exists('icrm_point_fetch_balance_from_icrm')) {
+            $fetch = icrm_point_fetch_balance_from_icrm($check['mb_id']);
+            if (!empty($fetch['ok'])) {
+                $balance = icrm_point_get_balance($check['mb_id']);
+            }
+        }
         if ($balance < (int) $min_points) {
             return array(
                 'ok'      => false,
@@ -1127,13 +1133,10 @@ if (!function_exists('icrm_point_maybe_auto_sync')) {
         }
 
         $mb_id = icrm_point_get_billing_mb_id();
-        if (icrm_point_get_balance($mb_id) > 0) {
-            icrm_point_mark_synced_now();
-
-            return;
+        $local_balance = icrm_point_get_balance($mb_id);
+        if ($local_balance <= 0) {
+            icrm_point_fetch_balance_from_icrm($mb_id);
         }
-
-        icrm_point_fetch_balance_from_icrm($mb_id);
         if (function_exists('icrm_point_mark_synced_now')) {
             icrm_point_mark_synced_now();
         }

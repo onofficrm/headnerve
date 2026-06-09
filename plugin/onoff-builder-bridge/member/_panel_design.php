@@ -106,7 +106,9 @@ $design_action_url = defined('ICRM_MEMBER_DESIGN_EMBED') && function_exists('icr
         <label for="zip_file">dist ZIP</label>
         <input type="file" name="zip_file" id="zip_file" accept=".zip,application/zip" required>
       </div>
-      <button type="submit" class="onoff-builder-admin__btn onoff-builder-admin__btn--primary">ZIP 업로드</button>
+      <div class="onoff-builder-admin__form-actions">
+        <button type="submit" class="onoff-builder-admin__btn onoff-builder-admin__btn--primary">ZIP 업로드</button>
+      </div>
     </form>
     <?php } ?>
   </section>

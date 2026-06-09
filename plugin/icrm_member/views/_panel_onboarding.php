@@ -62,9 +62,11 @@ if (empty($onboarding['steps'])) {
                 <p class="icrm-member-onboarding__status"><?php echo icrm_member_h($step['status_text']); ?></p>
             </div>
             <?php if (empty($step['done']) && !empty($step['url'])) { ?>
-            <a class="icc-btn icc-btn--sm<?php echo !empty($step['current']) ? ' icc-btn--primary' : ''; ?>" href="<?php echo icrm_member_h($step['url']); ?>">
-                <?php echo !empty($step['current']) ? '진행하기' : '열기'; ?>
-            </a>
+            <div class="icrm-member-onboarding__action">
+                <a class="icc-btn<?php echo !empty($step['current']) ? ' icc-btn--primary' : ' icc-btn--ghost'; ?>" href="<?php echo icrm_member_h($step['url']); ?>">
+                    <?php echo !empty($step['current']) ? '진행하기' : '열기'; ?>
+                </a>
+            </div>
             <?php } ?>
         </li>
         <?php } ?>

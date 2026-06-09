@@ -604,8 +604,8 @@ if (!function_exists('icrm_member_shell_begin')) {
 <title>iCRM · <?php echo icrm_member_h($active_label); ?></title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="<?php echo icrm_member_h($tokens_css); ?>">
-<link rel="stylesheet" href="<?php echo icrm_member_h($shell_css); ?>">
 <link rel="stylesheet" href="<?php echo icrm_member_h(G5_URL . '/css/icrm-module-quiet.css'); ?>">
+<link rel="stylesheet" href="<?php echo icrm_member_h($shell_css); ?>">
 </head>
 <body class="icrm-app icrm-member-app">
 <div class="icrm-sidebar-backdrop" id="icrm_member_sidebar_backdrop" hidden></div>
