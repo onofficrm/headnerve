@@ -27,6 +27,31 @@ if (is_file(G5_LIB_PATH . '/onoff-platform-skin.lib.php')) {
 
 $action = isset($_REQUEST['action']) ? preg_replace('/[^a-z_]/', '', $_REQUEST['action']) : '';
 
+$member_portal_retired_actions = array(
+    'board_create',
+    'board_update',
+    'board_connect',
+    'compose_suggest_titles',
+    'compose_generate_draft',
+    'compose_expand_presets',
+    'compose_expand',
+    'compose_ai_draft',
+    'compose_save',
+    'compose_publish',
+    'compose_delete',
+);
+if (in_array($action, $member_portal_retired_actions, true)) {
+    if (!function_exists('icrm_member_is_logged_in') || !icrm_member_is_logged_in()) {
+        echo json_encode(array('ok' => false, 'error' => '로그인이 필요합니다.'), JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+    echo json_encode(array(
+        'ok'    => false,
+        'error' => '게시판·콘텐츠 발행은 iCRM AI 관리에서 이용해 주세요.',
+    ), JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
 if ($action === 'platform_skin_status') {
     icrm_member_require('design');
     echo json_encode(array('ok' => true, 'status' => onoff_platform_skin_get_status()), JSON_UNESCAPED_UNICODE);

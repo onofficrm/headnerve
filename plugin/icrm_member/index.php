@@ -27,10 +27,8 @@ if (is_file(G5_LIB_PATH . '/icrm-member-board.lib.php')) {
 
 $m = isset($_GET['m']) ? preg_replace('/[^a-z_]/', '', $_GET['m']) : 'home';
 
-if ($m === 'setup') {
-    $tab = isset($_GET['tab']) ? preg_replace('/[^a-z_]/', '', (string) $_GET['tab']) : 'design';
-    $target = ($tab === 'boards') ? 'boards' : 'design';
-    header('Location: ' . icrm_member_url($target), true, 302);
+if (in_array($m, array('boards', 'publish', 'setup'), true)) {
+    header('Location: ' . icrm_member_url('home'), true, 302);
     exit;
 }
 

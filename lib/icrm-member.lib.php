@@ -143,7 +143,7 @@ if (!function_exists('icrm_member_can_boards')) {
 if (!function_exists('icrm_member_can_setup')) {
     function icrm_member_can_setup()
     {
-        return icrm_member_can_design() || icrm_member_can_boards();
+        return icrm_member_can_design();
     }
 }
 
@@ -169,9 +169,8 @@ if (!function_exists('icrm_member_can_module')) {
             case 'design':
                 return icrm_member_can_design();
             case 'publish':
-                return icrm_member_can_publish();
             case 'boards':
-                return icrm_member_can_boards();
+                return false;
             case 'update':
                 return icrm_member_can_update();
             default:
@@ -196,9 +195,8 @@ if (!function_exists('icrm_member_module_lock_reason')) {
 
                 return '레벨 ' . (function_exists('onoff_builder_member_deploy_min_level') ? onoff_builder_member_deploy_min_level() : 2) . ' 이상 필요';
             case 'boards':
-                return '레벨 ' . icrm_member_board_min_level() . ' 이상 필요';
             case 'publish':
-                return 'iCRM 라이선스 연동 후 이용 가능';
+                return 'iCRM AI 관리에서 이용해 주세요';
             case 'update':
                 return '관리자 전용';
             default:
@@ -302,11 +300,9 @@ if (!function_exists('icrm_member_modules')) {
     function icrm_member_modules()
     {
         return array(
-            'home'    => array('label' => '대시보드', 'icon' => 'home', 'desc' => '진행 상황 한눈에 보기', 'group' => ''),
-            'design'  => array('label' => '디자인 배포', 'icon' => 'design', 'desc' => '빌더 ZIP 업로드 · 사이트 적용', 'group' => '홈페이지'),
-            'boards'  => array('label' => '게시판', 'icon' => 'boards', 'desc' => '게시판 추가 · 수정', 'group' => '홈페이지'),
-            'publish' => array('label' => '콘텐츠 발행', 'icon' => 'publish', 'desc' => 'AI 글쓰기 · 게시판 발행', 'group' => '콘텐츠'),
-            'update'  => array('label' => '사이트 업데이트', 'icon' => 'update', 'desc' => '기능 업데이트 · 디자인 동기화', 'group' => '관리'),
+            'home'   => array('label' => '대시보드', 'icon' => 'home', 'desc' => '진행 상황 한눈에 보기', 'group' => ''),
+            'design' => array('label' => '디자인 배포', 'icon' => 'design', 'desc' => '빌더 ZIP · 플랫폼 스킨', 'group' => '디자인'),
+            'update' => array('label' => '사이트 업데이트', 'icon' => 'update', 'desc' => '기능 업데이트 · 디자인 동기화', 'group' => '관리'),
         );
     }
 }
@@ -402,7 +398,7 @@ if (!function_exists('icrm_member_onboarding_published_count')) {
 
 if (!function_exists('icrm_member_onboarding_checklist')) {
     /**
-     * 회원 포털 온보딩 단계 (업데이트 → 디자인 → 플랫폼 스킨 → 게시판 → 첫 발행)
+     * 회원 포털 온보딩 단계 (업데이트 → 디자인 → 플랫폼 스킨)
      *
      * @return array steps, done_count, total_count, complete, next_step_id, progress_pct
      */
@@ -452,17 +448,6 @@ if (!function_exists('icrm_member_onboarding_checklist')) {
             }
         }
 
-        if (is_file(G5_LIB_PATH . '/icrm-member-board.lib.php')) {
-            include_once G5_LIB_PATH . '/icrm-member-board.lib.php';
-        }
-
-        $board_count = 0;
-        if (function_exists('icrm_member_board_list_manageable')) {
-            $board_count = count(icrm_member_board_list_manageable($mb_id));
-        }
-
-        $published_count = icrm_member_onboarding_published_count($mb_id);
-
         $update_done = !empty($update_status['license_ok'])
             && (string) ($update_status['local_release'] ?? '') !== ''
             && empty($update_status['update_available']);
@@ -484,9 +469,6 @@ if (!function_exists('icrm_member_onboarding_checklist')) {
         } elseif (!empty($platform_status['member_applied'])) {
             $platform_done = true;
         }
-
-        $board_done = $board_count > 0;
-        $publish_done = $published_count > 0;
 
         $local_release = (string) ($update_status['local_release'] ?? '');
         $remote_release = (string) ($update_status['remote_release'] ?? '');
@@ -513,14 +495,6 @@ if (!function_exists('icrm_member_onboarding_checklist')) {
         $platform_status_text = $platform_done
             ? '플랫폼 스킨 적용됨'
             : (!empty($platform_status['ready']) ? '적용 대기' : '스킨 파일 설치 후 적용');
-
-        $board_status_text = $board_done
-            ? '게시판 ' . $board_count . '개 준비됨'
-            : '게시판 추가 또는 연결 필요';
-
-        $publish_status_text = $publish_done
-            ? '발행 ' . $published_count . '건 완료'
-            : 'AI 글쓰기 후 게시판에 발행';
 
         $definitions = array(
             array(
@@ -549,24 +523,6 @@ if (!function_exists('icrm_member_onboarding_checklist')) {
                 'done'        => $platform_done,
                 'url'         => icrm_member_url('design') . '#icrm-platform-skin',
                 'status_text' => $platform_status_text,
-            ),
-            array(
-                'id'          => 'board',
-                'label'       => '게시판 준비',
-                'desc'        => '콘텐츠를 올릴 게시판을 만들거나 기존 게시판을 연결합니다.',
-                'applicable'  => icrm_member_can_boards(),
-                'done'        => $board_done,
-                'url'         => icrm_member_url('boards'),
-                'status_text' => $board_status_text,
-            ),
-            array(
-                'id'          => 'publish',
-                'label'       => '첫 콘텐츠 발행',
-                'desc'        => 'AI 글쓰기로 초안을 만들고 게시판에 발행합니다.',
-                'applicable'  => icrm_member_can_publish(),
-                'done'        => $publish_done,
-                'url'         => icrm_member_url('publish'),
-                'status_text' => $publish_status_text,
             ),
         );
 

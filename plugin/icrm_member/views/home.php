@@ -21,7 +21,7 @@ $license_ok = function_exists('icrm_admin_shell_license_ok') ? icrm_admin_shell_
         <p><?php echo icrm_member_h($item['desc']); ?></p>
         <?php if ($can) { ?>
         <a class="icc-btn icc-btn--primary" href="<?php echo icrm_member_h(icrm_member_url($key)); ?>">
-            <?php echo $key === 'home' ? '바로가기' : ($key === 'publish' ? '글 발행' : '열기'); ?>
+            <?php echo $key === 'home' ? '바로가기' : '열기'; ?>
         </a>
         <?php } else { ?>
         <p class="icrm-member-card__lock"><?php echo icrm_member_h($lock_reason); ?></p>
@@ -38,6 +38,8 @@ $license_ok = function_exists('icrm_admin_shell_license_ok') ? icrm_admin_shell_
     <span style="color:#b45309"> · 미설정 (관리자에게 문의)</span>
     <?php } ?>
     <?php if (icrm_member_can_update()) { ?>
-    <span style="color:#64748b"> · SEO·순위 등 고급 설정은 <a href="<?php echo icrm_member_h(G5_PLUGIN_URL . '/icrm_hub/admin/index.php'); ?>">iCRM AI 관리</a>에서 진행합니다.</span>
+    <span style="color:#64748b"> · 게시판·콘텐츠 발행은 <a href="<?php echo icrm_member_h(G5_PLUGIN_URL . '/icrm_hub/admin/index.php'); ?>">iCRM AI 관리</a>에서 진행합니다.</span>
+    <?php } elseif (icrm_member_can_access()) { ?>
+    <span style="color:#64748b"> · 게시판·콘텐츠 발행은 iCRM AI 관리에서 진행합니다. (관리자에게 문의)</span>
     <?php } ?>
 </div>

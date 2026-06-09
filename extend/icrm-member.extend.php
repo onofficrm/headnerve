@@ -36,7 +36,7 @@ if (!function_exists('icrm_member_site_nav')) {
         echo '<span style="display:inline-flex;width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,#0d9488,#0f766e);color:#fff;align-items:center;justify-content:center;font-size:11px;font-weight:900">iC</span>';
         echo 'iCRM 관리';
         echo '</a>';
-        echo '<span style="display:block;margin-top:4px;color:#64748b;font-size:12px">디자인 배포 · 게시판 · 콘텐츠 발행</span>';
+        echo '<span style="display:block;margin-top:4px;color:#64748b;font-size:12px">디자인 배포 · 사이트 업데이트</span>';
         echo '</div>';
     }
 }

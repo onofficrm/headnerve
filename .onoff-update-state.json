@@ -1,20 +1,20 @@
 {
-    "updated_at": "2026-06-09T00:24:59+00:00",
+    "updated_at": "2026-06-09T00:48:36+00:00",
     "source": "local",
     "packages": {
         "seo-feed": {
             "version": "1.0.0",
-            "applied_at": "2026-06-09T00:24:59+00:00",
+            "applied_at": "2026-06-09T00:48:36+00:00",
             "title": "RSS · Sitemap · Robots"
         },
         "icrm-core": {
             "version": "1.4.10",
-            "applied_at": "2026-06-09T00:24:59+00:00",
+            "applied_at": "2026-06-09T00:48:36+00:00",
             "title": "iCRM Core (final_url · content-import · update · builder-deploy)"
         },
         "icrm-point": {
             "version": "1.0.8",
-            "applied_at": "2026-06-09T00:24:59+00:00",
+            "applied_at": "2026-06-09T00:48:36+00:00",
             "title": "iCRM 포인트 과금"
         },
         "auto-comment": {
@@ -24,7 +24,7 @@
         },
         "seo-meta": {
             "version": "1.4.6",
-            "applied_at": "2026-06-09T00:24:59+00:00",
+            "applied_at": "2026-06-09T00:48:36+00:00",
             "title": "SEO 메타 · iCRM AI"
         },
         "board-seo-ui": {
@@ -39,12 +39,12 @@
         },
         "content-collector": {
             "version": "1.0.20",
-            "applied_at": "2026-06-09T00:24:59+00:00",
+            "applied_at": "2026-06-09T00:48:36+00:00",
             "title": "콘텐츠 수집기"
         },
         "builder-bridge": {
             "version": "0.8.2",
-            "applied_at": "2026-06-09T00:24:59+00:00",
+            "applied_at": "2026-06-09T00:48:36+00:00",
             "title": "빌더 브릿지"
         },
         "icrm-update": {
@@ -53,8 +53,8 @@
             "title": "iCRM 중앙 업데이트 (관리자 UI · pull)"
         },
         "icrm-member": {
-            "version": "1.0.13",
-            "applied_at": "2026-06-09T00:24:59+00:00",
+            "version": "1.0.14",
+            "applied_at": "2026-06-09T00:48:36+00:00",
             "title": "iCRM 회원 포털"
         },
         "onoff-ui-kit": {

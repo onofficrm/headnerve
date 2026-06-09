@@ -18,7 +18,7 @@ if (empty($onboarding['steps'])) {
                 <?php if (!empty($onboarding['complete'])) { ?>
                 모든 준비가 끝났습니다. 아래 메뉴에서 계속 운영하세요.
                 <?php } else { ?>
-                아래 순서대로 진행하면 홈페이지·콘텐츠 운영을 시작할 수 있습니다.
+                아래 순서대로 진행하면 홈페이지 디자인을 적용할 수 있습니다.
                 <?php } ?>
             </p>
         </div>
