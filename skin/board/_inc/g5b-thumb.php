@@ -18,13 +18,13 @@ function g5b_list_thumb_html($bo_table, $wr_id, $width, $height, $subject = '', 
     }
 
     if ($is_notice) {
-        $thumb = get_list_thumbnail($bo_table, $wr_id, $width, $height, false, $is_crop);
+        $thumb = get_list_thumbnail($bo_table, $wr_id, $width, $height, true, $is_crop);
         if (empty($thumb['src'])) {
             return '<span class="board-thumb board-thumb--notice"><span class="notice_icon board-badge board-badge--notice">공지</span></span>';
         }
     }
 
-    $thumb = get_list_thumbnail($bo_table, $wr_id, $width, $height, false, $is_crop);
+    $thumb = get_list_thumbnail($bo_table, $wr_id, $width, $height, true, $is_crop);
     $alt = isset($thumb['alt']) && $thumb['alt'] ? get_text($thumb['alt']) : get_text(strip_tags($subject));
 
     if (!empty($thumb['src'])) {

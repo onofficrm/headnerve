@@ -780,9 +780,104 @@ if (!function_exists('icrm_board_content_head_css')) {
     }
 }
 
+if (!function_exists('icrm_write_has_editor_alignment_markup')) {
+    /**
+     * SmartEditor2·iCRM 발행 본문의 정렬 속성(align / text-align) 포함 여부
+     */
+    function icrm_write_has_editor_alignment_markup($write = null)
+    {
+        if ($write === null) {
+            global $write;
+        }
+
+        if (!is_array($write) || !isset($write['wr_content'])) {
+            return false;
+        }
+
+        $html = (string) $write['wr_content'];
+
+        return (bool) preg_match(
+            '/\balign\s*=\s*["\']?(center|left|right|justify)|text-align\s*:\s*(center|left|right|justify)/i',
+            $html
+        );
+    }
+}
+
+if (!function_exists('g5b_normalize_board_content_alignment')) {
+    /**
+     * 에디터 정렬(가운데·좌·우)이 글보기에서도 유지되도록 align → style 보강
+     */
+    function g5b_normalize_board_content_alignment($html)
+    {
+        $html = (string) $html;
+        if ($html === '' || stripos($html, '<') === false) {
+            return $html;
+        }
+
+        $html = preg_replace_callback(
+            '/<(p|div|h[1-6])(\s[^>]*)>/iu',
+            function ($m) {
+                $tag = $m[1];
+                $attrs = $m[2];
+                if (!preg_match('/\balign\s*=\s*["\']?(center|left|right|justify)/i', $attrs, $am)) {
+                    return $m[0];
+                }
+                $align = strtolower($am[1]);
+                if (preg_match('/\bstyle\s*=\s*["\']([^"\']*)["\']/i', $attrs, $sm)) {
+                    $style = $sm[1];
+                    if (!preg_match('/text-align\s*:/i', $style)) {
+                        $style = rtrim($style, ';').';text-align:'.$align;
+                        $attrs = preg_replace('/\bstyle\s*=\s*["\'][^"\']*["\']/i', 'style="'.str_replace('"', '', $style).'"', $attrs);
+                    }
+                } else {
+                    $attrs .= ' style="text-align:'.$align.'"';
+                }
+
+                return '<'.$tag.$attrs.'>';
+            },
+            $html
+        );
+
+        $html = preg_replace_callback(
+            '/<img(\s[^>]*)>/iu',
+            function ($m) {
+                $attrs = $m[1];
+                if (!preg_match('/\balign\s*=\s*["\']?center/i', $attrs)) {
+                    return $m[0];
+                }
+                if (preg_match('/\bstyle\s*=\s*["\']([^"\']*)["\']/i', $attrs, $sm)) {
+                    $style = $sm[1];
+                    if (!preg_match('/margin-left\s*:\s*auto/i', $style)) {
+                        $style = rtrim($style, ';').';display:block;margin-left:auto;margin-right:auto';
+                        $attrs = preg_replace('/\bstyle\s*=\s*["\'][^"\']*["\']/i', 'style="'.str_replace('"', '', $style).'"', $attrs);
+                    }
+                } else {
+                    $attrs .= ' style="display:block;margin-left:auto;margin-right:auto"';
+                }
+
+                return '<img'.$attrs.'>';
+            },
+            $html
+        );
+
+        return $html;
+    }
+}
+
+if (!function_exists('g5b_html_purifier_preserve_alignment')) {
+    function g5b_html_purifier_preserve_alignment($html, $purifier, $original)
+    {
+        if (!function_exists('g5b_normalize_board_content_alignment')) {
+            return $html;
+        }
+
+        return g5b_normalize_board_content_alignment($html);
+    }
+}
+
 if (!function_exists('icrm_html_purifier_config')) {
     /**
-     * iCRM 본문: class·style·data-icrm-* 속성 유지
+     * iCRM 본문: class·style·data-icrm-* 속성 및 에디터 정렬 유지
      */
     function icrm_html_purifier_config($config, $ctx)
     {
@@ -791,7 +886,13 @@ if (!function_exists('icrm_html_purifier_config')) {
             $html = (string) $ctx['html'];
         }
 
-        if ($html === '' || !icrm_write_has_template_markup(array('wr_content' => $html))) {
+        $needs_trusted_css = $html !== ''
+            && (
+                icrm_write_has_template_markup(array('wr_content' => $html))
+                || icrm_write_has_editor_alignment_markup(array('wr_content' => $html))
+            );
+
+        if (!$needs_trusted_css) {
             return;
         }
 
@@ -831,12 +932,19 @@ if (!function_exists('icrm_html_purifier_result')) {
     function icrm_html_purifier_result($html, $purifier, $original)
     {
         $original = (string) $original;
-        if ($original === '' || !icrm_write_has_template_markup(array('wr_content' => $original))) {
+        if ($original === '') {
             return $html;
         }
 
-        if (stripos((string) $html, 'icrm-') === false && stripos($original, 'icrm-') !== false) {
-            return $original;
+        if (icrm_write_has_template_markup(array('wr_content' => $original))) {
+            if (stripos((string) $html, 'icrm-') === false && stripos($original, 'icrm-') !== false) {
+                return $original;
+            }
+        }
+
+        if (function_exists('g5b_normalize_board_content_alignment')
+            && icrm_write_has_editor_alignment_markup(array('wr_content' => $original))) {
+            return g5b_normalize_board_content_alignment($html);
         }
 
         return $html;

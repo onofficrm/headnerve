@@ -61,6 +61,7 @@ if (function_exists('add_replace')) {
     add_replace('board_content_head', 'icrm_board_content_head_css', 5, 2);
     add_replace('board_mobile_content_head', 'icrm_board_content_head_css', 5, 2);
     add_replace('html_purifier_result', 'icrm_html_purifier_result', 10, 3);
+    add_replace('html_purifier_result', 'g5b_html_purifier_preserve_alignment', 15, 3);
 }
 
 if (function_exists('add_event')) {

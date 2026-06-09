@@ -9,6 +9,14 @@ if (!defined('_GNUBOARD_')) exit;
  * column  → post-thumb
  * reviews → reviews
  */
+if (is_file(G5_LIB_PATH.'/headnerve-board-meta.lib.php')) {
+    include_once G5_LIB_PATH.'/headnerve-board-meta.lib.php';
+}
+
+if (function_exists('add_event') && function_exists('headnerve_board_apply_meta_on_write')) {
+    add_event('write_update_after', 'headnerve_board_apply_meta_on_write', 8, 5);
+}
+
 if (!function_exists('headnerve_is_g5b_board')) {
     function headnerve_is_g5b_board()
     {
