@@ -14,7 +14,7 @@ $ps = function_exists('onoff_platform_skin_get_status') ? onoff_platform_skin_ge
 $can_apply = function_exists('onoff_platform_skin_can_apply') && onoff_platform_skin_can_apply();
 $action_url = icrm_member_url('action.php');
 ?>
-<section class="onoff-builder-member__step icrm-platform-skin-panel" style="margin-top:24px">
+<section class="onoff-builder-member__step icrm-platform-skin-panel" id="icrm-platform-skin" style="margin-top:24px">
   <h2>3. 플랫폼 스킨</h2>
   <p class="onoff-builder-admin__hint" style="margin:0 0 14px;line-height:1.6">
     로그인·회원가입·게시판 화면을 온오프 플랫폼 기본 디자인으로 통일합니다.

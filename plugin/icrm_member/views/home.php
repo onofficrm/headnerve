@@ -6,6 +6,8 @@ if (!defined('ICRM_MEMBER_ACTIVE')) {
 $modules = icrm_member_modules();
 $license_ok = function_exists('icrm_admin_shell_license_ok') ? icrm_admin_shell_license_ok() : false;
 ?>
+<?php include __DIR__ . '/_panel_onboarding.php'; ?>
+
 <div class="icrm-member-dash">
     <?php foreach ($modules as $key => $item) {
         if ($key === 'update' && !icrm_member_can_access()) {

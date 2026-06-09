@@ -335,6 +335,245 @@ if (!function_exists('icrm_member_h')) {
     }
 }
 
+if (!function_exists('icrm_member_onboarding_published_count')) {
+    function icrm_member_onboarding_published_count($mb_id = '')
+    {
+        global $member;
+
+        if ($mb_id === '' && !empty($member['mb_id'])) {
+            $mb_id = (string) $member['mb_id'];
+        }
+        $mb_id = preg_replace('/[^a-z0-9_]/i', '', trim((string) $mb_id));
+        if ($mb_id === '') {
+            return 0;
+        }
+
+        if (!is_file(G5_LIB_PATH . '/icrm-content.lib.php')) {
+            return 0;
+        }
+
+        include_once G5_LIB_PATH . '/icrm-content.lib.php';
+        if (!function_exists('icrm_content_bootstrap') || !function_exists('icrm_content_table')) {
+            return 0;
+        }
+
+        icrm_content_bootstrap();
+        icrm_content_ensure_tables();
+
+        $row = sql_fetch(" select count(*) as cnt
+                           from " . icrm_content_table('items') . "
+                           where status = 'published'
+                             and mb_id = '" . sql_real_escape_string($mb_id) . "' ");
+
+        return isset($row['cnt']) ? (int) $row['cnt'] : 0;
+    }
+}
+
+if (!function_exists('icrm_member_onboarding_checklist')) {
+    /**
+     * 회원 포털 온보딩 단계 (업데이트 → 디자인 → 플랫폼 스킨 → 게시판 → 첫 발행)
+     *
+     * @return array steps, done_count, total_count, complete, next_step_id, progress_pct
+     */
+    function icrm_member_onboarding_checklist($mb_id = '')
+    {
+        global $member;
+
+        if ($mb_id === '' && !empty($member['mb_id'])) {
+            $mb_id = (string) $member['mb_id'];
+        }
+
+        $update_status = array(
+            'license_ok'       => false,
+            'local_release'    => '',
+            'remote_release'   => '',
+            'update_available' => false,
+            'message'          => '',
+        );
+        if (is_file(G5_LIB_PATH . '/icrm-update.lib.php')) {
+            include_once G5_LIB_PATH . '/icrm-update.lib.php';
+            if (function_exists('icrm_update_check_status')) {
+                $update_status = icrm_update_check_status();
+            }
+        }
+
+        $builder_history = array();
+        $builder_state = array();
+        $builder_status = array();
+        if (is_file(G5_LIB_PATH . '/icrm-builder-deploy.lib.php')) {
+            include_once G5_LIB_PATH . '/icrm-builder-deploy.lib.php';
+            if (function_exists('icrm_builder_deploy_get_history')) {
+                $builder_history = icrm_builder_deploy_get_history();
+            }
+            if (function_exists('icrm_builder_deploy_read_state')) {
+                $builder_state = icrm_builder_deploy_read_state();
+            }
+            if (function_exists('icrm_builder_deploy_check_status')) {
+                $builder_status = icrm_builder_deploy_check_status();
+            }
+        }
+
+        $platform_status = array();
+        if (is_file(G5_LIB_PATH . '/onoff-platform-skin.lib.php')) {
+            include_once G5_LIB_PATH . '/onoff-platform-skin.lib.php';
+            if (function_exists('onoff_platform_skin_get_status')) {
+                $platform_status = onoff_platform_skin_get_status();
+            }
+        }
+
+        if (is_file(G5_LIB_PATH . '/icrm-member-board.lib.php')) {
+            include_once G5_LIB_PATH . '/icrm-member-board.lib.php';
+        }
+
+        $board_count = 0;
+        if (function_exists('icrm_member_board_list_manageable')) {
+            $board_count = count(icrm_member_board_list_manageable($mb_id));
+        }
+
+        $published_count = icrm_member_onboarding_published_count($mb_id);
+
+        $update_done = !empty($update_status['license_ok'])
+            && (string) ($update_status['local_release'] ?? '') !== ''
+            && empty($update_status['update_available']);
+
+        $design_done = false;
+        if ($builder_history !== array()) {
+            $design_done = true;
+        } elseif (!empty($builder_state['release_id'])) {
+            $design_done = true;
+        } elseif (function_exists('onoff_builder_home_enabled') && onoff_builder_home_enabled()) {
+            $design_done = true;
+        }
+
+        $platform_done = false;
+        if (function_exists('onoff_platform_skin_is_active') && onoff_platform_skin_is_active()) {
+            $platform_done = true;
+        } elseif (!empty($platform_status['applied_at'])) {
+            $platform_done = true;
+        } elseif (!empty($platform_status['member_applied'])) {
+            $platform_done = true;
+        }
+
+        $board_done = $board_count > 0;
+        $publish_done = $published_count > 0;
+
+        $local_release = (string) ($update_status['local_release'] ?? '');
+        $remote_release = (string) ($update_status['remote_release'] ?? '');
+
+        $update_status_text = '';
+        if (empty($update_status['license_ok'])) {
+            $update_status_text = 'iCRM 라이선스 설정 필요';
+        } elseif ($local_release === '') {
+            $update_status_text = '아직 업데이트 기록 없음';
+        } elseif (!empty($update_status['update_available'])) {
+            $update_status_text = '새 버전 ' . ($remote_release !== '' ? $remote_release : '') . ' 적용 가능';
+        } else {
+            $update_status_text = '최신 버전' . ($local_release !== '' ? ' (' . $local_release . ')' : '');
+        }
+
+        $design_status_text = $design_done
+            ? '홈 디자인 배포 완료'
+            : ((function_exists('onoff_builder_get_imports') && onoff_builder_get_imports() !== array())
+                ? 'ZIP 업로드됨 · 배포 적용 필요'
+                : 'dist ZIP 업로드 후 배포');
+
+        $platform_status_text = $platform_done
+            ? '플랫폼 스킨 적용됨'
+            : (!empty($platform_status['ready']) ? '적용 대기' : '스킨 파일 설치 후 적용');
+
+        $board_status_text = $board_done
+            ? '게시판 ' . $board_count . '개 준비됨'
+            : '게시판 추가 또는 연결 필요';
+
+        $publish_status_text = $publish_done
+            ? '발행 ' . $published_count . '건 완료'
+            : 'AI 글쓰기 후 게시판에 발행';
+
+        $definitions = array(
+            array(
+                'id'          => 'update',
+                'label'       => '사이트 업데이트',
+                'desc'        => 'iCRM 기능 패키지를 최신으로 유지합니다.',
+                'applicable'  => icrm_member_can_update(),
+                'done'        => $update_done,
+                'url'         => icrm_member_url('update'),
+                'status_text' => $update_status_text,
+            ),
+            array(
+                'id'          => 'design',
+                'label'       => '홈 디자인 배포',
+                'desc'        => '빌더 dist ZIP을 업로드하고 메인 화면에 반영합니다.',
+                'applicable'  => icrm_member_can_design(),
+                'done'        => $design_done,
+                'url'         => icrm_member_url('design'),
+                'status_text' => $design_status_text,
+            ),
+            array(
+                'id'          => 'platform_skin',
+                'label'       => '플랫폼 스킨',
+                'desc'        => '로그인·회원·게시판 화면을 온오프 기본 디자인으로 통일합니다.',
+                'applicable'  => icrm_member_can_design(),
+                'done'        => $platform_done,
+                'url'         => icrm_member_url('design') . '#icrm-platform-skin',
+                'status_text' => $platform_status_text,
+            ),
+            array(
+                'id'          => 'board',
+                'label'       => '게시판 준비',
+                'desc'        => '콘텐츠를 올릴 게시판을 만들거나 기존 게시판을 연결합니다.',
+                'applicable'  => icrm_member_can_boards(),
+                'done'        => $board_done,
+                'url'         => icrm_member_url('boards'),
+                'status_text' => $board_status_text,
+            ),
+            array(
+                'id'          => 'publish',
+                'label'       => '첫 콘텐츠 발행',
+                'desc'        => 'AI 글쓰기로 초안을 만들고 게시판에 발행합니다.',
+                'applicable'  => icrm_member_can_publish(),
+                'done'        => $publish_done,
+                'url'         => icrm_member_url('publish'),
+                'status_text' => $publish_status_text,
+            ),
+        );
+
+        $steps = array();
+        foreach ($definitions as $def) {
+            if (empty($def['applicable'])) {
+                continue;
+            }
+            $def['current'] = false;
+            $steps[] = $def;
+        }
+
+        $done_count = 0;
+        $next_step_id = null;
+        foreach ($steps as $idx => $step) {
+            if (!empty($step['done'])) {
+                $done_count++;
+                continue;
+            }
+            if ($next_step_id === null) {
+                $next_step_id = $step['id'];
+                $steps[$idx]['current'] = true;
+            }
+        }
+
+        $total_count = count($steps);
+        $complete = ($total_count > 0 && $done_count >= $total_count);
+        $progress_pct = $total_count > 0 ? (int) round(($done_count / $total_count) * 100) : 100;
+
+        return array(
+            'steps'         => $steps,
+            'done_count'    => $done_count,
+            'total_count'   => $total_count,
+            'complete'      => $complete,
+            'next_step_id'  => $next_step_id,
+            'progress_pct'  => $progress_pct,
+        );
+    }
+}
+
 if (!function_exists('icrm_member_shell_icon')) {
     function icrm_member_shell_icon($name)
     {
