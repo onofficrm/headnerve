@@ -1,80 +1,80 @@
 {
-    "updated_at": "2026-06-09T00:17:38+00:00",
+    "updated_at": "2026-06-09T00:24:59+00:00",
     "source": "local",
     "packages": {
         "seo-feed": {
             "version": "1.0.0",
-            "applied_at": "2026-06-09T00:17:38+00:00",
+            "applied_at": "2026-06-09T00:24:59+00:00",
             "title": "RSS · Sitemap · Robots"
         },
         "icrm-core": {
-            "version": "1.4.9",
-            "applied_at": "2026-06-09T00:17:38+00:00",
+            "version": "1.4.10",
+            "applied_at": "2026-06-09T00:24:59+00:00",
             "title": "iCRM Core (final_url · content-import · update · builder-deploy)"
         },
         "icrm-point": {
             "version": "1.0.8",
-            "applied_at": "2026-06-09T00:17:38+00:00",
+            "applied_at": "2026-06-09T00:24:59+00:00",
             "title": "iCRM 포인트 과금"
         },
         "auto-comment": {
             "version": "1.1.7",
-            "applied_at": "2026-06-09T00:17:38+00:00",
+            "applied_at": "2026-06-09T00:24:59+00:00",
             "title": "자동댓글 (iCRM Hub 연동)"
         },
         "seo-meta": {
             "version": "1.4.6",
-            "applied_at": "2026-06-09T00:17:38+00:00",
+            "applied_at": "2026-06-09T00:24:59+00:00",
             "title": "SEO 메타 · iCRM AI"
         },
         "board-seo-ui": {
             "version": "1.1.0",
-            "applied_at": "2026-06-09T00:17:38+00:00",
+            "applied_at": "2026-06-09T00:24:59+00:00",
             "title": "게시판 SEO UI (글보기 FAQ · Schema)"
         },
         "rank-check": {
             "version": "1.0.4",
-            "applied_at": "2026-06-09T00:17:38+00:00",
+            "applied_at": "2026-06-09T00:24:59+00:00",
             "title": "게시글 순위체크"
         },
         "content-collector": {
             "version": "1.0.20",
-            "applied_at": "2026-06-09T00:17:38+00:00",
+            "applied_at": "2026-06-09T00:24:59+00:00",
             "title": "콘텐츠 수집기"
         },
         "builder-bridge": {
             "version": "0.8.2",
-            "applied_at": "2026-06-09T00:17:38+00:00",
+            "applied_at": "2026-06-09T00:24:59+00:00",
             "title": "빌더 브릿지"
         },
         "icrm-update": {
             "version": "1.1.0",
-            "applied_at": "2026-06-09T00:17:38+00:00",
+            "applied_at": "2026-06-09T00:24:59+00:00",
             "title": "iCRM 중앙 업데이트 (관리자 UI · pull)"
         },
         "icrm-member": {
             "version": "1.0.13",
-            "applied_at": "2026-06-09T00:17:38+00:00",
+            "applied_at": "2026-06-09T00:24:59+00:00",
             "title": "iCRM 회원 포털"
         },
         "onoff-ui-kit": {
             "version": "1.0.2",
-            "applied_at": "2026-06-09T00:17:38+00:00",
+            "applied_at": "2026-06-09T00:24:59+00:00",
             "title": "온오프 플랫폼 UI 키트"
         },
         "onoff-member-skin": {
             "version": "1.1.0",
-            "applied_at": "2026-06-09T00:17:38+00:00",
+            "applied_at": "2026-06-09T00:24:59+00:00",
             "title": "온오프 회원·아웃로그인 스킨"
         },
         "onoff-board-skins": {
             "version": "1.2.0",
-            "applied_at": "2026-06-09T00:17:38+00:00",
+            "applied_at": "2026-06-09T00:24:59+00:00",
             "title": "온오프 게시판 스킨"
         },
         "onoff-platform-skin": {
             "version": "1.3.0",
-            "applied_at": "2026-06-09T00:17:38+00:00",
+            "applied_at": "2026-06-09T00:24:59+00:00",
             "title": "온오프 플랫폼 스킨 적용"
         }
     }

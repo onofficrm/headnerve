@@ -474,6 +474,13 @@ if (!function_exists('icrm_update_pull')) {
             $fileResp = icrm_update_download_file($release_id, $relative, $expected);
             if (empty($fileResp['success'])) {
                 icrm_update_remove_dir($tempRoot);
+                if ($relative !== '' && empty($fileResp['path'])) {
+                    $fileResp['path'] = $relative;
+                }
+                if ($relative !== '' && isset($fileResp['message']) && stripos((string) $fileResp['message'], $relative) === false) {
+                    $fileResp['message'] .= ' — ' . $relative;
+                }
+
                 return $fileResp;
             }
 
