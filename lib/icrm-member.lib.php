@@ -494,6 +494,8 @@ if (!function_exists('icrm_member_onboarding_checklist')) {
         $update_status_text = '';
         if (empty($update_status['license_ok'])) {
             $update_status_text = 'iCRM 라이선스 설정 필요';
+        } elseif (empty($update_status['ready']) && !empty($update_status['message'])) {
+            $update_status_text = (string) $update_status['message'];
         } elseif ($local_release === '') {
             $update_status_text = '아직 업데이트 기록 없음';
         } elseif (!empty($update_status['update_available'])) {

@@ -70,6 +70,9 @@ $license_settings_url = function_exists('icrm_admin_page_url')
         <p class="icu-hint" style="margin-top:12px;color:#b45309">먼저 <a href="<?php echo icu_h($license_settings_url); ?>">iCRM AI 관리 → SEO 메타 → iCRM 연동</a>에서 라이선스 키를 저장하세요.</p>
         <?php } elseif (empty($status['ready']) && !empty($status['message'])) { ?>
         <p class="icu-hint" style="margin-top:12px;color:#b45309"><?php echo icu_h($status['message']); ?></p>
+        <?php if (strpos((string) $status['message'], '파싱') !== false || strpos((string) $status['message'], '연결') !== false) { ?>
+        <p class="icu-hint" style="margin-top:8px;line-height:1.6">`_site.config.php`의 <code>icrm_update_api_base_url</code>이 <code>https://icrm.co.kr/api/g5-update</code>인지, 호스팅에서 icrm.co.kr HTTPS 아웃바운드가 허용되는지 확인하세요.</p>
+        <?php } ?>
         <?php } ?>
 
         <div class="icu-actions">

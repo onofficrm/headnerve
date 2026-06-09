@@ -147,43 +147,16 @@ if (!function_exists('icrm_builder_deploy_preview_admin_url')) {
 if (!function_exists('icrm_builder_deploy_api_post_json')) {
     function icrm_builder_deploy_api_post_json($endpoint, array $payload)
     {
-        if (!function_exists('icrm_update_get_license_key')) {
-            if (is_file(G5_LIB_PATH . '/icrm-update.lib.php')) {
-                include_once G5_LIB_PATH . '/icrm-update.lib.php';
-            }
+        if (!function_exists('icrm_api_post_json') && is_file(G5_LIB_PATH . '/icrm-update.lib.php')) {
+            include_once G5_LIB_PATH . '/icrm-update.lib.php';
         }
 
         $url = icrm_builder_deploy_get_api_base_url() . '/' . ltrim((string) $endpoint, '/');
-        $body = json_encode($payload, JSON_UNESCAPED_UNICODE);
-
-        if (function_exists('curl_init')) {
-            $ch = curl_init($url);
-            curl_setopt_array($ch, array(
-                CURLOPT_POST           => true,
-                CURLOPT_HTTPHEADER     => array('Content-Type: application/json', 'Accept: application/json'),
-                CURLOPT_POSTFIELDS     => $body,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_TIMEOUT        => 120,
-                CURLOPT_CONNECTTIMEOUT => 15,
-            ));
-            $raw = curl_exec($ch);
-            $code = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            $err = curl_error($ch);
-            curl_close($ch);
-
-            if ($raw === false) {
-                return array('success' => false, 'message' => 'API 연결 실패: ' . $err, 'http_code' => 0);
-            }
-
-            $decoded = json_decode((string) $raw, true);
-            if (!is_array($decoded)) {
-                return array('success' => false, 'message' => 'API 응답 파싱 실패', 'http_code' => $code);
-            }
-            $decoded['http_code'] = $code;
-
-            return $decoded;
+        if (function_exists('icrm_api_post_json')) {
+            return icrm_api_post_json($url, $payload);
         }
 
+        $body = json_encode($payload, JSON_UNESCAPED_UNICODE);
         $ctx = stream_context_create(array(
             'http' => array(
                 'method'  => 'POST',
@@ -195,6 +168,10 @@ if (!function_exists('icrm_builder_deploy_api_post_json')) {
         $raw = @file_get_contents($url, false, $ctx);
         if ($raw === false) {
             return array('success' => false, 'message' => 'API 연결 실패', 'http_code' => 0);
+        }
+
+        if (function_exists('icrm_api_decode_json_response')) {
+            return icrm_api_decode_json_response($raw, 0);
         }
 
         $decoded = json_decode((string) $raw, true);

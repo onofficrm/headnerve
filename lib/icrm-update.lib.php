@@ -112,21 +112,82 @@ if (!function_exists('icrm_update_last_check_file')) {
     }
 }
 
-if (!function_exists('icrm_update_api_post_json')) {
-    function icrm_update_api_post_json($endpoint, array $payload)
+if (!function_exists('icrm_api_normalize_json_body')) {
+    function icrm_api_normalize_json_body($raw)
     {
-        $url = icrm_update_get_api_base_url() . '/' . ltrim((string) $endpoint, '/');
+        $raw = (string) $raw;
+        if (substr($raw, 0, 3) === "\xEF\xBB\xBF") {
+            $raw = substr($raw, 3);
+        }
+
+        return trim($raw);
+    }
+}
+
+if (!function_exists('icrm_api_decode_json_response')) {
+    function icrm_api_decode_json_response($raw, $http_code = 0)
+    {
+        $raw = icrm_api_normalize_json_body($raw);
+        if ($raw === '') {
+            return array(
+                'success' => false,
+                'message' => 'API 응답이 비어 있습니다' . ($http_code > 0 ? ' (HTTP ' . $http_code . ')' : '') . ' — 호스팅 아웃바운드 HTTPS·라이선스·URL을 확인하세요.',
+                'http_code' => $http_code,
+            );
+        }
+
+        $decoded = json_decode($raw, true);
+        if (!is_array($decoded) && preg_match('/\{[\s\S]*\}/', $raw, $matches)) {
+            $decoded = json_decode($matches[0], true);
+        }
+        if (is_array($decoded)) {
+            $decoded['http_code'] = $http_code;
+
+            return $decoded;
+        }
+
+        $preview = preg_replace('/\s+/', ' ', trim(strip_tags($raw)));
+        if (function_exists('mb_substr')) {
+            $preview = mb_substr($preview, 0, 120, 'UTF-8');
+        } else {
+            $preview = substr($preview, 0, 120);
+        }
+
+        $message = 'API 응답 파싱 실패';
+        if ($http_code > 0) {
+            $message .= ' (HTTP ' . $http_code . ')';
+        }
+        if ($preview !== '') {
+            $message .= ': ' . $preview;
+        } else {
+            $message .= ' — icrm.co.kr HTTPS 연결·라이선스·API URL을 확인하세요';
+        }
+
+        return array(
+            'success'   => false,
+            'message'   => $message,
+            'http_code' => $http_code,
+        );
+    }
+}
+
+if (!function_exists('icrm_api_post_json')) {
+    function icrm_api_post_json($url, array $payload, $timeout = 120)
+    {
+        $url = trim((string) $url);
         $body = json_encode($payload, JSON_UNESCAPED_UNICODE);
 
         if (function_exists('curl_init')) {
             $ch = curl_init($url);
             curl_setopt_array($ch, array(
-                CURLOPT_POST           => true,
-                CURLOPT_HTTPHEADER     => array('Content-Type: application/json', 'Accept: application/json'),
-                CURLOPT_POSTFIELDS     => $body,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_TIMEOUT        => 120,
-                CURLOPT_CONNECTTIMEOUT => 15,
+                CURLOPT_POST            => true,
+                CURLOPT_HTTPHEADER      => array('Content-Type: application/json', 'Accept: application/json'),
+                CURLOPT_POSTFIELDS      => $body,
+                CURLOPT_RETURNTRANSFER  => true,
+                CURLOPT_FOLLOWLOCATION  => true,
+                CURLOPT_MAXREDIRS       => 3,
+                CURLOPT_TIMEOUT         => (int) $timeout,
+                CURLOPT_CONNECTTIMEOUT  => 15,
             ));
             $raw = curl_exec($ch);
             $code = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -134,24 +195,24 @@ if (!function_exists('icrm_update_api_post_json')) {
             curl_close($ch);
 
             if ($raw === false) {
-                return array('success' => false, 'message' => 'API 연결 실패: ' . $err, 'http_code' => 0);
+                return array(
+                    'success'   => false,
+                    'message'   => 'API 연결 실패: ' . ($err !== '' ? $err : 'curl error'),
+                    'http_code' => 0,
+                );
             }
 
-            $decoded = json_decode((string) $raw, true);
-            if (!is_array($decoded)) {
-                return array('success' => false, 'message' => 'API 응답 파싱 실패', 'http_code' => $code);
-            }
-            $decoded['http_code'] = $code;
-
-            return $decoded;
+            return icrm_api_decode_json_response($raw, $code);
         }
 
         $ctx = stream_context_create(array(
             'http' => array(
-                'method'  => 'POST',
-                'header'  => "Content-Type: application/json\r\nAccept: application/json\r\n",
-                'content' => $body,
-                'timeout' => 120,
+                'method'          => 'POST',
+                'header'          => "Content-Type: application/json\r\nAccept: application/json\r\n",
+                'content'         => $body,
+                'timeout'         => (int) $timeout,
+                'follow_location' => 1,
+                'max_redirects'   => 3,
             ),
         ));
         $raw = @file_get_contents($url, false, $ctx);
@@ -159,12 +220,21 @@ if (!function_exists('icrm_update_api_post_json')) {
             return array('success' => false, 'message' => 'API 연결 실패', 'http_code' => 0);
         }
 
-        $decoded = json_decode((string) $raw, true);
-        if (!is_array($decoded)) {
-            return array('success' => false, 'message' => 'API 응답 파싱 실패', 'http_code' => 0);
+        $http_code = 0;
+        if (isset($http_response_header[0]) && preg_match('/\s(\d{3})\s/', (string) $http_response_header[0], $m)) {
+            $http_code = (int) $m[1];
         }
 
-        return $decoded;
+        return icrm_api_decode_json_response($raw, $http_code);
+    }
+}
+
+if (!function_exists('icrm_update_api_post_json')) {
+    function icrm_update_api_post_json($endpoint, array $payload)
+    {
+        $url = icrm_update_get_api_base_url() . '/' . ltrim((string) $endpoint, '/');
+
+        return icrm_api_post_json($url, $payload);
     }
 }
 
