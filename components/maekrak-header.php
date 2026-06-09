@@ -8,6 +8,7 @@ include_once(G5_LIB_PATH.'/headnerve_nav.lib.php');
 $maekrak_nav = headnerve_nav_menu_items();
 $maekrak_booking_url = headnerve_nav_booking_url();
 $maekrak_tel_href = headnerve_nav_tel_href();
+$maekrak_myinfo_url = headnerve_nav_myinfo_url();
 $maekrak_site_title = isset($g5_site_title) ? $g5_site_title : (function_exists('g5site_cfg') ? g5site_cfg('site_name', $config['cf_title']) : $config['cf_title']);
 $maekrak_logo_inline = G5_PATH.'/components/maekrak-logo-inline.php';
 /* PNG 등 래스터만 img — SVG는 인라인(홈 빌더 Logo 와 동일, FTP 인코딩 이슈 방지) */
@@ -58,7 +59,11 @@ if (isset($g5_logo_url) && $g5_logo_url !== '' && preg_match('/\.(png|jpe?g|webp
 
             <div class="maekrak-header__actions">
                 <?php if ($is_member) { ?>
-                <a href="<?php echo G5_BBS_URL; ?>/member_confirm.php?url=<?php echo G5_BBS_URL; ?>/register_form.php" class="maekrak-header__btn maekrak-header__btn--ghost maekrak-header__btn--login">내 정보</a>
+                <a href="<?php echo $maekrak_myinfo_url; ?>" class="maekrak-header__btn maekrak-header__btn--ghost maekrak-header__btn--login">내정보</a>
+                <a href="<?php echo G5_BBS_URL; ?>/logout.php" class="maekrak-header__btn maekrak-header__btn--ghost maekrak-header__btn--logout">
+                    <svg class="maekrak-header__btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    로그아웃
+                </a>
                 <?php } else { ?>
                 <a href="<?php echo G5_BBS_URL; ?>/login.php" class="maekrak-header__btn maekrak-header__btn--ghost maekrak-header__btn--login">로그인</a>
                 <?php } ?>
@@ -102,8 +107,11 @@ if (isset($g5_logo_url) && $g5_logo_url !== '' && preg_match('/\.(png|jpe?g|webp
             </div>
             <div class="maekrak-header__mobile-foot">
                 <?php if ($is_member) { ?>
-                <a href="<?php echo G5_BBS_URL; ?>/member_confirm.php?url=<?php echo G5_BBS_URL; ?>/register_form.php" class="maekrak-header__btn maekrak-header__btn--ghost maekrak-header__btn--block">정보수정</a>
-                <a href="<?php echo G5_BBS_URL; ?>/logout.php" class="maekrak-header__btn maekrak-header__btn--ghost maekrak-header__btn--block">로그아웃</a>
+                <a href="<?php echo $maekrak_myinfo_url; ?>" class="maekrak-header__btn maekrak-header__btn--ghost maekrak-header__btn--block">내정보</a>
+                <a href="<?php echo G5_BBS_URL; ?>/logout.php" class="maekrak-header__btn maekrak-header__btn--ghost maekrak-header__btn--block maekrak-header__btn--logout">
+                    <svg class="maekrak-header__btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    로그아웃
+                </a>
                 <?php if ($is_admin) { ?>
                 <a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>" class="maekrak-header__btn maekrak-header__btn--ghost maekrak-header__btn--block">관리자</a>
                 <?php } ?>

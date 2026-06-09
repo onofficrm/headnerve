@@ -4,6 +4,50 @@ if (!defined('_GNUBOARD_')) exit;
 @ini_set('memory_limit', '-1');
 
 /**
+ * get_view_thumbnail() 재생성 시 원본 img 정렬·스타일 속성 유지
+ */
+function g5b_build_view_img_tag($original_img_tag, $src, $alt, $width = '', $height = '')
+{
+    $attrs = array();
+
+    if ($width !== '' && $height !== '') {
+        $attrs[] = 'width="'.(int) $width.'"';
+        $attrs[] = 'height="'.(int) $height.'"';
+    }
+
+    if (preg_match('/\balign\s*=\s*["\']?([^"\'>\s]+)/i', $original_img_tag, $m)) {
+        $attrs[] = 'align="'.str_replace('"', '', strtolower($m[1])).'"';
+    }
+
+    if (preg_match('/\bclass\s*=\s*["\']([^"\']+)["\']/i', $original_img_tag, $m)) {
+        $attrs[] = 'class="'.str_replace('"', '', $m[1]).'"';
+    }
+
+    $style = '';
+    if (preg_match('/\bstyle\s*=\s*["\']([^"\']*)["\']/i', $original_img_tag, $m)) {
+        $style = trim((string) $m[1]);
+    }
+
+    if ($width !== '') {
+        $style = preg_replace('/\bwidth\s*:\s*[^;"]+/i', '', $style);
+        $style = rtrim($style, '; ').';width:'.(int) $width.'px';
+    }
+    if ($height !== '') {
+        $style = preg_replace('/\bheight\s*:\s*[^;"]+/i', '', $style);
+        $style = rtrim($style, '; ').';height:'.(int) $height.'px';
+    }
+
+    $style = trim($style, '; ');
+    if ($style !== '') {
+        $attrs[] = 'style="'.$style.'"';
+    }
+
+    $attr_str = $attrs ? ' '.implode(' ', $attrs) : '';
+
+    return '<img src="'.$src.'" alt="'.$alt.'"'.$attr_str.'/>';
+}
+
+/**
  * 에디터/본문 이미지 URL을 로컬 파일 경로로 해석
  */
 function g5b_resolve_editor_image_path($img_src, $img_tag = '')
@@ -309,11 +353,14 @@ function get_view_thumbnail($contents, $thumb_width=0)
             if(!$thumb_file)
                 continue;
 
-            if ($width) {
-                $thumb_tag = '<img src="'.G5_URL.str_replace($filename, $thumb_file, $data_path).'" alt="'.$alt.'" width="'.$width.'" height="'.$height.'"/>';
-            } else {
-                $thumb_tag = '<img src="'.G5_URL.str_replace($filename, $thumb_file, $data_path).'" alt="'.$alt.'"/>';
-            }
+            $thumb_src = G5_URL.str_replace($filename, $thumb_file, $data_path);
+            $thumb_tag = g5b_build_view_img_tag(
+                $img_tag,
+                $thumb_src,
+                $alt,
+                $width !== '' ? $width : '',
+                $height !== '' ? $height : ''
+            );
             
             // $img_tag에 editor 경로가 있으면 원본보기 링크 추가
             if(strpos($img_tag, G5_DATA_DIR.'/'.G5_EDITOR_DIR) && preg_match("/\.({$config['cf_image_extension']})$/i", $filename)) {

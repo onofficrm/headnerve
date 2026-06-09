@@ -797,9 +797,35 @@ if (!function_exists('icrm_write_has_editor_alignment_markup')) {
         $html = (string) $write['wr_content'];
 
         return (bool) preg_match(
-            '/\balign\s*=\s*["\']?(center|left|right|justify)|text-align\s*:\s*(center|left|right|justify)/i',
+            '/\balign\s*=\s*["\']?(center|left|right|justify)|text-align\s*:\s*(center|left|right|justify)|margin(?:-left|-right)?\s*:\s*auto|float\s*:\s*(left|right)/i',
             $html
         );
+    }
+}
+
+if (!function_exists('g5b_append_inline_style_attr')) {
+    function g5b_append_inline_style_attr($attrs, $append_style)
+    {
+        $append_style = trim((string) $append_style, '; ');
+        if ($append_style === '') {
+            return $attrs;
+        }
+
+        if (preg_match('/\bstyle\s*=\s*["\']([^"\']*)["\']/i', $attrs, $sm)) {
+            $style = trim((string) $sm[1], '; ');
+            if (stripos($style, $append_style) === false) {
+                $style = $style === '' ? $append_style : $style.';'.$append_style;
+                $attrs = preg_replace(
+                    '/\bstyle\s*=\s*["\'][^"\']*["\']/i',
+                    'style="'.str_replace('"', '', $style).'"',
+                    $attrs
+                );
+            }
+        } else {
+            $attrs .= ' style="'.$append_style.'"';
+        }
+
+        return $attrs;
     }
 }
 
@@ -815,7 +841,7 @@ if (!function_exists('g5b_normalize_board_content_alignment')) {
         }
 
         $html = preg_replace_callback(
-            '/<(p|div|h[1-6])(\s[^>]*)>/iu',
+            '/<(p|div|figure|section|article|h[1-6]|span)(\s[^>]*)>/iu',
             function ($m) {
                 $tag = $m[1];
                 $attrs = $m[2];
@@ -823,14 +849,8 @@ if (!function_exists('g5b_normalize_board_content_alignment')) {
                     return $m[0];
                 }
                 $align = strtolower($am[1]);
-                if (preg_match('/\bstyle\s*=\s*["\']([^"\']*)["\']/i', $attrs, $sm)) {
-                    $style = $sm[1];
-                    if (!preg_match('/text-align\s*:/i', $style)) {
-                        $style = rtrim($style, ';').';text-align:'.$align;
-                        $attrs = preg_replace('/\bstyle\s*=\s*["\'][^"\']*["\']/i', 'style="'.str_replace('"', '', $style).'"', $attrs);
-                    }
-                } else {
-                    $attrs .= ' style="text-align:'.$align.'"';
+                if (!preg_match('/text-align\s*:/i', $attrs)) {
+                    $attrs = g5b_append_inline_style_attr($attrs, 'text-align:'.$align);
                 }
 
                 return '<'.$tag.$attrs.'>';
@@ -842,17 +862,29 @@ if (!function_exists('g5b_normalize_board_content_alignment')) {
             '/<img(\s[^>]*)>/iu',
             function ($m) {
                 $attrs = $m[1];
-                if (!preg_match('/\balign\s*=\s*["\']?center/i', $attrs)) {
-                    return $m[0];
-                }
-                if (preg_match('/\bstyle\s*=\s*["\']([^"\']*)["\']/i', $attrs, $sm)) {
-                    $style = $sm[1];
-                    if (!preg_match('/margin-left\s*:\s*auto/i', $style)) {
-                        $style = rtrim($style, ';').';display:block;margin-left:auto;margin-right:auto';
-                        $attrs = preg_replace('/\bstyle\s*=\s*["\'][^"\']*["\']/i', 'style="'.str_replace('"', '', $style).'"', $attrs);
+
+                if (preg_match('/\balign\s*=\s*["\']?center/i', $attrs)) {
+                    if (!preg_match('/margin-left\s*:\s*auto/i', $attrs)) {
+                        $attrs = g5b_append_inline_style_attr($attrs, 'display:block;margin-left:auto;margin-right:auto');
                     }
-                } else {
-                    $attrs .= ' style="display:block;margin-left:auto;margin-right:auto"';
+                } elseif (preg_match('/\balign\s*=\s*["\']?left/i', $attrs)) {
+                    if (!preg_match('/float\s*:/i', $attrs)) {
+                        $attrs = g5b_append_inline_style_attr($attrs, 'float:left;margin:0 1rem 1rem 0');
+                    }
+                } elseif (preg_match('/\balign\s*=\s*["\']?right/i', $attrs)) {
+                    if (!preg_match('/float\s*:/i', $attrs)) {
+                        $attrs = g5b_append_inline_style_attr($attrs, 'float:right;margin:0 0 1rem 1rem');
+                    }
+                } elseif (preg_match('/\bstyle\s*=\s*["\']([^"\']*)["\']/i', $attrs, $sm)) {
+                    $style = strtolower($sm[1]);
+                    if (strpos($style, 'margin-left:auto') !== false
+                        || strpos($style, 'margin-left: auto') !== false
+                        || strpos($style, 'margin:0 auto') !== false
+                        || strpos($style, 'margin: 0 auto') !== false) {
+                        if (!preg_match('/display\s*:/i', $attrs)) {
+                            $attrs = g5b_append_inline_style_attr($attrs, 'display:block');
+                        }
+                    }
                 }
 
                 return '<img'.$attrs.'>';

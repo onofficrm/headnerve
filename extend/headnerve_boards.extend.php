@@ -17,6 +17,24 @@ if (function_exists('add_event') && function_exists('headnerve_board_apply_meta_
     add_event('write_update_after', 'headnerve_board_apply_meta_on_write', 8, 5);
 }
 
+if (!function_exists('headnerve_board_normalize_view_alignment')) {
+    function headnerve_board_normalize_view_alignment($content)
+    {
+        if (!function_exists('headnerve_is_g5b_board') || !headnerve_is_g5b_board()) {
+            return $content;
+        }
+        if (!function_exists('g5b_normalize_board_content_alignment')) {
+            return $content;
+        }
+
+        return g5b_normalize_board_content_alignment($content);
+    }
+}
+
+if (function_exists('add_replace')) {
+    add_replace('get_view_thumbnail', 'headnerve_board_normalize_view_alignment', 10, 1);
+}
+
 if (!function_exists('headnerve_is_g5b_board')) {
     function headnerve_is_g5b_board()
     {

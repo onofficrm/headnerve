@@ -129,6 +129,47 @@ if (!function_exists('headnerve_nav_tel_href')) {
     }
 }
 
+if (!function_exists('headnerve_nav_myinfo_url')) {
+    function headnerve_nav_myinfo_url()
+    {
+        if (is_file(G5_LIB_PATH.'/icrm-member.lib.php')) {
+            include_once G5_LIB_PATH.'/icrm-member.lib.php';
+            if (function_exists('icrm_member_can_access') && icrm_member_can_access()) {
+                return icrm_member_url('home');
+            }
+        }
+
+        return G5_BBS_URL.'/member_confirm.php?url='.urlencode(G5_BBS_URL.'/register_form.php');
+    }
+}
+
+if (!function_exists('headnerve_nav_auth_payload')) {
+    function headnerve_nav_auth_payload()
+    {
+        global $is_member, $member;
+
+        return array(
+            'loggedIn'  => !empty($is_member) && !empty($member['mb_id']),
+            'loginUrl'  => G5_BBS_URL.'/login.php',
+            'logoutUrl' => G5_BBS_URL.'/logout.php',
+            'myInfoUrl' => headnerve_nav_myinfo_url(),
+        );
+    }
+}
+
+if (!function_exists('headnerve_nav_auth_bootstrap_script')) {
+    function headnerve_nav_auth_bootstrap_script()
+    {
+        $payload = headnerve_nav_auth_payload();
+        $json = json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        if ($json === false) {
+            return '';
+        }
+
+        return '<script>window.__HEADNERVE_AUTH__='.$json.';</script>';
+    }
+}
+
 if (!function_exists('headnerve_footer_address')) {
     function headnerve_footer_address()
     {

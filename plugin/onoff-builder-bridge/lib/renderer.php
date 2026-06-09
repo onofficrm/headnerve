@@ -135,6 +135,15 @@ if (!function_exists('onoff_builder_render_standalone')) {
             if (stripos($html, '<title>') !== false && $title !== '') {
                 $html = preg_replace('#<title>.*?</title>#is', '<title>' . onoff_builder_escape($title) . '</title>', $html, 1);
             }
+            if (is_file(G5_LIB_PATH.'/headnerve_nav.lib.php')) {
+                include_once G5_LIB_PATH.'/headnerve_nav.lib.php';
+                if (function_exists('headnerve_nav_auth_bootstrap_script')) {
+                    $auth_script = headnerve_nav_auth_bootstrap_script();
+                    if ($auth_script !== '' && stripos($html, '__HEADNERVE_AUTH__') === false) {
+                        $html = preg_replace('#</head>#i', $auth_script.'</head>', $html, 1);
+                    }
+                }
+            }
             echo $html;
             return;
         }

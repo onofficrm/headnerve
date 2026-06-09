@@ -3046,6 +3046,16 @@ html:has(.site-dock) {
   background: #f9fafb;
 }
 
+.maekrak-header__btn--logout {
+  gap: 0.4rem;
+}
+
+.maekrak-header__btn-icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
 .maekrak-header__btn--primary {
   padding-left: 1.25rem;
   padding-right: 1.25rem;

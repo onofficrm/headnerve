@@ -626,33 +626,112 @@
 /* iCRM·SmartEditor2 정렬 유지 (가운데/좌/우) */
 .board-wrap #bo_v_con [align="center"],
 .board-wrap .board-view__content [align="center"],
+.board-wrap .reviews-view__content [align="center"],
 .board-wrap #bo_v_con [style*="text-align:center"],
 .board-wrap #bo_v_con [style*="text-align: center"],
 .board-wrap .board-view__content [style*="text-align:center"],
 .board-wrap .board-view__content [style*="text-align: center"],
+.board-wrap .reviews-view__content [style*="text-align:center"],
+.board-wrap .reviews-view__content [style*="text-align: center"],
 .board-wrap #bo_v_con .text-center,
-.board-wrap .board-view__content .text-center {
+.board-wrap .board-view__content .text-center,
+.board-wrap .reviews-view__content .text-center {
   text-align: center;
+}
+
+.board-wrap #bo_v_con [align="left"],
+.board-wrap .board-view__content [align="left"],
+.board-wrap .reviews-view__content [align="left"],
+.board-wrap #bo_v_con [style*="text-align:left"],
+.board-wrap #bo_v_con [style*="text-align: left"],
+.board-wrap .board-view__content [style*="text-align:left"],
+.board-wrap .board-view__content [style*="text-align: left"],
+.board-wrap .reviews-view__content [style*="text-align:left"],
+.board-wrap .reviews-view__content [style*="text-align: left"] {
+  text-align: left;
 }
 
 .board-wrap #bo_v_con [align="right"],
 .board-wrap .board-view__content [align="right"],
+.board-wrap .reviews-view__content [align="right"],
 .board-wrap #bo_v_con [style*="text-align:right"],
 .board-wrap #bo_v_con [style*="text-align: right"],
 .board-wrap .board-view__content [style*="text-align:right"],
-.board-wrap .board-view__content [style*="text-align: right"] {
+.board-wrap .board-view__content [style*="text-align: right"],
+.board-wrap .reviews-view__content [style*="text-align:right"],
+.board-wrap .reviews-view__content [style*="text-align: right"] {
   text-align: right;
+}
+
+/* 부모 블록 가운데 정렬 시 이미지도 중앙 배치 */
+.board-wrap #bo_v_con [style*="text-align:center"] img,
+.board-wrap #bo_v_con [style*="text-align: center"] img,
+.board-wrap .board-view__content [style*="text-align:center"] img,
+.board-wrap .board-view__content [style*="text-align: center"] img,
+.board-wrap .reviews-view__content [style*="text-align:center"] img,
+.board-wrap .reviews-view__content [style*="text-align: center"] img,
+.board-wrap #bo_v_con [align="center"] img,
+.board-wrap .board-view__content [align="center"] img,
+.board-wrap .reviews-view__content [align="center"] img {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .board-wrap #bo_v_con img[align="center"],
 .board-wrap .board-view__content img[align="center"],
+.board-wrap .reviews-view__content img[align="center"],
 .board-wrap #bo_v_con img[style*="margin-left:auto"],
 .board-wrap .board-view__content img[style*="margin-left:auto"],
+.board-wrap .reviews-view__content img[style*="margin-left:auto"],
 .board-wrap #bo_v_con img[style*="margin-left: auto"],
-.board-wrap .board-view__content img[style*="margin-left: auto"] {
+.board-wrap .board-view__content img[style*="margin-left: auto"],
+.board-wrap .reviews-view__content img[style*="margin-left: auto"],
+.board-wrap #bo_v_con img[style*="margin:0 auto"],
+.board-wrap .board-view__content img[style*="margin:0 auto"],
+.board-wrap .reviews-view__content img[style*="margin:0 auto"],
+.board-wrap #bo_v_con img[style*="margin: 0 auto"],
+.board-wrap .board-view__content img[style*="margin: 0 auto"],
+.board-wrap .reviews-view__content img[style*="margin: 0 auto"] {
   display: block;
+  width: fit-content;
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
+}
+
+.board-wrap #bo_v_con img[align="left"],
+.board-wrap .board-view__content img[align="left"],
+.board-wrap .reviews-view__content img[align="left"],
+.board-wrap #bo_v_con img[style*="float:left"],
+.board-wrap .board-view__content img[style*="float:left"],
+.board-wrap .reviews-view__content img[style*="float:left"],
+.board-wrap #bo_v_con img[style*="float: left"],
+.board-wrap .board-view__content img[style*="float: left"],
+.board-wrap .reviews-view__content img[style*="float: left"] {
+  float: left;
+  margin: 0 1rem 1rem 0;
+}
+
+.board-wrap #bo_v_con img[align="right"],
+.board-wrap .board-view__content img[align="right"],
+.board-wrap .reviews-view__content img[align="right"],
+.board-wrap #bo_v_con img[style*="float:right"],
+.board-wrap .board-view__content img[style*="float:right"],
+.board-wrap .reviews-view__content img[style*="float:right"],
+.board-wrap #bo_v_con img[style*="float: right"],
+.board-wrap .board-view__content img[style*="float: right"],
+.board-wrap .reviews-view__content img[style*="float: right"] {
+  float: right;
+  margin: 0 0 1rem 1rem;
+}
+
+.board-wrap #bo_v_con figure,
+.board-wrap .board-view__content figure,
+.board-wrap .reviews-view__content figure {
+  margin: 1rem 0;
 }
 
 .board-wrap .board-view__section-title {

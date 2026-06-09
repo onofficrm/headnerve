@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Phone, Calendar, LogIn } from 'lucide-react';
+import { Menu, X, Phone, Calendar, LogIn, LogOut } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '../../lib/utils';
 import { Logo } from '../common/Logo';
-import { AUTH_URLS } from '../../lib/authUrls';
+import { getHeadnerveAuthState } from '../../lib/authUrls';
 import { COMMUNITY_NAV, BOARD_URLS, type NavMenuItem } from '../../lib/boardUrls';
 import { NavMenuLink } from './NavMenuLink';
 
@@ -12,6 +12,13 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
+  const auth = getHeadnerveAuthState();
+  const ghostBtnClass = cn(
+    'px-5 py-3 rounded-full text-[14px] font-semibold tracking-wide transition-all border inline-flex items-center gap-2',
+    isScrolled || !isHomePage
+      ? 'border-gray-200 text-maekrak-navy hover:border-maekrak-navy hover:bg-gray-50'
+      : 'border-white/40 text-white hover:bg-white/10'
+  );
 
   useEffect(() => {
     const handleScroll = (e: Event) => {
@@ -142,17 +149,21 @@ export function Header() {
           </nav>
           
           <div className="hidden md:flex items-center gap-3">
-             <a
-               href={AUTH_URLS.login}
-               className={cn(
-                 "px-5 py-3 rounded-full text-[14px] font-semibold tracking-wide transition-all border",
-                 isScrolled || !isHomePage
-                   ? "border-gray-200 text-maekrak-navy hover:border-maekrak-navy hover:bg-gray-50"
-                   : "border-white/40 text-white hover:bg-white/10"
-               )}
-             >
-               로그인
-             </a>
+             {auth.loggedIn ? (
+               <>
+                 <a href={auth.myInfoUrl} className={ghostBtnClass}>
+                   내정보
+                 </a>
+                 <a href={auth.logoutUrl} className={ghostBtnClass}>
+                   <LogOut className="w-4 h-4" aria-hidden="true" />
+                   로그아웃
+                 </a>
+               </>
+             ) : (
+               <a href={auth.loginUrl} className={ghostBtnClass}>
+                 로그인
+               </a>
+             )}
              <a href="https://booking.naver.com/booking/13/bizes/1120036?area=pll&map-search=1" target="_blank" rel="noopener noreferrer" className={cn("px-8 py-3 rounded-full text-[14px] font-bold tracking-wide transition-all shadow-md", isScrolled || !isHomePage ? "bg-maekrak-navy text-white hover:bg-maekrak-navy-light shadow-blue-900/10" : "bg-white text-maekrak-navy hover:bg-gray-100 shadow-black/10")}>
                상담 예약하기
              </a>
@@ -204,9 +215,22 @@ export function Header() {
               </div>
             ))}
             <div className="mt-auto pt-10 flex flex-col gap-3">
-              <a href={AUTH_URLS.login} className="py-4 border border-gray-200 rounded-2xl flex items-center justify-center gap-2 text-maekrak-navy font-bold hover:bg-gray-50 transition-colors" onClick={() => setMobileMenuOpen(false)}>
-                <LogIn className="w-5 h-5" /> <span>로그인</span>
-              </a>
+              {auth.loggedIn ? (
+                <>
+                  <a href={auth.myInfoUrl} className="py-4 border border-gray-200 rounded-2xl flex items-center justify-center gap-2 text-maekrak-navy font-bold hover:bg-gray-50 transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                    <span>내정보</span>
+                  </a>
+                  <a href={auth.logoutUrl} className="py-4 border border-gray-200 rounded-2xl flex items-center justify-center gap-2 text-maekrak-navy font-bold hover:bg-gray-50 transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                    <LogOut className="w-5 h-5" aria-hidden="true" />
+                    <span>로그아웃</span>
+                  </a>
+                </>
+              ) : (
+                <a href={auth.loginUrl} className="py-4 border border-gray-200 rounded-2xl flex items-center justify-center gap-2 text-maekrak-navy font-bold hover:bg-gray-50 transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                  <LogIn className="w-5 h-5" aria-hidden="true" />
+                  <span>로그인</span>
+                </a>
+              )}
               <div className="grid grid-cols-2 gap-3">
                 <a href="tel:02-6959-7252" className="py-5 bg-gray-50 rounded-2xl flex flex-col items-center justify-center gap-2 text-maekrak-navy font-bold hover:bg-gray-100 transition-colors">
                   <Phone className="w-6 h-6" /> <span>전화상담</span>
