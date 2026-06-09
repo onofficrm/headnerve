@@ -4,7 +4,7 @@ export const AUTH_URLS = {
   register: '/bbs/register.php',
   passwordLost: '/bbs/password_lost.php',
   logout: '/bbs/logout.php',
-  myInfo: '/bbs/member_confirm.php?url=%2Fbbs%2Fregister_form.php',
+  myInfo: '/bbs/member_confirm.php?url=register_form.php',
 } as const;
 
 export type HeadnerveAuthState = {

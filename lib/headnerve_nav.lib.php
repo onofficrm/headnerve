@@ -130,16 +130,12 @@ if (!function_exists('headnerve_nav_tel_href')) {
 }
 
 if (!function_exists('headnerve_nav_myinfo_url')) {
+    /**
+     * 홈페이지 헤더 「내정보」 — 회원정보 수정 (iCRM 관리 포털과 분리)
+     */
     function headnerve_nav_myinfo_url()
     {
-        if (is_file(G5_LIB_PATH.'/icrm-member.lib.php')) {
-            include_once G5_LIB_PATH.'/icrm-member.lib.php';
-            if (function_exists('icrm_member_can_access') && icrm_member_can_access()) {
-                return icrm_member_url('home');
-            }
-        }
-
-        return G5_BBS_URL.'/member_confirm.php?url='.urlencode(G5_BBS_URL.'/register_form.php');
+        return G5_BBS_URL.'/member_confirm.php?url='.urlencode('register_form.php');
     }
 }
 
