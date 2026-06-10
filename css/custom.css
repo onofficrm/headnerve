@@ -1103,7 +1103,10 @@
 .site-main .content-card__media,
 .page-template .content-card__media,
 .board-view .content-card__media {
+  display: block;
+  position: relative;
   flex-shrink: 0;
+  width: 100%;
   background: var(--color-surface);
   overflow: hidden;
 }
@@ -1128,6 +1131,32 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* 목록용 board-thumb가 관련글·최신글 카드에 섞여 들어온 경우에도 영역을 꽉 채움 */
+.site-main .content-card__media .board-thumb,
+.page-template .content-card__media .board-thumb,
+.board-view .content-card__media .board-thumb {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  border-radius: 0;
+}
+
+.site-main .content-card__media .board-thumb__img,
+.page-template .content-card__media .board-thumb__img,
+.board-view .content-card__media .board-thumb__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.site-main .content-card__img--placeholder,
+.page-template .content-card__img--placeholder,
+.board-view .content-card__img--placeholder {
+  object-fit: cover;
+  background: var(--color-surface);
 }
 
 .site-main .content-card__no-image,

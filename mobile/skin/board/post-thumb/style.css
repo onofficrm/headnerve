@@ -32,8 +32,8 @@
 
 /* Fallback: /img/common/no-image.svg (PHP: G5B_FALLBACK_NO_IMAGE_URL) */
 
-/* 썸네일 공통 */
-.board-thumb {
+/* 썸네일 공통 (목록 전용 — 관련글 content-card 와 분리) */
+.board-list--thumb .board-thumb {
   display: block;
   flex-shrink: 0;
   width: 96px;
@@ -43,20 +43,20 @@
   background: var(--color-surface, #f8fafc);
 }
 
-.board-thumb__img {
+.board-list--thumb .board-thumb__img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.board-thumb__img--placeholder {
+.board-list--thumb .board-thumb__img--placeholder {
   object-fit: contain;
   padding: 0.5rem;
   opacity: 0.85;
 }
 
-.board-thumb--empty {
+.board-list--thumb .board-thumb--empty {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -64,7 +64,7 @@
 }
 
 /* SVG 미존재 시 CSS 백업 (일반적으로 .board-thumb--fallback img 사용) */
-.board-thumb--empty::before {
+.board-list--thumb .board-thumb--empty::before {
   content: "";
   display: block;
   width: 100%;
@@ -74,7 +74,7 @@
   opacity: 0.85;
 }
 
-.board-thumb--secret {
+.board-list--thumb .board-thumb--secret {
   color: var(--color-muted, #64748b);
   font-size: 1.25rem;
 }
@@ -167,7 +167,7 @@
     gap: var(--space-md, 1rem);
   }
 
-  .board-thumb {
+  .board-list--thumb .board-thumb {
     width: 100%;
     height: auto;
     aspect-ratio: 16 / 9;
