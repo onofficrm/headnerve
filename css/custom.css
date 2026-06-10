@@ -1114,7 +1114,7 @@
 .site-main .content-list--card .content-card__media,
 .page-template .content-list--card .content-card__media,
 .board-view .content-list--card .content-card__media {
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 1 / 1;
 }
 
 .site-main .content-list--list .content-card__media,

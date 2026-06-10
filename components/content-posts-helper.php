@@ -102,7 +102,7 @@ if (!function_exists('g5b_content_thumb_html')) {
             include_once G5_LIB_PATH . '/thumbnail.lib.php';
         }
 
-        $thumb = get_list_thumbnail($bo_table, $wr_id, 640, 400, false, true);
+        $thumb = get_list_thumbnail($bo_table, $wr_id, 480, 480, false, true);
         $alt = !empty($thumb['alt']) ? get_text($thumb['alt']) : get_text(strip_tags($subject));
 
         if (!empty($thumb['src'])) {
