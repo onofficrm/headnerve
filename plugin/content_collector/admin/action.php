@@ -296,9 +296,16 @@ if ($action === 'compose_save') {
 
 if ($action === 'compose_publish') {
     $ici_id = isset($_POST['ici_id']) ? (int) $_POST['ici_id'] : 0;
+    $bo_table = isset($_POST['bo_table']) ? (string) $_POST['bo_table'] : '';
     $options = array(
         'geo_package' => !empty($_POST['geo_package']),
     );
+    if (is_file(G5_LIB_PATH.'/headnerve-board-meta.lib.php')) {
+        include_once G5_LIB_PATH.'/headnerve-board-meta.lib.php';
+        if (function_exists('headnerve_board_meta_publish_options')) {
+            $options = array_merge($options, headnerve_board_meta_publish_options($bo_table));
+        }
+    }
     echo json_encode(icrm_content_compose_publish(array(
         'ici_id'       => $ici_id,
         'subject'      => isset($_POST['subject']) ? (string) $_POST['subject'] : '',

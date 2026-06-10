@@ -1450,7 +1450,7 @@ if (!function_exists('icrm_content_recollect_item')) {
 }
 
 if (!function_exists('icrm_content_insert_board_post')) {
-    function icrm_content_insert_board_post($bo_table, $mb_id, $subject, $content_html, $ca_name = '')
+    function icrm_content_insert_board_post($bo_table, $mb_id, $subject, $content_html, $ca_name = '', $meta = array())
     {
         global $g5;
 
@@ -1548,6 +1548,12 @@ if (!function_exists('icrm_content_insert_board_post')) {
             icrm_ensure_wr_seo_title($bo_table, $wr_id);
         }
 
+        if (is_array($meta) && $meta !== array() && function_exists('headnerve_board_apply_meta_values')) {
+            $meta_datetime = isset($meta['wr_datetime']) ? $meta['wr_datetime'] : (isset($meta['datetime']) ? $meta['datetime'] : null);
+            $meta_hit = isset($meta['wr_hit']) ? $meta['wr_hit'] : (isset($meta['hit']) ? $meta['hit'] : null);
+            headnerve_board_apply_meta_values($bo_table, $wr_id, $meta_datetime, $meta_hit);
+        }
+
         return array('ok' => true, 'wr_id' => $wr_id, 'bo_table' => $bo_table);
     }
 }
@@ -1612,12 +1618,18 @@ if (!function_exists('icrm_content_publish_item')) {
             return $publish_check;
         }
 
+        $publish_meta = array();
+        if (!empty($options['board_meta']) && is_array($options['board_meta'])) {
+            $publish_meta = $options['board_meta'];
+        }
+
         $insert = icrm_content_insert_board_post(
             $item['bo_table'],
             $item['mb_id'],
             $item['subject'],
             $item['content_html'],
-            $item['ca_name']
+            $item['ca_name'],
+            $publish_meta
         );
         if (empty($insert['ok'])) {
             return array(

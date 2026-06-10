@@ -75,14 +75,24 @@ $default_mb = ($icrm_member_publish_mode && !empty($member['mb_id']))
     ? (string) $member['mb_id']
     : icrm_content_get_default_mb_id();
 
+if (is_file(G5_LIB_PATH.'/headnerve-board-meta.lib.php')) {
+    include_once G5_LIB_PATH.'/headnerve-board-meta.lib.php';
+}
+
 $board_meta = array();
-if ($icrm_member_publish_mode && function_exists('icrm_member_board_categories')) {
-    foreach ($boards as $b) {
-        $bt = (string) $b['bo_table'];
-        $board_meta[$bt] = array(
-            'categories' => icrm_member_board_categories($bt),
-        );
-    }
+$icp_board_meta_can_edit = function_exists('headnerve_board_meta_can_edit_any') && headnerve_board_meta_can_edit_any();
+$icp_default_meta_datetime = function_exists('headnerve_board_meta_datetime_local')
+    ? headnerve_board_meta_datetime_local(G5_TIME_YMDHIS)
+    : '';
+
+foreach ($boards as $b) {
+    $bt = (string) $b['bo_table'];
+    $board_meta[$bt] = array(
+        'categories'     => ($icrm_member_publish_mode && function_exists('icrm_member_board_categories'))
+            ? icrm_member_board_categories($bt)
+            : array(),
+        'allow_post_meta' => function_exists('headnerve_board_meta_editable') && headnerve_board_meta_editable($bt),
+    );
 }
 $license_ok = function_exists('icrm_admin_shell_license_ok') ? icrm_admin_shell_license_ok() : false;
 $ai_ready = function_exists('g5b_seo_meta_is_ai_configured') ? g5b_seo_meta_is_ai_configured() : false;
@@ -220,6 +230,23 @@ function icp_h($s)
                     <p class="icp-help">로그인한 회원 계정으로 발행됩니다.</p>
                     <?php } ?>
                 </div>
+
+                <?php if ($icp_board_meta_can_edit) { ?>
+                <div class="icp-field" id="icp_board_meta_wrap" hidden>
+                    <span class="icp-label">게시 정보</span>
+                    <p class="icp-help">블로그·뉴스·후기 게시판 발행 시 목록·본문에 표시되는 작성일과 조회수를 설정합니다.</p>
+                    <div class="icp-field-row">
+                        <div class="icp-field icp-field--half">
+                            <label class="icp-label" for="g5b_wr_datetime">작성일</label>
+                            <input type="datetime-local" class="icp-input" id="g5b_wr_datetime" name="g5b_wr_datetime" value="<?php echo icp_h($icp_default_meta_datetime); ?>">
+                        </div>
+                        <div class="icp-field icp-field--half">
+                            <label class="icp-label" for="g5b_wr_hit">조회수</label>
+                            <input type="number" class="icp-input" id="g5b_wr_hit" name="g5b_wr_hit" min="0" step="1" value="0">
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
 
                 <div class="icp-aside__actions">
                     <button type="button" class="icc-btn icc-btn--primary icp-btn-block" id="icp_titles_btn"<?php echo (!$license_ok || !$ai_ready) ? ' disabled' : ''; ?>>제목 추천</button>
@@ -402,15 +429,25 @@ body .se2_layer{display:block}
         if (!cats.length) {
             wrap.hidden = true;
             caEl.value = '';
-            return;
+        } else {
+            cats.forEach(function(cat) {
+                var opt = document.createElement('option');
+                opt.value = cat;
+                opt.textContent = cat;
+                caEl.appendChild(opt);
+            });
+            wrap.hidden = false;
         }
-        cats.forEach(function(cat) {
-            var opt = document.createElement('option');
-            opt.value = cat;
-            opt.textContent = cat;
-            caEl.appendChild(opt);
-        });
-        wrap.hidden = false;
+        icpSyncBoardMetaField();
+    }
+
+    function icpSyncBoardMetaField() {
+        var boEl = document.getElementById('icp_bo_table');
+        var wrap = document.getElementById('icp_board_meta_wrap');
+        if (!boEl || !wrap) return;
+        var bt = boEl.value || '';
+        var meta = boardMeta && boardMeta[bt] ? boardMeta[bt] : null;
+        wrap.hidden = !(meta && meta.allow_post_meta);
     }
 
     function setMsg(el, text, ok) {
@@ -467,7 +504,7 @@ body .se2_layer{display:block}
     function formFields() {
         icpSyncEditor();
         var fd = new FormData();
-        ['ici_id', 'topic', 'keywords', 'bo_table', 'mb_id', 'subject', 'ca_name'].forEach(function(name) {
+        ['ici_id', 'topic', 'keywords', 'bo_table', 'mb_id', 'subject', 'ca_name', 'g5b_wr_datetime', 'g5b_wr_hit'].forEach(function(name) {
             var el = document.querySelector('[name="' + name + '"]');
             if (el) fd.append(name, el.value);
         });
