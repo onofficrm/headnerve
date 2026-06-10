@@ -623,6 +623,68 @@
   height: auto;
 }
 
+/* 본문 텍스트 링크 — 일반 문장과 구분 (웹에디터 내부·외부 링크) */
+.board-wrap #bo_v_con a[href]:not(.view_image),
+.board-wrap .board-view__content a[href]:not(.view_image),
+.board-wrap .reviews-view__content a[href]:not(.view_image),
+.board-wrap .faq-view__content a[href]:not(.view_image),
+.board-wrap .inquiry-detail__content a[href]:not(.view_image) {
+  color: var(--color-primary, #2563eb);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--color-primary, #2563eb) 55%, transparent);
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+  font-weight: var(--font-weight-medium, 500);
+  transition: color var(--transition-fast, 150ms ease),
+    text-decoration-color var(--transition-fast, 150ms ease);
+}
+
+.board-wrap #bo_v_con a[href]:not(.view_image):hover,
+.board-wrap #bo_v_con a[href]:not(.view_image):focus-visible,
+.board-wrap .board-view__content a[href]:not(.view_image):hover,
+.board-wrap .board-view__content a[href]:not(.view_image):focus-visible,
+.board-wrap .reviews-view__content a[href]:not(.view_image):hover,
+.board-wrap .reviews-view__content a[href]:not(.view_image):focus-visible,
+.board-wrap .faq-view__content a[href]:not(.view_image):hover,
+.board-wrap .faq-view__content a[href]:not(.view_image):focus-visible,
+.board-wrap .inquiry-detail__content a[href]:not(.view_image):hover,
+.board-wrap .inquiry-detail__content a[href]:not(.view_image):focus-visible {
+  color: var(--color-primary-hover, #1d4ed8);
+  text-decoration-color: currentColor;
+}
+
+/* 이미지만 감싼 링크(썸네일·본문 이미지)는 텍스트 링크 스타일 제외 */
+.board-wrap #bo_v_con a[href]:not(.view_image):has(> img:only-child),
+.board-wrap .board-view__content a[href]:not(.view_image):has(> img:only-child),
+.board-wrap .reviews-view__content a[href]:not(.view_image):has(> img:only-child),
+.board-wrap .faq-view__content a[href]:not(.view_image):has(> img:only-child),
+.board-wrap .inquiry-detail__content a[href]:not(.view_image):has(> img:only-child) {
+  color: inherit;
+  font-weight: inherit;
+  text-decoration: none;
+}
+
+/* 외부 링크 — 새 창·http(s) 주소에 작은 표시 */
+.board-wrap #bo_v_con a[href][target="_blank"]:not(.view_image):not(:has(> img))::after,
+.board-wrap .board-view__content a[href][target="_blank"]:not(.view_image):not(:has(> img))::after,
+.board-wrap .reviews-view__content a[href][target="_blank"]:not(.view_image):not(:has(> img))::after,
+.board-wrap .faq-view__content a[href][target="_blank"]:not(.view_image):not(:has(> img))::after,
+.board-wrap .inquiry-detail__content a[href][target="_blank"]:not(.view_image):not(:has(> img))::after,
+.board-wrap #bo_v_con a[href^="http"]:not(.view_image):not(:has(> img))::after,
+.board-wrap .board-view__content a[href^="http"]:not(.view_image):not(:has(> img))::after,
+.board-wrap .reviews-view__content a[href^="http"]:not(.view_image):not(:has(> img))::after,
+.board-wrap .faq-view__content a[href^="http"]:not(.view_image):not(:has(> img))::after,
+.board-wrap .inquiry-detail__content a[href^="http"]:not(.view_image):not(:has(> img))::after {
+  content: "\2197";
+  display: inline-block;
+  margin-left: 0.1em;
+  font-size: 0.8em;
+  line-height: 1;
+  font-weight: var(--font-weight-normal, 400);
+  opacity: 0.8;
+  text-decoration: none;
+}
+
 /* iCRM·SmartEditor2 정렬 유지 (가운데/좌/우) */
 .board-wrap #bo_v_con [align="center"],
 .board-wrap .board-view__content [align="center"],
