@@ -48,7 +48,7 @@ if (isset($g5_logo_url) && $g5_logo_url !== '' && preg_match('/\.(png|jpe?g|webp
                         <?php if ($has_sub) { ?>
                         <ul class="maekrak-header__gnb-sub">
                             <?php foreach ($row['sub'] as $row2) { ?>
-                            <li><a href="<?php echo $row2['href']; ?>" class="maekrak-header__gnb-sub-link"><?php echo get_text($row2['name']); ?></a></li>
+                            <li><a href="<?php echo $row2['href']; ?>" class="maekrak-header__gnb-sub-link"<?php echo !empty($row2['external']) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>><?php echo get_text($row2['name']); ?></a></li>
                             <?php } ?>
                         </ul>
                         <?php } ?>
@@ -98,7 +98,7 @@ if (isset($g5_logo_url) && $g5_logo_url !== '' && preg_match('/\.(png|jpe?g|webp
                     <?php if (!empty($row['sub'])) { ?>
                     <ul class="maekrak-header__mobile-sub">
                         <?php foreach ($row['sub'] as $row2) { ?>
-                        <li><a href="<?php echo $row2['href']; ?>"><?php echo get_text($row2['name']); ?></a></li>
+                        <li><a href="<?php echo $row2['href']; ?>"<?php echo !empty($row2['external']) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>><?php echo get_text($row2['name']); ?></a></li>
                         <?php } ?>
                     </ul>
                     <?php } ?>

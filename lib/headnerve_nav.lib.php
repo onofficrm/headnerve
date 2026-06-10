@@ -99,9 +99,22 @@ if (!function_exists('headnerve_nav_menu_items')) {
                     array('name' => '공지사항', 'href' => headnerve_board_href('notice')),
                     array('name' => '뉴스', 'href' => headnerve_board_href('news')),
                     array('name' => '블로그', 'href' => headnerve_board_href('column')),
+                    array('name' => '질문하기', 'href' => headnerve_nav_cafe_url(), 'external' => true),
                 ),
             ),
         );
+    }
+}
+
+if (!function_exists('headnerve_nav_cafe_url')) {
+    function headnerve_nav_cafe_url()
+    {
+        $url = function_exists('g5site_cfg') ? g5site_cfg('naver_cafe_url', '') : '';
+        if ($url !== '') {
+            return $url;
+        }
+
+        return 'https://cafe.naver.com/leeaj1';
     }
 }
 

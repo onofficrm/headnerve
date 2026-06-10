@@ -18,6 +18,9 @@ export const BOARD_URLS = {
   reviews: boardUrl(BOARD_TABLES.reviews),
 } as const;
 
+/** 네이버 카페 — 커뮤니티 질문하기 */
+export const NAVER_CAFE_URL = 'https://cafe.naver.com/leeaj1';
+
 export type NavMenuItem = {
   name: string;
   href: string;
@@ -34,6 +37,7 @@ export const COMMUNITY_NAV: NavMenuItem = {
     { name: '공지사항', href: BOARD_URLS.notice, external: true },
     { name: '뉴스', href: BOARD_URLS.news, external: true },
     { name: '블로그', href: BOARD_URLS.column, external: true },
+    { name: '질문하기', href: NAVER_CAFE_URL, external: true },
   ],
 };
 

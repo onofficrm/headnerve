@@ -11,8 +11,14 @@ type NavMenuLinkProps = {
 
 export function NavMenuLink({ href, external, className, onClick, children }: NavMenuLinkProps) {
   if (external || isExternalNavHref(href)) {
+    const isOffsite = href.startsWith('http://') || href.startsWith('https://');
     return (
-      <a href={href} className={className} onClick={onClick}>
+      <a
+        href={href}
+        className={className}
+        onClick={onClick}
+        {...(isOffsite ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      >
         {children}
       </a>
     );
