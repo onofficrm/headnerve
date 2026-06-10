@@ -896,6 +896,66 @@ if (!function_exists('g5b_normalize_board_content_alignment')) {
     }
 }
 
+if (!function_exists('g5b_is_board_content_button_link')) {
+    /**
+     * 본문 CTA·버튼형 링크 여부 (텍스트 링크 스타일 제외 대상)
+     */
+    function g5b_is_board_content_button_link($attrs)
+    {
+        $attrs = (string) $attrs;
+
+        if (preg_match('/\bclass\s*=\s*["\'][^"\']*(?:view_image|icrm-cta|btn(?:_| )|board-btn)/i', $attrs)) {
+            return true;
+        }
+
+        if (!preg_match('/\bstyle\s*=\s*["\']([^"\']*)["\']/i', $attrs, $sm)) {
+            return false;
+        }
+
+        $style = strtolower($sm[1]);
+
+        return (strpos($style, 'background') !== false && strpos($style, 'background:none') === false)
+            || preg_match('/padding\s*:/', $style);
+    }
+}
+
+if (!function_exists('g5b_normalize_board_content_links')) {
+    /**
+     * 본문 텍스트 링크에 식별 클래스 부여 (글보기·발행 공통)
+     */
+    function g5b_normalize_board_content_links($html)
+    {
+        $html = (string) $html;
+        if ($html === '' || stripos($html, '<a') === false) {
+            return $html;
+        }
+
+        return preg_replace_callback('/<a(\s[^>]*)>/iu', function ($m) {
+            $attrs = $m[1];
+
+            if (g5b_is_board_content_button_link($attrs)) {
+                return $m[0];
+            }
+
+            if (preg_match('/\bclass\s*=\s*["\']([^"\']*)["\']/i', $attrs, $cm)) {
+                if (stripos($cm[1], 'board-content-link') !== false) {
+                    return $m[0];
+                }
+                $attrs = preg_replace(
+                    '/\bclass\s*=\s*(["\'])([^"\']*)\1/i',
+                    'class=$1$2 board-content-link$1',
+                    $attrs,
+                    1
+                );
+            } else {
+                $attrs .= ' class="board-content-link"';
+            }
+
+            return '<a' . $attrs . '>';
+        }, $html);
+    }
+}
+
 if (!function_exists('g5b_html_purifier_preserve_alignment')) {
     function g5b_html_purifier_preserve_alignment($html, $purifier, $original)
     {

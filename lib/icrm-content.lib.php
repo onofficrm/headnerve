@@ -1489,6 +1489,9 @@ if (!function_exists('icrm_content_insert_board_post')) {
         if (function_exists('g5b_normalize_board_content_alignment')) {
             $content_html = g5b_normalize_board_content_alignment($content_html);
         }
+        if (function_exists('g5b_normalize_board_content_links')) {
+            $content_html = g5b_normalize_board_content_links($content_html);
+        }
         $ca_name = trim((string) $ca_name);
 
         $wr_option = (strpos($content_html, '<') !== false) ? 'html1' : '';

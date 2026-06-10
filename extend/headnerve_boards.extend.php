@@ -17,22 +17,26 @@ if (function_exists('add_event') && function_exists('headnerve_board_apply_meta_
     add_event('write_update_after', 'headnerve_board_apply_meta_on_write', 8, 5);
 }
 
-if (!function_exists('headnerve_board_normalize_view_alignment')) {
-    function headnerve_board_normalize_view_alignment($content)
+if (!function_exists('headnerve_board_normalize_view_content')) {
+    function headnerve_board_normalize_view_content($content)
     {
         if (!function_exists('headnerve_is_g5b_board') || !headnerve_is_g5b_board()) {
             return $content;
         }
-        if (!function_exists('g5b_normalize_board_content_alignment')) {
-            return $content;
+
+        if (function_exists('g5b_normalize_board_content_alignment')) {
+            $content = g5b_normalize_board_content_alignment($content);
+        }
+        if (function_exists('g5b_normalize_board_content_links')) {
+            $content = g5b_normalize_board_content_links($content);
         }
 
-        return g5b_normalize_board_content_alignment($content);
+        return $content;
     }
 }
 
 if (function_exists('add_replace')) {
-    add_replace('get_view_thumbnail', 'headnerve_board_normalize_view_alignment', 10, 1);
+    add_replace('get_view_thumbnail', 'headnerve_board_normalize_view_content', 10, 1);
 }
 
 if (!function_exists('headnerve_is_g5b_board')) {
@@ -114,8 +118,20 @@ if (!function_exists('headnerve_board_enqueue_styles')) {
             }
         }
         add_stylesheet(
-            '<style>:root{--color-primary:'.$headnerve_primary.';--color-secondary:#5C6573;--color-on-primary:#fff;}</style>',
+            '<style>:root{--color-primary:'.$headnerve_primary.';--color-secondary:#5C6573;--color-on-primary:#fff;--board-content-link:#2e75b6;--board-content-link-hover:#1a5f99;}</style>',
             7
+        );
+        add_stylesheet(
+            '<style>'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con a.board-content-link,'
+            .'body.headnerve-g5b-board .board-wrap .board-view__content a.board-content-link{'
+            .'color:#2e75b6!important;text-decoration:underline!important;text-decoration-color:#2e75b6!important;'
+            .'text-underline-offset:0.18em;text-decoration-thickness:2px;font-weight:600;}'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con a.board-content-link:hover,'
+            .'body.headnerve-g5b-board .board-wrap .board-view__content a.board-content-link:hover{'
+            .'color:#1a5f99!important;text-decoration-color:#1a5f99!important;}'
+            .'</style>',
+            51
         );
         add_stylesheet(
             '<style>'
