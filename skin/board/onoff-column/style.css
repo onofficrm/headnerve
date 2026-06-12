@@ -45,9 +45,18 @@
   vertical-align: middle;
 }
 
-.board-list--modern .board-list__cell-date {
-  width: 7.5rem;
-  text-align: left;
+.board-wrap--onoff-column .board-list__col-date,
+.board-wrap--onoff-column .board-list__cell-date {
+  width: 6.5rem;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.board-wrap--onoff-column .board-list__col-hit,
+.board-wrap--onoff-column .board-list__cell-hit {
+  width: 5rem;
+  text-align: right;
+  white-space: nowrap;
 }
 
 .board-list--modern .board-list__date {
@@ -118,6 +127,11 @@
 
 /* 모바일 */
 @media (max-width: 767px) {
+  .board-wrap--onoff-column .board-list__cell-date,
+  .board-wrap--onoff-column .board-list__cell-hit {
+    width: auto;
+    text-align: left;
+  }
   .board-list--modern .board-list__cell-date::before { content: "날짜"; }
   .board-list--modern .board-list__cell-cate::before { content: "분류"; }
   .board-list--modern .board-title--modern .board-title__link {

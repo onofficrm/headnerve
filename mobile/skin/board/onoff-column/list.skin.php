@@ -68,10 +68,10 @@ onoff_platform_board_styles($board_skin_url);
                 <label for="chkall"><span></span><b class="sound_only">전체선택</b></label>
             </th>
             <?php } ?>
-            <th scope="col" class="board-list__col-date"><?php echo subject_sort_link('wr_datetime', $qstr2, 1) ?>날짜</a></th>
             <?php if ($is_category) { ?><th scope="col" class="board-list__col-cate">분류</th><?php } ?>
             <th scope="col" class="board-list__col-subject">제목</th>
             <th scope="col" class="board-list__col-name">글쓴이</th>
+            <th scope="col" class="board-list__col-date"><?php echo subject_sort_link('wr_datetime', $qstr2, 1) ?>날짜</a></th>
             <th scope="col" class="board-list__col-hit"><?php echo subject_sort_link('wr_hit', $qstr2, 1) ?>조회</a></th>
             <?php if ($is_good) { ?><th scope="col" class="board-list__col-good"><?php echo subject_sort_link('wr_good', $qstr2, 1) ?>추천</a></th><?php } ?>
             <?php if ($is_nogood) { ?><th scope="col" class="board-list__col-nogood"><?php echo subject_sort_link('wr_nogood', $qstr2, 1) ?>비추천</a></th><?php } ?>
@@ -89,11 +89,6 @@ onoff_platform_board_styles($board_skin_url);
                 <label for="chk_wr_id_<?php echo $i ?>"><span></span><b class="sound_only"><?php echo $list[$i]['subject'] ?></b></label>
             </td>
             <?php } ?>
-            <td class="td_datetime board-list__cell-date" data-label="날짜">
-                <?php echo g5b_seo_list_time($list[$i]); ?>
-                <?php if ($list[$i]['is_notice']) { ?><span class="notice_icon board-badge board-badge--notice">공지</span><?php } ?>
-                <?php if (!$list[$i]['is_notice'] && $wr_id == $list[$i]['wr_id']) { ?><span class="bo_current">열람중</span><?php } ?>
-            </td>
             <?php if ($is_category) { ?>
             <td class="board-list__cell-cate" data-label="분류">
                 <?php if ($list[$i]['ca_name']) { ?>
@@ -122,6 +117,11 @@ onoff_platform_board_styles($board_skin_url);
                 </div>
             </td>
             <td class="td_name sv_use board-list__cell-name" data-label="글쓴이"><?php echo $list[$i]['name'] ?></td>
+            <td class="td_datetime board-list__cell-date" data-label="날짜">
+                <?php echo g5b_seo_list_time($list[$i]); ?>
+                <?php if ($list[$i]['is_notice']) { ?><span class="notice_icon board-badge board-badge--notice">공지</span><?php } ?>
+                <?php if (!$list[$i]['is_notice'] && $wr_id == $list[$i]['wr_id']) { ?><span class="bo_current">열람중</span><?php } ?>
+            </td>
             <td class="td_num board-list__cell-hit" data-label="조회"><?php echo $list[$i]['wr_hit'] ?></td>
             <?php if ($is_good) { ?><td class="td_num board-list__cell-good" data-label="추천"><?php echo $list[$i]['wr_good'] ?></td><?php } ?>
             <?php if ($is_nogood) { ?><td class="td_num board-list__cell-nogood" data-label="비추천"><?php echo $list[$i]['wr_nogood'] ?></td><?php } ?>

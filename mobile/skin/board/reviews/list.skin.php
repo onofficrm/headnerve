@@ -8,7 +8,7 @@ include_once(G5_SKIN_PATH.'/board/_inc/g5b-thumb.php');
 include_once(G5_SKIN_PATH.'/board/reviews/reviews-helper.php');
 
 $thumb_w = 480;
-$thumb_h = 640;
+$thumb_h = 480;
 
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 ?>
