@@ -35,7 +35,6 @@ export const COMMUNITY_NAV: NavMenuItem = {
   external: true,
   subLinks: [
     { name: '공지사항', href: BOARD_URLS.notice, external: true },
-    { name: '뉴스', href: BOARD_URLS.news, external: true },
     { name: '블로그', href: BOARD_URLS.column, external: true },
     { name: '질문하기', href: NAVER_CAFE_URL, external: true },
   ],

@@ -97,7 +97,6 @@ if (!function_exists('headnerve_nav_menu_items')) {
                 'href' => headnerve_board_href('notice'),
                 'sub' => array(
                     array('name' => '공지사항', 'href' => headnerve_board_href('notice')),
-                    array('name' => '뉴스', 'href' => headnerve_board_href('news')),
                     array('name' => '블로그', 'href' => headnerve_board_href('column')),
                     array('name' => '질문하기', 'href' => headnerve_nav_cafe_url(), 'external' => true),
                 ),
