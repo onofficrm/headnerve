@@ -9,6 +9,13 @@ include_once(G5_SKIN_PATH.'/board/reviews/reviews-helper.php');
 
 $thumb_w = 480;
 $thumb_h = 480;
+$reviews_categories = array(
+    '두통,편두통' => '두통',
+    '어지럼증' => '어지럼증',
+    '자율신경' => '자율신경',
+    '말초신경' => '말초신경병증',
+    '브레인포그' => '브레인포그',
+);
 
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 ?>
@@ -17,7 +24,15 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
     <?php if ($is_category) { ?>
     <nav class="reviews-cate" id="bo_cate" aria-label="치료후기 분류">
-        <ul id="bo_cate_ul"><?php echo $category_option ?></ul>
+        <ul id="bo_cate_ul">
+            <li<?php echo $sca === '' ? ' id="bo_cate_on"' : ''; ?>><a href="<?php echo get_pretty_url($bo_table); ?>">전체</a></li>
+            <?php foreach ($reviews_categories as $label => $category_value) {
+                $is_current_category = ($sca === $category_value || $sca === $label);
+                $category_url = get_pretty_url($bo_table, '', 'sca='.urlencode($category_value));
+            ?>
+            <li<?php echo $is_current_category ? ' id="bo_cate_on"' : ''; ?>><a href="<?php echo $category_url; ?>"><?php echo get_text($label); ?></a></li>
+            <?php } ?>
+        </ul>
     </nav>
     <?php } ?>
 

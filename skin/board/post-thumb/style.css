@@ -124,6 +124,23 @@
   gap: 0.35rem;
 }
 
+.board-list--thumb .board-list__side-meta {
+  flex: 0 0 8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+  margin-left: auto;
+  color: var(--color-muted, #64748b);
+  font-size: var(--font-size-sm, 0.875rem);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.board-list--thumb .board-list__side-meta .board-list__date {
+  color: var(--color-muted, #64748b);
+}
+
 .board-list--thumb .board-list__meta {
   display: flex;
   flex-wrap: wrap;
@@ -177,6 +194,14 @@
     flex-direction: column;
     padding: var(--space-md, 1rem);
     gap: var(--space-md, 1rem);
+  }
+
+  .board-list--thumb .board-list__side-meta {
+    flex: none;
+    width: 100%;
+    align-items: flex-start;
+    margin-left: 0;
+    text-align: left;
   }
 
   .board-list--thumb .board-thumb {

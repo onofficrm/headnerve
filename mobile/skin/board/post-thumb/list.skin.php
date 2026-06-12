@@ -95,8 +95,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                             <?php if ($is_category && $list[$i]['ca_name']) { ?>
                             <span class="bo_cate_link board-list__cate"><?php echo $list[$i]['ca_name'] ?></span>
                             <?php } ?>
-                            <?php echo g5b_seo_list_time($list[$i]); ?>
-                            <span class="board-list__hit">조회 <?php echo number_format((int) $list[$i]['wr_hit']); ?></span>
                         </span>
                         <h2 class="board-title board-title--thumb">
                             <?php echo $list[$i]['icon_reply'] ?>
@@ -118,6 +116,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                             if (isset($list[$i]['icon_hot'])) echo rtrim($list[$i]['icon_hot']);
                             ?>
                         </span>
+                    </span>
+                    <span class="board-list__side-meta">
+                        <?php echo g5b_seo_list_time($list[$i]); ?>
+                        <span class="board-list__hit">조회 <?php echo number_format((int) $list[$i]['wr_hit']); ?></span>
                     </span>
                 </a>
             </li>

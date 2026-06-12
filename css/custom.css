@@ -1879,6 +1879,8 @@ html.page-sub #container_wr {
 html.page-sub #container {
   flex: 1;
   min-width: 0;
+  min-height: 0;
+  margin-bottom: 0;
 }
 
 html.page-sub .site-aside {
@@ -3455,19 +3457,34 @@ body.maekrak-nav-open .maekrak-header__inner {
 
 body.headnerve-g5b-board #container .board-wrap {
   padding-top: 0.25rem;
+  margin-bottom: 0;
+}
+
+body.headnerve-g5b-board #container_wr {
+  padding-bottom: 0.75rem;
+}
+
+body.headnerve-g5b-board #container {
+  min-height: 0;
+  margin-bottom: 0;
+}
+
+body.headnerve-g5b-board .board-paging,
+body.headnerve-g5b-board .reviews-paging {
+  margin-bottom: 0;
 }
 
 /* ==========================================================================
    맥락 푸터·플로팅 (게시판 — 빌더 Footer / FloatingQuickMenu 동일)
    ========================================================================== */
 .site-footer-wrap--maekrak {
-  margin-top: 3rem;
+  margin-top: 1rem;
 }
 
 .maekrak-footer {
   background: #fff;
   border-top: 1px solid #f3f4f6;
-  padding: 4rem 0 0;
+  padding: 2rem 0 0;
 }
 
 .maekrak-footer__inner {
@@ -3594,8 +3611,8 @@ body.headnerve-g5b-board #container .board-wrap {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-top: 4rem;
-  padding: 2rem 0;
+  margin-top: 2rem;
+  padding: 1.25rem 0;
   border-top: 1px solid #f3f4f6;
 }
 

@@ -37,7 +37,7 @@ if (is_file($config_file)) {
 $bo_subject = isset($board_cfg['title']) ? $board_cfg['title'] : '치료후기';
 $bo_skin = isset($board_cfg['skin']) ? $board_cfg['skin'] : 'reviews';
 $bo_mobile_skin = isset($board_cfg['mobile_skin']) ? $board_cfg['mobile_skin'] : 'reviews';
-$bo_category_list = isset($board_cfg['categories']) ? $board_cfg['categories'] : '두통|어지럼증|자율신경|말초신경병증|브레인포그|기타';
+$bo_category_list = isset($board_cfg['categories']) ? $board_cfg['categories'] : '두통|어지럼증|자율신경|말초신경병증|브레인포그';
 $extra_fields = isset($board_cfg['extra_fields']) && is_array($board_cfg['extra_fields']) ? $board_cfg['extra_fields'] : array(
     'wr_1' => '환자',
     'wr_2' => '담당 원장',
