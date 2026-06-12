@@ -38,6 +38,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             <div class="reviews-view__meta-row">
                 <span class="reviews-view__badge">치료 사례</span>
                 <time class="reviews-view__date" datetime="<?php echo $view['wr_datetime']; ?>"><?php echo $review_date; ?></time>
+                <span class="reviews-view__hit">조회 <?php echo number_format((int) $view['wr_hit']); ?>회</span>
             </div>
             <h1 class="reviews-view__title"><?php echo get_text($view['wr_subject']); ?></h1>
         </header>
@@ -81,6 +82,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             <div class="reviews-view__cta-actions">
                 <a href="<?php echo $booking_url; ?>" class="reviews-btn reviews-btn--primary" target="_blank" rel="noopener noreferrer">진료 예약하기</a>
                 <a href="<?php echo $tel_href; ?>" class="reviews-btn reviews-btn--outline">전화 상담하기</a>
+                <a href="https://cafe.naver.com/leeaj1" class="reviews-btn reviews-btn--outline" target="_blank" rel="noopener noreferrer">질문하러가기</a>
             </div>
         </div>
 

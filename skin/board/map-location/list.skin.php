@@ -54,6 +54,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             <p class="map-location-card__meta">
                 <?php if ($loc_cat) { ?><span><?php echo $loc_cat; ?></span><?php } ?>
                 <?php if ($loc_region) { ?> · <span><?php echo $loc_region; ?></span><?php } ?>
+                <span>조회 <?php echo number_format((int) $list[$i]['wr_hit']); ?></span>
             </p>
             <?php if ($loc_addr) { ?><p class="map-location-card__meta"><?php echo $loc_addr; ?></p><?php } ?>
             <?php if ($loc_phone) { ?><p class="map-location-card__meta"><?php echo $loc_phone; ?></p><?php } ?>

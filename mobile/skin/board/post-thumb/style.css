@@ -160,6 +160,19 @@
   font-weight: var(--font-weight-medium, 500);
 }
 
+.board-list--thumb .board-list__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.75rem;
+  color: var(--color-muted, #64748b);
+  font-size: var(--font-size-sm, 0.875rem);
+}
+
+.board-list--thumb .board-list__hit {
+  color: var(--color-muted, #64748b);
+}
+
 @media (max-width: 767px) {
   .board-list--thumb .board-list__item-link {
     flex-direction: column;

@@ -96,6 +96,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                             <span class="bo_cate_link board-list__cate"><?php echo $list[$i]['ca_name'] ?></span>
                             <?php } ?>
                             <?php echo g5b_seo_list_time($list[$i]); ?>
+                            <span class="board-list__hit">조회 <?php echo number_format((int) $list[$i]['wr_hit']); ?></span>
                         </span>
                         <h2 class="board-title board-title--thumb">
                             <?php echo $list[$i]['icon_reply'] ?>

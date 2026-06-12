@@ -5,6 +5,9 @@ include_once(G5_SKIN_PATH.'/board/_inc/g5b-seo-view.php');
 
 include_once(G5_SKIN_PATH.'/_inc/onoff-platform.php');
 onoff_platform_board_styles($board_skin_url);
+
+$onoff_reviews_booking_url = function_exists('headnerve_nav_booking_url') ? headnerve_nav_booking_url() : 'https://booking.naver.com/booking/13/bizes/1120036?area=pll&map-search=1';
+$onoff_reviews_tel_href = function_exists('headnerve_nav_tel_href') ? headnerve_nav_tel_href() : 'tel:0269597252';
 ?>
 
 <script src="<?php echo G5_JS_URL; ?>/viewimageresize.js"></script>
@@ -133,6 +136,16 @@ onoff_platform_board_styles($board_skin_url);
             }
         }
         ?>
+    </section>
+
+    <section class="onoff-reviews-cta" aria-label="치료후기 상담 안내">
+        <h2 class="onoff-reviews-cta__title">비슷한 고민이 있으신가요?</h2>
+        <p class="onoff-reviews-cta__desc">맥락한의원에서 1:1 맞춤 상담을 받아보세요</p>
+        <div class="onoff-reviews-cta__actions">
+            <a href="<?php echo $onoff_reviews_booking_url; ?>" class="onoff-reviews-cta__btn onoff-reviews-cta__btn--primary" target="_blank" rel="noopener noreferrer">진료 예약하기</a>
+            <a href="<?php echo $onoff_reviews_tel_href; ?>" class="onoff-reviews-cta__btn onoff-reviews-cta__btn--outline">전화 상담하기</a>
+            <a href="https://cafe.naver.com/leeaj1" class="onoff-reviews-cta__btn onoff-reviews-cta__btn--outline" target="_blank" rel="noopener noreferrer">질문하러가기</a>
+        </div>
     </section>
 
     <?php

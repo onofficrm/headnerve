@@ -62,7 +62,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         <span class="reviews-card__cate"><?php echo get_text($list[$i]['ca_name']); ?></span>
                         <?php } ?>
                         <span class="reviews-card__title"><?php echo get_text($list[$i]['subject']); ?></span>
-                        <time class="reviews-card__date" datetime="<?php echo $list[$i]['datetime']; ?>"><?php echo reviews_format_date($list[$i]['wr_datetime']); ?></time>
+                        <span class="reviews-card__meta">
+                            <time class="reviews-card__date" datetime="<?php echo $list[$i]['datetime']; ?>"><?php echo reviews_format_date($list[$i]['wr_datetime']); ?></time>
+                            <span class="reviews-card__hit">조회 <?php echo number_format((int) $list[$i]['wr_hit']); ?></span>
+                        </span>
                     </span>
                 </a>
             </li>

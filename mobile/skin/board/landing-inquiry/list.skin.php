@@ -7,7 +7,7 @@ include_once dirname(__FILE__) . '/inquiry-helper.php';
 
 add_stylesheet('<link rel="stylesheet" href="' . $board_skin_url . '/style.css">', 0);
 
-$colspan = 8;
+$colspan = 9;
 if ($is_checkbox) {
     $colspan++;
 }
@@ -79,6 +79,7 @@ if ($is_checkbox) {
             <th scope="col" class="inquiry-table__email">이메일</th>
             <th scope="col" class="inquiry-table__subject">제목</th>
             <th scope="col" class="inquiry-table__page">접수 페이지</th>
+            <th scope="col" class="inquiry-table__hit"><?php echo subject_sort_link('wr_hit', $qstr2, 1) ?>조회</a></th>
             <th scope="col" class="inquiry-table__date"><?php echo subject_sort_link('wr_datetime', $qstr2, 1) ?>접수일</a></th>
             <th scope="col" class="inquiry-table__ip">IP</th>
         </tr>
@@ -173,6 +174,7 @@ if ($is_checkbox) {
                 }
                 ?>
             </td>
+            <td class="inquiry-table__cell-hit" data-label="조회"><?php echo number_format((int) $list[$i]['wr_hit']); ?></td>
             <td class="inquiry-table__cell-date" data-label="접수일"><?php echo $list[$i]['datetime2'] ?></td>
             <td class="inquiry-table__cell-ip" data-label="IP">
                 <span class="inquiry-table__ip"><?php echo $ip !== '' ? get_text($ip) : '—' ?></span>
