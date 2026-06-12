@@ -39,7 +39,12 @@ g5b_seo_meta_preview_assets();
 ?>
 
 <div class="board-write-form__row write_div g5b-seo-meta-panel" id="g5b_seo_meta_panel">
-    <h3 class="board-write-form__label">SEO 메타 (수동 · AI · 미리보기)</h3>
+    <details class="g5b-seo-meta-panel__details">
+    <summary class="g5b-seo-meta-panel__summary">
+        <span class="board-write-form__label g5b-seo-meta-panel__title">SEO 메타 (수동 · AI · 미리보기)</span>
+        <span class="g5b-seo-meta-panel__summary-hint">클릭해서 열기</span>
+    </summary>
+    <div class="g5b-seo-meta-panel__body">
     <p class="g5b-seo-meta-panel__hint">비워 두면 자동 메타가 적용됩니다. 대표 이미지·타이틀·설명 입력 시 네이버·구글 검색 미리보기처럼 표시됩니다.</p>
     <input type="hidden" name="g5b_seo_meta_enabled" value="1">
 
@@ -149,10 +154,21 @@ g5b_seo_meta_preview_assets();
     ));
     ?>
     </div>
+    </div>
+    </details>
 </div>
 
 <style>
 .g5b-seo-meta-panel { margin-top: 1.5rem; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 8px; background: #f8fafc; }
+.g5b-seo-meta-panel__details { display: block; }
+.g5b-seo-meta-panel__summary { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; cursor: pointer; list-style: none; }
+.g5b-seo-meta-panel__summary::-webkit-details-marker { display: none; }
+.g5b-seo-meta-panel__summary::after { content: "열기"; flex: 0 0 auto; padding: 0.25rem 0.55rem; border: 1px solid #cbd5e1; border-radius: 999px; background: #fff; color: #475569; font-size: 0.75rem; font-weight: 700; }
+.g5b-seo-meta-panel__details[open] .g5b-seo-meta-panel__summary::after { content: "닫기"; }
+.g5b-seo-meta-panel__title { margin: 0; }
+.g5b-seo-meta-panel__summary-hint { margin-left: auto; color: #64748b; font-size: 0.8125rem; }
+.g5b-seo-meta-panel__details[open] .g5b-seo-meta-panel__summary-hint { display: none; }
+.g5b-seo-meta-panel__body { margin-top: 1rem; }
 .g5b-seo-meta-panel__hint { margin: 0 0 1rem; font-size: 0.875rem; color: #64748b; }
 .g5b-seo-meta-panel__grid { display: grid; gap: 0.75rem; }
 .g5b-seo-meta-panel__field label { display: block; margin-bottom: 0.25rem; font-weight: 600; font-size: 0.875rem; }
