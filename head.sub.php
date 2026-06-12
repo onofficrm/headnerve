@@ -4,9 +4,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 run_event('head_sub_before');
 
-// 테마 head.sub.php — 커뮤니티 게시판(g5b 스킨)은 베이스 head.sub 사용
+// 테마 head.sub.php — 베이스 헤더 강제 페이지와 커뮤니티 게시판(g5b 스킨)은 베이스 head.sub 사용
 if (!defined('G5_IS_ADMIN') && defined('G5_THEME_PATH') && is_file(G5_THEME_PATH.'/head.sub.php')) {
-    if (!(function_exists('headnerve_is_g5b_board') && headnerve_is_g5b_board())) {
+    if (!defined('G5_USE_BASE_HEAD') && !(function_exists('headnerve_is_g5b_board') && headnerve_is_g5b_board())) {
         require_once(G5_THEME_PATH.'/head.sub.php');
         return;
     }

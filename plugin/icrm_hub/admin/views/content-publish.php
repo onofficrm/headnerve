@@ -3,7 +3,7 @@ if (!defined('_GNUBOARD_') || !defined('ICRM_HUB_ACTIVE')) {
     exit;
 }
 
-global $member;
+global $member, $g5, $config;
 
 if (is_file(G5_LIB_PATH . '/icrm-content.lib.php')) {
     include_once G5_LIB_PATH . '/icrm-content.lib.php';
@@ -99,6 +99,8 @@ $ai_ready = function_exists('g5b_seo_meta_is_ai_configured') ? g5b_seo_meta_is_a
 $geo_enabled = function_exists('g5site_cfg_bool') ? g5site_cfg_bool('icrm_hub_geo_button', true) : true;
 
 $icp_preload_item = (isset($icp_preload_item) && is_array($icp_preload_item)) ? $icp_preload_item : null;
+$icp_preload_subject = $icp_preload_item ? (string) ($icp_preload_item['subject'] ?? '') : '';
+$icp_preload_content = $icp_preload_item ? (string) ($icp_preload_item['content_html'] ?? '') : '';
 
 $icp_use_editor = false;
 if (!empty($config['cf_editor']) && defined('G5_EDITOR_LIB') && is_file(G5_EDITOR_LIB)) {
@@ -278,7 +280,7 @@ function icp_h($s)
 
                 <div class="icp-field">
                     <label class="icp-label" for="icp_subject">제목</label>
-                    <input type="text" class="icp-input icp-input--lg" id="icp_subject" name="subject" placeholder="게시글 제목을 입력하세요">
+                    <input type="text" class="icp-input icp-input--lg" id="icp_subject" name="subject" value="<?php echo icp_h($icp_preload_subject); ?>" placeholder="게시글 제목을 입력하세요">
                 </div>
 
                 <div class="icp-field icp-field--editor">
@@ -294,9 +296,9 @@ function icp_h($s)
                     </div>
                     <div class="icp-editor-box<?php echo $icp_use_editor ? ' icp-editor-box--se2' : ''; ?>">
                         <?php if ($icp_use_editor) { ?>
-                            <?php echo editor_html($icp_editor_id, '', true); ?>
+                            <?php echo editor_html($icp_editor_id, $icp_preload_content, true); ?>
                         <?php } else { ?>
-                            <textarea class="icp-textarea" id="<?php echo icp_h($icp_editor_id); ?>" name="<?php echo icp_h($icp_editor_id); ?>" rows="18" placeholder="직접 작성하거나 AI 초안 생성 결과를 수정하세요."></textarea>
+                            <textarea class="icp-textarea" id="<?php echo icp_h($icp_editor_id); ?>" name="<?php echo icp_h($icp_editor_id); ?>" rows="18" placeholder="직접 작성하거나 AI 초안 생성 결과를 수정하세요."><?php echo icp_h($icp_preload_content); ?></textarea>
                         <?php } ?>
                     </div>
                 </div>
@@ -492,6 +494,19 @@ body .se2_layer{display:block}
         }
         var el = document.getElementById(icpEditorId);
         if (el) el.value = html || raw || '';
+    }
+
+    function icpSetContentWhenReady(raw, tries) {
+        icpSetContent(raw);
+        if (!icpUseEditor || !raw) return;
+        tries = typeof tries === 'number' ? tries : 10;
+        if (typeof oEditors !== 'undefined' && oEditors.getById && oEditors.getById[icpEditorId]) {
+            return;
+        }
+        if (tries < 1) return;
+        setTimeout(function() {
+            icpSetContentWhenReady(raw, tries - 1);
+        }, 150);
     }
 
     function icpContentIsEmpty(content) {
@@ -762,7 +777,7 @@ body .se2_layer{display:block}
             if (el && preloadFields[id] !== '') el.value = preloadFields[id];
         });
         if (icpPreload.content_html) {
-            icpSetContent(icpPreload.content_html);
+            icpSetContentWhenReady(icpPreload.content_html);
             icpShowExpandBar(true);
             icpLoadExpandPresets();
         }

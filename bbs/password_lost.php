@@ -6,7 +6,12 @@ if ($is_member) {
     alert("이미 로그인중입니다.", G5_URL);
 }
 
+if (!defined('G5_USE_BASE_HEAD')) {
+    define('G5_USE_BASE_HEAD', true);
+}
+
 $g5['title'] = '회원정보 찾기';
+$g5['body_script'] = ' class="headnerve-member-auth"';
 include_once(G5_PATH.'/_head.php');
 
 $action_url = G5_HTTPS_BBS_URL."/password_lost2.php";

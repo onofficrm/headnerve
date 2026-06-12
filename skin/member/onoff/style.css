@@ -24,3 +24,43 @@
   font-size: 1.2rem;
   font-weight: 800;
 }
+
+body.headnerve-member-auth {
+  padding-top: 80px;
+  background: #f7f8fb;
+}
+
+body.headnerve-member-auth > hr,
+body.headnerve-member-auth #hd_login_msg,
+body.headnerve-member-auth #aside,
+body.headnerve-member-auth .site-aside,
+body.headnerve-member-auth .site-g5-widgets--tail {
+  display: none !important;
+}
+
+body.headnerve-member-auth #wrapper {
+  padding-top: 0;
+}
+
+body.headnerve-member-auth #container_wr {
+  display: block;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px 56px;
+}
+
+body.headnerve-member-auth #container {
+  float: none;
+  width: 100%;
+  max-width: 100%;
+  min-height: 0;
+  margin: 0;
+}
+
+body.headnerve-member-auth #container_title {
+  max-width: 720px;
+  margin: 0 auto 18px;
+  padding: 0;
+  font-size: 18px;
+}

@@ -631,6 +631,31 @@ if (!function_exists('onoff_builder_rewrite_asset_paths')) {
     }
 }
 
+if (!function_exists('onoff_builder_inject_headnerve_auth_script')) {
+    function onoff_builder_inject_headnerve_auth_script($html)
+    {
+        if (stripos((string) $html, '__HEADNERVE_AUTH__') !== false) {
+            return $html;
+        }
+        if (is_file(G5_LIB_PATH . '/headnerve_nav.lib.php')) {
+            include_once G5_LIB_PATH . '/headnerve_nav.lib.php';
+        }
+        if (!function_exists('headnerve_nav_auth_bootstrap_script')) {
+            return $html;
+        }
+
+        $script = headnerve_nav_auth_bootstrap_script();
+        if ($script === '') {
+            return $html;
+        }
+        if (stripos((string) $html, '</head>') !== false) {
+            return preg_replace('#</head>#i', $script . '</head>', $html, 1);
+        }
+
+        return $script . $html;
+    }
+}
+
 if (!function_exists('onoff_builder_resolve_import_index_file')) {
     function onoff_builder_resolve_import_index_file($id, $entry_path)
     {
@@ -696,6 +721,7 @@ if (!function_exists('onoff_builder_render_import_page')) {
 
         $html = onoff_builder_remove_base_tags($html);
         $html = onoff_builder_rewrite_asset_paths($html, $id, $entry);
+        $html = onoff_builder_inject_headnerve_auth_script($html);
 
         header('Content-Type: text/html; charset=utf-8');
         echo $html;
