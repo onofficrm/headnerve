@@ -154,6 +154,13 @@ onoff_platform_board_styles($board_skin_url);
     </div>
     <?php } ?>
 
+    <?php
+    $g5b_meta_write_inc = G5_SKIN_PATH.'/board/_inc/g5b-write-meta-fields.php';
+    if (is_file($g5b_meta_write_inc)) {
+        include_once $g5b_meta_write_inc;
+    }
+    ?>
+
     <div class="btn_confirm write_div board-write-form__submit">
         <a href="<?php echo get_pretty_url($bo_table); ?>" class="btn_cancel btn">취소</a>
         <button type="submit" id="btn_submit" accesskey="s" class="btn_submit btn board-actions__write">작성완료</button>

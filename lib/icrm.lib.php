@@ -967,6 +967,109 @@ if (!function_exists('g5b_html_purifier_preserve_alignment')) {
     }
 }
 
+if (!function_exists('icrm_should_preserve_jsonld_scripts')) {
+    /**
+     * 관리자 작성 글의 본문 JSON-LD를 글보기에서 복원한다.
+     */
+    function icrm_should_preserve_jsonld_scripts()
+    {
+        global $write;
+
+        if (!is_array($write) || empty($write['mb_id'])) {
+            return false;
+        }
+
+        return function_exists('is_admin') && is_admin($write['mb_id']);
+    }
+}
+
+if (!function_exists('icrm_jsonld_has_schema_context')) {
+    function icrm_jsonld_has_schema_context($data)
+    {
+        if (is_string($data)) {
+            return stripos($data, 'schema.org') !== false;
+        }
+
+        if (!is_array($data)) {
+            return false;
+        }
+
+        if (isset($data['@context'])) {
+            if (icrm_jsonld_has_schema_context($data['@context'])) {
+                return true;
+            }
+        }
+
+        foreach ($data as $value) {
+            if (icrm_jsonld_has_schema_context($value)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+
+if (!function_exists('icrm_extract_valid_jsonld_scripts')) {
+    function icrm_extract_valid_jsonld_scripts($html)
+    {
+        $html = (string) $html;
+        if ($html === '' || stripos($html, '<script') === false || stripos($html, 'ld+json') === false) {
+            return array();
+        }
+
+        preg_match_all('/<script\b([^>]*)>(.*?)<\/script>/is', $html, $matches, PREG_SET_ORDER);
+        $scripts = array();
+
+        foreach ($matches as $match) {
+            $attrs = isset($match[1]) ? $match[1] : '';
+            if (!preg_match('/\btype\s*=\s*(?:"application\/ld\+json"|\'application\/ld\+json\'|application\/ld\+json)\b/i', $attrs)) {
+                continue;
+            }
+
+            $json = trim(isset($match[2]) ? html_entity_decode($match[2], ENT_QUOTES, 'UTF-8') : '');
+            if ($json === '') {
+                continue;
+            }
+
+            $data = json_decode($json, true);
+            if (json_last_error() !== JSON_ERROR_NONE || !icrm_jsonld_has_schema_context($data)) {
+                continue;
+            }
+
+            $encoded = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+            if ($encoded === false) {
+                continue;
+            }
+
+            $encoded = str_replace('</script', '<\/script', $encoded);
+            $scripts[] = '<script type="application/ld+json">'."\n".$encoded."\n".'</script>';
+        }
+
+        return $scripts;
+    }
+}
+
+if (!function_exists('icrm_restore_jsonld_scripts')) {
+    function icrm_restore_jsonld_scripts($html, $original)
+    {
+        if (!icrm_should_preserve_jsonld_scripts()) {
+            return $html;
+        }
+
+        if (stripos((string) $html, 'application/ld+json') !== false) {
+            return $html;
+        }
+
+        $scripts = icrm_extract_valid_jsonld_scripts($original);
+        if (empty($scripts)) {
+            return $html;
+        }
+
+        return rtrim((string) $html)."\n".implode("\n", $scripts);
+    }
+}
+
 if (!function_exists('icrm_html_purifier_config')) {
     /**
      * iCRM 본문: class·style·data-icrm-* 속성 및 에디터 정렬 유지
@@ -1036,7 +1139,11 @@ if (!function_exists('icrm_html_purifier_result')) {
 
         if (function_exists('g5b_normalize_board_content_alignment')
             && icrm_write_has_editor_alignment_markup(array('wr_content' => $original))) {
-            return g5b_normalize_board_content_alignment($html);
+            $html = g5b_normalize_board_content_alignment($html);
+        }
+
+        if (function_exists('icrm_restore_jsonld_scripts')) {
+            $html = icrm_restore_jsonld_scripts($html, $original);
         }
 
         return $html;

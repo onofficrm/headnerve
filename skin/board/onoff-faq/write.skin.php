@@ -166,6 +166,11 @@ $faq_sort = isset($wr_2) ? get_text($wr_2) : '';
     if (is_file($g5b_seo_write_inc)) {
         include_once $g5b_seo_write_inc;
     }
+
+    $g5b_meta_write_inc = dirname(__FILE__) . '/../_inc/g5b-write-meta-fields.php';
+    if (is_file($g5b_meta_write_inc)) {
+        include_once $g5b_meta_write_inc;
+    }
     ?>
 
     <div class="btn_confirm write_div board-write-form__submit faq-actions">

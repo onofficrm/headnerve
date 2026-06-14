@@ -162,9 +162,14 @@ onoff_platform_board_styles($board_skin_url);
     <?php } ?>
 
     <?php
-    $g5b_seo_write_inc = dirname(__FILE__) . '/../_inc/g5b-seo-write-fields.php';
+    $g5b_seo_write_inc = G5_SKIN_PATH.'/board/_inc/g5b-seo-write-fields.php';
     if (is_file($g5b_seo_write_inc)) {
         include_once $g5b_seo_write_inc;
+    }
+
+    $g5b_meta_write_inc = G5_SKIN_PATH.'/board/_inc/g5b-write-meta-fields.php';
+    if (is_file($g5b_meta_write_inc)) {
+        include_once $g5b_meta_write_inc;
     }
     ?>
 
