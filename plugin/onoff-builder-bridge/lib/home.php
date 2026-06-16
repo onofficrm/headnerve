@@ -50,6 +50,9 @@ if (!function_exists('onoff_builder_maybe_render_home')) {
         }
 
         $id = onoff_builder_get_home_bridge_id();
+        if (!defined('_INDEX_')) {
+            define('_INDEX_', true);
+        }
         onoff_builder_render_import_page($id);
 
         return true;

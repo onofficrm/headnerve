@@ -14,6 +14,72 @@ if (!function_exists('headnerve_newwin_device_sql')) {
     }
 }
 
+if (!function_exists('headnerve_should_show_newwin')) {
+    /**
+     * @param string $builder_project_id 빌더 프로젝트 ID (standalone 홈 출력 시)
+     */
+    function headnerve_should_show_newwin($builder_project_id = '')
+    {
+        if (defined('_INDEX_')) {
+            return true;
+        }
+
+        if ($builder_project_id !== '' && function_exists('onoff_builder_get_home_bridge_id')) {
+            return onoff_builder_get_home_bridge_id() === $builder_project_id;
+        }
+
+        return false;
+    }
+}
+
+if (!function_exists('headnerve_fetch_newwin_rows')) {
+    function headnerve_fetch_newwin_rows()
+    {
+        global $g5;
+
+        if (empty($g5['new_win_table'])) {
+            return array();
+        }
+
+        $pop_division = defined('_SHOP_') ? 'shop' : 'comm';
+        $device_sql = headnerve_newwin_device_sql();
+        $time_sql = "'".G5_TIME_YMDHIS."' between nw_begin_time and nw_end_time";
+
+        $queries = array(
+            " select * from {$g5['new_win_table']}
+               where {$time_sql}
+                 and {$device_sql}
+                 and nw_division IN ( 'both', '".$pop_division."' )
+               order by nw_id asc ",
+            " select * from {$g5['new_win_table']}
+               where {$time_sql}
+                 and {$device_sql}
+               order by nw_id asc ",
+        );
+
+        foreach ($queries as $sql) {
+            $result = sql_query($sql, false);
+            if ($result === false) {
+                continue;
+            }
+
+            $rows = array();
+            while ($nw = sql_fetch_array($result)) {
+                if (isset($_COOKIE["hd_pops_{$nw['nw_id']}"]) && $_COOKIE["hd_pops_{$nw['nw_id']}"]) {
+                    continue;
+                }
+                $rows[] = $nw;
+            }
+
+            if (count($rows)) {
+                return $rows;
+            }
+        }
+
+        return array();
+    }
+}
+
 if (!function_exists('headnerve_capture_newwin_layer')) {
     /**
      * @param bool $use_jquery true: 그누보드 head(common.js) 환경, false: 빌더 standalone 등
@@ -37,23 +103,7 @@ if (!function_exists('headnerve_render_newwin_layer')) {
             return;
         }
 
-        $pop_division = defined('_SHOP_') ? 'shop' : 'comm';
-        $device_sql = headnerve_newwin_device_sql();
-
-        $sql = " select * from {$g5['new_win_table']}
-                  where '".G5_TIME_YMDHIS."' between nw_begin_time and nw_end_time
-                    and {$device_sql} and nw_division IN ( 'both', '".$pop_division."' )
-                  order by nw_id asc ";
-        $result = sql_query($sql, false);
-
-        $rows = array();
-        while ($nw = sql_fetch_array($result)) {
-            if (isset($_COOKIE["hd_pops_{$nw['nw_id']}"]) && $_COOKIE["hd_pops_{$nw['nw_id']}"]) {
-                continue;
-            }
-            $rows[] = $nw;
-        }
-
+        $rows = headnerve_fetch_newwin_rows();
         if (!count($rows)) {
             return;
         }
@@ -147,9 +197,9 @@ if (!function_exists('headnerve_inject_newwin_into_html')) {
     /**
      * 빌더 standalone 전체 HTML에 팝업레이어 삽입
      */
-    function headnerve_inject_newwin_into_html($html)
+    function headnerve_inject_newwin_into_html($html, $builder_project_id = '')
     {
-        if (!defined('_INDEX_')) {
+        if (!headnerve_should_show_newwin($builder_project_id)) {
             return $html;
         }
 

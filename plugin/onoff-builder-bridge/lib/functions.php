@@ -725,7 +725,7 @@ if (!function_exists('onoff_builder_render_import_page')) {
         if (is_file(G5_LIB_PATH.'/headnerve-newwin.lib.php')) {
             include_once G5_LIB_PATH.'/headnerve-newwin.lib.php';
             if (function_exists('headnerve_inject_newwin_into_html')) {
-                $html = headnerve_inject_newwin_into_html($html);
+                $html = headnerve_inject_newwin_into_html($html, $id);
             }
         }
 
