@@ -722,6 +722,12 @@ if (!function_exists('onoff_builder_render_import_page')) {
         $html = onoff_builder_remove_base_tags($html);
         $html = onoff_builder_rewrite_asset_paths($html, $id, $entry);
         $html = onoff_builder_inject_headnerve_auth_script($html);
+        if (is_file(G5_LIB_PATH.'/headnerve-newwin.lib.php')) {
+            include_once G5_LIB_PATH.'/headnerve-newwin.lib.php';
+            if (function_exists('headnerve_inject_newwin_into_html')) {
+                $html = headnerve_inject_newwin_into_html($html);
+            }
+        }
 
         header('Content-Type: text/html; charset=utf-8');
         echo $html;
