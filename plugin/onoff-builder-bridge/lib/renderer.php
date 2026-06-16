@@ -144,11 +144,8 @@ if (!function_exists('onoff_builder_render_standalone')) {
                     }
                 }
             }
-            if (is_file(G5_LIB_PATH.'/headnerve-newwin.lib.php')) {
-                include_once G5_LIB_PATH.'/headnerve-newwin.lib.php';
-                if (function_exists('headnerve_inject_newwin_into_html')) {
-                    $html = headnerve_inject_newwin_into_html($html, $id);
-                }
+            if (function_exists('onoff_builder_inject_popup_layer_into_html')) {
+                $html = onoff_builder_inject_popup_layer_into_html($html, $id);
             }
             echo $html;
             return;
@@ -162,15 +159,14 @@ if (!function_exists('onoff_builder_render_standalone')) {
         }
         echo onoff_builder_extract_head_assets($html);
         echo '<link rel="stylesheet" href="' . onoff_builder_escape(ONOFF_BUILDER_ASSETS_URL . '/css/frontend.css') . '">';
-        if (is_file(G5_LIB_PATH.'/headnerve-newwin.lib.php')) {
-            include_once G5_LIB_PATH.'/headnerve-newwin.lib.php';
-            if (function_exists('headnerve_newwin_stylesheet_tag')) {
-                echo headnerve_newwin_stylesheet_tag();
-            }
+        if (function_exists('onoff_builder_popup_layer_stylesheet_tag')) {
+            echo onoff_builder_popup_layer_stylesheet_tag();
         }
         echo '</head><body class="onoff-builder-standalone">';
-        if (is_file(G5_LIB_PATH.'/headnerve-newwin.lib.php') && function_exists('headnerve_render_newwin_layer')) {
-            headnerve_render_newwin_layer(false);
+        if (function_exists('onoff_builder_project_popup_layer_enabled') && onoff_builder_project_popup_layer_enabled($id)) {
+            if (function_exists('onoff_builder_render_popup_layer_markup')) {
+                onoff_builder_render_popup_layer_markup(false);
+            }
         }
         echo onoff_builder_extract_body_content($html);
         echo '</body></html>';

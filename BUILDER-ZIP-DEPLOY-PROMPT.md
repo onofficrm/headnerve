@@ -248,6 +248,56 @@ onoff-g5-base 또는 onlycebu 레포를 복사해 [새 사이트명] 프로젝�
 
 ---
 
+## 프롬프트 ⑤ — 그누보드 팝업레이어 × onoff-builder 연동
+
+관리자 **환경설정 → 팝업레이어관리**에 등록한 팝업을 빌더 홈(React SPA)에 표시할 때 사용합니다.
+
+### 자동 연동 (권장 · React 수정 최소)
+
+서버(onoff-builder-bridge)가 빌더 HTML에 팝업을 **PHP로 자동 주입**합니다. 빌더 ZIP에 별도 팝업 UI를 넣지 않아도 됩니다.
+
+| 조건 | 팝업 표시 |
+|------|-----------|
+| 프로젝트가 사이트 홈(`/`)으로 연결됨 | 자동 표시 |
+| `imports.json` 에 `"popup_layer": true` | `page.php?id=...` 에서도 표시 |
+| `"popup_layer": false` | 해당 프로젝트에서는 숨김 |
+
+**관리자 토글:** `plugin/onoff-builder-bridge/admin/list.php` → 프로젝트별 「팝업레이어」 체크
+
+**팝업 내용 수정:** 그누보드 관리자 → 환경설정 → 팝업레이어관리 (빌더 재빌드 불필요)
+
+```
+【상황】
+- onoff-builder-bridge 프로젝트 ID: [headnerve-main 등]
+- 홈(/) 또는 page.php 로 빌더 SPA 출력 중
+- 그누보드 팝업레이어관리에 팝업 등록함
+
+【요청】
+1. 이 빌더 프로젝트에 그누보드 팝업레이어가 노출되도록 onoff-builder-bridge 연동 확인
+2. imports.json 의 popup_layer 설정 및 홈 연결(home_builder_bridge_id) 점검
+3. index.php 에서 _INDEX_ 정의 시점·빌더 렌더 순서 확인
+4. 필요 시 _BUILDER_INPUT/app 에 GnuboardPopupLayer 컴포넌트 추가 (로컬 dev·API fallback용)
+
+【React 선택 연동 파일】
+- src/lib/popupLayer.ts
+- src/components/common/GnuboardPopupLayer.tsx
+- Layout.tsx 홈 경로에 <GnuboardPopupLayer projectId="[프로젝트ID]" fetchWhenMissing />
+
+【주의】
+- 운영 서버는 PHP 주입(#hd_pop)이 우선 → React 컴포넌트는 #hd_pop 이 없을 때만 렌더
+- 팝업 수정은 관리자 팝업레이어관리만 변경 (ZIP 재업로드 불필요)
+- git commit/push·FTP 배포는 내가 요청할 때만
+```
+
+### 새 빌더 프로젝트 체크리스트
+
+1. `_site.config.php` → `home_builder_bridge_id` = 프로젝트 ID
+2. `plugin/onoff-builder-bridge/data/imports.json` → `"popup_layer": true` (홈 프로젝트)
+3. `index.php` 가 빌더 홈을 출력하는지 확인
+4. (선택) React `GnuboardPopupLayer` — 로컬 `npm run dev` 미리보기용
+
+---
+
 ## Cursor에 ZIP 폴더만 맡길 때 (한 줄)
 
 ```

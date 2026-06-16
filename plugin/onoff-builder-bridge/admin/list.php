@@ -50,6 +50,7 @@ header('Content-Type: text/html; charset=utf-8');
     <div class="onoff-builder-admin__help">
       <p><strong>보기 URL</strong> · <strong>미리보기 ↗</strong>를 눌러 새 창에서 확인하세요. 메뉴·게시판·배너에 연결할 때는 아래 URL 전체를 복사해 사용합니다.</p>
       <p class="onoff-builder-admin__hint" style="margin-top:0.5rem;margin-bottom:0">형식: <code><?php echo onoff_builder_escape(ONOFF_BUILDER_URL); ?>/page.php?id=프로젝트ID</code></p>
+      <p class="onoff-builder-admin__hint" style="margin-top:0.5rem;margin-bottom:0">팝업레이어: 그누보드 <strong>환경설정 → 팝업레이어관리</strong> 내용이 홈(/) 또는 <code>popup_layer: true</code> 프로젝트에 자동 주입됩니다.</p>
     </div>
 
     <?php if (!$count) { ?>
@@ -66,6 +67,7 @@ header('Content-Type: text/html; charset=utf-8');
             <th>프로젝트명</th>
             <th>project_id</th>
             <th>보기 URL</th>
+            <th>팝업레이어</th>
             <th>업로드일</th>
             <th>관리</th>
           </tr>
@@ -75,6 +77,10 @@ header('Content-Type: text/html; charset=utf-8');
               $pid = isset($p['id']) ? $p['id'] : '';
               $view_url = onoff_builder_page_url($pid);
               $pname = isset($p['name']) ? $p['name'] : $pid;
+              $popup_enabled = function_exists('onoff_builder_project_popup_layer_enabled')
+                  ? onoff_builder_project_popup_layer_enabled($pid)
+                  : !empty($p['popup_layer']);
+              $home_id = function_exists('onoff_builder_get_home_bridge_id') ? onoff_builder_get_home_bridge_id() : '';
               ?>
           <tr>
             <td><?php echo onoff_builder_escape($pname); ?></td>
@@ -86,6 +92,15 @@ header('Content-Type: text/html; charset=utf-8');
               <?php } else { ?>
               <span class="onoff-builder-admin__hint">—</span>
               <?php } ?>
+            </td>
+            <td>
+              <form method="post" action="<?php echo onoff_builder_escape(onoff_builder_admin_url('popup-layer-save.php')); ?>" class="onoff-builder-admin__inline-form">
+                <input type="hidden" name="project_id" value="<?php echo onoff_builder_escape($pid); ?>">
+                <label>
+                  <input type="checkbox" name="popup_layer" value="1" <?php echo $popup_enabled ? 'checked' : ''; ?> onchange="this.form.submit()">
+                  <?php echo $home_id === $pid ? '홈 연결' : '사용'; ?>
+                </label>
+              </form>
             </td>
             <td><?php echo onoff_builder_escape(isset($p['created_at']) ? $p['created_at'] : '—'); ?></td>
             <td>

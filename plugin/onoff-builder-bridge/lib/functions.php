@@ -278,6 +278,55 @@ if (!function_exists('onoff_builder_get_imports')) {
     }
 }
 
+if (!function_exists('onoff_builder_import_meta_extras')) {
+  function onoff_builder_import_meta_extras($row)
+  {
+    if (!is_array($row)) {
+      return array();
+    }
+
+    $reserved = array('id', 'name', 'path', 'entry', 'created_at');
+    $extras = array();
+
+    foreach ($row as $key => $value) {
+      if (in_array($key, $reserved, true)) {
+        continue;
+      }
+      $extras[$key] = $value;
+    }
+
+    return $extras;
+  }
+}
+
+if (!function_exists('onoff_builder_set_import_popup_layer')) {
+  function onoff_builder_set_import_popup_layer($project_id, $enabled)
+  {
+    if (!onoff_builder_validate_project_id($project_id)) {
+      return false;
+    }
+
+    $id = onoff_builder_sanitize_project_id($project_id);
+    $items = onoff_builder_get_imports();
+    $found = false;
+
+    foreach ($items as $idx => $row) {
+      if (!isset($row['id']) || $row['id'] !== $id) {
+        continue;
+      }
+      $items[$idx]['popup_layer'] = $enabled ? true : false;
+      $found = true;
+      break;
+    }
+
+    if (!$found) {
+      return false;
+    }
+
+    return onoff_builder_save_imports($items);
+  }
+}
+
 if (!function_exists('onoff_builder_save_imports')) {
     function onoff_builder_save_imports($items)
     {
@@ -298,13 +347,13 @@ if (!function_exists('onoff_builder_save_imports')) {
             if ($id === '') {
                 continue;
             }
-            $normalized[] = array(
+            $normalized[] = array_merge(array(
                 'id'         => $id,
                 'name'       => isset($row['name']) && $row['name'] !== '' ? $row['name'] : $id,
                 'path'       => isset($row['path']) && $row['path'] !== '' ? $row['path'] : $id,
                 'entry'      => isset($row['entry']) && $row['entry'] !== '' ? $row['entry'] : 'index.html',
                 'created_at' => isset($row['created_at']) && $row['created_at'] !== '' ? $row['created_at'] : date('Y-m-d H:i:s'),
-            );
+            ), onoff_builder_import_meta_extras($row));
         }
 
         $json = json_encode($normalized, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
@@ -354,26 +403,26 @@ if (!function_exists('onoff_builder_add_import')) {
 
         foreach ($items as $idx => $row) {
             if (isset($row['id']) && $row['id'] === $id) {
-                $items[$idx] = array(
+                $items[$idx] = array_merge($row, array(
                     'id'         => $id,
                     'name'       => isset($data['name']) && $data['name'] !== '' ? $data['name'] : $id,
                     'path'       => isset($data['path']) && $data['path'] !== '' ? $data['path'] : $id,
                     'entry'      => isset($data['entry']) && $data['entry'] !== '' ? $data['entry'] : 'index.html',
                     'created_at' => isset($row['created_at']) ? $row['created_at'] : date('Y-m-d H:i:s'),
-                );
+                ), onoff_builder_import_meta_extras($data));
                 $found = true;
                 break;
             }
         }
 
         if (!$found) {
-            $items[] = array(
+            $items[] = array_merge(array(
                 'id'         => $id,
                 'name'       => isset($data['name']) && $data['name'] !== '' ? $data['name'] : $id,
                 'path'       => isset($data['path']) && $data['path'] !== '' ? $data['path'] : $id,
                 'entry'      => isset($data['entry']) && $data['entry'] !== '' ? $data['entry'] : 'index.html',
                 'created_at' => date('Y-m-d H:i:s'),
-            );
+            ), onoff_builder_import_meta_extras($data));
         }
 
         return onoff_builder_save_imports($items);
@@ -722,11 +771,8 @@ if (!function_exists('onoff_builder_render_import_page')) {
         $html = onoff_builder_remove_base_tags($html);
         $html = onoff_builder_rewrite_asset_paths($html, $id, $entry);
         $html = onoff_builder_inject_headnerve_auth_script($html);
-        if (is_file(G5_LIB_PATH.'/headnerve-newwin.lib.php')) {
-            include_once G5_LIB_PATH.'/headnerve-newwin.lib.php';
-            if (function_exists('headnerve_inject_newwin_into_html')) {
-                $html = headnerve_inject_newwin_into_html($html, $id);
-            }
+        if (function_exists('onoff_builder_inject_popup_layer_into_html')) {
+            $html = onoff_builder_inject_popup_layer_into_html($html, $id);
         }
 
         header('Content-Type: text/html; charset=utf-8');
