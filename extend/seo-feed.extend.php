@@ -47,3 +47,11 @@ if (!function_exists('seofeed_filter_board_rss_href')) {
 if (function_exists('add_replace')) {
     add_replace('get_list_rss_url', 'seofeed_filter_board_rss_href', 10, 3);
 }
+
+$onoff_seo_feed_lib = defined('G5_PLUGIN_PATH')
+    ? G5_PLUGIN_PATH . '/onoff-builder-bridge/lib/seo-feed.php'
+    : G5_PATH . '/plugin/onoff-builder-bridge/lib/seo-feed.php';
+
+if (is_file($onoff_seo_feed_lib)) {
+    include_once $onoff_seo_feed_lib;
+}

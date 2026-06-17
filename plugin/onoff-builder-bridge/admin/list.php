@@ -51,6 +51,7 @@ header('Content-Type: text/html; charset=utf-8');
       <p><strong>보기 URL</strong> · <strong>미리보기 ↗</strong>를 눌러 새 창에서 확인하세요. 메뉴·게시판·배너에 연결할 때는 아래 URL 전체를 복사해 사용합니다.</p>
       <p class="onoff-builder-admin__hint" style="margin-top:0.5rem;margin-bottom:0">형식: <code><?php echo onoff_builder_escape(ONOFF_BUILDER_URL); ?>/page.php?id=프로젝트ID</code></p>
       <p class="onoff-builder-admin__hint" style="margin-top:0.5rem;margin-bottom:0">팝업레이어: 그누보드 <strong>환경설정 → 팝업레이어관리</strong> 내용이 홈(/) 또는 <code>popup_layer: true</code> 프로젝트에 자동 주입됩니다.</p>
+      <p class="onoff-builder-admin__hint" style="margin-top:0.5rem;margin-bottom:0">SEO: <code>/sitemap.xml</code> · <code>/rss.xml</code> · <code>/robots.txt</code> (사이트 루트, 자동 생성)</p>
     </div>
 
     <?php if (!$count) { ?>

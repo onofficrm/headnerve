@@ -20,10 +20,21 @@ if (!function_exists('seofeed_is_enabled')) {
 if (!function_exists('seofeed_get_base_url')) {
     function seofeed_get_base_url()
     {
-        if (function_exists('icrm_get_site_base_url')) {
-            $url = icrm_get_site_base_url();
-            if ($url !== '') {
-                return rtrim($url, '/');
+        if (function_exists('g5site_cfg')) {
+            $configured = trim(g5site_cfg('icrm_site_base_url', ''));
+            if ($configured !== '' && preg_match('#^https?://#i', $configured)) {
+                return rtrim($configured, '/');
+            }
+        }
+
+        if (defined('ICRM_SITE_BASE_URL') && trim((string) ICRM_SITE_BASE_URL) !== '') {
+            return rtrim((string) ICRM_SITE_BASE_URL, '/');
+        }
+
+        if (function_exists('icrm_detect_request_base_url')) {
+            $detected = icrm_detect_request_base_url();
+            if ($detected !== '') {
+                return rtrim($detected, '/');
             }
         }
 

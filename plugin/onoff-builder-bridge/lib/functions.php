@@ -774,6 +774,9 @@ if (!function_exists('onoff_builder_render_import_page')) {
         if (function_exists('onoff_builder_inject_popup_layer_into_html')) {
             $html = onoff_builder_inject_popup_layer_into_html($html, $id);
         }
+        if (function_exists('onoff_builder_inject_seo_feed_head_tags')) {
+            $html = onoff_builder_inject_seo_feed_head_tags($html);
+        }
 
         header('Content-Type: text/html; charset=utf-8');
         echo $html;

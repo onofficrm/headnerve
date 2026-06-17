@@ -54,13 +54,14 @@ foreach ($data['boards'] as $item) {
 
     sql_query(" update {$g5['board_table']}
         set bo_skin = '{$bo_skin}',
-            bo_mobile_skin = '{$bo_mobile_skin}'{$subject_sql}
+            bo_mobile_skin = '{$bo_mobile_skin}',
+            bo_use_rss_view = 1{$subject_sql}
         where bo_table = '{$bo_table}' ");
 
     $results[] = array(
         'bo_table' => $bo_table,
         'status'   => 'updated',
-        'message'  => "스킨 → PC: {$item['skin']}, MO: {$item['mobile_skin']}".($bo_subject !== '' ? ", 제목 → {$item['title']}" : ''),
+        'message'  => "스킨 → PC: {$item['skin']}, MO: {$item['mobile_skin']}, RSS 사용".($bo_subject !== '' ? ", 제목 → {$item['title']}" : ''),
     );
 }
 
