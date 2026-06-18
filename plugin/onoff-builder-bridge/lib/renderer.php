@@ -135,6 +135,9 @@ if (!function_exists('onoff_builder_render_standalone')) {
             if (stripos($html, '<title>') !== false && $title !== '') {
                 $html = preg_replace('#<title>.*?</title>#is', '<title>' . onoff_builder_escape($title) . '</title>', $html, 1);
             }
+            if (function_exists('onoff_builder_inject_config_add_meta')) {
+                $html = onoff_builder_inject_config_add_meta($html);
+            }
             if (is_file(G5_LIB_PATH.'/headnerve_nav.lib.php')) {
                 include_once G5_LIB_PATH.'/headnerve_nav.lib.php';
                 if (function_exists('headnerve_nav_auth_bootstrap_script')) {
@@ -156,6 +159,12 @@ if (!function_exists('onoff_builder_render_standalone')) {
         echo '<title>' . onoff_builder_escape($title) . '</title>';
         if ($desc !== '') {
             echo '<meta name="description" content="' . onoff_builder_escape($desc) . '">';
+        }
+        if (function_exists('onoff_builder_config_add_meta_markup')) {
+            $config_add_meta = onoff_builder_config_add_meta_markup();
+            if ($config_add_meta !== '') {
+                echo $config_add_meta;
+            }
         }
         echo onoff_builder_extract_head_assets($html);
         echo '<link rel="stylesheet" href="' . onoff_builder_escape(ONOFF_BUILDER_ASSETS_URL . '/css/frontend.css') . '">';

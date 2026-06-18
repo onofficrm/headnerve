@@ -705,6 +705,38 @@ if (!function_exists('onoff_builder_inject_headnerve_auth_script')) {
     }
 }
 
+if (!function_exists('onoff_builder_config_add_meta_markup')) {
+    function onoff_builder_config_add_meta_markup()
+    {
+        global $config;
+
+        if (empty($config['cf_add_meta'])) {
+            return '';
+        }
+
+        return trim((string) $config['cf_add_meta']);
+    }
+}
+
+if (!function_exists('onoff_builder_inject_config_add_meta')) {
+    /**
+     * 그누보드 기본환경설정 > 추가 메타태그를 빌더 standalone HTML에도 반영
+     */
+    function onoff_builder_inject_config_add_meta($html)
+    {
+        $meta = onoff_builder_config_add_meta_markup();
+        if ($meta === '' || stripos((string) $html, '</head>') === false) {
+            return $html;
+        }
+
+        if (strpos((string) $html, $meta) !== false) {
+            return $html;
+        }
+
+        return preg_replace('#</head>#i', $meta . "\n</head>", $html, 1);
+    }
+}
+
 if (!function_exists('onoff_builder_resolve_import_index_file')) {
     function onoff_builder_resolve_import_index_file($id, $entry_path)
     {
@@ -770,6 +802,7 @@ if (!function_exists('onoff_builder_render_import_page')) {
 
         $html = onoff_builder_remove_base_tags($html);
         $html = onoff_builder_rewrite_asset_paths($html, $id, $entry);
+        $html = onoff_builder_inject_config_add_meta($html);
         $html = onoff_builder_inject_headnerve_auth_script($html);
         if (function_exists('onoff_builder_inject_popup_layer_into_html')) {
             $html = onoff_builder_inject_popup_layer_into_html($html, $id);
