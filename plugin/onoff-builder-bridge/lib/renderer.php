@@ -160,10 +160,10 @@ if (!function_exists('onoff_builder_render_standalone')) {
         if ($desc !== '') {
             echo '<meta name="description" content="' . onoff_builder_escape($desc) . '">';
         }
-        if (function_exists('onoff_builder_config_add_meta_markup')) {
-            $config_add_meta = onoff_builder_config_add_meta_markup();
-            if ($config_add_meta !== '') {
-                echo $config_add_meta;
+        if (function_exists('onoff_builder_config_head_extra_markup')) {
+            $config_head_extra = onoff_builder_config_head_extra_markup();
+            if ($config_head_extra !== '') {
+                echo $config_head_extra;
             }
         }
         echo onoff_builder_extract_head_assets($html);

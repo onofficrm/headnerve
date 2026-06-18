@@ -718,22 +718,54 @@ if (!function_exists('onoff_builder_config_add_meta_markup')) {
     }
 }
 
+if (!function_exists('onoff_builder_config_add_script_markup')) {
+    function onoff_builder_config_add_script_markup()
+    {
+        global $config;
+
+        if (empty($config['cf_add_script'])) {
+            return '';
+        }
+
+        return trim((string) $config['cf_add_script']);
+    }
+}
+
+if (!function_exists('onoff_builder_config_head_extra_markup')) {
+    function onoff_builder_config_head_extra_markup()
+    {
+        $chunks = array();
+
+        $add_meta = onoff_builder_config_add_meta_markup();
+        if ($add_meta !== '') {
+            $chunks[] = $add_meta;
+        }
+
+        $add_script = onoff_builder_config_add_script_markup();
+        if ($add_script !== '') {
+            $chunks[] = $add_script;
+        }
+
+        return trim(implode("\n", $chunks));
+    }
+}
+
 if (!function_exists('onoff_builder_inject_config_add_meta')) {
     /**
-     * 그누보드 기본환경설정 > 추가 메타태그를 빌더 standalone HTML에도 반영
+     * 그누보드 기본환경설정 > 추가 메타태그 / 추가 script, css 를 빌더 standalone HTML에도 반영
      */
     function onoff_builder_inject_config_add_meta($html)
     {
-        $meta = onoff_builder_config_add_meta_markup();
-        if ($meta === '' || stripos((string) $html, '</head>') === false) {
+        $markup = onoff_builder_config_head_extra_markup();
+        if ($markup === '' || stripos((string) $html, '</head>') === false) {
             return $html;
         }
 
-        if (strpos((string) $html, $meta) !== false) {
+        if (strpos((string) $html, $markup) !== false) {
             return $html;
         }
 
-        return preg_replace('#</head>#i', $meta . "\n</head>", $html, 1);
+        return preg_replace('#</head>#i', $markup . "\n</head>", $html, 1);
     }
 }
 
