@@ -57,6 +57,37 @@ if (!function_exists('reviews_format_date')) {
     }
 }
 
+if (!function_exists('reviews_format_dot_date')) {
+    function reviews_format_dot_date($datetime)
+    {
+        if (!$datetime) {
+            return '';
+        }
+
+        $ts = strtotime($datetime);
+        if (!$ts) {
+            return get_text($datetime);
+        }
+
+        return date('Y. n. j.', $ts);
+    }
+}
+
+if (!function_exists('reviews_list_summary')) {
+    function reviews_list_summary($item)
+    {
+        if (!empty($item['wr_3'])) {
+            return get_text(cut_str(strip_tags($item['wr_3']), 170, '…'));
+        }
+
+        if (!empty($item['wr_content'])) {
+            return get_text(cut_str(trim(strip_tags($item['wr_content'])), 170, '…'));
+        }
+
+        return get_text(cut_str(strip_tags($item['subject']), 140, '…'));
+    }
+}
+
 if (!function_exists('reviews_booking_url')) {
     function reviews_booking_url()
     {

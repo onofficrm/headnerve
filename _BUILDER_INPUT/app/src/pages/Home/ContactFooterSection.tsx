@@ -90,7 +90,7 @@ export function ContactFooterSection() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[12px] text-gray-400 font-light leading-relaxed">
             <div>
               <p>상호 : 맥락한의원</p>
-              <p>사업자등록번호 : 준비중</p>
+              <p>사업자등록번호 : 573-93-02056</p>
             </div>
             <div>
               <p>위치 : 서울시 중구 서소문로 134, 2층</p>
@@ -100,24 +100,19 @@ export function ContactFooterSection() {
           <p className="text-[11px] text-gray-400 mt-8 uppercase tracking-widest font-bold">&copy; MAEKRAK CLINIC. ALL RIGHTS RESERVED.</p>
         </div>
 
-        {/* Right Side: Visual Map (abstract design) md and up */}
-        <div className="hidden md:flex w-1/2 relative bg-white border border-gray-100 items-center justify-center my-12 rounded-[2rem] shadow-sm overflow-hidden group">
-          <div className="absolute inset-0 opacity-[0.15] diagram-pattern" />
-          
-          {/* Map Area */}
-          <div className="relative z-10 w-full h-full p-12 flex flex-col justify-end items-end">
-             {/* Substation line abstraction */}
-             <div className="absolute top-[40%] left-0 right-0 h-[10px] bg-maekrak-navy/10 -skew-y-12 shrink-0 group-hover:-translate-y-2 transition-transform duration-700" />
-             <div className="absolute top-[38%] left-[40%] px-5 py-2.5 bg-maekrak-accent text-white font-bold rounded-full text-lg shadow-lg z-20 group-hover:-translate-y-4 group-hover:shadow-xl transition-all duration-500">
-               시청역 8번 출구
-             </div>
-             
-             {/* Giant Location Pin / Info bubble */}
-             <div className="bg-maekrak-navy text-white p-8 rounded-full w-56 h-56 flex items-center justify-center flex-col shadow-2xl absolute top-12 right-12 group-hover:scale-110 transition-transform duration-700 ease-in-out">
-               <span className="font-serif font-bold text-3xl tracking-widest leading-none mb-2 italic">맥락</span>
-               <span className="text-sm font-light opacity-80 tracking-widest">한의원</span>
-               <div className="w-12 h-[2px] bg-white opacity-40 mt-5" />
-             </div>
+        {/* Right Side: Google Map */}
+        <div className="w-full md:w-1/2 relative bg-white border border-gray-100 my-8 md:my-12 rounded-[2rem] shadow-sm overflow-hidden min-h-[360px] md:min-h-0">
+          <iframe
+            title="맥락한의원 위치 지도"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.061312785755!2d126.9758536!3d37.5635946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca3658affe99b%3A0xeae2abc9e2c8b290!2z66el65297ZWc7J2Y7JuQ!5e1!3m2!1sko!2sph!4v1781842127379!5m2!1sko!2sph"
+            className="absolute inset-0 h-full w-full"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+          <div className="pointer-events-none absolute left-5 top-5 rounded-full bg-maekrak-accent px-5 py-2 text-sm font-bold text-white shadow-lg md:text-base">
+            시청역 8번 출구
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ const checklist = [
   { text: '항CGRP 주사(아조비·앰갤러티)도 효과가 없었습니다', checked: true },
   { text: '두통과 어지럼증, 이명, 뒷목 통증이 함께 있습니다', checked: true },
   { text: '머리가 멍하고 집중이 안 되는데 원인을 모릅니다', checked: true },
-  { text: '약 없이 건강한 일상으로 돌아가고 싶습니다', checked: false },
+  { text: '약 없이 건강한 일상으로 돌아가고 싶습니다', checked: true },
 ];
 
 export function HeroSection() {

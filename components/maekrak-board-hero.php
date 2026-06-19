@@ -23,10 +23,11 @@ if ($is_review_view) {
 }
 
 if ($bo_table === 'reviews' && !$is_write_hero) {
-    $hero_title = '치료후기';
-    $hero_sub = isset($hero_labels['reviews']) ? $hero_labels['reviews'] : '';
+    $hero_title = '치료 사례';
+    $hero_sub = '실제 환자분들의 생생한 치료 경험을 확인하세요';
     ?>
 <section class="reviews-page-head" aria-label="치료후기">
+    <p class="reviews-page-head__eyebrow">Clinic OS</p>
     <h2 class="reviews-page-head__title"><?php echo $hero_title; ?></h2>
     <?php if ($hero_sub !== '') { ?>
     <p class="reviews-page-head__desc"><?php echo get_text($hero_sub); ?></p>
