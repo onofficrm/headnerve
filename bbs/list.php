@@ -170,7 +170,10 @@ $td_width = (int)(100 / $bo_gallery_cols);
 // 인덱스 필드가 아니면 정렬에 사용하지 않음
 //if (!$sst || ($sst && !(strstr($sst, 'wr_id') || strstr($sst, "wr_datetime")))) {
 if (!$sst) {
-    if ($board['bo_sort_field']) {
+    if ($bo_table === 'reviews') {
+        $sst = 'wr_datetime';
+        $sod = 'desc';
+    } else if ($board['bo_sort_field']) {
         $sst = $board['bo_sort_field'];
     } else {
         $sst  = "wr_num, wr_reply";
