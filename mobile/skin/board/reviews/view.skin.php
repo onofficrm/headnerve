@@ -15,6 +15,7 @@ $booking_url = reviews_booking_url();
 $tel_href = reviews_tel_href();
 $phone_label = reviews_phone_label();
 $list_url = reviews_list_url($bo_table, $sca);
+$category_url = !empty($view['ca_name']) ? reviews_list_url($bo_table, $view['ca_name']) : '';
 
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 ?>
@@ -29,7 +30,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <a href="<?php echo $list_url; ?>">치료후기</a>
         <?php if ($category_name) { ?>
         <span aria-hidden="true">&gt;</span>
-        <span><?php echo get_text($view['ca_name']); ?></span>
+        <a href="<?php echo $category_url; ?>"><?php echo get_text($view['ca_name']); ?></a>
         <?php } ?>
     </nav>
 

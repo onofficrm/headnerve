@@ -60,6 +60,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <?php } else { ?>
         <ul class="reviews-list__grid">
         <?php for ($i = 0; $i < count($list); $i++) {
+            $is_secret = isset($list[$i]['wr_option']) && strstr($list[$i]['wr_option'], 'secret');
+            $thumb_html = g5b_list_thumb_html($bo_table, $list[$i]['wr_id'], $thumb_w, $thumb_h, $list[$i]['subject'], $is_secret, $list[$i]['is_notice'], true);
             $patient_name = !empty($list[$i]['wr_1']) ? get_text($list[$i]['wr_1']) : get_text($list[$i]['name']);
             $doctor_name = !empty($list[$i]['wr_2']) ? get_text($list[$i]['wr_2']) : '이재성';
             $summary = reviews_list_summary($list[$i]);
@@ -73,6 +75,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 </div>
                 <?php } ?>
                 <a href="<?php echo $list[$i]['href'] ?>" class="reviews-card">
+                    <span class="reviews-card__thumb"><?php echo $thumb_html; ?></span>
                     <span class="reviews-card__body">
                         <?php if ($summary !== '') { ?>
                         <span class="reviews-card__summary"><?php echo $summary; ?></span>
