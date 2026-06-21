@@ -31,14 +31,6 @@ $member_portal_retired_actions = array(
     'board_create',
     'board_update',
     'board_connect',
-    'compose_suggest_titles',
-    'compose_generate_draft',
-    'compose_expand_presets',
-    'compose_expand',
-    'compose_ai_draft',
-    'compose_save',
-    'compose_publish',
-    'compose_delete',
 );
 if (in_array($action, $member_portal_retired_actions, true)) {
     if (!function_exists('icrm_member_is_logged_in') || !icrm_member_is_logged_in()) {

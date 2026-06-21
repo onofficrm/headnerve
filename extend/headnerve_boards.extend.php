@@ -5,6 +5,7 @@ if (!defined('_GNUBOARD_')) exit;
  * 커뮤니티 게시판 스킨 고정 + 맥락한의원 브랜드 토큰 (기존 onoff-g5-base 스킨만 사용)
  *
  * notice  → basic-notice
+ * free    → post-thumb (legacy iCRM fallback)
  * news    → basic-modern
  * column  → post-thumb
  * reviews → reviews
@@ -50,6 +51,10 @@ if (!function_exists('headnerve_is_g5b_board')) {
 }
 
 $GLOBALS['headnerve_board_skin_map'] = array(
+    'free' => array(
+        'bo_skin'         => 'post-thumb',
+        'bo_mobile_skin'  => 'post-thumb',
+    ),
     'notice' => array(
         'bo_skin'         => 'basic-notice',
         'bo_mobile_skin'  => 'basic-notice',

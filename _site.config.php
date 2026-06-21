@@ -101,7 +101,7 @@ $site_config = array(
     'icrm_rank_api_base_url'     => 'https://icrm.co.kr/api/rank-check',
     'content_collector_builtin'      => true,
     'icrm_content_api_base_url'      => 'https://icrm.co.kr/api/content-collector',
-    'icrm_content_default_bo_table'  => '',
+    'icrm_content_default_bo_table'  => 'column',
     'icrm_content_default_mb_id'     => '',
     'onoff_builder_bridge_enabled' => true,
 

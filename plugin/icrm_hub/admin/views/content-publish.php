@@ -64,8 +64,19 @@ if ($icrm_member_publish_mode) {
     $requested_bo = isset($publish_bo_table) ? (string) $publish_bo_table : '';
     if ($requested_bo !== '' && function_exists('icrm_member_board_can_publish_to') && icrm_member_board_can_publish_to($requested_bo)) {
         $default_bo = $requested_bo;
-    } elseif ($boards !== array()) {
-        $default_bo = (string) $boards[0]['bo_table'];
+    } else {
+        $preferred_boards = array('column', 'reviews', 'notice');
+        foreach ($preferred_boards as $preferred_bo) {
+            foreach ($boards as $board_option) {
+                if ((string) ($board_option['bo_table'] ?? '') === $preferred_bo) {
+                    $default_bo = $preferred_bo;
+                    break 2;
+                }
+            }
+        }
+        if ($default_bo === '' && $boards !== array()) {
+            $default_bo = (string) $boards[0]['bo_table'];
+        }
     }
 } else {
     $default_bo = icrm_content_get_default_bo_table();

@@ -65,6 +65,27 @@
   .medical-card:hover {
     border-color: var(--color-maekrak-navy);
   }
+
+  @media (max-width: 767px) {
+    .maekrak-snap-container {
+      height: 100dvh;
+      overflow-y: auto;
+      scroll-snap-type: none;
+      scroll-behavior: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-y: contain;
+      touch-action: pan-y;
+    }
+
+    .maekrak-snap-section {
+      height: auto;
+      min-height: 100svh;
+      justify-content: flex-start;
+      scroll-snap-align: none;
+      scroll-snap-stop: normal;
+      overflow: visible;
+    }
+  }
 }
 
 body {
