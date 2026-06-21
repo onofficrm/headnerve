@@ -25,7 +25,11 @@ function g5b_list_thumb_html($bo_table, $wr_id, $width, $height, $subject = '', 
     }
 
     $thumb = get_list_thumbnail($bo_table, $wr_id, $width, $height, true, $is_crop);
-    $alt = isset($thumb['alt']) && $thumb['alt'] ? get_text($thumb['alt']) : get_text(strip_tags($subject));
+    $alt = trim(strip_tags((string) $subject));
+    if ($alt === '' && isset($thumb['alt']) && $thumb['alt']) {
+        $alt = (string) $thumb['alt'];
+    }
+    $alt = get_text($alt);
 
     if (!empty($thumb['src'])) {
         $src = $thumb['src'];

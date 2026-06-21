@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { CheckCircle2, ChevronRight, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { BOOKING_URL } from '../../lib/boardUrls';
 
 export function MedicationOveruseHeadache() {
   useEffect(() => {
@@ -166,7 +167,7 @@ export function MedicationOveruseHeadache() {
             <Link to="/blog" className="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-colors">
               블로그 글 보기 <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
-            <a href="tel:02-6959-7252" className="inline-flex items-center justify-center px-8 py-3 rounded-xl bg-maekrak-navy text-white hover:bg-[#1a3276] transition-colors font-medium">
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-8 py-3 rounded-xl bg-maekrak-navy text-white hover:bg-[#1a3276] transition-colors font-medium">
               상담 예약하기
             </a>
           </div>

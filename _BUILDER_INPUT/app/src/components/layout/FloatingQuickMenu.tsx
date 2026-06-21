@@ -1,4 +1,5 @@
 import { ArrowUp, Youtube } from 'lucide-react';
+import { BOOKING_URL, KAKAO_CHAT_URL } from '../../lib/boardUrls';
 
 export function FloatingQuickMenu() {
   const scrollToTop = () => {
@@ -13,7 +14,7 @@ export function FloatingQuickMenu() {
   const menuItems = [
     {
       label: '예약하기',
-      href: 'https://booking.naver.com/booking/13/bizes/1120036?area=pll&map-search=1',
+      href: BOOKING_URL,
       icon: (
         <div className="w-[22px] h-[22px] bg-[#03C75A] text-white flex items-center justify-center rounded-sm font-bold text-[14px] leading-none">
           N
@@ -45,7 +46,7 @@ export function FloatingQuickMenu() {
     },
     {
       label: '상담하기',
-      href: '#consult',
+      href: KAKAO_CHAT_URL,
       icon: (
         <div className="relative w-6 h-[18px] flex items-center justify-center">
           <div className="absolute inset-0 bg-[#3A1D1D] rounded-[8px]" />

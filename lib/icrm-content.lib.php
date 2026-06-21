@@ -360,7 +360,7 @@ if (!function_exists('icrm_content_item_excerpt')) {
         }
 
         $html = (string) ($row['content_html'] ?? '');
-        $text = trim(preg_replace('/\s+/u', ' ', strip_tags($html)));
+        $text = icrm_content_clean_excerpt_text($html);
         if ($text === '') {
             return '';
         }
@@ -368,6 +368,151 @@ if (!function_exists('icrm_content_item_excerpt')) {
         return function_exists('mb_strimwidth')
             ? mb_strimwidth($text, 0, 180, '…', 'UTF-8')
             : substr($text, 0, 180);
+    }
+}
+
+if (!function_exists('icrm_content_strip_json_ld_text')) {
+    function icrm_content_strip_json_ld_text($text)
+    {
+        $text = (string) $text;
+
+        while (($context_pos = strpos($text, '"@context"')) !== false) {
+            $start = strrpos(substr($text, 0, $context_pos), '{');
+            if ($start === false) {
+                break;
+            }
+
+            $len = strlen($text);
+            $depth = 0;
+            $in_string = false;
+            $escaped = false;
+            $end = null;
+
+            for ($i = $start; $i < $len; $i++) {
+                $ch = $text[$i];
+                if ($in_string) {
+                    if ($escaped) {
+                        $escaped = false;
+                    } elseif ($ch === '\\') {
+                        $escaped = true;
+                    } elseif ($ch === '"') {
+                        $in_string = false;
+                    }
+                    continue;
+                }
+
+                if ($ch === '"') {
+                    $in_string = true;
+                } elseif ($ch === '{') {
+                    $depth++;
+                } elseif ($ch === '}') {
+                    $depth--;
+                    if ($depth <= 0) {
+                        $end = $i + 1;
+                        break;
+                    }
+                }
+            }
+
+            if ($end === null) {
+                $text = substr($text, 0, $start);
+                break;
+            }
+
+            $text = substr($text, 0, $start) . ' ' . substr($text, $end);
+        }
+
+        return $text;
+    }
+}
+
+if (!function_exists('icrm_content_clean_excerpt_text')) {
+    function icrm_content_clean_excerpt_text($html)
+    {
+        $html = html_entity_decode((string) $html, ENT_QUOTES, 'UTF-8');
+        $html = preg_replace('#<(script|style|noscript|template)\b[^>]*>.*?</\1>#isu', ' ', $html);
+        $html = preg_replace('#<(p|div|span|h[1-6])\b[^>]*>\s*[\p{L}\p{N}\s_.(){}\[\]-]+\.(?:png|jpe?g|gif|webp)\s*</\1>#iu', ' ', $html);
+        $text = trim(strip_tags($html));
+        $text = icrm_content_strip_json_ld_text($text);
+
+        $lines = preg_split('/\R/u', $text);
+        $clean_lines = array();
+        foreach ($lines as $line) {
+            $line = trim(preg_replace('/\s+/u', ' ', (string) $line));
+            if ($line === '') {
+                continue;
+            }
+            if (preg_match('/^[\p{L}\p{N}\s_.(){}\[\]-]+\.(?:png|jpe?g|gif|webp)$/iu', $line)) {
+                continue;
+            }
+            $clean_lines[] = $line;
+        }
+
+        return trim(preg_replace('/\s+/u', ' ', implode(' ', $clean_lines)));
+    }
+}
+
+if (!function_exists('icrm_content_sanitize_board_html')) {
+    function icrm_content_sanitize_board_html($html)
+    {
+        $html = (string) $html;
+        $html = preg_replace('#<(script|style|noscript|template)\b[^>]*>.*?</\1>#isu', '', $html);
+        $html = preg_replace('#<(p|div|span|h[1-6])\b[^>]*>\s*[\p{L}\p{N}\s_.(){}\[\]-]+\.(?:png|jpe?g|gif|webp)\s*</\1>#iu', '', $html);
+        $html = preg_replace('#<p\b[^>]*>\s*(?:&nbsp;|\s)*</p>#iu', '', $html);
+
+        return trim($html);
+    }
+}
+
+if (!function_exists('icrm_content_infer_reviews_category')) {
+    function icrm_content_infer_reviews_category($subject, $content)
+    {
+        $haystack = trim((string) $subject . ' ' . icrm_content_clean_excerpt_text($content));
+        $map = array(
+            '브레인포그' => array('브레인포그', 'brain fog', '머리 안개', '집중'),
+            '말초신경병증' => array('말초신경', '손끝', '발끝', '저림', '마비', '감각'),
+            '자율신경' => array('자율신경', '불면', '불안', '기립성', '두근거림', '수면'),
+            '어지럼증' => array('어지럼', '어지러움', '현기증', '메니에르', '이석증', '전정'),
+            '두통' => array('두통', '편두통', '긴장형', '경추성', '군발', '약물과용'),
+        );
+
+        foreach ($map as $category => $keywords) {
+            foreach ($keywords as $keyword) {
+                if (stripos($haystack, $keyword) !== false) {
+                    return $category;
+                }
+            }
+        }
+
+        return '';
+    }
+}
+
+if (!function_exists('icrm_content_prepare_board_post')) {
+    function icrm_content_prepare_board_post(array $item, array $meta = array())
+    {
+        $bo_table = preg_replace('/[^a-z0-9_]/i', '', (string) ($item['bo_table'] ?? ''));
+        $subject = trim((string) ($item['subject'] ?? ''));
+        $content_html = icrm_content_sanitize_board_html((string) ($item['content_html'] ?? ''));
+        $ca_name = trim((string) ($item['ca_name'] ?? ''));
+
+        if ($bo_table === 'reviews') {
+            $summary = icrm_content_clean_excerpt_text($content_html);
+            if ($ca_name === '') {
+                $ca_name = icrm_content_infer_reviews_category($subject, $content_html);
+            }
+            $meta['extra_fields'] = array_merge(isset($meta['extra_fields']) && is_array($meta['extra_fields']) ? $meta['extra_fields'] : array(), array(
+                'wr_2' => '이재성',
+                'wr_3' => function_exists('mb_strimwidth') ? mb_strimwidth($summary, 0, 170, '…', 'UTF-8') : substr($summary, 0, 170),
+            ));
+        }
+
+        return array(
+            'subject'      => $subject,
+            'content_html' => $content_html,
+            'ca_name'      => $ca_name,
+            'meta'         => $meta,
+        );
     }
 }
 
@@ -520,6 +665,7 @@ if (!function_exists('icrm_content_import_payload')) {
         if (isset($json['content']) && $content_html === '') {
             $content_html = (string) $json['content'];
         }
+        $content_html = icrm_content_sanitize_board_html($content_html);
         if (trim(strip_tags($content_html)) === '') {
             return array('ok' => false, 'error' => 'missing_content', 'message' => 'content_html 이 필요합니다.');
         }
@@ -585,6 +731,9 @@ if (!function_exists('icrm_content_import_payload')) {
         $excerpt = isset($json['excerpt']) ? trim((string) $json['excerpt']) : '';
         if ($excerpt === '' && !empty($json['seo']['description'])) {
             $excerpt = trim((string) $json['seo']['description']);
+        }
+        if ($excerpt === '') {
+            $excerpt = icrm_content_clean_excerpt_text($content_html);
         }
         $collect_mode = isset($json['collect_mode']) ? preg_replace('/[^a-z_]/', '', (string) $json['collect_mode']) : 'source';
         if (!in_array($collect_mode, array('source', 'regenerate', 'batch'), true)) {
@@ -755,7 +904,9 @@ if (!function_exists('icrm_content_update_draft')) {
             }
         }
         if (isset($fields['content_html'])) {
-            $sets[] = "content_html = '" . icrm_content_escape((string) $fields['content_html']) . "'";
+            $content_html = icrm_content_sanitize_board_html((string) $fields['content_html']);
+            $sets[] = "content_html = '" . icrm_content_escape($content_html) . "'";
+            $sets[] = "excerpt = '" . icrm_content_escape(icrm_content_clean_excerpt_text($content_html)) . "'";
         }
         if (isset($fields['bo_table'])) {
             $bo_table = preg_replace('/[^a-z0-9_]/i', '', (string) $fields['bo_table']);
@@ -1244,7 +1395,7 @@ if (!function_exists('icrm_content_save_compose_draft')) {
         icrm_content_ensure_tables();
 
         $subject = isset($fields['subject']) ? trim((string) $fields['subject']) : '';
-        $content_html = isset($fields['content_html']) ? (string) $fields['content_html'] : '';
+        $content_html = icrm_content_sanitize_board_html(isset($fields['content_html']) ? (string) $fields['content_html'] : '');
         $bo_table = isset($fields['bo_table']) ? preg_replace('/[^a-z0-9_]/i', '', (string) $fields['bo_table']) : icrm_content_get_default_bo_table();
         $mb_id = isset($fields['mb_id']) ? preg_replace('/[^a-z0-9_]/i', '', (string) $fields['mb_id']) : icrm_content_get_default_mb_id();
         $keywords = isset($fields['keywords']) ? trim((string) $fields['keywords']) : '';
@@ -1328,7 +1479,7 @@ if (!function_exists('icrm_content_save_compose_draft')) {
         $request_id = 'compose_' . str_replace('.', '', uniqid('', true));
         $source_hash = 'compose:' . hash('sha256', $request_id . (string) microtime(true));
         $source_title = $topic !== '' ? $topic : mb_substr($subject, 0, 120, 'UTF-8');
-        $plain = trim(strip_tags($content_html));
+        $plain = icrm_content_clean_excerpt_text($content_html);
         $excerpt = function_exists('mb_substr') ? mb_substr($plain, 0, 200, 'UTF-8') : substr($plain, 0, 200);
         $now = G5_TIME_YMDHIS;
 
@@ -1485,7 +1636,7 @@ if (!function_exists('icrm_content_insert_board_post')) {
 
         $write_table = $g5['write_prefix'] . $bo_table;
         $subject = trim(stripslashes((string) $subject));
-        $content_html = (string) $content_html;
+        $content_html = icrm_content_sanitize_board_html((string) $content_html);
         if (function_exists('g5b_normalize_board_content_alignment')) {
             $content_html = g5b_normalize_board_content_alignment($content_html);
         }
@@ -1557,6 +1708,19 @@ if (!function_exists('icrm_content_insert_board_post')) {
             headnerve_board_apply_meta_values($bo_table, $wr_id, $meta_datetime, $meta_hit);
         }
 
+        if (is_array($meta) && !empty($meta['extra_fields']) && is_array($meta['extra_fields'])) {
+            $extra_sets = array();
+            foreach ($meta['extra_fields'] as $key => $value) {
+                if (!preg_match('/^wr_([1-9]|10)$/', (string) $key)) {
+                    continue;
+                }
+                $extra_sets[] = $key . " = '" . sql_real_escape_string((string) $value) . "'";
+            }
+            if ($extra_sets !== array()) {
+                sql_query(" update {$write_table} set " . implode(', ', $extra_sets) . " where wr_id = '{$wr_id}' ");
+            }
+        }
+
         return array('ok' => true, 'wr_id' => $wr_id, 'bo_table' => $bo_table);
     }
 }
@@ -1625,14 +1789,15 @@ if (!function_exists('icrm_content_publish_item')) {
         if (!empty($options['board_meta']) && is_array($options['board_meta'])) {
             $publish_meta = $options['board_meta'];
         }
+        $prepared = icrm_content_prepare_board_post($item, $publish_meta);
 
         $insert = icrm_content_insert_board_post(
             $item['bo_table'],
             $item['mb_id'],
-            $item['subject'],
-            $item['content_html'],
-            $item['ca_name'],
-            $publish_meta
+            $prepared['subject'],
+            $prepared['content_html'],
+            $prepared['ca_name'],
+            $prepared['meta']
         );
         if (empty($insert['ok'])) {
             return array(

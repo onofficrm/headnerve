@@ -94,7 +94,7 @@ if (!function_exists('headnerve_nav_menu_items')) {
             ),
             array(
                 'name' => '커뮤니티',
-                'href' => headnerve_board_href('notice'),
+                'href' => headnerve_board_href('column'),
                 'sub' => array(
                     array('name' => '블로그', 'href' => headnerve_board_href('column')),
                     array('name' => '질문하기', 'href' => headnerve_nav_cafe_url(), 'external' => true),

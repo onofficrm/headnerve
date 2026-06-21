@@ -3,6 +3,7 @@ if (!defined('_GNUBOARD_')) exit;
 
 include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 include_once(G5_SKIN_PATH.'/board/_inc/g5b-thumb.php');
+include_once(G5_SKIN_PATH.'/board/_inc/g5b-excerpt.php');
 include_once(G5_SKIN_PATH.'/board/_inc/g5b-seo-list.php');
 
 $thumb_w = 96;
@@ -74,7 +75,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             $is_secret = isset($list[$i]['wr_option']) && strstr($list[$i]['wr_option'], 'secret');
             $excerpt = '';
             if (!empty($list[$i]['list_content']) && !$is_secret) {
-                $excerpt = cut_str(strip_tags($list[$i]['list_content']), $excerpt_len, '…');
+                $excerpt = g5b_board_clean_excerpt($list[$i]['list_content'], $excerpt_len, '…');
             }
             $thumb_html = g5b_list_thumb_html($bo_table, $list[$i]['wr_id'], $thumb_w, $thumb_h, $list[$i]['subject'], $is_secret);
         ?>

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BOARD_URLS } from '../../lib/boardUrls';
+import { BOARD_URLS, KAKAO_CHAT_URL, NAVER_BLOG_URL } from '../../lib/boardUrls';
 
 export function ContactFooterSection() {
   return (
@@ -49,9 +49,8 @@ export function ContactFooterSection() {
             <span className="text-4xl lg:text-[46px] font-light text-maekrak-navy tracking-tight">02.6959.7252</span>
             {/* Social Icons Placeholder */}
             <div className="flex gap-2 sm:ml-4 mt-2 sm:mt-0">
-              <a href="#" className="w-9 h-9 rounded-full bg-[#1da1f2] flex items-center justify-center text-white text-xs font-bold hover:opacity-80 transition-opacity">B</a>
-              <a href="#" className="w-9 h-9 rounded-full bg-[#FEE500] flex items-center justify-center text-[#371d1e] text-xs font-bold hover:opacity-80 transition-opacity">K</a>
-              <a href="#" className="w-9 h-9 rounded-full bg-[#E1306C] flex items-center justify-center text-white text-xs font-bold hover:opacity-80 transition-opacity">IN</a>
+              <a href={NAVER_BLOG_URL} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-[#03C75A] flex items-center justify-center text-white text-xs font-bold hover:opacity-80 transition-opacity">B</a>
+              <a href={KAKAO_CHAT_URL} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-[#FEE500] flex items-center justify-center text-[#371d1e] text-xs font-bold hover:opacity-80 transition-opacity">K</a>
             </div>
           </div>
           

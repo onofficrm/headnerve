@@ -59,6 +59,8 @@ if($config['cf_add_meta'])
     echo $config['cf_add_meta'].PHP_EOL;
 ?>
 <title><?php echo $g5_head_title; ?></title>
+<link rel="icon" type="image/png" href="<?php echo G5_URL; ?>/favicon.png?v=20260621">
+<link rel="shortcut icon" type="image/png" href="<?php echo G5_URL; ?>/favicon.png?v=20260621">
 <?php
 if (defined('G5_IS_ADMIN')) {
     if(!defined('_THEME_PREVIEW_'))

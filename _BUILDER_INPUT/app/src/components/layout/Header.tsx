@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Menu, X, Phone, Calendar, LogIn, LogOut } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '../../lib/utils';
 import { Logo } from '../common/Logo';
 import { getHeadnerveAuthState } from '../../lib/authUrls';
-import { COMMUNITY_NAV, BOARD_URLS, type NavMenuItem } from '../../lib/boardUrls';
+import { COMMUNITY_NAV, BOARD_URLS, BOOKING_URL, type NavMenuItem } from '../../lib/boardUrls';
 import { NavMenuLink } from './NavMenuLink';
 
 export function Header() {
@@ -38,6 +39,20 @@ export function Header() {
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) {
+      document.body.style.overflow = '';
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [mobileMenuOpen]);
 
   const navLinks: NavMenuItem[] = [
     { name: '맥락한의원소개', href: '/about' },
@@ -109,9 +124,79 @@ export function Header() {
   ];
 
   const headerBgClass = isScrolled || !isHomePage ? 'glass-nav border-gray-100 shadow-sm' : 'bg-transparent border-transparent';
+  const mobileMenuPanel = mobileMenuOpen && typeof document !== 'undefined'
+    ? createPortal(
+        <div className="fixed inset-0 bg-white z-[9999] flex flex-col animate-in fade-in slide-in-from-right-4 duration-300">
+          <div className="h-20 px-6 flex justify-between items-center border-b border-gray-100 shrink-0">
+             <Logo className="h-8 w-auto text-maekrak-navy" />
+             <button onClick={() => setMobileMenuOpen(false)} className="p-2 text-gray-900"><X className="w-7 h-7" /></button>
+          </div>
+          <div className="flex-1 min-h-0 overflow-y-auto p-6 md:p-12 flex flex-col bg-white">
+            <h3 className="text-sm font-bold tracking-widest text-gray-400 mb-5 uppercase shrink-0">Menu</h3>
+            <nav className="flex flex-col gap-6 text-left shrink-0" aria-label="전체 메뉴">
+              {navLinks.map(link => (
+                <div key={link.name} className="flex flex-col gap-3">
+                  <NavMenuLink
+                    href={link.href}
+                    external={link.external}
+                    className="block text-3xl font-light text-gray-800 hover:text-maekrak-accent transition-colors"
+                    onClick={() => !link.subLinks && setMobileMenuOpen(false)}
+                  >
+                    {link.name}
+                  </NavMenuLink>
+                  {link.subLinks && (
+                    <div className="pl-6 flex flex-col gap-3 mt-2 border-l border-gray-100">
+                      {link.subLinks.map(subLink => (
+                        <NavMenuLink
+                          key={subLink.name}
+                          href={subLink.href}
+                          external={subLink.external ?? link.external}
+                          className="block text-xl font-light text-gray-600 hover:text-maekrak-accent transition-colors"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {subLink.name}
+                        </NavMenuLink>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </nav>
+            <div className="mt-auto pt-10 flex flex-col gap-3">
+              {auth.loggedIn ? (
+                <>
+                  <a href={auth.myInfoUrl} className="py-4 border border-gray-200 rounded-2xl flex items-center justify-center gap-2 text-maekrak-navy font-bold hover:bg-gray-50 transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                    <span>내정보</span>
+                  </a>
+                  <a href={auth.logoutUrl} className="py-4 border border-gray-200 rounded-2xl flex items-center justify-center gap-2 text-maekrak-navy font-bold hover:bg-gray-50 transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                    <LogOut className="w-5 h-5" aria-hidden="true" />
+                    <span>로그아웃</span>
+                  </a>
+                </>
+              ) : (
+                <a href={auth.loginUrl} className="py-4 border border-gray-200 rounded-2xl flex items-center justify-center gap-2 text-maekrak-navy font-bold hover:bg-gray-50 transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                  <LogIn className="w-5 h-5" aria-hidden="true" />
+                  <span>로그인</span>
+                </a>
+              )}
+              <div className="grid grid-cols-2 gap-3">
+                <a href="tel:02-6959-7252" className="py-5 bg-gray-50 rounded-2xl flex flex-col items-center justify-center gap-2 text-maekrak-navy font-bold hover:bg-gray-100 transition-colors">
+                  <Phone className="w-6 h-6" /> <span>전화상담</span>
+                </a>
+                <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="py-5 bg-maekrak-navy text-white rounded-2xl flex flex-col items-center justify-center gap-2 font-bold hover:bg-maekrak-navy-light transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                  <Calendar className="w-6 h-6" /> <span>예약하기</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )
+    : null;
 
   return (
-    <header className={cn('fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b', headerBgClass, isHomePage ? 'h-[90px]' : 'h-20')}>
+    <>
+    <header className={cn('fixed top-0 left-0 right-0 transition-all duration-300 border-b', mobileMenuOpen ? 'z-[90]' : 'z-50', headerBgClass, isHomePage ? 'h-[90px]' : 'h-20')}>
       <div className="w-full h-full px-6 md:px-12 flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3">
@@ -164,7 +249,7 @@ export function Header() {
                  로그인
                </a>
              )}
-             <a href="https://booking.naver.com/booking/13/bizes/1120036?area=pll&map-search=1" target="_blank" rel="noopener noreferrer" className={cn("px-8 py-3 rounded-full text-[14px] font-bold tracking-wide transition-all shadow-md", isScrolled || !isHomePage ? "bg-maekrak-navy text-white hover:bg-maekrak-navy-light shadow-blue-900/10" : "bg-white text-maekrak-navy hover:bg-gray-100 shadow-black/10")}>
+             <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className={cn("px-8 py-3 rounded-full text-[14px] font-bold tracking-wide transition-all shadow-md", isScrolled || !isHomePage ? "bg-maekrak-navy text-white hover:bg-maekrak-navy-light shadow-blue-900/10" : "bg-white text-maekrak-navy hover:bg-gray-100 shadow-black/10")}>
                상담 예약하기
              </a>
              <button onClick={() => setMobileMenuOpen(true)} className={cn("w-12 h-12 flex items-center justify-center rounded-full border transition-all cursor-pointer", isScrolled || !isHomePage ? "border-gray-300 text-gray-800 hover:bg-gray-50" : "border-white/30 text-white hover:bg-white/10")}>
@@ -178,72 +263,9 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile/Overlay Menu Panel */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 bg-white z-[60] flex flex-col animate-in fade-in slide-in-from-right-4 duration-300">
-          <div className="h-20 px-6 flex justify-between items-center border-b border-gray-100 shrink-0">
-             <Logo className="h-8 w-auto text-maekrak-navy" />
-             <button onClick={() => setMobileMenuOpen(false)} className="p-2 text-gray-900"><X className="w-7 h-7" /></button>
-          </div>
-          <div className="flex-1 overflow-y-auto p-6 md:p-12 flex flex-col gap-6">
-            <h3 className="text-sm font-bold tracking-widest text-gray-400 mb-4 uppercase">Menu</h3>
-            {navLinks.map(link => (
-              <div key={link.name} className="flex flex-col gap-3">
-                <NavMenuLink
-                  href={link.href}
-                  external={link.external}
-                  className="text-3xl font-light text-gray-800 hover:text-maekrak-accent transition-colors"
-                  onClick={() => !link.subLinks && setMobileMenuOpen(false)}
-                >
-                  {link.name}
-                </NavMenuLink>
-                {link.subLinks && (
-                  <div className="pl-6 flex flex-col gap-3 mt-2 border-l border-gray-100">
-                    {link.subLinks.map(subLink => (
-                      <NavMenuLink
-                        key={subLink.name}
-                        href={subLink.href}
-                        external={subLink.external ?? link.external}
-                        className="text-xl font-light text-gray-600 hover:text-maekrak-accent transition-colors"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        {subLink.name}
-                      </NavMenuLink>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-            <div className="mt-auto pt-10 flex flex-col gap-3">
-              {auth.loggedIn ? (
-                <>
-                  <a href={auth.myInfoUrl} className="py-4 border border-gray-200 rounded-2xl flex items-center justify-center gap-2 text-maekrak-navy font-bold hover:bg-gray-50 transition-colors" onClick={() => setMobileMenuOpen(false)}>
-                    <span>내정보</span>
-                  </a>
-                  <a href={auth.logoutUrl} className="py-4 border border-gray-200 rounded-2xl flex items-center justify-center gap-2 text-maekrak-navy font-bold hover:bg-gray-50 transition-colors" onClick={() => setMobileMenuOpen(false)}>
-                    <LogOut className="w-5 h-5" aria-hidden="true" />
-                    <span>로그아웃</span>
-                  </a>
-                </>
-              ) : (
-                <a href={auth.loginUrl} className="py-4 border border-gray-200 rounded-2xl flex items-center justify-center gap-2 text-maekrak-navy font-bold hover:bg-gray-50 transition-colors" onClick={() => setMobileMenuOpen(false)}>
-                  <LogIn className="w-5 h-5" aria-hidden="true" />
-                  <span>로그인</span>
-                </a>
-              )}
-              <div className="grid grid-cols-2 gap-3">
-                <a href="tel:02-6959-7252" className="py-5 bg-gray-50 rounded-2xl flex flex-col items-center justify-center gap-2 text-maekrak-navy font-bold hover:bg-gray-100 transition-colors">
-                  <Phone className="w-6 h-6" /> <span>전화상담</span>
-                </a>
-                <a href="https://booking.naver.com/booking/13/bizes/1120036?area=pll&map-search=1" target="_blank" rel="noopener noreferrer" className="py-5 bg-maekrak-navy text-white rounded-2xl flex flex-col items-center justify-center gap-2 font-bold hover:bg-maekrak-navy-light transition-colors" onClick={() => setMobileMenuOpen(false)}>
-                  <Calendar className="w-6 h-6" /> <span>예약하기</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </header>
+    {mobileMenuPanel}
+    </>
   );
 }
 

@@ -73,8 +73,16 @@ if (!function_exists('icrm_member_board_templates')) {
         return array(
             'column' => array(
                 'label'            => '칼럼 · 블로그',
-                'skin'             => 'onoff-column',
-                'mobile_skin'      => 'onoff-column',
+                'skin'             => 'post-thumb',
+                'mobile_skin'      => 'post-thumb',
+                'use_category'     => '0',
+                'category_list'    => '',
+                'bo_comment_level' => '1',
+            ),
+            'notice' => array(
+                'label'            => '공지사항',
+                'skin'             => 'basic-notice',
+                'mobile_skin'      => 'basic-notice',
                 'use_category'     => '0',
                 'category_list'    => '',
                 'bo_comment_level' => '1',
@@ -89,10 +97,10 @@ if (!function_exists('icrm_member_board_templates')) {
             ),
             'reviews' => array(
                 'label'            => '후기 · 리뷰',
-                'skin'             => 'onoff-reviews',
-                'mobile_skin'      => 'onoff-reviews',
+                'skin'             => 'reviews',
+                'mobile_skin'      => 'reviews',
                 'use_category'     => '1',
-                'category_list'    => '일반|추천',
+                'category_list'    => '두통|어지럼증|자율신경|말초신경병증|브레인포그',
                 'bo_comment_level' => '0',
             ),
             'inquiry' => array(
@@ -308,6 +316,8 @@ if (!function_exists('icrm_member_board_guess_template')) {
             'landing-inquiry' => 'inquiry',
             'reviews'         => 'reviews',
             'basic-card'      => 'reviews',
+            'basic-notice'    => 'notice',
+            'post-thumb'      => 'column',
         );
         if (isset($legacy_skins[$skin])) {
             return $legacy_skins[$skin];

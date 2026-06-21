@@ -11,7 +11,7 @@ if (!function_exists('headnerve_board_meta_tables')) {
      */
     function headnerve_board_meta_tables()
     {
-        return array('reviews', 'column', 'news');
+        return array('reviews', 'column', 'notice', 'news');
     }
 }
 

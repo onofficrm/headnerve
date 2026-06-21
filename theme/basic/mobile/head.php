@@ -14,6 +14,9 @@ include_once(G5_LIB_PATH.'/poll.lib.php');
 include_once(G5_LIB_PATH.'/visit.lib.php');
 include_once(G5_LIB_PATH.'/connect.lib.php');
 include_once(G5_LIB_PATH.'/popular.lib.php');
+if (is_file(G5_LIB_PATH.'/headnerve_nav.lib.php')) {
+    include_once G5_LIB_PATH.'/headnerve_nav.lib.php';
+}
 ?>
 
 <header id="hd">
@@ -40,6 +43,32 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <ul id="gnb_1dul">
             <?php
             $menu_datas = get_menu_db(1, true);
+            $has_menu_datas = false;
+            foreach ((array) $menu_datas as $menu_row) {
+                if (!empty($menu_row)) {
+                    $has_menu_datas = true;
+                    break;
+                }
+            }
+            if (!$has_menu_datas && function_exists('headnerve_nav_menu_items')) {
+                $menu_datas = array();
+                foreach (headnerve_nav_menu_items() as $nav_row) {
+                    $sub = array();
+                    foreach ((array) ($nav_row['sub'] ?? array()) as $nav_sub) {
+                        $sub[] = array(
+                            'me_link' => $nav_sub['href'],
+                            'me_target' => !empty($nav_sub['external']) ? 'blank' : 'self',
+                            'me_name' => $nav_sub['name'],
+                        );
+                    }
+                    $menu_datas[] = array(
+                        'me_link' => $nav_row['href'],
+                        'me_target' => !empty($nav_row['external']) ? 'blank' : 'self',
+                        'me_name' => $nav_row['name'],
+                        'sub' => $sub,
+                    );
+                }
+            }
 			$i = 0;
 			foreach( $menu_datas as $row ){
 				if( empty($row) ) continue;

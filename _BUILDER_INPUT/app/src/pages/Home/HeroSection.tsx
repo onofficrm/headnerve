@@ -19,7 +19,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="maekrak-snap-section relative bg-maekrak-navy isolate w-full overflow-hidden" id="hero">
+    <section className="maekrak-snap-section relative bg-maekrak-navy isolate w-full overflow-y-auto overflow-x-hidden" id="hero">
       <div className="absolute inset-0 z-0">
         <img
           src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2680&auto=format&fit=crop"
@@ -30,8 +30,8 @@ export function HeroSection() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_70%_at_75%_50%,rgba(74,143,168,0.18),transparent)]" />
       </div>
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 h-full pt-24 pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 h-full items-center">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 h-full pt-[8.5rem] md:pt-24 pb-24 md:pb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 h-full items-start md:items-center">
           <div className="flex flex-col justify-center">
             <div className="inline-flex items-center gap-2 bg-[#4a8fa8]/15 border border-[#4a8fa8]/30 px-4 py-2 rounded-sm mb-6 w-fit">
               <span className="w-1.5 h-1.5 rounded-full bg-[#7ec8e0]" />
@@ -94,7 +94,7 @@ export function HeroSection() {
           </div>
 
           <div className="flex items-center justify-center lg:justify-end">
-            <div className="w-full max-w-[360px] bg-white/6 border border-white/12 p-8 rounded-sm backdrop-blur-sm">
+            <div className="w-full max-w-[360px] bg-white/6 border border-white/12 p-6 md:p-8 rounded-sm backdrop-blur-sm">
               <p className="text-[11px] font-bold tracking-[0.18em] uppercase text-[#7ec8e0] mb-5 pb-3 border-b border-white/10">
                 이런 증상이라면 읽어보세요
               </p>

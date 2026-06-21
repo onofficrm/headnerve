@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Logo } from '../common/Logo';
-import { BOARD_URLS } from '../../lib/boardUrls';
+import { BOARD_URLS, BOOKING_URL } from '../../lib/boardUrls';
 
 export function Footer() {
   return (
@@ -29,11 +29,11 @@ export function Footer() {
               <h3 className="font-bold text-gray-800 mb-6 uppercase tracking-widest text-[11px]">바로가기</h3>
               <ul className="space-y-3 text-gray-500">
                 <li><Link to="/about" className="hover:text-maekrak-navy transition-colors">맥락한의원 소개</Link></li>
-                <li><Link to="/program" className="hover:text-maekrak-navy transition-colors">치료 프로그램</Link></li>
+                <li><Link to="/programs" className="hover:text-maekrak-navy transition-colors">치료 프로그램</Link></li>
                 <li><a href={BOARD_URLS.reviews} className="hover:text-maekrak-navy transition-colors">치료후기</a></li>
                 <li><a href={BOARD_URLS.notice} className="hover:text-maekrak-navy transition-colors">공지사항</a></li>
                 <li><a href={BOARD_URLS.column} className="hover:text-maekrak-navy transition-colors">블로그</a></li>
-                <li><a href="#consult" className="hover:text-maekrak-navy transition-colors">상담 예약</a></li>
+                <li><a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="hover:text-maekrak-navy transition-colors">상담 예약</a></li>
               </ul>
             </div>
   
