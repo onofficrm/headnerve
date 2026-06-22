@@ -33,6 +33,25 @@ if (!function_exists('g5b_seo_escape')) {
 if (!function_exists('g5b_seo_current_url')) {
     function g5b_seo_current_url()
     {
+        $script = isset($_SERVER['SCRIPT_NAME']) ? basename((string) $_SERVER['SCRIPT_NAME']) : '';
+        $bo_table = isset($_GET['bo_table']) ? preg_replace('/[^a-z0-9_]/i', '', (string) $_GET['bo_table']) : '';
+        $wr_id = isset($_GET['wr_id']) ? (int) $_GET['wr_id'] : 0;
+        if ($script === 'board.php' && $bo_table !== '') {
+            if (function_exists('get_pretty_url')) {
+                $pretty = $wr_id > 0 ? get_pretty_url($bo_table, $wr_id) : get_pretty_url($bo_table);
+                if ($pretty !== '') {
+                    return $pretty;
+                }
+            }
+            if (defined('G5_BBS_URL')) {
+                $url = G5_BBS_URL . '/board.php?bo_table=' . rawurlencode($bo_table);
+                if ($wr_id > 0) {
+                    $url .= '&wr_id=' . $wr_id;
+                }
+                return $url;
+            }
+        }
+
         if (!empty($_SERVER['HTTP_HOST'])) {
             $https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
                 || (isset($_SERVER['SERVER_PORT']) && (int) $_SERVER['SERVER_PORT'] === 443);

@@ -457,8 +457,34 @@ if (!function_exists('icrm_content_sanitize_board_html')) {
     {
         $html = (string) $html;
         $html = preg_replace('#<(script|style|noscript|template)\b[^>]*>.*?</\1>#isu', '', $html);
+        $html = preg_replace_callback('#<img\b[^>]*>#iu', function ($matches) {
+            $tag = $matches[0];
+            if (!preg_match('#\bsrc\s*=\s*(["\']?)([^"\'\s>]*)\1#iu', $tag, $src_match)) {
+                return '';
+            }
+            $src = trim(html_entity_decode((string) $src_match[2], ENT_QUOTES, 'UTF-8'));
+            if ($src === '' || $src === '\\' || $src === '%5C' || preg_match('#^(?:\\\\|%5c)+$#iu', $src)) {
+                return '';
+            }
+
+            return $tag;
+        }, $html);
+        $html = preg_replace_callback('#<a\b([^>]*)>(.*?)</a>#isu', function ($matches) {
+            $attrs = (string) $matches[1];
+            $body = (string) $matches[2];
+            if (!preg_match('#\bhref\s*=\s*(["\']?)([^"\'\s>]*)\1#iu', $attrs, $href_match)) {
+                return strip_tags($body);
+            }
+            $href = trim(html_entity_decode((string) $href_match[2], ENT_QUOTES, 'UTF-8'));
+            if ($href === '' || $href === '\\' || $href === '%5C' || preg_match('#^(?:\\\\|%5c)+$#iu', $href)) {
+                return strip_tags($body);
+            }
+
+            return '<a' . $attrs . '>' . $body . '</a>';
+        }, $html);
         $html = preg_replace('#<(p|div|span|h[1-6])\b[^>]*>\s*[\p{L}\p{N}\s_.(){}\[\]-]+\.(?:png|jpe?g|gif|webp)\s*</\1>#iu', '', $html);
         $html = preg_replace('#<p\b[^>]*>\s*(?:&nbsp;|\s)*</p>#iu', '', $html);
+        $html = preg_replace('#<(p|div|span)\b[^>]*>\s*(?:&nbsp;|\s|<br\s*/?>)*</\1>#iu', '', $html);
 
         return trim($html);
     }

@@ -14,6 +14,41 @@ if (is_file(G5_LIB_PATH.'/headnerve-board-meta.lib.php')) {
     include_once G5_LIB_PATH.'/headnerve-board-meta.lib.php';
 }
 
+if (!function_exists('headnerve_board_sanitize_view_html')) {
+    function headnerve_board_sanitize_view_html($html)
+    {
+        $html = (string) $html;
+        $html = preg_replace_callback('#<img\b[^>]*>#iu', function ($matches) {
+            $tag = $matches[0];
+            if (!preg_match('#\bsrc\s*=\s*(["\']?)([^"\'\s>]*)\1#iu', $tag, $src_match)) {
+                return '';
+            }
+            $src = trim(html_entity_decode((string) $src_match[2], ENT_QUOTES, 'UTF-8'));
+            if ($src === '' || $src === '\\' || $src === '%5C' || preg_match('#^(?:\\\\|%5c)+$#iu', $src)) {
+                return '';
+            }
+
+            return $tag;
+        }, $html);
+        $html = preg_replace_callback('#<a\b([^>]*)>(.*?)</a>#isu', function ($matches) {
+            $attrs = (string) $matches[1];
+            $body = (string) $matches[2];
+            if (!preg_match('#\bhref\s*=\s*(["\']?)([^"\'\s>]*)\1#iu', $attrs, $href_match)) {
+                return strip_tags($body);
+            }
+            $href = trim(html_entity_decode((string) $href_match[2], ENT_QUOTES, 'UTF-8'));
+            if ($href === '' || $href === '\\' || $href === '%5C' || preg_match('#^(?:\\\\|%5c)+$#iu', $href)) {
+                return strip_tags($body);
+            }
+
+            return '<a' . $attrs . '>' . $body . '</a>';
+        }, $html);
+        $html = preg_replace('#<(p|div|span)\b[^>]*>\s*(?:&nbsp;|\s|<br\s*/?>)*</\1>#iu', '', $html);
+
+        return trim($html);
+    }
+}
+
 if (function_exists('add_event') && function_exists('headnerve_board_apply_meta_on_write')) {
     add_event('write_update_after', 'headnerve_board_apply_meta_on_write', 8, 5);
 }
@@ -25,6 +60,9 @@ if (!function_exists('headnerve_board_normalize_view_content')) {
             return $content;
         }
 
+        if (function_exists('headnerve_board_sanitize_view_html')) {
+            $content = headnerve_board_sanitize_view_html($content);
+        }
         if (function_exists('g5b_normalize_board_content_alignment')) {
             $content = g5b_normalize_board_content_alignment($content);
         }

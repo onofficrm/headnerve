@@ -1,6 +1,20 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
+global $config;
+
+if (function_exists('headnerve_is_g5b_board') && headnerve_is_g5b_board()) {
+?>
+    </div>
+</div>
+<?php
+if (!empty($config['cf_analytics'])) {
+    echo $config['cf_analytics'];
+}
+include_once(G5_PATH."/tail.sub.php");
+return;
+}
+
 if(defined('G5_THEME_PATH')) {
     require_once(G5_THEME_PATH.'/tail.php');
     return;
