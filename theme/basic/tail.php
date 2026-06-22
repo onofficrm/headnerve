@@ -37,12 +37,11 @@ if(G5_COMMUNITY_USE === false) {
         <div id="ft_company" class="ft_cnt">
         	<h2>사이트 정보</h2>
 	        <p class="ft_info">
-	        	회사명 : 회사명 / 대표 : 대표자명<br>
-				주소  : OO도 OO시 OO구 OO동 123-45<br>
-				사업자 등록번호  : 123-45-67890<br>
-				전화 :  02-123-4567  팩스  : 02-123-4568<br>
-				통신판매업신고번호 :  제 OO구 - 123호<br>
-				개인정보관리책임자 :  정보책임자명<br>
+	        	상호 : 맥락한의원 / 대표 : 이재성<br>
+				주소  : 서울시 중구 서소문로 134, 2층<br>
+				사업자 등록번호  : 573-93-02056<br>
+				전화 :  02-6959-7252<br>
+				이메일 : macnac.kclinic@gmail.com<br>
 			</p>
 	    </div>
         <?php
@@ -56,7 +55,7 @@ if(G5_COMMUNITY_USE === false) {
 		<?php echo visit('theme/basic'); // 접속자집계, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
 	</div>      
         <!-- <div id="ft_catch"><img src="<?php echo G5_IMG_URL; ?>/ft_logo.png" alt="<?php echo G5_VERSION ?>"></div> -->
-        <div id="ft_copy">Copyright &copy; <b>소유하신 도메인.</b> All rights reserved.</div>
+        <div id="ft_copy">Copyright &copy; <b>맥락한의원</b>. All rights reserved.</div>
     
     
     <button type="button" id="top_btn">

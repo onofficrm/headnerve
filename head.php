@@ -12,7 +12,7 @@ if (defined('G5_THEME_PATH') && !defined('G5_USE_BASE_HEAD')) {
     return;
 }
 
-if (G5_IS_MOBILE) {
+if (G5_IS_MOBILE && !(function_exists('headnerve_is_g5b_board') && headnerve_is_g5b_board())) {
     include_once(G5_MOBILE_PATH.'/head.php');
     return;
 }

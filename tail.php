@@ -8,11 +8,6 @@ if (defined('G5_THEME_PATH') && !defined('G5_USE_BASE_HEAD')) {
     return;
 }
 
-if (G5_IS_MOBILE) {
-    include_once(G5_MOBILE_PATH.'/tail.php');
-    return;
-}
-
 if (function_exists('headnerve_is_g5b_board') && headnerve_is_g5b_board()) {
 ?>
     </div>
@@ -29,22 +24,27 @@ include_once(G5_PATH.'/tail.sub.php');
 return;
 }
 
+if (G5_IS_MOBILE) {
+    include_once(G5_MOBILE_PATH.'/tail.php');
+    return;
+}
+
 if (!isset($site_config) && is_file(G5_PATH.'/_site.config.php')) {
     include_once(G5_PATH.'/_site.config.php');
 }
 
 // 푸터·하단 버튼 — _site.config.php 우선, 없으면 기본값
-$g5_footer_tel_display = function_exists('g5site_cfg') ? g5site_cfg('phone', '02-123-4567') : '02-123-4567';
-$g5_footer_tel_link    = function_exists('g5site_tel_link') ? g5site_tel_link($g5_footer_tel_display) : 'tel:021234567';
+$g5_footer_tel_display = function_exists('g5site_cfg') ? g5site_cfg('phone', '02-6959-7252') : '02-6959-7252';
+$g5_footer_tel_link    = function_exists('g5site_tel_link') ? g5site_tel_link($g5_footer_tel_display) : 'tel:0269597252';
 $g5_footer_kakao_url   = function_exists('g5site_cfg') ? g5site_cfg('kakao_url', 'https://pf.kakao.com/_xxxxx') : 'https://pf.kakao.com/_xxxxx';
-$g5_footer_company     = function_exists('g5site_cfg') ? g5site_cfg('company_name', '회사명') : '회사명';
-$g5_footer_ceo         = function_exists('g5site_cfg') ? g5site_cfg('ceo_name', '대표자명') : '대표자명';
+$g5_footer_company     = function_exists('g5site_cfg') ? g5site_cfg('company_name', '맥락한의원') : '맥락한의원';
+$g5_footer_ceo         = function_exists('g5site_cfg') ? g5site_cfg('ceo_name', '이재성') : '이재성';
 $g5_footer_intro       = function_exists('g5site_cfg') ? g5site_cfg('footer_desc', '고객과 함께 성장하는 든든한 파트너입니다.') : '고객과 함께 성장하는 든든한 파트너입니다.';
-$g5_footer_biz_no      = function_exists('g5site_cfg') ? g5site_cfg('business_no', '123-45-67890') : '123-45-67890';
+$g5_footer_biz_no      = function_exists('g5site_cfg') ? g5site_cfg('business_no', '573-93-02056') : '573-93-02056';
 $g5_footer_sales_no    = function_exists('g5site_cfg') ? g5site_cfg('sales_no', '제 OO구 - 123호') : '제 OO구 - 123호';
 $g5_footer_privacy     = function_exists('g5site_cfg') ? g5site_cfg('privacy_manager', '정보책임자명') : '정보책임자명';
-$g5_footer_email       = function_exists('g5site_cfg') ? g5site_cfg('email', 'info@example.com') : 'info@example.com';
-$g5_footer_address     = function_exists('g5site_cfg') ? g5site_cfg('address', 'OO도 OO시 OO구 OO동 123-45') : 'OO도 OO시 OO구 OO동 123-45';
+$g5_footer_email       = function_exists('g5site_cfg') ? g5site_cfg('email', 'macnac.kclinic@gmail.com') : 'macnac.kclinic@gmail.com';
+$g5_footer_address     = function_exists('g5site_cfg') ? g5site_cfg('address', '서울시 중구 서소문로 134, 2층') : '서울시 중구 서소문로 134, 2층';
 $g5_footer_fax         = function_exists('g5site_cfg') ? g5site_cfg('fax', '02-123-4568') : '02-123-4568';
 
 if (!isset($g5_inquiry_url)) {
