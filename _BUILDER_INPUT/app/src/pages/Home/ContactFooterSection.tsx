@@ -90,10 +90,11 @@ export function ContactFooterSection() {
             <div>
               <p>상호 : 맥락한의원</p>
               <p>사업자등록번호 : 573-93-02056</p>
+              <p>이메일 : macnac.kclinic@gmail.com</p>
             </div>
             <div>
               <p>위치 : 서울시 중구 서소문로 134, 2층</p>
-              <p>대표자 : 이재성, 김윤서</p>
+              <p>대표 : 이재성</p>
             </div>
           </div>
           <p className="text-[11px] text-gray-400 mt-8 uppercase tracking-widest font-bold">&copy; MAEKRAK CLINIC. ALL RIGHTS RESERVED.</p>

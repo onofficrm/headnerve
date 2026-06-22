@@ -15,6 +15,9 @@ export function Footer() {
             <div className="space-y-4 text-[13px] text-gray-500 leading-relaxed font-light">
               <p>주소: 서울시 중구 서소문로 134, 2층 맥락한의원</p>
               <p>전화: <a href="tel:02-6959-7252" className="text-maekrak-navy hover:underline font-bold">02-6959-7252</a></p>
+              <p>대표: 이재성</p>
+              <p>사업자등록번호: 573-93-02056</p>
+              <p>이메일: <a href="mailto:macnac.kclinic@gmail.com" className="text-maekrak-navy hover:underline">macnac.kclinic@gmail.com</a></p>
               <div className="mt-4 pt-4 border-t border-gray-100">
                 <p>평일 10:00 - 20:00 (점심 14-15)</p>
                 <p>토요일 10:00 - 14:00 (점심시간 없음)</p>
