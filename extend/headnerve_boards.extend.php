@@ -140,6 +140,17 @@ if (G5_IS_MOBILE) {
 }
 
 // CSS는 extend 로드 순서상 G5_CSS_VER 정의 전일 수 있음 → common_header 에서 enqueue
+if (!function_exists('headnerve_board_asset_ver')) {
+    function headnerve_board_asset_ver($path, $fallback = '1')
+    {
+        if (is_file($path)) {
+            return (string) filemtime($path);
+        }
+
+        return (string) $fallback;
+    }
+}
+
 if (!function_exists('headnerve_board_enqueue_styles')) {
     function headnerve_board_enqueue_styles()
     {
@@ -150,8 +161,11 @@ if (!function_exists('headnerve_board_enqueue_styles')) {
         }
 
         $css_ver = defined('G5_CSS_VER') ? G5_CSS_VER : '1';
-        add_stylesheet('<link rel="stylesheet" href="'.G5_CSS_URL.'/custom.css?ver='.$css_ver.'">', 5);
-        add_stylesheet('<link rel="stylesheet" href="'.G5_CSS_URL.'/g5b-board.css?ver='.$css_ver.'">', 6);
+        $css_path = defined('G5_CSS_PATH') ? G5_CSS_PATH : G5_PATH.'/css';
+        $custom_ver = headnerve_board_asset_ver($css_path.'/custom.css', $css_ver);
+        $board_ver = headnerve_board_asset_ver($css_path.'/g5b-board.css', $css_ver);
+        add_stylesheet('<link rel="stylesheet" href="'.G5_CSS_URL.'/custom.css?ver='.$custom_ver.'">', 5);
+        add_stylesheet('<link rel="stylesheet" href="'.G5_CSS_URL.'/g5b-board.css?ver='.$board_ver.'">', 6);
 
         $headnerve_primary = '#0B2744';
         if (function_exists('g5site_cfg')) {
@@ -195,3 +209,34 @@ if (!function_exists('headnerve_board_enqueue_styles')) {
     }
 }
 add_event('common_header', 'headnerve_board_enqueue_styles', 1);
+
+if (!function_exists('headnerve_board_inject_late_content_style')) {
+    function headnerve_board_inject_late_content_style($buffer)
+    {
+        if (strpos($buffer, 'headnerve-g5b-board') === false || strpos($buffer, 'headnerve-g5b-content-style') !== false) {
+            return $buffer;
+        }
+
+        $style = '<style id="headnerve-g5b-content-style">'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con,body.headnerve-g5b-board .board-wrap .board-view__content{font-size:1rem;line-height:1.85;word-break:keep-all;overflow-wrap:anywhere;}'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con p,body.headnerve-g5b-board .board-wrap .board-view__content p{margin:0 0 1.15rem;color:#334155;line-height:1.9;}'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con h2,body.headnerve-g5b-board .board-wrap .board-view__content h2{margin:2.45rem 0 1rem;padding-bottom:.65rem;border-bottom:1px solid rgba(15,39,68,.12);color:#0b2744;font-size:clamp(1.35rem,2.6vw,1.75rem);font-weight:750;line-height:1.38;letter-spacing:-.035em;}'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con h3,body.headnerve-g5b-board .board-wrap .board-view__content h3{margin:2rem 0 .75rem;color:#0b2744;font-size:clamp(1.12rem,2.2vw,1.35rem);font-weight:700;line-height:1.45;letter-spacing:-.025em;}'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con blockquote,body.headnerve-g5b-board .board-wrap .board-view__content blockquote{margin:1.65rem 0;padding:1.1rem 1.25rem 1.1rem 1.35rem;border-left:4px solid #7aa6b8;border-radius:0 18px 18px 0;background:#f2f8f9;color:#284557;line-height:1.85;}'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con blockquote p,body.headnerve-g5b-board .board-wrap .board-view__content blockquote p{margin-bottom:.7rem;color:inherit;}'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con blockquote p:last-child,body.headnerve-g5b-board .board-wrap .board-view__content blockquote p:last-child{margin-bottom:0;}'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con hr,body.headnerve-g5b-board .board-wrap .board-view__content hr{display:block!important;height:1px;margin:2.2rem 0;border:0;background:linear-gradient(90deg,transparent,rgba(15,39,68,.16),transparent);}'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con ul,body.headnerve-g5b-board .board-wrap #bo_v_con ol,body.headnerve-g5b-board .board-wrap .board-view__content ul,body.headnerve-g5b-board .board-wrap .board-view__content ol{margin:1rem 0 1.35rem;padding-left:1.45rem;color:#334155;}'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con li,body.headnerve-g5b-board .board-wrap .board-view__content li{margin:.42rem 0;line-height:1.85;}'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con strong,body.headnerve-g5b-board .board-wrap .board-view__content strong{color:#17324d;font-weight:700;}'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con table,body.headnerve-g5b-board .board-wrap .board-view__content table{width:100%;margin:1.5rem 0;border-collapse:collapse;border-spacing:0;border:1px solid rgba(15,39,68,.12);border-radius:16px;background:#fff;color:#334155;font-size:.95rem;line-height:1.65;overflow:hidden;}'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con th,body.headnerve-g5b-board .board-wrap #bo_v_con td,body.headnerve-g5b-board .board-wrap .board-view__content th,body.headnerve-g5b-board .board-wrap .board-view__content td{padding:.85rem 1rem;border:1px solid rgba(15,39,68,.1);vertical-align:top;text-align:left;}'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con th,body.headnerve-g5b-board .board-wrap .board-view__content th{background:#f4f8fb;color:#0b2744;font-weight:700;}'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con a[href]:not(.view_image):not(.icrm-cta-button):not([class*="btn"]),body.headnerve-g5b-board .board-wrap .board-view__content a[href]:not(.view_image):not(.icrm-cta-button):not([class*="btn"]){color:#2e75b6!important;text-decoration:underline!important;text-underline-offset:.18em;text-decoration-thickness:2px;font-weight:600;}'
+            .'@media (max-width:768px){body.headnerve-g5b-board .board-wrap #bo_v_con,body.headnerve-g5b-board .board-wrap .board-view__content{overflow-x:auto;-webkit-overflow-scrolling:touch;}body.headnerve-g5b-board .board-wrap #bo_v_con table,body.headnerve-g5b-board .board-wrap .board-view__content table{display:block;min-width:620px;max-width:100%;overflow-x:auto;white-space:normal;}body.headnerve-g5b-board .board-wrap #bo_v_con th,body.headnerve-g5b-board .board-wrap #bo_v_con td,body.headnerve-g5b-board .board-wrap .board-view__content th,body.headnerve-g5b-board .board-wrap .board-view__content td{padding:.72rem .82rem;}}'
+            .'</style>';
+
+        return preg_replace('#</head>#i', $style . PHP_EOL . '</head>', $buffer, 1);
+    }
+}
+add_replace('html_process_buffer', 'headnerve_board_inject_late_content_style', 20, 1);
