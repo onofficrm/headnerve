@@ -496,7 +496,7 @@ if (!function_exists('icrm_content_infer_reviews_category')) {
         $haystack = trim((string) $subject . ' ' . icrm_content_clean_excerpt_text($content));
         $map = array(
             '브레인포그' => array('브레인포그', 'brain fog', '머리 안개', '집중'),
-            '말초신경병증' => array('말초신경', '손끝', '발끝', '저림', '마비', '감각'),
+            '말초신경' => array('말초신경', '손끝', '발끝', '저림', '마비', '감각'),
             '자율신경' => array('자율신경', '불면', '불안', '기립성', '두근거림', '수면'),
             '어지럼증' => array('어지럼', '어지러움', '현기증', '메니에르', '이석증', '전정'),
             '두통' => array('두통', '편두통', '긴장형', '경추성', '군발', '약물과용'),

@@ -49,6 +49,60 @@ if (!function_exists('headnerve_board_sanitize_view_html')) {
     }
 }
 
+if (!function_exists('headnerve_board_cta_url')) {
+    function headnerve_board_cta_url($key, $fallback)
+    {
+        if (function_exists('g5site_cfg')) {
+            return g5site_cfg($key, $fallback);
+        }
+
+        return $fallback;
+    }
+}
+
+if (!function_exists('headnerve_board_restore_cta_links')) {
+    function headnerve_board_restore_cta_links($html)
+    {
+        $html = (string) $html;
+        $protected_links = array();
+        $html = preg_replace_callback('#<a\b[^>]*>.*?</a>#isu', function ($matches) use (&$protected_links) {
+            $key = '%%HEADNERVE_LINK_' . count($protected_links) . '%%';
+            $protected_links[$key] = $matches[0];
+
+            return $key;
+        }, $html);
+
+        $cta_links = array(
+            '네이버 예약하기' => array(
+                'url' => headnerve_board_cta_url('naver_booking_url', 'https://booking.naver.com/booking/13/bizes/1120036?area=pll&map-search=1'),
+                'mod' => 'primary',
+            ),
+            '네이버 지도로 보기' => array(
+                'url' => headnerve_board_cta_url('naver_place_url', 'https://map.naver.com/p/entry/place/1769198478?placePath=%252Fhome%253Fentry%253Dplt&searchType=place&lng=126.9758741&lat=37.5635861&c=15.00,0,0,0,dh'),
+                'mod' => 'secondary',
+            ),
+            '두통환우카페 바로가기' => array(
+                'url' => headnerve_board_cta_url('naver_cafe_url', 'https://cafe.naver.com/leeaj1'),
+                'mod' => 'outline',
+            ),
+        );
+
+        foreach ($cta_links as $label => $meta) {
+            $html = str_replace(
+                $label,
+                '<a href="' . htmlspecialchars($meta['url'], ENT_QUOTES, 'UTF-8') . '" class="headnerve-board-cta__button headnerve-board-cta__button--' . $meta['mod'] . '" target="_blank" rel="noopener noreferrer">' . $label . '</a>',
+                $html
+            );
+        }
+
+        if (!empty($protected_links)) {
+            $html = strtr($html, $protected_links);
+        }
+
+        return $html;
+    }
+}
+
 if (function_exists('add_event') && function_exists('headnerve_board_apply_meta_on_write')) {
     add_event('write_update_after', 'headnerve_board_apply_meta_on_write', 8, 5);
 }
@@ -62,6 +116,9 @@ if (!function_exists('headnerve_board_normalize_view_content')) {
 
         if (function_exists('headnerve_board_sanitize_view_html')) {
             $content = headnerve_board_sanitize_view_html($content);
+        }
+        if (function_exists('headnerve_board_restore_cta_links')) {
+            $content = headnerve_board_restore_cta_links($content);
         }
         if (function_exists('g5b_normalize_board_content_alignment')) {
             $content = g5b_normalize_board_content_alignment($content);
@@ -232,8 +289,13 @@ if (!function_exists('headnerve_board_inject_late_content_style')) {
             .'body.headnerve-g5b-board .board-wrap #bo_v_con table,body.headnerve-g5b-board .board-wrap .board-view__content table{width:100%;margin:1.5rem 0;border-collapse:collapse;border-spacing:0;border:1px solid rgba(15,39,68,.12);border-radius:16px;background:#fff;color:#334155;font-size:.95rem;line-height:1.65;overflow:hidden;}'
             .'body.headnerve-g5b-board .board-wrap #bo_v_con th,body.headnerve-g5b-board .board-wrap #bo_v_con td,body.headnerve-g5b-board .board-wrap .board-view__content th,body.headnerve-g5b-board .board-wrap .board-view__content td{padding:.85rem 1rem;border:1px solid rgba(15,39,68,.1);vertical-align:top;text-align:left;}'
             .'body.headnerve-g5b-board .board-wrap #bo_v_con th,body.headnerve-g5b-board .board-wrap .board-view__content th{background:#f4f8fb;color:#0b2744;font-weight:700;}'
-            .'body.headnerve-g5b-board .board-wrap #bo_v_con a[href]:not(.view_image):not(.icrm-cta-button):not([class*="btn"]),body.headnerve-g5b-board .board-wrap .board-view__content a[href]:not(.view_image):not(.icrm-cta-button):not([class*="btn"]){color:#2e75b6!important;text-decoration:underline!important;text-underline-offset:.18em;text-decoration-thickness:2px;font-weight:600;}'
-            .'@media (max-width:768px){body.headnerve-g5b-board .board-wrap #bo_v_con,body.headnerve-g5b-board .board-wrap .board-view__content{overflow-x:auto;-webkit-overflow-scrolling:touch;}body.headnerve-g5b-board .board-wrap #bo_v_con table,body.headnerve-g5b-board .board-wrap .board-view__content table{display:block;min-width:620px;max-width:100%;overflow-x:auto;white-space:normal;}body.headnerve-g5b-board .board-wrap #bo_v_con th,body.headnerve-g5b-board .board-wrap #bo_v_con td,body.headnerve-g5b-board .board-wrap .board-view__content th,body.headnerve-g5b-board .board-wrap .board-view__content td{padding:.72rem .82rem;}}'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con .headnerve-board-cta__button,body.headnerve-g5b-board .board-wrap .board-view__content .headnerve-board-cta__button{display:inline-flex;align-items:center;justify-content:center;min-width:150px;min-height:42px;margin:.35rem .45rem .35rem 0;padding:.72rem 1.15rem;border:1px solid transparent;border-radius:0;box-sizing:border-box;font-size:.95rem;font-weight:700;line-height:1.2;letter-spacing:-.02em;text-align:center;text-decoration:none!important;white-space:nowrap;transition:filter 160ms ease;}'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con .headnerve-board-cta__button:hover,body.headnerve-g5b-board .board-wrap #bo_v_con .headnerve-board-cta__button:focus-visible,body.headnerve-g5b-board .board-wrap .board-view__content .headnerve-board-cta__button:hover,body.headnerve-g5b-board .board-wrap .board-view__content .headnerve-board-cta__button:focus-visible{filter:brightness(.96);text-decoration:none!important;}'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con .headnerve-board-cta__button--primary,body.headnerve-g5b-board .board-wrap .board-view__content .headnerve-board-cta__button--primary{background:#03c75a;border-color:#03c75a;color:#fff!important;}'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con .headnerve-board-cta__button--secondary,body.headnerve-g5b-board .board-wrap .board-view__content .headnerve-board-cta__button--secondary{background:#0b2744;border-color:#0b2744;color:#fff!important;}'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con .headnerve-board-cta__button--outline,body.headnerve-g5b-board .board-wrap .board-view__content .headnerve-board-cta__button--outline{background:#fff;border-color:rgba(11,39,68,.22);color:#0b2744!important;}'
+            .'body.headnerve-g5b-board .board-wrap #bo_v_con a[href]:not(.view_image):not(.icrm-cta-button):not(.headnerve-board-cta__button):not([class*="btn"]),body.headnerve-g5b-board .board-wrap .board-view__content a[href]:not(.view_image):not(.icrm-cta-button):not(.headnerve-board-cta__button):not([class*="btn"]){color:#2e75b6!important;text-decoration:underline!important;text-underline-offset:.18em;text-decoration-thickness:2px;font-weight:600;}'
+            .'@media (max-width:768px){body.headnerve-g5b-board .board-wrap #bo_v_con,body.headnerve-g5b-board .board-wrap .board-view__content{overflow-x:auto;-webkit-overflow-scrolling:touch;}body.headnerve-g5b-board .board-wrap #bo_v_con table,body.headnerve-g5b-board .board-wrap .board-view__content table{display:block;min-width:620px;max-width:100%;overflow-x:auto;white-space:normal;}body.headnerve-g5b-board .board-wrap #bo_v_con th,body.headnerve-g5b-board .board-wrap #bo_v_con td,body.headnerve-g5b-board .board-wrap .board-view__content th,body.headnerve-g5b-board .board-wrap .board-view__content td{padding:.72rem .82rem;}body.headnerve-g5b-board .board-wrap #bo_v_con .headnerve-board-cta__button,body.headnerve-g5b-board .board-wrap .board-view__content .headnerve-board-cta__button{min-width:0;width:100%;margin-right:0;}}'
             .'</style>';
 
         return preg_replace('#</head>#i', $style . PHP_EOL . '</head>', $buffer, 1);

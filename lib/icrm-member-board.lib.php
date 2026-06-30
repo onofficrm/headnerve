@@ -100,7 +100,7 @@ if (!function_exists('icrm_member_board_templates')) {
                 'skin'             => 'reviews',
                 'mobile_skin'      => 'reviews',
                 'use_category'     => '1',
-                'category_list'    => '두통|어지럼증|자율신경|말초신경병증|브레인포그',
+                'category_list'    => '두통|어지럼증|자율신경|말초신경|브레인포그',
                 'bo_comment_level' => '0',
             ),
             'inquiry' => array(

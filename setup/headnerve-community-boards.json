@@ -34,7 +34,7 @@
       "mobile_skin": "reviews",
       "menu_label": "후기",
       "url": "/bbs/board.php?bo_table=reviews",
-      "categories": "두통|어지럼증|자율신경|말초신경병증|브레인포그",
+      "categories": "두통|어지럼증|자율신경|말초신경|브레인포그",
       "extra_fields": {
         "wr_1": "환자",
         "wr_2": "담당 원장",

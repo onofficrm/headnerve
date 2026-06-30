@@ -781,6 +781,57 @@
   line-height: 1.65;
 }
 
+.board-wrap #bo_v_con .headnerve-board-cta__button,
+.board-wrap .board-view__content .headnerve-board-cta__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 150px;
+  min-height: 42px;
+  margin: 0.35rem 0.45rem 0.35rem 0;
+  padding: 0.72rem 1.15rem;
+  border: 1px solid transparent;
+  border-radius: 0;
+  box-sizing: border-box;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-align: center;
+  text-decoration: none !important;
+  white-space: nowrap;
+  transition: filter 160ms ease;
+}
+
+.board-wrap #bo_v_con .headnerve-board-cta__button:hover,
+.board-wrap #bo_v_con .headnerve-board-cta__button:focus-visible,
+.board-wrap .board-view__content .headnerve-board-cta__button:hover,
+.board-wrap .board-view__content .headnerve-board-cta__button:focus-visible {
+  filter: brightness(0.96);
+  text-decoration: none !important;
+}
+
+.board-wrap #bo_v_con .headnerve-board-cta__button--primary,
+.board-wrap .board-view__content .headnerve-board-cta__button--primary {
+  background: #03c75a;
+  border-color: #03c75a;
+  color: #fff !important;
+}
+
+.board-wrap #bo_v_con .headnerve-board-cta__button--secondary,
+.board-wrap .board-view__content .headnerve-board-cta__button--secondary {
+  background: #0b2744;
+  border-color: #0b2744;
+  color: #fff !important;
+}
+
+.board-wrap #bo_v_con .headnerve-board-cta__button--outline,
+.board-wrap .board-view__content .headnerve-board-cta__button--outline {
+  background: #fff;
+  border-color: rgba(11, 39, 68, 0.22);
+  color: #0b2744 !important;
+}
+
 @media (max-width: 768px) {
   .board-wrap #bo_v_con,
   .board-wrap .board-view__content {
@@ -814,6 +865,13 @@
   .board-wrap .board-view__content td {
     padding: 0.72rem 0.82rem;
   }
+
+  .board-wrap #bo_v_con .headnerve-board-cta__button,
+  .board-wrap .board-view__content .headnerve-board-cta__button {
+    min-width: 0;
+    width: 100%;
+    margin-right: 0;
+  }
 }
 
 /* 본문 텍스트 링크 — 일반 문장과 구분 (웹에디터 내부·외부 링크) */
@@ -822,8 +880,8 @@
 .board-wrap .reviews-view__content a.board-content-link,
 .board-wrap .faq-view__content a.board-content-link,
 .board-wrap .inquiry-detail__content a.board-content-link,
-.board-wrap #bo_v_con a[href]:not(.view_image):not(.icrm-cta-button):not([class*="btn"]):not([style*="background"]):not([style*="padding:"]),
-.board-wrap .board-view__content a[href]:not(.view_image):not(.icrm-cta-button):not([class*="btn"]):not([style*="background"]):not([style*="padding:"]),
+.board-wrap #bo_v_con a[href]:not(.view_image):not(.icrm-cta-button):not(.headnerve-board-cta__button):not([class*="btn"]):not([style*="background"]):not([style*="padding:"]),
+.board-wrap .board-view__content a[href]:not(.view_image):not(.icrm-cta-button):not(.headnerve-board-cta__button):not([class*="btn"]):not([style*="background"]):not([style*="padding:"]),
 .board-wrap .reviews-view__content a[href]:not(.view_image):not(.icrm-cta-button):not([class*="btn"]):not([style*="background"]):not([style*="padding:"]),
 .board-wrap .faq-view__content a[href]:not(.view_image):not(.icrm-cta-button):not([class*="btn"]):not([style*="background"]):not([style*="padding:"]),
 .board-wrap .inquiry-detail__content a[href]:not(.view_image):not(.icrm-cta-button):not([class*="btn"]):not([style*="background"]):not([style*="padding:"]) {
@@ -847,10 +905,10 @@
 .board-wrap .faq-view__content a.board-content-link:focus-visible,
 .board-wrap .inquiry-detail__content a.board-content-link:hover,
 .board-wrap .inquiry-detail__content a.board-content-link:focus-visible,
-.board-wrap #bo_v_con a[href]:not(.view_image):not(.icrm-cta-button):not([class*="btn"]):not([style*="background"]):not([style*="padding:"]):hover,
-.board-wrap #bo_v_con a[href]:not(.view_image):not(.icrm-cta-button):not([class*="btn"]):not([style*="background"]):not([style*="padding:"]):focus-visible,
-.board-wrap .board-view__content a[href]:not(.view_image):not(.icrm-cta-button):not([class*="btn"]):not([style*="background"]):not([style*="padding:"]):hover,
-.board-wrap .board-view__content a[href]:not(.view_image):not(.icrm-cta-button):not([class*="btn"]):not([style*="background"]):not([style*="padding:"]):focus-visible,
+.board-wrap #bo_v_con a[href]:not(.view_image):not(.icrm-cta-button):not(.headnerve-board-cta__button):not([class*="btn"]):not([style*="background"]):not([style*="padding:"]):hover,
+.board-wrap #bo_v_con a[href]:not(.view_image):not(.icrm-cta-button):not(.headnerve-board-cta__button):not([class*="btn"]):not([style*="background"]):not([style*="padding:"]):focus-visible,
+.board-wrap .board-view__content a[href]:not(.view_image):not(.icrm-cta-button):not(.headnerve-board-cta__button):not([class*="btn"]):not([style*="background"]):not([style*="padding:"]):hover,
+.board-wrap .board-view__content a[href]:not(.view_image):not(.icrm-cta-button):not(.headnerve-board-cta__button):not([class*="btn"]):not([style*="background"]):not([style*="padding:"]):focus-visible,
 .board-wrap .reviews-view__content a[href]:not(.view_image):not(.icrm-cta-button):not([class*="btn"]):not([style*="background"]):not([style*="padding:"]):hover,
 .board-wrap .reviews-view__content a[href]:not(.view_image):not(.icrm-cta-button):not([class*="btn"]):not([style*="background"]):not([style*="padding:"]):focus-visible,
 .board-wrap .faq-view__content a[href]:not(.view_image):not(.icrm-cta-button):not([class*="btn"]):not([style*="background"]):not([style*="padding:"]):hover,
