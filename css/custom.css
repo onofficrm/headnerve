@@ -3641,6 +3641,16 @@ body.headnerve-g5b-board .reviews-paging {
   color: #4b5563;
 }
 
+body.headnerve-builder-page .maekrak-float {
+  bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+}
+
+@media (min-width: 768px) {
+  body.headnerve-builder-page .maekrak-float {
+    bottom: 2rem;
+  }
+}
+
 /* 플로팅 퀵 메뉴 */
 .maekrak-float {
   display: flex;

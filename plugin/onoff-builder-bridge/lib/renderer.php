@@ -150,6 +150,9 @@ if (!function_exists('onoff_builder_render_standalone')) {
             if (function_exists('onoff_builder_inject_popup_layer_into_html')) {
                 $html = onoff_builder_inject_popup_layer_into_html($html, $id);
             }
+            if (function_exists('onoff_builder_inject_floating_menu_into_html')) {
+                $html = onoff_builder_inject_floating_menu_into_html($html);
+            }
             echo $html;
             return;
         }

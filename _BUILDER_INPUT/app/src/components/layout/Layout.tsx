@@ -2,7 +2,6 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { MobileBottomCTA } from './MobileBottomCTA';
-import { FloatingQuickMenu } from './FloatingQuickMenu';
 import { GnuboardPopupLayer } from '../common/GnuboardPopupLayer';
 
 export function Layout() {
@@ -20,7 +19,6 @@ export function Layout() {
       </main>
       {!isHome && <Footer />}
       <MobileBottomCTA />
-      <FloatingQuickMenu />
     </div>
   );
 }
