@@ -11,6 +11,9 @@ if (function_exists('headnerve_is_g5b_board') && headnerve_is_g5b_board()) {
 if (!empty($config['cf_analytics'])) {
     echo $config['cf_analytics'];
 }
+if (is_file(G5_PATH.'/components/maekrak-floating-menu.php')) {
+    include_once(G5_PATH.'/components/maekrak-floating-menu.php');
+}
 include_once(G5_PATH."/tail.sub.php");
 return;
 }

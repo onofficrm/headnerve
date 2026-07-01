@@ -3643,20 +3643,111 @@ body.headnerve-g5b-board .reviews-paging {
 
 /* 플로팅 퀵 메뉴 */
 .maekrak-float {
-  display: none;
+  display: flex;
   position: fixed;
-  right: 2rem;
-  bottom: 2rem;
+  right: 1rem;
+  bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
   z-index: 70;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.maekrak-float__panel {
+  display: flex;
   flex-direction: column;
+  align-items: flex-end;
   gap: 0.5rem;
-  transform: scale(0.7);
-  transform-origin: bottom right;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: max-height 0.28s ease, opacity 0.22s ease, transform 0.22s ease;
+}
+
+.maekrak-float.is-open .maekrak-float__panel {
+  max-height: 520px;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.maekrak-float__menu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.maekrak-float__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border: 0;
+  border-radius: 999px;
+  background: #00a650;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.maekrak-float__toggle:hover {
+  background: #009040;
+}
+
+.maekrak-float__toggle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.maekrak-float__toggle-icon--close {
+  display: none;
+}
+
+.maekrak-float.is-open .maekrak-float__toggle-icon--open {
+  display: none;
+}
+
+.maekrak-float.is-open .maekrak-float__toggle-icon--close {
+  display: flex;
+}
+
+.maekrak-float__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 69;
+  background: rgba(15, 23, 42, 0.28);
 }
 
 @media (min-width: 768px) {
   .maekrak-float {
-    display: flex;
+    right: 2rem;
+    bottom: 2rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    transform: scale(0.91);
+    transform-origin: bottom right;
+  }
+
+  .maekrak-float__panel {
+    max-height: none;
+    opacity: 1;
+    overflow: visible;
+    pointer-events: auto;
+    transform: none;
+    transition: none;
+  }
+
+  .maekrak-float__toggle,
+  .maekrak-float__backdrop {
+    display: none !important;
   }
 }
 
@@ -3738,6 +3829,21 @@ body.headnerve-g5b-board .reviews-paging {
   background: #03c75a;
   color: #fff;
   font-size: 9px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.maekrak-float__icon--cafe::before {
+  content: "cafe";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  background: #03c75a;
+  color: #fff;
+  font-size: 8px;
   font-weight: 700;
   letter-spacing: -0.02em;
 }

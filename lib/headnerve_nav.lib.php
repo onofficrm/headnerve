@@ -201,6 +201,12 @@ if (!function_exists('headnerve_floating_menu_items')) {
 
         return array(
             array(
+                'label'  => '질문하기',
+                'href'   => headnerve_nav_cafe_url(),
+                'external' => true,
+                'icon'   => 'cafe',
+            ),
+            array(
                 'label'  => '예약하기',
                 'href'   => headnerve_nav_booking_url(),
                 'external' => true,
