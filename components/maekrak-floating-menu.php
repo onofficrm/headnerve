@@ -31,15 +31,10 @@ $mf_float_items = headnerve_floating_menu_items();
         id="maekrakFloatToggle"
         aria-expanded="false"
         aria-controls="maekrakFloatPanel"
-        title="빠른 메뉴"
+        aria-label="빠른 메뉴"
     >
-        <span class="maekrak-float__toggle-icon maekrak-float__toggle-icon--open" aria-hidden="true">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-        </span>
-        <span class="maekrak-float__toggle-icon maekrak-float__toggle-icon--close" aria-hidden="true">
-            <i class="fa fa-times" aria-hidden="true"></i>
-        </span>
-        <span class="sound_only">빠른 메뉴</span>
+        <span class="maekrak-float__toggle-icon maekrak-float__toggle-icon--open" aria-hidden="true">☰</span>
+        <span class="maekrak-float__toggle-icon maekrak-float__toggle-icon--close" aria-hidden="true">✕</span>
     </button>
 </div>
 <div class="maekrak-float__backdrop" id="maekrakFloatBackdrop" hidden></div>

@@ -3713,7 +3713,8 @@ body.headnerve-builder-page .maekrak-float {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+  font-size: 26px;
+  font-weight: 700;
   line-height: 1;
 }
 
