@@ -1760,7 +1760,13 @@ if (!function_exists('icrm_content_apply_seo_and_rank')) {
             return;
         }
 
-        if (!empty($seo) && function_exists('g5b_seo_meta_save')) {
+        if (function_exists('g5b_seo_meta_autofill_post')) {
+            $seed = is_array($seo) ? $seo : array();
+            g5b_seo_meta_autofill_post($bo_table, $wr_id, $seed, array(
+                'use_ai'      => function_exists('g5b_seo_meta_is_core_empty') ? g5b_seo_meta_is_core_empty($seed) : empty($seed),
+                'include_faq' => true,
+            ));
+        } elseif (!empty($seo) && function_exists('g5b_seo_meta_save')) {
             g5b_seo_meta_save('posts', $bo_table . ':' . $wr_id, $seo);
         }
 

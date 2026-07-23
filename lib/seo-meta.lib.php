@@ -1411,6 +1411,73 @@ if (!function_exists('g5b_seo_meta_openai_generate')) {
     }
 }
 
+if (!function_exists('g5b_seo_meta_canonical_is_board_list')) {
+    /**
+     * 저장된 canonical이 게시판 목록 URL인지 판별 (글 상세에 잘못 붙은 경우)
+     */
+    function g5b_seo_meta_canonical_is_board_list($url, $bo_table)
+    {
+        $url = trim((string) $url);
+        $bo_table = preg_replace('/[^a-z0-9_]/i', '', (string) $bo_table);
+        if ($url === '' || $bo_table === '') {
+            return false;
+        }
+
+        $path = parse_url($url, PHP_URL_PATH);
+        $query = parse_url($url, PHP_URL_QUERY);
+        $path = $path !== null ? rtrim((string) $path, '/') : '';
+        $query = $query !== null ? (string) $query : '';
+
+        // /column 또는 /column/ (슬러그 없음)
+        if ($path === '/' . $bo_table && !preg_match('#(?:^|&)wr_id=\d+#i', $query)) {
+            return true;
+        }
+
+        // board.php?bo_table=column (wr_id 없음)
+        if (preg_match('#/(?:bbs/)?board\.php$#i', $path)
+            && preg_match('#(?:^|&)bo_table=' . preg_quote($bo_table, '#') . '(?:&|$)#i', $query)
+            && !preg_match('#(?:^|&)wr_id=\d+#i', $query)) {
+            return true;
+        }
+
+        if (function_exists('get_pretty_url')) {
+            $list_url = rtrim((string) get_pretty_url($bo_table), '/');
+            $cand = rtrim(strtok($url, '?'), '/');
+            if ($list_url !== '' && $cand === $list_url) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+
+if (!function_exists('g5b_seo_meta_force_post_canonical')) {
+    function g5b_seo_meta_force_post_canonical($bo_table, $wr_id, $stored = '')
+    {
+        $bo_table = preg_replace('/[^a-z0-9_]/i', '', (string) $bo_table);
+        $wr_id = (int) $wr_id;
+        $stored = trim((string) $stored);
+        if ($bo_table === '' || $wr_id < 1) {
+            return $stored;
+        }
+
+        $post_url = function_exists('g5b_seo_meta_build_post_public_url')
+            ? g5b_seo_meta_build_post_public_url($bo_table, $wr_id)
+            : '';
+
+        if ($post_url === '') {
+            return $stored;
+        }
+
+        if ($stored === '' || g5b_seo_meta_canonical_is_board_list($stored, $bo_table)) {
+            return $post_url;
+        }
+
+        return $stored;
+    }
+}
+
 if (!function_exists('g5b_seo_meta_apply_globals')) {
     function g5b_seo_meta_apply_globals($meta)
     {
@@ -1454,7 +1521,7 @@ if (!function_exists('g5b_seo_meta_apply_globals')) {
 if (!function_exists('g5b_seo_meta_apply_context')) {
     function g5b_seo_meta_apply_context()
     {
-        global $bo_table, $wr_id, $write;
+        global $bo_table, $wr_id, $write, $page_canonical;
 
         if (defined('G5_IS_ADMIN') && G5_IS_ADMIN) {
             return;
@@ -1463,10 +1530,24 @@ if (!function_exists('g5b_seo_meta_apply_context')) {
         if (!empty($bo_table) && !empty($wr_id) && is_array($write) && !empty($write['wr_id']) && empty($write['wr_is_comment'])) {
             $key = preg_replace('/[^a-z0-9_]/i', '', (string) $bo_table) . ':' . (int) $wr_id;
             $meta = g5b_seo_meta_get('posts', $key);
+            $from_board = false;
             if (!$meta) {
                 $meta = g5b_seo_meta_get('boards', $bo_table);
+                $from_board = true;
+            }
+            if ($from_board && is_array($meta)) {
+                // 게시판(목록) SEO의 canonical은 글 상세에 절대 상속하지 않음
+                unset($meta['canonical']);
             }
             g5b_seo_meta_apply_globals($meta);
+
+            $stored = !empty($page_canonical) ? (string) $page_canonical : '';
+            if ($from_board) {
+                $stored = '';
+            } elseif (is_array($meta) && !empty($meta['canonical'])) {
+                $stored = (string) $meta['canonical'];
+            }
+            $page_canonical = g5b_seo_meta_force_post_canonical($bo_table, (int) $wr_id, $stored);
 
             return;
         }
@@ -1560,6 +1641,168 @@ if (!function_exists('g5b_seo_meta_append_faq_jsonld')) {
     }
 }
 
+if (!function_exists('g5b_seo_meta_is_core_empty')) {
+    function g5b_seo_meta_is_core_empty($meta)
+    {
+        if (!is_array($meta)) {
+            return true;
+        }
+
+        $title = isset($meta['title']) ? trim((string) $meta['title']) : '';
+        $desc = isset($meta['description']) ? trim((string) $meta['description']) : '';
+        $keywords = isset($meta['keywords']) ? trim((string) $meta['keywords']) : '';
+        $faq = isset($meta['faq']) && is_array($meta['faq']) ? $meta['faq'] : array();
+
+        return $title === '' && $desc === '' && $keywords === '' && count($faq) === 0;
+    }
+}
+
+if (!function_exists('g5b_seo_meta_extract_first_image_from_html')) {
+    function g5b_seo_meta_extract_first_image_from_html($html)
+    {
+        $html = (string) $html;
+        if ($html === '') {
+            return '';
+        }
+
+        if (preg_match('#<img\b[^>]*\bsrc\s*=\s*(["\'])([^"\']+)\1#i', $html, $m)) {
+            return trim((string) $m[2]);
+        }
+        if (preg_match('#<img\b[^>]*\bsrc\s*=\s*([^\s>]+)#i', $html, $m)) {
+            return trim((string) $m[1], "\"'");
+        }
+
+        return '';
+    }
+}
+
+if (!function_exists('g5b_seo_meta_autofill_post')) {
+    /**
+     * 비어 있는 SEO 필드만 AI·본문 기반으로 채움 (기존 값 유지)
+     *
+     * @param string $bo_table
+     * @param int    $wr_id
+     * @param array  $seed     현재 메타(수동 입력값)
+     * @param array  $options  use_ai(bool), include_faq(bool), subject, content
+     * @return array{ok:bool,data?:array,error?:string,filled?:bool}
+     */
+    function g5b_seo_meta_autofill_post($bo_table, $wr_id, $seed = array(), $options = array())
+    {
+        $bo_table = preg_replace('/[^a-z0-9_]/i', '', (string) $bo_table);
+        $wr_id = (int) $wr_id;
+        if ($bo_table === '' || $wr_id < 1) {
+            return array('ok' => false, 'error' => '잘못된 글 정보입니다.');
+        }
+
+        $data = is_array($seed) ? $seed : array();
+        foreach (array('title', 'description', 'keywords', 'robots', 'og_image', 'canonical', 'schema_type') as $field) {
+            if (!isset($data[$field])) {
+                $data[$field] = '';
+            } else {
+                $data[$field] = trim((string) $data[$field]);
+            }
+        }
+        if (!isset($data['faq']) || !is_array($data['faq'])) {
+            $data['faq'] = array();
+        }
+
+        $use_ai = !isset($options['use_ai']) || !empty($options['use_ai']);
+        $include_faq = !isset($options['include_faq']) || !empty($options['include_faq']);
+        $filled = false;
+        $key = $bo_table . ':' . $wr_id;
+
+        $ctx = g5b_seo_meta_extract_post_context($bo_table, $wr_id);
+        $subject = isset($options['subject']) ? trim((string) $options['subject']) : $ctx['subject'];
+        $content = isset($options['content']) ? (string) $options['content'] : '';
+        if ($content === '' && !empty($ctx['content'])) {
+            $content = $ctx['content'];
+        }
+
+        if ($use_ai && g5b_seo_meta_is_ai_configured() && g5b_seo_meta_is_core_empty($data)) {
+            $result = g5b_seo_meta_ai_generate('posts', $key, array(
+                'subject' => $subject,
+                'content' => $content,
+            ));
+            if (!empty($result['ok']) && !empty($result['data']) && is_array($result['data'])) {
+                foreach (array('title', 'description', 'keywords', 'robots', 'schema_type') as $field) {
+                    if ($data[$field] === '' && !empty($result['data'][$field])) {
+                        $data[$field] = trim((string) $result['data'][$field]);
+                        $filled = true;
+                    }
+                }
+                if (empty($data['faq']) && !empty($result['data']['faq']) && is_array($result['data']['faq'])) {
+                    $data['faq'] = $result['data']['faq'];
+                    $filled = true;
+                }
+            } elseif (empty($result['ok'])) {
+                // AI 실패해도 이미지·canonical 보완은 계속 진행
+            }
+        }
+
+        if ($include_faq && $use_ai && g5b_seo_meta_is_ai_configured() && count($data['faq']) < 3) {
+            $faq_result = g5b_seo_meta_ai_generate_faq_enhanced('posts', $key, array(
+                'subject' => $subject,
+                'content' => $content,
+            ), 6);
+            if (!empty($faq_result['ok']) && !empty($faq_result['data']['faq']) && is_array($faq_result['data']['faq'])) {
+                $data['faq'] = $faq_result['data']['faq'];
+                $filled = true;
+            }
+        }
+
+        if ($data['og_image'] === '') {
+            $html_for_image = $content;
+            if ($html_for_image === '' || stripos($html_for_image, '<img') === false) {
+                global $g5;
+                $write_table = $g5['write_prefix'] . $bo_table;
+                $row = sql_fetch(" select wr_content from {$write_table} where wr_id = '{$wr_id}' ");
+                if ($row) {
+                    $html_for_image = (string) $row['wr_content'];
+                }
+            }
+            $first_image = g5b_seo_meta_extract_first_image_from_html($html_for_image);
+            if ($first_image !== '') {
+                $data['og_image'] = $first_image;
+                $filled = true;
+            }
+        }
+
+        if ($data['canonical'] === '') {
+            $canonical = g5b_seo_meta_build_post_public_url($bo_table, $wr_id);
+            if ($canonical !== '') {
+                $data['canonical'] = $canonical;
+                $filled = true;
+            }
+        } elseif (g5b_seo_meta_canonical_is_board_list($data['canonical'], $bo_table)) {
+            $canonical = g5b_seo_meta_build_post_public_url($bo_table, $wr_id);
+            if ($canonical !== '') {
+                $data['canonical'] = $canonical;
+                $filled = true;
+            }
+        }
+
+        if ($data['schema_type'] === '') {
+            $data['schema_type'] = 'Article';
+            $filled = true;
+        }
+
+        if ($data['robots'] === '') {
+            $data['robots'] = 'index,follow';
+        }
+
+        $saved = g5b_seo_meta_save('posts', $key, $data);
+        if (!$saved) {
+            return array('ok' => false, 'error' => 'SEO 메타 저장 실패');
+        }
+
+        return array(
+            'ok'     => true,
+            'filled' => $filled,
+            'data'   => $data,
+        );
+    }
+}
+
 if (!function_exists('g5b_seo_meta_on_write_update_after')) {
     function g5b_seo_meta_on_write_update_after($board, $wr_id, $w, $qstr, $redirect_url)
     {
@@ -1594,7 +1837,7 @@ if (!function_exists('g5b_seo_meta_on_write_update_after')) {
             }
         }
 
-        g5b_seo_meta_save('posts', $bo_table . ':' . $wr_id, array(
+        $seed = array(
             'title'       => isset($_POST['g5b_seo_title']) ? $_POST['g5b_seo_title'] : '',
             'description' => isset($_POST['g5b_seo_description']) ? $_POST['g5b_seo_description'] : '',
             'keywords'    => isset($_POST['g5b_seo_keywords']) ? $_POST['g5b_seo_keywords'] : '',
@@ -1603,7 +1846,20 @@ if (!function_exists('g5b_seo_meta_on_write_update_after')) {
             'canonical'   => isset($_POST['g5b_seo_canonical']) ? $_POST['g5b_seo_canonical'] : '',
             'schema_type' => isset($_POST['g5b_seo_schema_type']) ? $_POST['g5b_seo_schema_type'] : '',
             'faq'         => $faq,
-        ));
+        );
+
+        $auto_fill = !isset($_POST['g5b_seo_auto_fill']) || $_POST['g5b_seo_auto_fill'] === '1';
+        if ($auto_fill) {
+            g5b_seo_meta_autofill_post($bo_table, $wr_id, $seed, array(
+                'use_ai'      => true,
+                'include_faq' => true,
+                'subject'     => isset($_POST['wr_subject']) ? $_POST['wr_subject'] : '',
+                'content'     => isset($_POST['wr_content']) ? $_POST['wr_content'] : '',
+            ));
+            return;
+        }
+
+        g5b_seo_meta_save('posts', $bo_table . ':' . $wr_id, $seed);
     }
 }
 

@@ -33,20 +33,32 @@ if (!function_exists('g5b_seo_escape')) {
 if (!function_exists('g5b_seo_current_url')) {
     function g5b_seo_current_url()
     {
+        global $bo_table, $wr_id, $write;
+
         $script = isset($_SERVER['SCRIPT_NAME']) ? basename((string) $_SERVER['SCRIPT_NAME']) : '';
-        $bo_table = isset($_GET['bo_table']) ? preg_replace('/[^a-z0-9_]/i', '', (string) $_GET['bo_table']) : '';
-        $wr_id = isset($_GET['wr_id']) ? (int) $_GET['wr_id'] : 0;
-        if ($script === 'board.php' && $bo_table !== '') {
+        $bo = isset($_GET['bo_table']) ? preg_replace('/[^a-z0-9_]/i', '', (string) $_GET['bo_table']) : '';
+        if ($bo === '' && !empty($bo_table)) {
+            $bo = preg_replace('/[^a-z0-9_]/i', '', (string) $bo_table);
+        }
+        $id = isset($_GET['wr_id']) ? (int) $_GET['wr_id'] : 0;
+        if ($id < 1 && !empty($wr_id)) {
+            $id = (int) $wr_id;
+        }
+        if ($id < 1 && is_array($write) && !empty($write['wr_id']) && empty($write['wr_is_comment'])) {
+            $id = (int) $write['wr_id'];
+        }
+
+        if (($script === 'board.php' || $bo !== '') && $bo !== '') {
             if (function_exists('get_pretty_url')) {
-                $pretty = $wr_id > 0 ? get_pretty_url($bo_table, $wr_id) : get_pretty_url($bo_table);
+                $pretty = $id > 0 ? get_pretty_url($bo, $id) : get_pretty_url($bo);
                 if ($pretty !== '') {
                     return $pretty;
                 }
             }
             if (defined('G5_BBS_URL')) {
-                $url = G5_BBS_URL . '/board.php?bo_table=' . rawurlencode($bo_table);
-                if ($wr_id > 0) {
-                    $url .= '&wr_id=' . $wr_id;
+                $url = G5_BBS_URL . '/board.php?bo_table=' . rawurlencode($bo);
+                if ($id > 0) {
+                    $url .= '&wr_id=' . $id;
                 }
                 return $url;
             }
@@ -142,6 +154,14 @@ if (!function_exists('g5b_seo_resolve')) {
         }
         if ($canonical !== '' && !preg_match('#^https?://#i', $canonical) && defined('G5_URL')) {
             $canonical = G5_URL . '/' . ltrim($canonical, '/');
+        }
+
+        // 글 상세인데 목록 URL이 canonical로 들어온 경우 교정
+        global $bo_table, $wr_id, $write;
+        if (!empty($bo_table) && !empty($wr_id) && is_array($write) && !empty($write['wr_id']) && empty($write['wr_is_comment'])) {
+            if (function_exists('g5b_seo_meta_force_post_canonical')) {
+                $canonical = g5b_seo_meta_force_post_canonical($bo_table, (int) $wr_id, $canonical);
+            }
         }
 
         $robots = 'index,follow';
