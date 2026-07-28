@@ -189,11 +189,30 @@ if (!function_exists('g5b_seo_resolve')) {
         $email = function_exists('g5site_cfg') ? g5site_cfg('email', '') : '';
         $address = function_exists('g5site_cfg') ? g5site_cfg('address', '') : '';
 
-        $schema_type = 'Organization';
+        // 페이지 Schema 유형 (Article 등) — Organization 노드와 분리
+        $page_schema = '';
         if (!empty($page_schema_type)) {
-            $schema_type = preg_replace('/[^a-zA-Z]/', '', (string) $page_schema_type);
-            if ($schema_type === '') {
-                $schema_type = 'Organization';
+            $page_schema = preg_replace('/[^a-zA-Z]/', '', (string) $page_schema_type);
+        }
+
+        $org_type = 'Organization';
+        if (function_exists('g5site_cfg')) {
+            $configured_org = preg_replace('/[^a-zA-Z]/', '', (string) g5site_cfg('schema_organization_type', 'MedicalOrganization'));
+            if ($configured_org !== '') {
+                $org_type = $configured_org;
+            }
+        }
+
+        // 경로 기반 noindex (로그인·다국어 잔여 URL)
+        if (function_exists('onoff_builder_path_robots_directive')) {
+            $path_robots = onoff_builder_path_robots_directive();
+            if ($path_robots !== '') {
+                $robots = $path_robots;
+            }
+        } elseif (!empty($_SERVER['REQUEST_URI'])) {
+            $req_path = parse_url((string) $_SERVER['REQUEST_URI'], PHP_URL_PATH);
+            if (is_string($req_path) && preg_match('#^/(?:login|en|zh-hans)(?:/|$)#i', $req_path)) {
+                $robots = 'noindex,nofollow';
             }
         }
 
@@ -214,7 +233,8 @@ if (!function_exists('g5b_seo_resolve')) {
             'phone'           => $phone,
             'email'           => $email,
             'address'         => $address,
-            'schema_type'     => $schema_type,
+            'schema_type'     => $org_type,
+            'page_schema_type'=> $page_schema,
             'site_url'        => defined('G5_URL') ? G5_URL : '',
         );
 
@@ -294,8 +314,21 @@ if (!function_exists('g5b_seo_build_meta_html')) {
 if (!function_exists('g5b_seo_build_jsonld')) {
     function g5b_seo_build_jsonld($data)
     {
+        $org_type = !empty($data['schema_type'])
+            ? preg_replace('/[^a-zA-Z]/', '', (string) $data['schema_type'])
+            : 'Organization';
+        if ($org_type === '' || in_array($org_type, array('Article', 'WebPage', 'BlogPosting', 'NewsArticle'), true)) {
+            $org_type = 'Organization';
+            if (function_exists('g5site_cfg')) {
+                $configured = preg_replace('/[^a-zA-Z]/', '', (string) g5site_cfg('schema_organization_type', 'MedicalOrganization'));
+                if ($configured !== '') {
+                    $org_type = $configured;
+                }
+            }
+        }
+
         $org = array(
-            '@type' => $data['schema_type'],
+            '@type' => $org_type,
             '@id'   => $data['site_url'] . '#organization',
             'name'  => $data['company_name'],
             'url'   => $data['site_url'],
@@ -316,11 +349,6 @@ if (!function_exists('g5b_seo_build_jsonld')) {
             );
         }
 
-        /*
-         * 추후 확장: LocalBusiness
-         * $local = array_merge($org, array('@type' => 'LocalBusiness', 'priceRange' => '$$'));
-         */
-
         $website = array(
             '@type' => 'WebSite',
             '@id'   => $data['site_url'] . '#website',
@@ -330,6 +358,8 @@ if (!function_exists('g5b_seo_build_jsonld')) {
             'publisher'   => array('@id' => $data['site_url'] . '#organization'),
         );
 
+        // page_schema_type(Article 등)은 Organization에 적용하지 않음.
+        // 게시글 Article JSON-LD는 skin/board/_inc/g5b-seo-view.php 등에서 별도 출력.
         $graph = array(
             '@context' => 'https://schema.org',
             '@graph'     => array($org, $website),

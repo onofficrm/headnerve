@@ -27,6 +27,8 @@ $site_config = array(
     'main_keyword'        => '',
     'sub_keywords'        => '',
     'robots'              => 'index,follow',
+    /* JSON-LD #organization 고정 타입 (게시글 Schema 유형과 분리) */
+    'schema_organization_type' => 'MedicalOrganization',
     'consultation_text'   => '상담문의',
     'footer_desc'         => '두통·어지럼증·자율신경·말초신경병증·브레인포그 맥락 치료',
     /* 문의 폼 → inquiry 게시판 (proc/inquiry-submit.php) */

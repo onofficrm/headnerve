@@ -836,6 +836,9 @@ if (!function_exists('onoff_builder_render_import_page')) {
         $html = onoff_builder_rewrite_asset_paths($html, $id, $entry);
         $html = onoff_builder_inject_config_add_meta($html);
         $html = onoff_builder_inject_headnerve_auth_script($html);
+        if (function_exists('onoff_builder_inject_seo_meta_into_html')) {
+            $html = onoff_builder_inject_seo_meta_into_html($html);
+        }
         if (function_exists('onoff_builder_inject_popup_layer_into_html')) {
             $html = onoff_builder_inject_popup_layer_into_html($html, $id);
         }

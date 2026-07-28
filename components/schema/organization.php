@@ -23,9 +23,17 @@ if ($company_name === '') {
     return;
 }
 
+$org_type = 'Organization';
+if (function_exists('g5site_cfg')) {
+    $configured_org = preg_replace('/[^a-zA-Z]/', '', (string) g5site_cfg('schema_organization_type', 'MedicalOrganization'));
+    if ($configured_org !== '') {
+        $org_type = $configured_org;
+    }
+}
+
 $schema = array(
     '@context' => 'https://schema.org',
-    '@type'    => 'Organization',
+    '@type'    => $org_type,
     'name'     => $company_name,
 );
 

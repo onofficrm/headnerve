@@ -4,6 +4,9 @@ global $lo_url;
 
 include_once(__DIR__ . '/_common.php');
 
+// 오류/안내 페이지는 색인 대상이 아님 (/login 등 rewrite 잔여 URL 포함)
+$page_robots = 'noindex,nofollow';
+
 if($error) {
     $g5['title'] = "오류안내 페이지";
 } else {

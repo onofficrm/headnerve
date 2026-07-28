@@ -138,6 +138,9 @@ if (!function_exists('onoff_builder_render_standalone')) {
             if (function_exists('onoff_builder_inject_config_add_meta')) {
                 $html = onoff_builder_inject_config_add_meta($html);
             }
+            if (function_exists('onoff_builder_inject_seo_meta_into_html')) {
+                $html = onoff_builder_inject_seo_meta_into_html($html);
+            }
             if (is_file(G5_LIB_PATH.'/headnerve_nav.lib.php')) {
                 include_once G5_LIB_PATH.'/headnerve_nav.lib.php';
                 if (function_exists('headnerve_nav_auth_bootstrap_script')) {

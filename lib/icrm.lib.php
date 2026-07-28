@@ -936,14 +936,133 @@ if (!function_exists('g5b_is_board_content_button_link')) {
     }
 }
 
+if (!function_exists('g5b_rewrite_legacy_site_urls')) {
+    /**
+     * 구 도메인(headnerve.iwinv.net) → 현재 사이트 도메인
+     */
+    function g5b_rewrite_legacy_site_urls($html)
+    {
+        $html = (string) $html;
+        if ($html === '' || stripos($html, 'iwinv.net') === false) {
+            return $html;
+        }
+
+        $target = defined('G5_URL') ? rtrim(G5_URL, '/') : 'https://headnerve.com';
+        if (function_exists('g5site_cfg')) {
+            $configured = trim((string) g5site_cfg('icrm_site_base_url', ''));
+            if ($configured !== '' && preg_match('#^https?://#i', $configured)) {
+                $target = rtrim($configured, '/');
+            }
+        }
+
+        $html = preg_replace('#https?://headnerve\.iwinv\.net#i', $target, $html);
+
+        return is_string($html) ? $html : (string) $html;
+    }
+}
+
+if (!function_exists('g5b_strip_nofollow_on_internal_links')) {
+    /**
+     * 자사(동일 호스트) 링크의 rel="nofollow" 제거
+     */
+    function g5b_strip_nofollow_on_internal_links($html)
+    {
+        $html = (string) $html;
+        if ($html === '' || stripos($html, 'nofollow') === false || stripos($html, '<a') === false) {
+            return $html;
+        }
+
+        $hosts = array();
+        if (defined('G5_URL')) {
+            $h = parse_url(G5_URL, PHP_URL_HOST);
+            if ($h) {
+                $hosts[] = strtolower((string) $h);
+            }
+        }
+        if (function_exists('g5site_cfg')) {
+            $base = trim((string) g5site_cfg('icrm_site_base_url', ''));
+            if ($base !== '') {
+                $h = parse_url($base, PHP_URL_HOST);
+                if ($h) {
+                    $hosts[] = strtolower((string) $h);
+                }
+            }
+        }
+        $hosts[] = 'headnerve.com';
+        $hosts[] = 'www.headnerve.com';
+        $hosts = array_values(array_unique(array_filter($hosts)));
+
+        return preg_replace_callback('/<a(\s[^>]*)>/iu', function ($m) use ($hosts) {
+            $attrs = $m[1];
+            if (!preg_match('/\bhref\s*=\s*(["\'])([^"\']+)\1/i', $attrs, $hm)
+                && !preg_match('/\bhref\s*=\s*([^\s>]+)/i', $attrs, $hm)) {
+                return $m[0];
+            }
+            $href = html_entity_decode(isset($hm[2]) ? $hm[2] : $hm[1], ENT_QUOTES, 'UTF-8');
+            $href = trim($href);
+            if ($href === '' || $href[0] === '#' || stripos($href, 'javascript:') === 0 || stripos($href, 'mailto:') === 0) {
+                return $m[0];
+            }
+
+            $is_internal = false;
+            if ($href[0] === '/') {
+                $is_internal = true;
+            } else {
+                $link_host = parse_url($href, PHP_URL_HOST);
+                if ($link_host && in_array(strtolower((string) $link_host), $hosts, true)) {
+                    $is_internal = true;
+                }
+            }
+            if (!$is_internal || !preg_match('/\brel\s*=\s*(["\'])([^"\']*)\1/i', $attrs, $rm)) {
+                return $m[0];
+            }
+
+            $rel_parts = preg_split('/\s+/', trim($rm[2]));
+            $kept = array();
+            foreach ($rel_parts as $part) {
+                $low = strtolower($part);
+                if ($low === '' || $low === 'nofollow') {
+                    continue;
+                }
+                $kept[] = $part;
+            }
+
+            if (empty($kept)) {
+                $attrs = preg_replace('/\s*\brel\s*=\s*(["\'])[^"\']*\1/i', '', $attrs, 1);
+            } else {
+                $new_rel = implode(' ', $kept);
+                $attrs = preg_replace(
+                    '/\brel\s*=\s*(["\'])[^"\']*\1/i',
+                    'rel="' . htmlspecialchars($new_rel, ENT_QUOTES, 'UTF-8') . '"',
+                    $attrs,
+                    1
+                );
+            }
+
+            return '<a' . $attrs . '>';
+        }, $html);
+    }
+}
+
 if (!function_exists('g5b_normalize_board_content_links')) {
     /**
-     * 본문 텍스트 링크에 식별 클래스 부여 (글보기·발행 공통)
+     * 본문 텍스트 링크에 식별 클래스 부여 + 구 도메인/내부 nofollow 정리
      */
     function g5b_normalize_board_content_links($html)
     {
         $html = (string) $html;
-        if ($html === '' || stripos($html, '<a') === false) {
+        if ($html === '') {
+            return $html;
+        }
+
+        if (function_exists('g5b_rewrite_legacy_site_urls')) {
+            $html = g5b_rewrite_legacy_site_urls($html);
+        }
+        if (function_exists('g5b_strip_nofollow_on_internal_links')) {
+            $html = g5b_strip_nofollow_on_internal_links($html);
+        }
+
+        if (stripos($html, '<a') === false) {
             return $html;
         }
 

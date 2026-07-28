@@ -12,6 +12,10 @@ RewriteRule ^sitemap\.xml$ sitemap.php [L]
 RewriteRule ^robots\.txt$ robots.php [L]
 RewriteRule ^rss\.xml$ rss.php [L]
 
+# 잔여 다국어·로그인 pretty URL → noindex 404 (검색 노출 차단)
+RewriteRule ^(en|zh-hans)(/.*)?$ page/404.php [L,QSA]
+RewriteRule ^login/?$ bbs/login.php [L,QSA]
+
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]

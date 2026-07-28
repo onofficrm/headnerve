@@ -548,9 +548,15 @@ if (!function_exists('seofeed_output_robots')) {
         echo "User-agent: *\n";
         echo "Allow: /\n\n";
         echo "Disallow: /adm/\n";
+        echo "Disallow: /login\n";
+        echo "Disallow: /en\n";
+        echo "Disallow: /en/\n";
+        echo "Disallow: /zh-hans\n";
+        echo "Disallow: /zh-hans/\n";
         echo "Disallow: /bbs/login.php\n";
         echo "Disallow: /bbs/register.php\n";
         echo "Disallow: /bbs/password.php\n";
+        echo "Disallow: /bbs/new.php\n";
         echo "Disallow: /data/\n";
         echo "Disallow: /_BUILDER_INPUT/\n";
         echo "Disallow: /page/style-guide.php\n";
