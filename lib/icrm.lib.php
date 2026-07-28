@@ -108,7 +108,8 @@ if (!function_exists('icrm_detect_request_base_url')) {
 if (!function_exists('icrm_get_site_base_url')) {
     /**
      * final_url 기준 사이트 루트 (끝 슬래시 없음)
-     * 우선순위: icrm.config / _site.config → G5_DOMAIN → G5_URL → 현재 요청 Host
+     * 우선순위: _site.config → G5_DOMAIN → G5_URL → ICRM_SITE_BASE_URL → 현재 요청 Host
+     * (옛 도메인이 data/icrm.config.php 에만 남은 경우 G5_DOMAIN을 우선)
      *
      * @return string
      */
@@ -121,10 +122,6 @@ if (!function_exists('icrm_get_site_base_url')) {
         }
 
         $candidates = array();
-
-        if (defined('ICRM_SITE_BASE_URL') && trim((string) ICRM_SITE_BASE_URL) !== '') {
-            $candidates[] = (string) ICRM_SITE_BASE_URL;
-        }
 
         if (function_exists('g5site_cfg')) {
             $cfg_url = g5site_cfg('icrm_site_base_url', '');
@@ -141,17 +138,37 @@ if (!function_exists('icrm_get_site_base_url')) {
             $candidates[] = G5_URL;
         }
 
+        if (defined('ICRM_SITE_BASE_URL') && trim((string) ICRM_SITE_BASE_URL) !== '') {
+            $candidates[] = (string) ICRM_SITE_BASE_URL;
+        }
+
         $candidates[] = icrm_detect_request_base_url();
+
+        $preferred_host = '';
+        if (defined('G5_DOMAIN') && G5_DOMAIN !== '') {
+            $preferred_host = strtolower((string) parse_url(G5_DOMAIN, PHP_URL_HOST));
+        }
 
         foreach ($candidates as $url) {
             $url = rtrim(trim((string) $url), '/');
-            if ($url === '') {
+            if ($url === '' || !preg_match('#^https?://#i', $url)) {
                 continue;
             }
-            if (preg_match('#^https?://#i', $url)) {
-                $cached = $url;
-                return $cached;
+
+            $host = strtolower((string) parse_url($url, PHP_URL_HOST));
+            // G5_DOMAIN이 있으면 다른 호스트(옛 iwinv 등)는 건너뜀
+            if ($preferred_host !== '' && $host !== '' && $host !== $preferred_host) {
+                continue;
             }
+
+            $cached = $url;
+            return $cached;
+        }
+
+        // preferred 필터로 전부 탈락한 경우: G5_DOMAIN 단독 사용
+        if (defined('G5_DOMAIN') && G5_DOMAIN !== '' && preg_match('#^https?://#i', G5_DOMAIN)) {
+            $cached = rtrim(G5_DOMAIN, '/');
+            return $cached;
         }
 
         $cached = '';

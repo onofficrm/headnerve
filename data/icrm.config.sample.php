@@ -12,7 +12,7 @@ if (!defined('_GNUBOARD_')) {
     exit;
 }
 
-/** 비우면 G5_DOMAIN / G5_URL / 현재 접속 도메인 순으로 자동 (사이트마다 다름) */
+/** 비우면 _site.config / G5_DOMAIN / G5_URL 순으로 자동. 옛 도메인(iwinv 등)을 넣지 마세요. */
 define('ICRM_SITE_BASE_URL', '');
 
 /** iCRM → 이 홈페이지 API 호출 시 (X-ICRM-Token 또는 ?token=) */

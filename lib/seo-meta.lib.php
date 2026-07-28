@@ -1001,6 +1001,60 @@ if (!function_exists('g5b_seo_meta_ai_publish_checklist')) {
     }
 }
 
+if (!function_exists('g5b_seo_meta_preferred_site_base')) {
+    function g5b_seo_meta_preferred_site_base()
+    {
+        if (function_exists('icrm_get_site_base_url')) {
+            $base = icrm_get_site_base_url();
+            if ($base !== '') {
+                return rtrim($base, '/');
+            }
+        }
+        if (defined('G5_DOMAIN') && G5_DOMAIN !== '') {
+            return rtrim(G5_DOMAIN, '/');
+        }
+        if (defined('G5_URL') && G5_URL !== '') {
+            return rtrim(G5_URL, '/');
+        }
+
+        return '';
+    }
+}
+
+if (!function_exists('g5b_seo_meta_normalize_absolute_url')) {
+    /**
+     * 절대 URL의 호스트를 현재 사이트 도메인(G5_DOMAIN)으로 맞춤
+     */
+    function g5b_seo_meta_normalize_absolute_url($url)
+    {
+        $url = trim((string) $url);
+        $base = g5b_seo_meta_preferred_site_base();
+        if ($url === '') {
+            return '';
+        }
+        if ($base === '') {
+            return $url;
+        }
+
+        if (!preg_match('#^https?://#i', $url)) {
+            return rtrim($base, '/') . '/' . ltrim($url, '/');
+        }
+
+        $expected_host = strtolower((string) parse_url($base, PHP_URL_HOST));
+        $parts = parse_url($url);
+        $url_host = isset($parts['host']) ? strtolower((string) $parts['host']) : '';
+        if ($expected_host === '' || $url_host === '' || $expected_host === $url_host) {
+            return $url;
+        }
+
+        $path = isset($parts['path']) ? (string) $parts['path'] : '/';
+        $query = !empty($parts['query']) ? '?' . $parts['query'] : '';
+        $fragment = !empty($parts['fragment']) ? '#' . $parts['fragment'] : '';
+
+        return rtrim($base, '/') . $path . $query . $fragment;
+    }
+}
+
 if (!function_exists('g5b_seo_meta_build_post_public_url')) {
     function g5b_seo_meta_build_post_public_url($bo_table, $wr_id)
     {
@@ -1010,18 +1064,35 @@ if (!function_exists('g5b_seo_meta_build_post_public_url')) {
             return '';
         }
 
-        if (function_exists('icrm_build_final_url')) {
-            $url = icrm_build_final_url($bo_table, $wr_id);
-            if ($url !== '') {
-                return $url;
+        // 1) 그누보드 pretty URL 우선 (슬러그 포함)
+        if (function_exists('get_pretty_url')) {
+            $pretty = get_pretty_url($bo_table, $wr_id);
+            if ($pretty !== '') {
+                return g5b_seo_meta_normalize_absolute_url($pretty);
             }
         }
 
-        if (function_exists('get_pretty_url')) {
-            return get_pretty_url($bo_table, $wr_id);
+        // 2) SEO 타이틀을 넣어 iCRM final_url 생성 (board.php?wr_id 폴백 방지)
+        $seo_title = '';
+        if (function_exists('icrm_ensure_wr_seo_title')) {
+            $seo_title = (string) icrm_ensure_wr_seo_title($bo_table, $wr_id);
+        } elseif (function_exists('get_write') && isset($GLOBALS['g5']['write_prefix'])) {
+            $write = get_write($GLOBALS['g5']['write_prefix'] . $bo_table, $wr_id, true);
+            if (is_array($write) && !empty($write['wr_seo_title'])) {
+                $seo_title = trim((string) $write['wr_seo_title']);
+            }
         }
 
-        return G5_BBS_URL . '/board.php?bo_table=' . urlencode($bo_table) . '&wr_id=' . $wr_id;
+        if (function_exists('icrm_build_final_url')) {
+            $url = icrm_build_final_url($bo_table, $wr_id, $seo_title);
+            if ($url !== '') {
+                return g5b_seo_meta_normalize_absolute_url($url);
+            }
+        }
+
+        $fallback = (defined('G5_BBS_URL') ? G5_BBS_URL : '') . '/board.php?bo_table=' . rawurlencode($bo_table) . '&wr_id=' . $wr_id;
+
+        return g5b_seo_meta_normalize_absolute_url($fallback);
     }
 }
 
@@ -1452,6 +1523,36 @@ if (!function_exists('g5b_seo_meta_canonical_is_board_list')) {
     }
 }
 
+if (!function_exists('g5b_seo_meta_canonical_needs_rebuild')) {
+    /**
+     * 목록 URL · 옛 도메인 · board.php?wr_id 형태면 재생성 대상
+     */
+    function g5b_seo_meta_canonical_needs_rebuild($url, $bo_table, $wr_id = 0)
+    {
+        $url = trim((string) $url);
+        $bo_table = preg_replace('/[^a-z0-9_]/i', '', (string) $bo_table);
+        if ($url === '') {
+            return true;
+        }
+        if ($bo_table !== '' && g5b_seo_meta_canonical_is_board_list($url, $bo_table)) {
+            return true;
+        }
+        // pretty URL 대신 board.php?wr_id=… 로 저장된 경우
+        if (preg_match('#(?:^|[?/])board\.php\?#i', $url) && preg_match('#(?:^|[?&])wr_id=\d+#i', $url)) {
+            return true;
+        }
+
+        $base = g5b_seo_meta_preferred_site_base();
+        $expected_host = $base !== '' ? strtolower((string) parse_url($base, PHP_URL_HOST)) : '';
+        $url_host = strtolower((string) parse_url($url, PHP_URL_HOST));
+        if ($expected_host !== '' && $url_host !== '' && $expected_host !== $url_host) {
+            return true;
+        }
+
+        return false;
+    }
+}
+
 if (!function_exists('g5b_seo_meta_force_post_canonical')) {
     function g5b_seo_meta_force_post_canonical($bo_table, $wr_id, $stored = '')
     {
@@ -1467,14 +1568,14 @@ if (!function_exists('g5b_seo_meta_force_post_canonical')) {
             : '';
 
         if ($post_url === '') {
-            return $stored;
+            return $stored !== '' ? g5b_seo_meta_normalize_absolute_url($stored) : $stored;
         }
 
-        if ($stored === '' || g5b_seo_meta_canonical_is_board_list($stored, $bo_table)) {
+        if (g5b_seo_meta_canonical_needs_rebuild($stored, $bo_table, $wr_id)) {
             return $post_url;
         }
 
-        return $stored;
+        return g5b_seo_meta_normalize_absolute_url($stored);
     }
 }
 
@@ -1767,13 +1868,7 @@ if (!function_exists('g5b_seo_meta_autofill_post')) {
             }
         }
 
-        if ($data['canonical'] === '') {
-            $canonical = g5b_seo_meta_build_post_public_url($bo_table, $wr_id);
-            if ($canonical !== '') {
-                $data['canonical'] = $canonical;
-                $filled = true;
-            }
-        } elseif (g5b_seo_meta_canonical_is_board_list($data['canonical'], $bo_table)) {
+        if ($data['canonical'] === '' || g5b_seo_meta_canonical_needs_rebuild($data['canonical'], $bo_table, $wr_id)) {
             $canonical = g5b_seo_meta_build_post_public_url($bo_table, $wr_id);
             if ($canonical !== '') {
                 $data['canonical'] = $canonical;
